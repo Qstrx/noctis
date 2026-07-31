@@ -7,7 +7,7 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="dark">
 <title>Ocean’s Scenepacks</title>
-<meta name="description" content="Free Call of Duty scene packs sorted by operator, plus After Effects project files and presets. 60 fps, no watermark, no sign-in.">
+<meta name="description" content="Free Call of Duty scene packs, plus After Effects project files and presets. 60 fps, no watermark, no sign-in.">
 <link rel="icon" href="img/icon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
@@ -180,6 +180,8 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   transform:translateY(46px);opacity:0;
   transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s}
 .doss.in{transform:none;opacity:1}
+.doss[hidden]{display:none}
+.stamp.pending{border-color:var(--lens);color:var(--lens);text-shadow:none;box-shadow:none}
 .doss .lock{position:absolute;background:var(--phos);box-shadow:var(--gM);opacity:0;
   transition:opacity .35s,transform .55s cubic-bezier(.2,.9,.2,1)}
 .doss .lock.h{height:1px;width:64px}
@@ -201,6 +203,9 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   45%{transform:translate(4px,-2px)}70%{transform:translate(-2px,-1px)}}
 
 .portrait{position:relative;overflow:hidden;border:1px solid var(--rule);transform-style:preserve-3d}
+.portrait canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;
+  transform:scale(1.04);transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.doss:hover .portrait canvas{transform:scale(1.09)}
 .portrait img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
   object-position:50% 42%;transform:scale(1.04);
   filter:grayscale(1) contrast(1.14) brightness(.84);
@@ -401,7 +406,7 @@ body.gated{overflow:hidden}
 }
 </style>
 
-<h2 class="sr-only">Ocean’s Scenepacks is a night-vision themed archive with two sections: scene packs sorted by operator, and After Effects project files and presets. Everything is free to download.</h2>
+<h2 class="sr-only">Ocean’s Scenepacks is a night-vision themed archive with two sections: scene packs, grouped into collections, and After Effects project files and presets. Everything is free to download.</h2>
 
 <canvas id="scene" class="fx"></canvas>
 <canvas id="grain" class="fx"></canvas>
@@ -460,7 +465,7 @@ body.gated{overflow:hidden}
 <main>
 
   <section id="s1">
-    <p class="lab"><b>01</b> Scene packs — select operator</p>
+    <p class="lab"><b>01</b> Scene packs — pick a collection</p>
 
     <div class="roster" id="roster">
       <button class="op sel" type="button" aria-pressed="true" data-op="price">
@@ -468,9 +473,9 @@ body.gated{overflow:hidden}
         <span class="st">4 volumes · 39 min</span>
         <span class="sel-bar"></span>
       </button>
-      <button class="op" type="button" aria-pressed="false" data-empty>
-        <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
-        <span class="st">Awaiting</span>
+      <button class="op" type="button" aria-pressed="false" data-op="cutscenes">
+        <span class="nm"><em>MW I–III</em><strong>Cutscenes</strong></span>
+        <span class="st">Encoding · 2h 52m</span>
         <span class="sel-bar"></span>
       </button>
       <button class="op" type="button" aria-pressed="false" data-empty>
@@ -485,7 +490,7 @@ body.gated{overflow:hidden}
       </button>
     </div>
 
-    <article class="doss" id="doss">
+    <article class="doss" id="doss" data-doss="price">
       <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
       <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
       <div class="stamp">Declassified</div>
@@ -565,6 +570,71 @@ body.gated{overflow:hidden}
           <span class="fz">5.33 GB</span>
           <button class="dep" type="button" data-name="Full scene pack"
             data-url="https://mega.nz/file/SS4EAQQI#_0fGCxJnfgSKcLeHu5oPYMi6CU1KAQch8r4KsW4Vr0k"><span class="bg"></span><span>Download all</span><span class="ar">→</span></button>
+        </div>
+      </div>
+    </article>
+
+    <article class="doss" id="doss-cuts" data-doss="cutscenes" hidden>
+      <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
+      <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
+      <div class="stamp pending">In progress</div>
+
+      <div>
+        <div class="portrait">
+          <canvas width="560" height="700" data-still="41"></canvas>
+          <div class="cross"></div>
+          <div class="tag">Source — 4K</div>
+        </div>
+        <div class="strip">
+          <canvas width="320" height="200" data-still="52"></canvas>
+          <canvas width="320" height="200" data-still="74"></canvas>
+          <canvas width="320" height="200" data-still="96"></canvas>
+        </div>
+      </div>
+
+      <div>
+        <div class="pid">Collection 02</div>
+        <h3 data-scramble>Cutscenes</h3>
+        <div class="call">Every cutscene — Modern Warfare I, II and III</div>
+        <div class="specs">
+          <div>Runtime<b>2h 52m</b></div>
+          <div>Source<b>4K</b></div>
+          <div>Games<b data-count="3">0</b></div>
+          <div>Status<b>Encoding</b></div>
+        </div>
+
+        <p class="cap info"><i></i><span><b>Not up yet — I'm converting these now.</b>
+        They come off a 4K source, so each game gets split into parts small enough to download
+        without an account. Runtimes below are final; sizes and links land when the encode does.</span></p>
+
+        <div class="clips">
+          <article class="clip">
+            <span class="ce">01 — Modern Warfare</span>
+            <h4>MW1</h4>
+            <span class="cm">59:15 · all cutscenes</span>
+            <div class="cbtns">
+              <button class="dep sm" type="button" data-locked data-name="MW1 cutscenes"
+                data-msg="MW1 cutscenes — still encoding"><span class="bg"></span><span>Soon</span><span class="ar">✕</span></button>
+            </div>
+          </article>
+          <article class="clip">
+            <span class="ce">02 — Modern Warfare II</span>
+            <h4>MW2</h4>
+            <span class="cm">38:36 · all cutscenes</span>
+            <div class="cbtns">
+              <button class="dep sm" type="button" data-locked data-name="MW2 cutscenes"
+                data-msg="MW2 cutscenes — still encoding"><span class="bg"></span><span>Soon</span><span class="ar">✕</span></button>
+            </div>
+          </article>
+          <article class="clip">
+            <span class="ce">03 — Modern Warfare III</span>
+            <h4>MW3</h4>
+            <span class="cm">1:14:44 · all cutscenes</span>
+            <div class="cbtns">
+              <button class="dep sm" type="button" data-locked data-name="MW3 cutscenes"
+                data-msg="MW3 cutscenes — still encoding"><span class="bg"></span><span>Soon</span><span class="ar">✕</span></button>
+            </div>
+          </article>
         </div>
       </div>
     </article>
@@ -810,16 +880,19 @@ var io = new IntersectionObserver(function(es){
 }, { threshold:.22 });
 document.querySelectorAll(".doss, .roster").forEach(function(el){ io.observe(el); });
 
-var doss = document.getElementById("doss");
+var dossiers = document.querySelectorAll(".doss");
 if (fine && !reduce){
-  var por = doss.querySelector(".portrait");
-  doss.addEventListener("pointermove", function(e){
-    var r = por.getBoundingClientRect();
-    var dx = (e.clientX-(r.left+r.width/2))/r.width, dy = (e.clientY-(r.top+r.height/2))/r.height;
-    por.style.transform = "perspective(900px) rotateY("+(dx*6).toFixed(2)+
-      "deg) rotateX("+(-dy*6).toFixed(2)+"deg)";
+  dossiers.forEach(function(ds){
+    var por = ds.querySelector(".portrait");
+    if (!por) return;
+    ds.addEventListener("pointermove", function(e){
+      var r = por.getBoundingClientRect();
+      var dx = (e.clientX-(r.left+r.width/2))/r.width, dy = (e.clientY-(r.top+r.height/2))/r.height;
+      por.style.transform = "perspective(900px) rotateY("+(dx*6).toFixed(2)+
+        "deg) rotateX("+(-dy*6).toFixed(2)+"deg)";
+    });
+    ds.addEventListener("pointerleave", function(){ por.style.transform = ""; });
   });
-  doss.addEventListener("pointerleave", function(){ por.style.transform = ""; });
   document.querySelectorAll(".dep").forEach(function(b){
     b.addEventListener("pointermove", function(e){
       var r = b.getBoundingClientRect();
@@ -845,6 +918,25 @@ addEventListener("scroll", function(){
   tks.forEach(function(t,ix){ t.classList.toggle("on", ix === act); });
 }, { passive:true });
 
+function showDossier(key){
+  var target = null;
+  dossiers.forEach(function(ds){
+    var match = ds.dataset.doss === key;
+    ds.hidden = !match;
+    if (match) target = ds;
+  });
+  if (!target) return;
+  io.unobserve(target);
+  target.classList.remove("in"); void target.offsetWidth; target.classList.add("in");
+  target.querySelectorAll("[data-scramble]").forEach(scramble);
+  target.querySelectorAll("[data-count]").forEach(countUp);
+  var cv = target.querySelector(".portrait img, .portrait canvas");
+  if (cv && !reduce){ cv.classList.add("glitch");
+    setTimeout(function(){ cv.classList.remove("glitch"); }, 460); }
+  beep(1320,.04,.03,"sine");
+  setTimeout(function(){ beep(660,.09,.04); }, 800);
+}
+
 document.querySelectorAll(".op").forEach(function(op){
   op.addEventListener("click", function(){
     if (op.hasAttribute("data-empty")){
@@ -857,14 +949,7 @@ document.querySelectorAll(".op").forEach(function(op){
       o.classList.toggle("sel", o === op);
       o.setAttribute("aria-pressed", o === op ? "true" : "false");
     });
-    doss.classList.remove("in"); void doss.offsetWidth; doss.classList.add("in");
-    doss.querySelectorAll("[data-scramble]").forEach(scramble);
-    doss.querySelectorAll("[data-count]").forEach(countUp);
-    var cv = doss.querySelector(".portrait img");
-    if (cv && !reduce){ cv.classList.add("glitch");
-      setTimeout(function(){ cv.classList.remove("glitch"); }, 460); }
-    beep(1320,.04,.03,"sine");
-    setTimeout(function(){ beep(660,.09,.04); }, 800);
+    showDossier(op.dataset.op);
   });
 });
 
@@ -956,7 +1041,7 @@ document.querySelectorAll(".dep").forEach(function(b){
       row.classList.add("shake");
       setTimeout(function(){ row.classList.remove("shake"); }, 380);
     }
-    extract(b.dataset.name, locked, b.dataset.url, null, b.hasAttribute("data-direct"));
+    extract(b.dataset.name, locked, b.dataset.url, b.dataset.msg, b.hasAttribute("data-direct"));
   });
 });
 addEventListener("keydown", function(e){ if (e.key === "Escape") closeEx(); });
