@@ -102,18 +102,30 @@ body.hot .ret b{inset:4px;border-radius:2px;transform:rotate(45deg);border-color
 body.hot .ret i{background:var(--hot)}
 
 /* ===================== BOOT ===================== */
-.boot{position:fixed;inset:0;z-index:100;background:var(--ink);display:grid;
-  place-content:center;justify-items:center;gap:20px;padding:var(--gut);text-align:center}
-.boot-mark{font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;
-  font-size:clamp(2.4rem,9vw,5.5rem);line-height:1;color:var(--hot);
-  filter:blur(14px);opacity:0;animation:focusIn 1.5s .25s forwards}
-@keyframes focusIn{0%{filter:blur(18px);opacity:0;letter-spacing:.34em}
-  60%{opacity:1}100%{filter:blur(0);opacity:1;letter-spacing:.02em;text-shadow:var(--gH)}}
-.boot-bar{width:min(320px,62vw);height:2px;background:var(--rule);overflow:hidden}
-.boot-bar i{display:block;height:100%;width:0;background:var(--phos);box-shadow:var(--gM);
-  animation:fill 1.9s .3s cubic-bezier(.6,0,.2,1) forwards}
-@keyframes fill{to{width:100%}}
-.boot-line{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);min-height:1.4em}
+/* Startup, without a word: four tubes of an image intensifier igniting in
+   sequence. Abstract enough to be a mark, specific enough to be this device. */
+.boot{position:fixed;inset:0;z-index:100;background:var(--ink);display:grid;place-content:center}
+.tubes{display:flex;gap:clamp(9px,2.2vw,24px)}
+.tubes i{display:block;width:clamp(36px,7vw,72px);aspect-ratio:1;border-radius:50%;
+  border:2px solid var(--rule);opacity:.22;transform:scale(.94);
+  animation:ignite .55s cubic-bezier(.2,.8,.3,1) forwards}
+.tubes i:nth-child(1){animation-delay:.18s}
+.tubes i:nth-child(2){animation-delay:.44s}
+.tubes i:nth-child(3){animation-delay:.70s}
+.tubes i:nth-child(4){animation-delay:.96s}
+@keyframes ignite{
+  0%  {opacity:.22;border-color:var(--rule);box-shadow:none;transform:scale(.94)}
+  55% {opacity:1;border-color:var(--hot);transform:scale(1.06);
+       box-shadow:0 0 34px rgba(200,255,220,.55),inset 0 0 24px rgba(140,255,180,.35)}
+  100%{opacity:1;border-color:var(--phos);transform:scale(1);
+       box-shadow:0 0 18px rgba(61,255,110,.45),inset 0 0 14px rgba(61,255,110,.2)}
+}
+:root.thermal .tubes i{animation-name:igniteT}
+@keyframes igniteT{
+  0%  {opacity:.22;border-color:var(--rule);transform:scale(.94)}
+  55% {opacity:1;border-color:var(--hot);transform:scale(1.06)}
+  100%{opacity:1;border-color:var(--phos);transform:scale(1)}
+}
 body.booted .boot{opacity:0;pointer-events:none;transition:opacity .7s}
 
 /* ===================== HUD ===================== */
@@ -327,20 +339,18 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   transition:opacity .4s}
 .gwrap:hover .door{opacity:.3}
 .gwrap .door:hover,.gwrap .door:focus-visible{opacity:1}
-/* Two abstract marks instead of labels: hollow stacked frames for footage,
-   solid stacked bars for project data. Different in weight and in axis, so
-   they read apart at a glance without a word between them. */
-.dglyph{width:clamp(140px,19vw,250px);height:auto;color:var(--dim);
-  transition:color .4s,transform .6s cubic-bezier(.2,.8,.2,1),filter .4s}
-.door:hover .dglyph,.door:focus-visible .dglyph{color:var(--hot);transform:scale(1.05);
-  filter:drop-shadow(0 0 16px color-mix(in srgb,var(--phos) 50%,transparent))}
-:root.thermal .door:hover .dglyph{filter:none}
-.dglyph .sweep{opacity:0;transition:opacity .35s}
-.door:hover .sweep,.door:focus-visible .sweep{opacity:.95}
-.door:hover .sy,.door:focus-visible .sy{animation:scanY 2.4s ease-in-out infinite}
-.door:hover .sx,.door:focus-visible .sx{animation:scanX 2.4s ease-in-out infinite}
-@keyframes scanY{0%,100%{transform:translateY(0)}50%{transform:translateY(85px)}}
-@keyframes scanX{0%,100%{transform:translateX(0)}50%{transform:translateX(110px)}}
+.door em{font-style:normal;font-size:9.5px;letter-spacing:.4em;text-transform:uppercase;color:var(--dim)}
+.door strong{position:relative;font-family:var(--display);font-stretch:75%;font-weight:700;
+  text-transform:uppercase;font-size:clamp(2.1rem,5.6vw,4.4rem);line-height:.9;
+  letter-spacing:-.005em;color:var(--text);text-align:center;text-wrap:balance;
+  transition:color .3s,text-shadow .3s}
+.door:hover strong,.door:focus-visible strong{color:var(--hot);text-shadow:var(--gH)}
+.door strong::after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:1px;
+  background:var(--phos);box-shadow:var(--gS);
+  transform:scaleX(0);transition:transform .45s cubic-bezier(.2,.9,.2,1)}
+.door:hover strong::after,.door:focus-visible strong::after{transform:scaleX(1)}
+.dmeta{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
+  text-align:center;max-width:26ch;margin-top:6px}
 
 @media (max-width:760px){
   .gwrap{grid-template-columns:1fr;grid-template-rows:1fr 1px 1fr;max-width:none}
@@ -399,10 +409,8 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 <div class="fx fx-iris" id="iris"></div>
 <div class="ret" id="ret"><i></i><i></i><i></i><i></i><b></b></div>
 
-<div class="boot" id="boot" role="status">
-  <div class="boot-mark">Noctis</div>
-  <div class="boot-bar"><i></i></div>
-  <div class="boot-line" id="bootline">Powering image intensifier</div>
+<div class="boot" id="boot" role="status" aria-label="Starting up">
+  <div class="tubes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 </div>
 
 <div class="hud" aria-hidden="true">
@@ -421,33 +429,16 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 
 <div class="gate" id="gate">
   <div class="gwrap">
-    <!-- Wordless by design. The labels below are for screen readers and the
-         native tooltip only — nothing renders on screen. -->
-    <button class="door" type="button" data-side="a" data-go="s1"
-            aria-label="Scene packs" title="Scene packs">
-      <svg class="dglyph" viewBox="0 0 200 150" aria-hidden="true">
-        <g fill="none" stroke="currentColor" stroke-width="1.6">
-          <rect x="11" y="13" width="141" height="87" opacity=".3"></rect>
-          <rect x="29" y="31" width="141" height="87" opacity=".58"></rect>
-          <rect x="47" y="49" width="141" height="87"></rect>
-        </g>
-        <line class="sweep sy" x1="47" y1="50" x2="188" y2="50"
-              stroke="currentColor" stroke-width="2"></line>
-      </svg>
+    <button class="door" type="button" data-side="a" data-go="s1">
+      <em>01</em>
+      <strong>Scene packs</strong>
+      <span class="dmeta">My scenepacks</span>
     </button>
     <i class="gline"></i>
-    <button class="door" type="button" data-side="b" data-go="s2"
-            aria-label="Project files and presets" title="Project files and presets">
-      <svg class="dglyph" viewBox="0 0 200 150" aria-hidden="true">
-        <g fill="currentColor">
-          <rect x="16" y="30" width="152" height="13" opacity=".85"></rect>
-          <rect x="16" y="55" width="104" height="13" opacity=".55"></rect>
-          <rect x="16" y="80" width="133" height="13" opacity=".72"></rect>
-          <rect x="16" y="105" width="71" height="13" opacity=".42"></rect>
-        </g>
-        <line class="sweep sx" x1="58" y1="20" x2="58" y2="128"
-              stroke="currentColor" stroke-width="2"></line>
-      </svg>
+    <button class="door" type="button" data-side="b" data-go="s2">
+      <em>02</em>
+      <strong>Project files</strong>
+      <span class="dmeta">Pjf, presets</span>
     </button>
   </div>
 </div>
@@ -958,15 +949,7 @@ document.querySelectorAll(".dep").forEach(function(b){
 addEventListener("keydown", function(e){ if (e.key === "Escape") closeEx(); });
 
 /* ============ 13. BOOT ============ */
-var boot = document.getElementById("boot"), bl = document.getElementById("bootline"),
-    iris = document.getElementById("iris");
-var seq = ["Powering image intensifier","Tube gain — auto","Mounting volume //Noctis","Optic ready"], si = 0;
-if (!reduce){
-  var bi = setInterval(function(){
-    bl.textContent = seq[si = Math.min(si+1, seq.length-1)];
-    if (si === seq.length-1) clearInterval(bi);
-  }, 560);
-}
+var boot = document.getElementById("boot"), iris = document.getElementById("iris");
 var opened = false;
 function open(){
   if (opened) return; opened = true;
@@ -979,7 +962,7 @@ function open(){
     if (r < 115) requestAnimationFrame(step); else iris.style.display = "none";
   })();
 }
-setTimeout(open, reduce ? 0 : 2350);
+setTimeout(open, reduce ? 0 : 1850);
 boot.addEventListener("click", open);
 
 /* ============ 14. HUD TELEMETRY ============ */
