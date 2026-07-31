@@ -249,22 +249,24 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .specs b{display:block;font-size:1.1rem;color:var(--text);font-weight:400;margin-top:3px;
   font-variant-numeric:tabular-nums;letter-spacing:.02em}
 
-.clips{display:grid;grid-template-columns:repeat(auto-fit,minmax(226px,1fr));gap:1px;
+.clips{display:flex;flex-direction:column;gap:1px;
   background:var(--rule);border:1px solid var(--rule);margin-top:26px}
-.clip{position:relative;background:var(--tube);padding:26px 22px 22px;
-  display:flex;flex-direction:column;overflow:hidden;transition:background .3s}
+.clip{position:relative;background:var(--tube);padding:20px 22px;
+  display:flex;align-items:center;gap:clamp(14px,2.5vw,30px);flex-wrap:wrap;
+  overflow:hidden;transition:background .3s}
 .clip::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .4s;
-  background:radial-gradient(130% 90% at 50% 118%,
-    color-mix(in srgb,var(--phos) 20%,transparent),transparent 72%)}
+  background:linear-gradient(90deg,
+    color-mix(in srgb,var(--phos) 13%,transparent),transparent 62%)}
 .clip:hover::before{opacity:1}
 .clip>*{position:relative}
-.clip .ce{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
-.clip h4{margin:6px 0 0;font-family:var(--display);font-stretch:75%;font-weight:700;
-  text-transform:uppercase;font-size:clamp(2.6rem,6vw,3.8rem);line-height:.85;
+.ctitle{flex:1;min-width:118px}
+.clip .ce{display:block;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
+.clip h4{margin:3px 0 0;font-family:var(--display);font-stretch:75%;font-weight:700;
+  text-transform:uppercase;font-size:clamp(2rem,4.4vw,2.9rem);line-height:.9;
   color:var(--hot);text-shadow:var(--gS)}
-.clip .cm{margin-top:auto;padding-top:20px;font-size:9.5px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--dim);font-variant-numeric:tabular-nums}
-.cbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.clip .cm{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.cbtns{display:flex;flex-wrap:wrap;gap:9px;margin-left:auto}
 
 .full{display:flex;align-items:center;gap:clamp(20px,4vw,44px);flex-wrap:wrap;margin-top:1px;
   padding:30px 26px 30px 24px;border:1px solid var(--rule);border-left:2px solid var(--ir);
@@ -296,6 +298,11 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .dep:hover span,.dep:hover .ar{color:var(--ink)}
 .dep:hover .ar{transform:translateX(5px)}
 .dep.sm{padding:10px 15px;font-size:9.5px;letter-spacing:.2em;gap:9px}
+.dep.go{background:var(--phos);border-color:var(--phos);box-shadow:var(--gM);padding:14px 22px}
+.dep.go .bg{background:var(--hot)}
+.dep.go span,.dep.go .ar,.dep.go:hover span,.dep.go:hover .ar{color:var(--ink)}
+.dep.go:hover{border-color:var(--hot);box-shadow:var(--gH)}
+.dep.go .ar{font-size:1.15em}
 .dep[data-locked]{border-color:var(--rule);color:var(--dim);box-shadow:none}
 .dep[data-locked] .bg{background:var(--ir)}
 .dep[data-locked]:hover{border-color:var(--ir)}
@@ -385,9 +392,11 @@ body.gated{overflow:hidden}
   .doss{padding:20px 16px}
   .doss h3{font-size:clamp(2.2rem,12vw,3.2rem)}
   .specs{grid-template-columns:repeat(2,1fr);gap:14px}
-  .clip{padding:22px 18px 20px}
-  .clip h4{font-size:clamp(2.4rem,13vw,3.2rem)}
-  .cbtns{gap:10px}
+  .clip{padding:18px 16px;gap:12px}
+  .clip h4{font-size:clamp(2rem,10vw,2.6rem)}
+  .ctitle{flex:1 1 100%}
+  .clip .cm{flex:1 1 100%;white-space:normal}
+  .cbtns{gap:10px;margin-left:0;width:100%}
   .cbtns .dep{flex:1;justify-content:center}
   .full{padding:24px 18px 24px 16px}
   .full .fz{font-size:1.8rem}
@@ -528,32 +537,29 @@ body.gated{overflow:hidden}
 
         <div class="clips">
           <article class="clip">
-            <span class="ce">01 — Modern Warfare</span>
-            <h4>MW1</h4>
+            <div class="ctitle"><span class="ce">01 — Modern Warfare</span><h4>MW1</h4></div>
             <span class="cm">18:55 · 2.57 GB · two files</span>
             <div class="cbtns">
-              <button class="dep sm" type="button" data-name="MW1 clips, part 1" data-direct
-                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part1.mp4"><span class="bg"></span><span>Part 1</span><span class="ar">→</span></button>
-              <button class="dep sm" type="button" data-name="MW1 clips, part 2" data-direct
-                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part2.mp4"><span class="bg"></span><span>Part 2</span><span class="ar">→</span></button>
+              <button class="dep sm go" type="button" data-name="MW1 clips, part 1" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part1.mp4"><span class="bg"></span><span>Part 1</span><span class="ar">↓</span></button>
+              <button class="dep sm go" type="button" data-name="MW1 clips, part 2" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part2.mp4"><span class="bg"></span><span>Part 2</span><span class="ar">↓</span></button>
             </div>
           </article>
           <article class="clip">
-            <span class="ce">02 — Modern Warfare II</span>
-            <h4>MW2</h4>
+            <div class="ctitle"><span class="ce">02 — Modern Warfare II</span><h4>MW2</h4></div>
             <span class="cm">8:06 · 1.16 GB · one file</span>
             <div class="cbtns">
-              <button class="dep sm" type="button" data-name="MW2 clips" data-direct
-                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW2.mp4"><span class="bg"></span><span>Download</span><span class="ar">→</span></button>
+              <button class="dep sm go" type="button" data-name="MW2 clips" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW2.mp4"><span class="bg"></span><span>Download</span><span class="ar">↓</span></button>
             </div>
           </article>
           <article class="clip">
-            <span class="ce">03 — Modern Warfare III</span>
-            <h4>MW3</h4>
+            <div class="ctitle"><span class="ce">03 — Modern Warfare III</span><h4>MW3</h4></div>
             <span class="cm">11:55 · 1.62 GB · one file</span>
             <div class="cbtns">
-              <button class="dep sm" type="button" data-name="MW3 clips" data-direct
-                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW3.mp4"><span class="bg"></span><span>Download</span><span class="ar">→</span></button>
+              <button class="dep sm go" type="button" data-name="MW3 clips" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW3.mp4"><span class="bg"></span><span>Download</span><span class="ar">↓</span></button>
             </div>
           </article>
         </div>
@@ -568,7 +574,7 @@ body.gated{overflow:hidden}
             footage and always work.</span>
           </span>
           <span class="fz">5.33 GB</span>
-          <button class="dep" type="button" data-name="Full scene pack"
+          <button class="dep go" type="button" data-name="Full scene pack"
             data-url="https://mega.nz/file/SS4EAQQI#_0fGCxJnfgSKcLeHu5oPYMi6CU1KAQch8r4KsW4Vr0k"><span class="bg"></span><span>Download all</span><span class="ar">→</span></button>
         </div>
       </div>
@@ -609,8 +615,7 @@ body.gated{overflow:hidden}
 
         <div class="clips">
           <article class="clip">
-            <span class="ce">01 — Modern Warfare</span>
-            <h4>MW1</h4>
+            <div class="ctitle"><span class="ce">01 — Modern Warfare</span><h4>MW1</h4></div>
             <span class="cm">59:15 · all cutscenes</span>
             <div class="cbtns">
               <button class="dep sm" type="button" data-locked data-name="MW1 cutscenes"
@@ -618,8 +623,7 @@ body.gated{overflow:hidden}
             </div>
           </article>
           <article class="clip">
-            <span class="ce">02 — Modern Warfare II</span>
-            <h4>MW2</h4>
+            <div class="ctitle"><span class="ce">02 — Modern Warfare II</span><h4>MW2</h4></div>
             <span class="cm">38:36 · all cutscenes</span>
             <div class="cbtns">
               <button class="dep sm" type="button" data-locked data-name="MW2 cutscenes"
@@ -627,8 +631,7 @@ body.gated{overflow:hidden}
             </div>
           </article>
           <article class="clip">
-            <span class="ce">03 — Modern Warfare III</span>
-            <h4>MW3</h4>
+            <div class="ctitle"><span class="ce">03 — Modern Warfare III</span><h4>MW3</h4></div>
             <span class="cm">1:14:44 · all cutscenes</span>
             <div class="cbtns">
               <button class="dep sm" type="button" data-locked data-name="MW3 cutscenes"
