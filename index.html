@@ -176,26 +176,27 @@ section{padding-top:clamp(90px,17vh,190px)}
 /* ---------- ROSTER (operator select) ---------- */
 .roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
   background:var(--rule);border:1px solid var(--rule);margin-bottom:clamp(30px,5vh,56px)}
-.op{position:relative;background:var(--tube);padding:0;border:0;font:inherit;color:inherit;
-  cursor:none;text-align:left;overflow:hidden;display:block;transition:background .3s}
-.op canvas{display:block;width:100%;aspect-ratio:4/5;
-  filter:grayscale(0) contrast(1.05) brightness(.62);transition:filter .45s,transform .7s}
-.op:hover canvas,.op.sel canvas{filter:brightness(1.05) contrast(1.1);transform:scale(1.04)}
-.op .nm{position:absolute;left:12px;right:12px;bottom:11px;z-index:2}
-.op .nm em{display:block;font-size:9px;letter-spacing:.26em;color:var(--dim);font-style:normal}
+.op{position:relative;background:var(--tube);border:0;font:inherit;color:inherit;cursor:none;
+  text-align:left;display:flex;flex-direction:column;padding:22px 20px 20px;
+  min-height:132px;transition:background .3s}
+.op:hover,.op.sel{background:var(--panel)}
+.op .nm em{display:block;font-style:normal;font-size:9px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--dim)}
 .op .nm strong{display:block;font-family:var(--display);font-stretch:75%;font-weight:700;
-  font-size:1.3rem;line-height:1.05;text-transform:uppercase;color:var(--text);transition:color .3s}
+  font-size:1.5rem;line-height:1.05;text-transform:uppercase;color:var(--text);
+  margin-top:5px;transition:color .3s}
 .op:hover .nm strong,.op.sel .nm strong{color:var(--hot);text-shadow:var(--gS)}
-.op::after{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(transparent 40%,color-mix(in srgb,var(--ink) 92%,transparent))}
+.op .st{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
+  margin-top:auto;padding-top:16px}
+.op.sel .st{color:var(--phos);text-shadow:var(--gS)}
 .op .sel-bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--phos);
-  box-shadow:var(--gM);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.9,.2,1);z-index:3}
+  box-shadow:var(--gM);transform:scaleX(0);transform-origin:left;
+  transition:transform .45s cubic-bezier(.2,.9,.2,1)}
 .op.sel .sel-bar{transform:scaleX(1)}
 .op[data-empty] .nm strong{color:var(--dim)}
-.op[data-empty] .redact{display:inline-block;width:76px;height:15px;background:var(--dim);
-  vertical-align:-2px;opacity:.55}
+.op[data-empty] .redact{display:inline-block;width:74px;height:14px;background:var(--dim);
+  vertical-align:-1px;opacity:.5}
 .op[data-empty]:hover .nm strong{color:var(--ir)}
-.op[data-empty] canvas{filter:brightness(.3) contrast(1.4) blur(1.5px)}
 
 /* ---------- DOSSIER ---------- */
 .doss{position:relative;border:1px solid var(--rule);
@@ -349,63 +350,42 @@ section{padding-top:clamp(90px,17vh,190px)}
 /* ---------- GATE — the optic acquires two targets, you pick one ----------
    Sits under the fx layers (55) so grain, scanlines and vignette fall over it,
    and under the HUD (70) so the audio and optic toggles stay reachable. */
-.gate{position:fixed;inset:0;z-index:55;opacity:1;transition:opacity .55s}
+.gate{position:fixed;inset:0;z-index:55;background:var(--ink);
+  display:grid;place-items:center;transition:opacity .5s}
 .gate.gone{opacity:0;pointer-events:none}
-.door{position:absolute;inset:0;border:0;padding:0;margin:0;background:var(--ink);
-  font:inherit;color:inherit;cursor:none;overflow:hidden;text-align:left;
-  transition:clip-path .55s cubic-bezier(.2,.8,.2,1),opacity .45s}
-.door.a{clip-path:polygon(0 0,58% 0,42% 100%,0 100%)}
-.door.b{clip-path:polygon(58% 0,100% 0,100% 100%,42% 100%)}
-.gate.hov-a .door.a{clip-path:polygon(0 0,72% 0,56% 100%,0 100%)}
-.gate.hov-a .door.b{clip-path:polygon(72% 0,100% 0,100% 100%,56% 100%)}
-.gate.hov-b .door.a{clip-path:polygon(0 0,44% 0,28% 100%,0 100%)}
-.gate.hov-b .door.b{clip-path:polygon(44% 0,100% 0,100% 100%,28% 100%)}
-.gate.pick-a .door.a,.gate.pick-b .door.b{clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
-.gate.pick-a .door.b,.gate.pick-b .door.a{opacity:0}
+.gwrap{display:grid;grid-template-columns:1fr 1px 1fr;align-items:center;
+  width:100%;max-width:1080px;padding:0 var(--gut)}
+.gline{align-self:stretch;width:1px;margin:12vh 0;
+  background:linear-gradient(transparent,var(--rule) 18%,var(--rule) 82%,transparent)}
 
-.dvis{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  filter:brightness(.34) contrast(1.05);transition:filter .5s,transform .9s;transform:scale(1.04)}
-.door:hover .dvis,.door:focus-visible .dvis{filter:brightness(.72) contrast(1.1);transform:scale(1.09)}
-.door::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(200deg,transparent 30%,color-mix(in srgb,var(--ink) 88%,transparent))}
+.door{background:none;border:0;font:inherit;color:inherit;cursor:none;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  padding:clamp(30px,6vh,64px) clamp(14px,3vw,40px);
+  transition:opacity .4s}
+.gwrap:hover .door{opacity:.3}
+.gwrap .door:hover,.gwrap .door:focus-visible{opacity:1}
+.door em{font-style:normal;font-size:9.5px;letter-spacing:.4em;text-transform:uppercase;color:var(--dim)}
+.door strong{position:relative;font-family:var(--display);font-stretch:75%;font-weight:700;
+  text-transform:uppercase;font-size:clamp(2.1rem,5.6vw,4.4rem);line-height:.9;
+  letter-spacing:-.005em;color:var(--text);text-align:center;text-wrap:balance;
+  transition:color .3s,text-shadow .3s}
+.door:hover strong,.door:focus-visible strong{color:var(--hot);text-shadow:var(--gH)}
+.door strong::after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:1px;
+  background:var(--phos);box-shadow:var(--gS);
+  transform:scaleX(0);transition:transform .45s cubic-bezier(.2,.9,.2,1)}
+.door:hover strong::after,.door:focus-visible strong::after{transform:scaleX(1)}
+.dmeta{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
+  text-align:center;max-width:26ch;margin-top:6px}
 
-.dinner{position:absolute;left:0;right:0;bottom:clamp(70px,13vh,130px);
-  padding:0 clamp(26px,6vw,90px);display:flex;flex-direction:column;gap:9px;z-index:2}
-.door.b .dinner{align-items:flex-end;text-align:right}
-.dinner em{font-style:normal;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim)}
-.dinner strong{font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;
-  font-size:clamp(2.6rem,7.5vw,6.5rem);line-height:.85;letter-spacing:-.005em;
-  color:var(--hot);text-shadow:var(--gH);text-wrap:balance}
-.door:hover .dinner strong{color:var(--phos)}
-.dmeta{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text);max-width:32ch}
-.door.b .dmeta{margin-left:auto}
-.denter{margin-top:12px;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--phos);
-  opacity:0;transform:translateY(7px);transition:opacity .35s,transform .35s;display:flex;gap:11px}
-.door:hover .denter,.door:focus-visible .denter{opacity:1;transform:none}
-
-/* target brackets snap in on hover */
-.dbrk{position:absolute;width:34px;height:34px;border:1px solid var(--phos);z-index:2;
-  opacity:0;box-shadow:var(--gS);transition:opacity .3s,transform .45s cubic-bezier(.2,.9,.2,1)}
-.door:hover .dbrk,.door:focus-visible .dbrk{opacity:1;transform:none}
-.dbrk.tl{top:12%;left:12%;border-right:0;border-bottom:0;transform:translate(-22px,-22px)}
-.dbrk.tr{top:12%;right:12%;border-left:0;border-bottom:0;transform:translate(22px,-22px)}
-.dbrk.bl{bottom:12%;left:12%;border-right:0;border-top:0;transform:translate(-22px,22px)}
-.dbrk.br{bottom:12%;right:12%;border-left:0;border-top:0;transform:translate(22px,22px)}
-
-.gskip{position:absolute;left:50%;transform:translateX(-50%);bottom:clamp(22px,5vh,44px);z-index:4;
-  font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);
+.gskip{position:absolute;left:50%;transform:translateX(-50%);bottom:clamp(26px,6vh,54px);
+  font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);
   border-bottom:1px solid transparent;padding-bottom:3px;transition:color .25s,border-color .25s}
-.gskip:hover{color:var(--phos);border-bottom-color:var(--phos);text-shadow:var(--gS)}
+.gskip:hover{color:var(--phos);border-bottom-color:var(--phos)}
 
-@media (max-width:820px){
-  .door.a{clip-path:polygon(0 0,100% 0,100% 54%,0 46%)}
-  .door.b{clip-path:polygon(0 46%,100% 54%,100% 100%,0 100%)}
-  .gate.hov-a .door.a,.gate.hov-b .door.a{clip-path:polygon(0 0,100% 0,100% 54%,0 46%)}
-  .gate.hov-a .door.b,.gate.hov-b .door.b{clip-path:polygon(0 46%,100% 54%,100% 100%,0 100%)}
-  .dinner{bottom:auto;top:14%;padding:0 26px}
-  .door.b .dinner{top:auto;bottom:12%;align-items:flex-start;text-align:left}
-  .door.b .dmeta{margin-left:0}
-  .dbrk{display:none}
+@media (max-width:760px){
+  .gwrap{grid-template-columns:1fr;grid-template-rows:1fr 1px 1fr;max-width:none}
+  .gline{width:auto;height:1px;margin:0 8vw;align-self:auto;
+    background:linear-gradient(90deg,transparent,var(--rule) 18%,var(--rule) 82%,transparent)}
 }
 
 /* ---------- EXTRACTION ---------- */
@@ -490,27 +470,20 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
 </div>
 
 <div class="gate" id="gate">
-  <button class="door a" type="button" data-side="a" data-go="s1">
-    <canvas class="dvis" width="900" height="1100" data-door="scene"></canvas>
-    <i class="dbrk tl"></i><i class="dbrk tr"></i><i class="dbrk bl"></i><i class="dbrk br"></i>
-    <span class="dinner">
-      <em>Section 01</em>
-      <strong>Scene<br>packs</strong>
-      <span class="dmeta">John Price — MW I to III · 39 min · 60 fps · four volumes</span>
-      <span class="denter">Enter <i>→</i></span>
-    </span>
-  </button>
-  <button class="door b" type="button" data-side="b" data-go="s2">
-    <canvas class="dvis" width="900" height="1100" data-door="timeline"></canvas>
-    <i class="dbrk tl"></i><i class="dbrk tr"></i><i class="dbrk bl"></i><i class="dbrk br"></i>
-    <span class="dinner">
-      <em>Section 02</em>
-      <strong>Project<br>files</strong>
-      <span class="dmeta">After Effects projects, presets and LUTs</span>
-      <span class="denter">Enter <i>→</i></span>
-    </span>
-  </button>
-  <a class="gskip" id="gskip" href="#">Skip — show the whole archive</a>
+  <div class="gwrap">
+    <button class="door" type="button" data-side="a" data-go="s1">
+      <em>01</em>
+      <strong>Scene packs</strong>
+      <span class="dmeta">John Price — MW I to III</span>
+    </button>
+    <i class="gline"></i>
+    <button class="door" type="button" data-side="b" data-go="s2">
+      <em>02</em>
+      <strong>Project files</strong>
+      <span class="dmeta">Projects, presets, LUTs</span>
+    </button>
+  </div>
+  <a class="gskip" id="gskip" href="#">Show everything</a>
 </div>
 
 <div class="ex" id="ex" role="status" aria-live="polite">
@@ -542,23 +515,23 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
 
     <div class="roster" id="roster" role="tablist">
       <button class="op sel" type="button" role="tab" aria-selected="true" data-op="price">
-        <canvas width="360" height="450" data-seed="7"></canvas>
         <span class="nm"><em>TF-141</em><strong>John Price</strong></span>
+        <span class="st">4 volumes · 39 min</span>
         <span class="sel-bar"></span>
       </button>
       <button class="op" type="button" role="tab" aria-selected="false" data-empty>
-        <canvas width="360" height="450" data-seed="31"></canvas>
         <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
+        <span class="st">Awaiting</span>
         <span class="sel-bar"></span>
       </button>
       <button class="op" type="button" role="tab" aria-selected="false" data-empty>
-        <canvas width="360" height="450" data-seed="58"></canvas>
         <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
+        <span class="st">Awaiting</span>
         <span class="sel-bar"></span>
       </button>
       <button class="op" type="button" role="tab" aria-selected="false" data-empty>
-        <canvas width="360" height="450" data-seed="94"></canvas>
         <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
+        <span class="st">Awaiting</span>
         <span class="sel-bar"></span>
       </button>
     </div>
@@ -570,7 +543,7 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
 
       <div>
         <div class="portrait">
-          <canvas width="560" height="700" data-seed="7" data-hero></canvas>
+          <canvas width="560" height="700" data-still="7"></canvas>
           <div class="cross"></div>
           <div class="tag">Frame 0042 — gain auto</div>
         </div>
@@ -824,77 +797,7 @@ function beep(f,d,v,type){
 /* ============ 5. PROCEDURAL ART — operator + stills ============ */
 function rng(seed){ var s = seed; return function(){ s = (s*9301+49297)%233280; return s/233280; }; }
 
-/* helmeted operator wearing a quad-tube NVG rig */
-function drawOperator(cv, redacted){
-  var c = cv.getContext("2d"), w = cv.width, h = cv.height, r = rng(+cv.dataset.seed || 7);
-  var bg = c.createRadialGradient(w*.5,h*.34,20,w*.5,h*.5,h*.8);
-  bg.addColorStop(0,"#0d3a1c"); bg.addColorStop(.45,"#062011"); bg.addColorStop(1,"#010805");
-  c.fillStyle = bg; c.fillRect(0,0,w,h);
-
-  /* ambient blooms behind the subject */
-  for (var b=0;b<4;b++){
-    var bx = r()*w, by = h*(.15+r()*.5), br = 70+r()*160;
-    var g2 = c.createRadialGradient(bx,by,0,bx,by,br);
-    g2.addColorStop(0,"rgba(120,255,165,"+(.09+r()*.16).toFixed(2)+")");
-    g2.addColorStop(1,"rgba(20,120,50,0)");
-    c.fillStyle = g2; c.fillRect(0,0,w,h);
-  }
-
-  var cx = w*.5, hy = h*.30, hr = w*.235;      /* head centre + radius */
-
-  /* rim light so the silhouette separates from the ground */
-  c.save();
-  c.shadowColor = "rgba(150,255,190,.55)"; c.shadowBlur = 26;
-  c.fillStyle = "rgba(0,0,0,.94)";
-  /* shoulders */
-  c.beginPath();
-  c.moveTo(w*.06, h);
-  c.bezierCurveTo(w*.10, h*.74, w*.30, h*.63, cx, h*.625);
-  c.bezierCurveTo(w*.70, h*.63, w*.90, h*.74, w*.94, h);
-  c.closePath(); c.fill();
-  /* neck */
-  c.fillRect(cx-hr*.42, hy+hr*.55, hr*.84, h*.62-(hy+hr*.55)+6);
-  /* helmet + head */
-  c.beginPath(); c.ellipse(cx, hy, hr, hr*1.13, 0, 0, 6.2832); c.fill();
-  /* helmet brim */
-  c.beginPath(); c.ellipse(cx, hy-hr*.16, hr*1.09, hr*.86, 0, Math.PI, 0); c.fill();
-  c.restore();
-
-  /* the four NVG tubes */
-  var ey = hy+hr*.20, sp = hr*.44, tr = hr*.205;
-  for (var i=0;i<4;i++){
-    var tx = cx + (i-1.5)*sp;
-    var tg = c.createRadialGradient(tx,ey,0,tx,ey,tr*2.6);
-    tg.addColorStop(0,"rgba(200,255,220,.5)"); tg.addColorStop(1,"rgba(60,220,110,0)");
-    c.fillStyle = tg; c.beginPath(); c.arc(tx,ey,tr*2.6,0,6.2832); c.fill();
-    c.fillStyle = "rgba(0,0,0,.9)"; c.beginPath(); c.arc(tx,ey,tr,0,6.2832); c.fill();
-    c.strokeStyle = i===3 ? "rgba(150,225,255,.9)" : "rgba(140,255,180,.85)";
-    c.lineWidth = Math.max(1.4, tr*.14);
-    c.beginPath(); c.arc(tx,ey,tr,0,6.2832); c.stroke();
-  }
-  /* one tube blown out — the illuminator in the reference frame */
-  var fx = cx - 1.5*sp;
-  var fl = c.createRadialGradient(fx,ey,0,fx,ey,tr*4.2);
-  fl.addColorStop(0,"rgba(255,255,255,.95)"); fl.addColorStop(.18,"rgba(210,255,230,.6)");
-  fl.addColorStop(1,"rgba(90,255,150,0)");
-  c.fillStyle = fl; c.beginPath(); c.arc(fx,ey,tr*4.2,0,6.2832); c.fill();
-
-  if (redacted){
-    c.fillStyle = "rgba(0,0,0,.72)"; c.fillRect(0,0,w,h);
-    c.fillStyle = "#000"; c.fillRect(w*.14, h*.44, w*.72, h*.09);
-  }
-
-  /* grain + interlace */
-  var im = c.getImageData(0,0,w,h), d = im.data;
-  for (var p=0;p<d.length;p+=4){
-    var n = (Math.random()-.5)*74, row = (p/4/w)|0;
-    d[p] += n*.35; d[p+1] += n; d[p+2] += n*.4;
-    if (row%3===0) d[p+1] *= .87;
-  }
-  c.putImageData(im,0,0);
-}
-
-/* landscape scene still */
+/* scene still — abstract light and silhouette, no figure */
 function drawStill(cv){
   var c = cv.getContext("2d"), w = cv.width, h = cv.height, r = rng(+cv.dataset.still || 3);
   var g = c.createLinearGradient(0,0,0,h);
@@ -923,58 +826,6 @@ function drawStill(cv){
   c.putImageData(im,0,0);
 }
 
-/* a composition timeline, rendered on the tube — the project-files door */
-function drawTimeline(cv){
-  var c = cv.getContext("2d"), w = cv.width, h = cv.height, r = rng(29);
-  var g = c.createLinearGradient(0,0,0,h);
-  g.addColorStop(0,"#03150b"); g.addColorStop(.6,"#021007"); g.addColorStop(1,"#010805");
-  c.fillStyle = g; c.fillRect(0,0,w,h);
-
-  c.strokeStyle = "rgba(40,170,85,.14)"; c.lineWidth = 1;
-  for (var x=0; x<w; x+=w/16){ c.beginPath(); c.moveTo(x,0); c.lineTo(x,h); c.stroke(); }
-
-  var rows = 15, rh = h/(rows+2), top = rh;
-  for (var i=0;i<rows;i++){
-    var y = top + i*rh, bh = rh*.58;
-    c.fillStyle = "rgba(0,0,0,.45)"; c.fillRect(w*.05, y, w*.9, bh);
-    var x0 = w*.07 + r()*w*.26, x1 = x0 + w*(.2 + r()*.6);
-    if (x1 > w*.94) x1 = w*.94;
-    var lg = c.createLinearGradient(x0,0,x1,0);
-    lg.addColorStop(0,"rgba(61,255,110,.46)"); lg.addColorStop(1,"rgba(61,255,110,.13)");
-    c.fillStyle = lg; c.fillRect(x0, y, x1-x0, bh);
-    c.strokeStyle = "rgba(150,255,190,.45)"; c.lineWidth = 1;
-    c.strokeRect(x0+.5, y+.5, x1-x0-1, bh-1);
-    var kn = 1 + ((r()*3)|0);
-    for (var k=0;k<kn;k++){
-      var kx = x0 + (x1-x0)*r(), ky = y + bh/2, s2 = bh*.26;
-      c.fillStyle = "rgba(210,255,228,.92)";
-      c.beginPath(); c.moveTo(kx,ky-s2); c.lineTo(kx+s2,ky);
-      c.lineTo(kx,ky+s2); c.lineTo(kx-s2,ky); c.closePath(); c.fill();
-    }
-  }
-  var ph = w*.44;
-  c.strokeStyle = "rgba(235,255,242,.8)"; c.lineWidth = 2;
-  c.beginPath(); c.moveTo(ph,0); c.lineTo(ph,h); c.stroke();
-  c.fillStyle = "rgba(235,255,242,.9)"; c.fillRect(ph-10, 0, 20, rh*.5);
-
-  var im = c.getImageData(0,0,w,h), d = im.data;
-  for (var p=0;p<d.length;p+=4){
-    var n = (Math.random()-.5)*64, row = (p/4/w)|0;
-    d[p] += n*.35; d[p+1] += n; d[p+2] += n*.4;
-    if (row%3===0) d[p+1] *= .88;
-  }
-  c.putImageData(im,0,0);
-}
-
-document.querySelectorAll("[data-door]").forEach(function(cv){
-  if (cv.dataset.door === "timeline") drawTimeline(cv);
-  else { cv.dataset.still = "5"; drawStill(cv); }
-});
-
-document.querySelectorAll(".op canvas").forEach(function(cv){
-  drawOperator(cv, cv.closest(".op").hasAttribute("data-empty"));
-});
-document.querySelectorAll("[data-hero]").forEach(function(cv){ drawOperator(cv,false); });
 document.querySelectorAll("[data-still]").forEach(drawStill);
 
 /* ============ 6. TEXT SCRAMBLE ============ */
@@ -1110,23 +961,13 @@ function dropGate(target){
   }
 }
 document.querySelectorAll(".door").forEach(function(d){
-  var side = d.dataset.side;
-  d.addEventListener("pointerenter", function(){
-    gate.classList.remove("hov-a","hov-b");
-    gate.classList.add("hov-" + side);
-    beep(1480,.03,.022,"sine");
-  });
-  d.addEventListener("focus", function(){
-    gate.classList.remove("hov-a","hov-b"); gate.classList.add("hov-" + side);
-  });
+  d.addEventListener("pointerenter", function(){ beep(1480,.03,.02,"sine"); });
   d.addEventListener("click", function(){
-    gate.classList.add("pick-" + side);
     beep(880,.05,.04,"sine");
-    setTimeout(function(){ beep(1320,.16,.05,"sine"); }, 130);
-    setTimeout(function(){ dropGate(d.dataset.go); }, reduce ? 0 : 560);
+    setTimeout(function(){ beep(1320,.14,.045,"sine"); }, 120);
+    setTimeout(function(){ dropGate(d.dataset.go); }, reduce ? 0 : 260);
   });
 });
-gate.addEventListener("pointerleave", function(){ gate.classList.remove("hov-a","hov-b"); });
 document.getElementById("gskip").addEventListener("click", function(e){
   e.preventDefault(); dropGate(null);
 });
