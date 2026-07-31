@@ -306,19 +306,6 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 /* ---------- PROJECT FILES — nothing here yet, said plainly ---------- */
 .soon{margin:0;font-size:14px;line-height:1.7;color:var(--text);max-width:48ch}
 
-/* ---------- COMMS ---------- */
-.comms{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;
-  background:var(--rule);border:1px solid var(--rule)}
-.freq{position:relative;background:var(--tube);padding:26px 22px;display:flex;flex-direction:column;
-  gap:4px;overflow:hidden;transition:background .3s}
-.freq::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--phos);
-  box-shadow:var(--gM);transition:width .45s cubic-bezier(.2,.9,.2,1)}
-.freq:hover::after{width:100%}
-.freq .ch{font-size:9px;letter-spacing:.28em;color:var(--dim);text-transform:uppercase}
-.freq .who{font-family:var(--display);font-stretch:75%;font-weight:700;font-size:1.4rem;
-  text-transform:uppercase;color:var(--hot);transition:color .25s}
-.freq:hover .who{color:var(--phos);text-shadow:var(--gS)}
-
 /* ---------- GATE — the optic acquires two targets, you pick one ----------
    Sits under the fx layers (55) so grain, scanlines and vignette fall over it,
    and under the HUD (70) so the audio and optic toggles stay reachable. */
@@ -378,10 +365,6 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .chan.on{display:inline-flex;animation:pop .4s cubic-bezier(.2,1.3,.3,1)}
 @keyframes pop{0%{transform:scale(.82);opacity:0}100%{transform:scale(1);opacity:1}}
 .chan:hover{background:var(--hot)}
-
-footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid var(--rule);
-  font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
-  display:flex;flex-wrap:wrap;gap:10px 32px}
 
 @media (max-width:880px){
   .doss{grid-template-columns:1fr}
@@ -580,21 +563,6 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
     <p class="soon">I'll upload some project files and presets here soon.</p>
   </section>
 
-  <section>
-    <p class="lab">Comms</p>
-    <div class="comms">
-      <a class="freq" href="#"><span class="ch">Ch 01 — Discord</span><span class="who">The squad</span></a>
-      <a class="freq" href="#"><span class="ch">Ch 02 — TikTok</span><span class="who">@yourhandle</span></a>
-      <a class="freq" href="#"><span class="ch">Ch 03 — YouTube</span><span class="who">Full edits</span></a>
-      <a class="freq" href="#"><span class="ch">Ch 04 — Guns.lol</span><span class="who">All links</span></a>
-    </div>
-  </section>
-
-  <footer>
-    <span>//Noctis Archive</span>
-    <span>Free to use — credit appreciated, never required</span>
-    <span>Hosted on GitHub Pages</span>
-  </footer>
 
 </main>
 
@@ -690,7 +658,7 @@ if (fine){
     requestAnimationFrame(trail);
   })();
   document.addEventListener("pointerover", function(e){
-    document.body.classList.toggle("hot", !!e.target.closest("button,a,.op,.freq,.clip"));
+    document.body.classList.toggle("hot", !!e.target.closest("button,a,.op,.clip"));
   });
 } else {
   (function orbit(){
@@ -805,7 +773,7 @@ var io = new IntersectionObserver(function(es){
     io.unobserve(el);
   });
 }, { threshold:.22 });
-document.querySelectorAll(".doss, .roster, .comms").forEach(function(el){ io.observe(el); });
+document.querySelectorAll(".doss, .roster").forEach(function(el){ io.observe(el); });
 
 /* ============ 9. TILT + MAGNETIC BUTTONS ============ */
 var doss = document.getElementById("doss");
