@@ -220,6 +220,22 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .hit.on .hline{animation:hitLine .85s .08s cubic-bezier(.2,.9,.2,1) both}
 @keyframes hitLine{0%{width:0;opacity:0}28%{opacity:1}100%{width:44%;opacity:0}}
 
+.hgo{display:flex;align-items:center;gap:12px;margin-top:8px;
+  font:inherit;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  min-height:54px;padding:0 clamp(24px,4vw,38px);border:0;cursor:none;
+  background:var(--phos);color:var(--ink);box-shadow:var(--gM);
+  transition:background .25s,box-shadow .25s}
+.hgo i{font-size:1.15em;transition:transform .3s}
+.hgo:hover{background:var(--hot);box-shadow:var(--gH)}
+.hgo:hover i{transform:translateY(3px)}
+.hno{background:none;border:0;font:inherit;font-size:9.5px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--dim);cursor:none;padding:8px 6px;
+  transition:color .25s}
+.hno:hover{color:var(--phos)}
+.hit:not(.ask) .hgo,.hit:not(.ask) .hno{display:none}
+.hit.on.ask .hgo{animation:hitUp .45s .3s both}
+.hit.on.ask .hno{animation:hitUp .45s .42s both}
+
 .hit.warn .hitin strong,.hit.warn .hitin span{color:var(--ir);text-shadow:none}
 .hit.warn .hring{border-color:var(--ir)}
 .hit.warn .hline{background:var(--ir);box-shadow:none}
@@ -395,9 +411,11 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   <i class="hring" aria-hidden="true"></i>
   <i class="hline l" aria-hidden="true"></i>
   <i class="hline r" aria-hidden="true"></i>
-  <div class="hitin" role="status">
+  <div class="hitin" role="dialog" aria-modal="true" aria-labelledby="hitT">
     <strong id="hitT">Credits are appreciated</strong>
     <span id="hitS">Download started</span>
+    <button class="hgo" id="hitGo" type="button">Start download <i aria-hidden="true">↓</i></button>
+    <button class="hno" id="hitNo" type="button">Cancel</button>
   </div>
 </div>
 
@@ -810,23 +828,61 @@ document.querySelectorAll(".op").forEach(function(op){
 
 var hit = document.getElementById("hit"),
     hitT = document.getElementById("hitT"),
-    hitS = document.getElementById("hitS"), hitTimer = null;
+    hitS = document.getElementById("hitS"),
+    hitGo = document.getElementById("hitGo"),
+    hitNo = document.getElementById("hitNo"),
+    hitTimer = null, pending = null;
 
-function hideHit(){ clearTimeout(hitTimer); hit.classList.remove("on"); }
+function hideHit(){
+  clearTimeout(hitTimer); pending = null;
+  hit.classList.remove("on","ask");
+}
+
+/* Auto-dismissing message: used for locked packs and missing links. */
 function notify(title, sub, warn){
-  clearTimeout(hitTimer);
-  hitT.textContent = title;
-  hitS.textContent = sub;
+  clearTimeout(hitTimer); pending = null;
+  hitT.textContent = title; hitS.textContent = sub;
+  hit.classList.remove("ask");
   hit.classList.toggle("warn", !!warn);
   hit.classList.remove("on"); void hit.offsetWidth; hit.classList.add("on");
-  if (warn){ beep(200,.22,.05,"sawtooth"); }
-  else {
-    beep(1180,.07,.04,"sine");
-    setTimeout(function(){ beep(1560,.16,.045,"sine"); }, 130);
-  }
-  hitTimer = setTimeout(hideHit, warn ? 2400 : 2900);
+  beep(warn ? 200 : 1180, warn ? .22 : .09, .045, warn ? "sawtooth" : "sine");
+  hitTimer = setTimeout(hideHit, warn ? 2400 : 2600);
 }
-hit.addEventListener("click", hideHit);
+
+/* The thank-you now stands between the click and the file: it is read first,
+   and the download leaves from the button inside it. */
+function ask(btn, sub){
+  clearTimeout(hitTimer);
+  pending = btn;
+  hitT.textContent = "Credits are appreciated";
+  hitS.textContent = sub;
+  hit.classList.remove("warn");
+  hit.classList.remove("on"); void hit.offsetWidth;
+  hit.classList.add("on","ask");
+  beep(1180,.07,.04,"sine");
+  setTimeout(function(){ beep(1560,.16,.045,"sine"); }, 130);
+  setTimeout(function(){ hitGo.focus(); }, 320);
+}
+
+function fire(b){
+  var url = b.dataset.url;
+  /* Launched from a real click on this button, so no popup blocking. */
+  if (b.hasAttribute("data-direct")){
+    var a = document.createElement("a");
+    a.href = url; a.download = ""; a.rel = "noopener";
+    document.body.appendChild(a); a.click(); a.remove();
+  } else {
+    window.open(url, "_blank", "noopener");
+  }
+}
+
+hitGo.addEventListener("click", function(){
+  if (!pending) return;
+  fire(pending);
+  hideHit();
+});
+hitNo.addEventListener("click", hideHit);
+hit.addEventListener("click", function(e){ if (e.target === hit) hideHit(); });
 addEventListener("keydown", function(e){ if (e.key === "Escape") hideHit(); });
 
 document.querySelectorAll(".go").forEach(function(b){
@@ -848,23 +904,15 @@ document.querySelectorAll(".go").forEach(function(b){
       return;
     }
 
-    /* Fire the download inside the click itself — no delay, and for Mega no
-       popup blocker, because the gesture is still live. */
-    if (b.hasAttribute("data-direct")){
-      var a = document.createElement("a");
-      a.href = url; a.download = ""; a.rel = "noopener";
-      document.body.appendChild(a); a.click(); a.remove();
-      notify("Credits are appreciated", name + " — download started");
-    } else {
-      window.open(url, "_blank", "noopener");
-      var host = "the host";
+    var where = "";
+    if (!b.hasAttribute("data-direct")){
       try {
         var h = new URL(url).hostname;
-        host = h.indexOf("mega") > -1 ? "Mega"
-             : h.indexOf("google") > -1 ? "Google Drive" : h;
+        where = h.indexOf("mega") > -1 ? " · opens Mega"
+              : h.indexOf("google") > -1 ? " · opens Google Drive" : "";
       } catch(err){}
-      notify("Credits are appreciated", name + " — opening on " + host);
     }
+    ask(b, name + where);
   });
 });
 
