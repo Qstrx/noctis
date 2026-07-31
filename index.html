@@ -303,19 +303,8 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .dep[data-locked] .bg{background:var(--ir)}
 .dep[data-locked]:hover{border-color:var(--ir)}
 
-/* ---------- PROJECT FILES — empty on purpose, not broken ---------- */
-.pending{border:1px solid var(--rule);background:color-mix(in srgb,var(--tube) 70%,transparent);
-  padding:clamp(30px,5vw,52px);display:flex;flex-direction:column;gap:12px;align-items:flex-start}
-.pending .pe{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--lens)}
-.pending strong{font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;
-  font-size:clamp(2rem,5vw,3.2rem);line-height:.9;color:var(--hot);text-shadow:var(--gS)}
-.pending p{margin:0;font-size:13px;line-height:1.7;color:var(--dim);max-width:50ch}
-/* redaction bars standing in for the files that aren't here yet */
-.pbars{display:flex;flex-direction:column;gap:9px;margin-top:14px;width:min(340px,80%)}
-.pbars i{height:13px;background:var(--dim);opacity:.28;animation:breathe 3.4s ease-in-out infinite}
-.pbars i:nth-child(2){width:78%;animation-delay:.5s}
-.pbars i:nth-child(3){width:54%;animation-delay:1s}
-@keyframes breathe{0%,100%{opacity:.16}50%{opacity:.4}}
+/* ---------- PROJECT FILES — nothing here yet, said plainly ---------- */
+.soon{margin:0;font-size:14px;line-height:1.7;color:var(--text);max-width:48ch}
 
 /* ---------- COMMS ---------- */
 .comms{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;
@@ -588,13 +577,7 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
   <!-- ============ SECTION 02 — PROJECT FILES ============ -->
   <section id="s2">
     <p class="lab"><b>02</b> Project files &amp; presets</p>
-    <div class="pending">
-      <span class="pe">Awaiting upload</span>
-      <strong>Nothing on record yet</strong>
-      <p>Project files, presets and LUTs are on the way — I'm uploading the first batch shortly.
-      Same terms as everything else here: free, no watermark, no sign-in.</p>
-      <div class="pbars"><i></i><i></i><i></i></div>
-    </div>
+    <p class="soon">I'll upload some project files and presets here soon.</p>
   </section>
 
   <section>
@@ -822,7 +805,7 @@ var io = new IntersectionObserver(function(es){
     io.unobserve(el);
   });
 }, { threshold:.22 });
-document.querySelectorAll(".doss, .roster, .pending, .comms").forEach(function(el){ io.observe(el); });
+document.querySelectorAll(".doss, .roster, .comms").forEach(function(el){ io.observe(el); });
 
 /* ============ 9. TILT + MAGNETIC BUTTONS ============ */
 var doss = document.getElementById("doss");
