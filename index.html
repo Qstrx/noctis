@@ -117,11 +117,8 @@ body.booted .hud{opacity:1}
 .bar{position:absolute;left:0;right:0;display:flex;gap:clamp(10px,2.6vw,30px);align-items:center;
   padding:11px var(--gut);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
   background:linear-gradient(var(--ink),transparent)}
-.bar.bot{top:auto;bottom:0;background:linear-gradient(to top,var(--ink),transparent)}
 .bar b{color:var(--phos);font-weight:400;text-shadow:var(--gS);font-variant-numeric:tabular-nums}
 .bar .sp{flex:1}
-.bar a{pointer-events:auto;transition:color .25s}
-.bar a:hover,.bar a.on{color:var(--phos);text-shadow:var(--gS)}
 .rec{color:var(--ir);display:flex;align-items:center;gap:6px}
 .rec i{width:6px;height:6px;border-radius:50%;background:var(--ir);animation:blip 1.5s infinite}
 @keyframes blip{0%,55%{opacity:1}56%,100%{opacity:.12}}
@@ -367,11 +364,6 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .dmeta{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
   text-align:center;max-width:26ch;margin-top:6px}
 
-.gskip{position:absolute;left:50%;transform:translateX(-50%);bottom:clamp(26px,6vh,54px);
-  font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);
-  border-bottom:1px solid transparent;padding-bottom:3px;transition:color .25s,border-color .25s}
-.gskip:hover{color:var(--phos);border-bottom-color:var(--phos)}
-
 @media (max-width:760px){
   .gwrap{grid-template-columns:1fr;grid-template-rows:1fr 1px 1fr;max-width:none}
   .gline{width:auto;height:1px;margin:0 8vw;align-self:auto;
@@ -451,12 +443,6 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
   </div>
   <div class="brk tl"></div><div class="brk tr"></div><div class="brk bl"></div><div class="brk br"></div>
   <div class="ladder" id="ladder"><div class="dep-read" id="depth">000 M</div></div>
-  <div class="bar bot">
-    <a href="#s1" data-nav="s1">01 — Scene packs</a>
-    <a href="#s2" data-nav="s2">02 — Project files</a>
-    <span class="sp"></span>
-    <span><b id="tick">Move to illuminate</b></span>
-  </div>
 </div>
 
 <div class="gate" id="gate">
@@ -473,7 +459,6 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
       <span class="dmeta">Projects, presets, LUTs</span>
     </button>
   </div>
-  <a class="gskip" id="gskip" href="#">Show everything</a>
 </div>
 
 <div class="ex" id="ex" role="status" aria-live="polite">
@@ -887,16 +872,11 @@ if (fine && !reduce){
 var ladder = document.getElementById("ladder"), depth = document.getElementById("depth");
 for (var i=0;i<12;i++){ var tk = document.createElement("div"); tk.className = "tk"; ladder.appendChild(tk); }
 var tks = ladder.querySelectorAll(".tk");
-var navs = document.querySelectorAll("[data-nav]");
 addEventListener("scroll", function(){
   var max = document.body.scrollHeight - innerHeight, p = max > 0 ? scrollY/max : 0;
   depth.textContent = String(Math.round(p*860)).padStart(3,"0") + " M";
   var act = Math.round(p*(tks.length-1));
   tks.forEach(function(t,ix){ t.classList.toggle("on", ix === act); });
-  navs.forEach(function(a){
-    var sec = document.getElementById(a.dataset.nav), r = sec.getBoundingClientRect();
-    a.classList.toggle("on", r.top < innerHeight*.5 && r.bottom > innerHeight*.4);
-  });
 }, { passive:true });
 
 /* ============ 11. OPERATOR SELECT ============ */
@@ -943,13 +923,6 @@ document.querySelectorAll(".door").forEach(function(d){
     setTimeout(function(){ beep(1320,.14,.045,"sine"); }, 120);
     setTimeout(function(){ dropGate(d.dataset.go); }, reduce ? 0 : 260);
   });
-});
-document.getElementById("gskip").addEventListener("click", function(e){
-  e.preventDefault(); dropGate(null);
-});
-/* the HUD section links work straight through the gate */
-document.querySelectorAll("[data-nav]").forEach(function(a){
-  a.addEventListener("click", function(){ dropGate(null); });
 });
 
 /* ============ 12. EXTRACTION ============ */
@@ -1057,7 +1030,7 @@ boot.addEventListener("click", open);
 
 /* ============ 14. HUD TELEMETRY ============ */
 var clk = document.getElementById("clk"), gain = document.getElementById("gain"),
-    grid = document.getElementById("grid"), tickEl = document.getElementById("tick");
+    grid = document.getElementById("grid");
 setInterval(function(){
   var d = new Date();
   clk.textContent = [d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()]
@@ -1069,9 +1042,6 @@ if (!reduce){
     grid.textContent = (38.9+Math.random()*.02).toFixed(4) + "N 077." +
       (((Math.random()*900)|0)+100) + "W";
   }, 2600);
-  var msgs = ["Move to illuminate","MW I — II — III","2560×1088 · 60 fps",
-              "Direct download — no account"], mi = 0;
-  setInterval(function(){ tickEl.textContent = msgs[mi = (mi+1)%msgs.length]; }, 4600);
 }
 
 /* ============ 15. OPTIC MODE ============ */
