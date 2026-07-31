@@ -237,56 +237,42 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 
 /* One file, one band — and the whole band is the button. Nothing nested,
    nothing to aim at: the target is the width of the panel. */
+/* One box per game. Two columns, equal weight, buttons pinned to the bottom
+   so every box lines up whatever the text does. */
 .dls{display:grid;grid-template-columns:1fr 1fr;gap:1px;
   background:var(--rule);border:1px solid var(--rule)}
-.dl{position:relative;width:100%;overflow:hidden;cursor:none;font:inherit;color:inherit;
-  background:color-mix(in srgb,var(--tube) 60%,transparent);border:0;text-align:left;
-  display:grid;grid-template-columns:1fr auto;
-  grid-template-areas:"num arr" "txt txt";
-  align-items:start;gap:14px 12px;padding:clamp(16px,1.8vw,22px);
-  transition:background .35s}
-.dl > span:nth-child(2){grid-area:txt;min-width:0}
-.dl .num{grid-area:num}
-.dl .darr{grid-area:arr}
-.dl.mega{grid-column:1/-1;grid-template-areas:"num arr" "txt arr";
-  grid-template-columns:1fr auto;align-items:center}
-.dl:hover{background:color-mix(in srgb,var(--phos) 8%,transparent)}
-.dl::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;
-  background:var(--phos);box-shadow:var(--gM);transform:scaleX(0);transform-origin:left;
-  transition:transform .55s cubic-bezier(.2,.9,.2,1)}
-.dl:hover::after,.dl:focus-visible::after{transform:scaleX(1)}
+.pk{position:relative;display:flex;flex-direction:column;overflow:hidden;
+  background:color-mix(in srgb,var(--panel) 62%,transparent);
+  padding:clamp(18px,2vw,24px);transition:background .3s}
+.pk:hover{background:color-mix(in srgb,var(--panel) 95%,transparent)}
+.pk:last-child:nth-child(odd){grid-column:1/-1}
+.pk > *{position:relative;z-index:1}
+.pkn{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+.pkt{margin:8px 0 0;font-family:var(--display);font-stretch:75%;font-weight:700;
+  text-transform:uppercase;font-size:clamp(1.5rem,2.6vw,2.05rem);line-height:1;
+  color:var(--hot);text-shadow:var(--gS)}
+.pkm{margin:10px 0 auto;padding-bottom:20px;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text);font-variant-numeric:tabular-nums}
+.pkb{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px}
 
-.num{font-family:var(--display);font-stretch:75%;font-weight:700;line-height:.85;
-  font-size:clamp(1.5rem,2.6vw,2.1rem);color:transparent;
-  -webkit-text-stroke:1px var(--dim);transition:-webkit-text-stroke-color .35s,color .35s}
-.dl:hover .num{-webkit-text-stroke-color:var(--phos);
-  color:color-mix(in srgb,var(--phos) 18%,transparent)}
-.dgame{display:block;font-family:var(--display);font-stretch:75%;font-weight:700;
-  text-transform:uppercase;font-size:clamp(1.25rem,2.1vw,1.6rem);line-height:1.05;
-  color:var(--text);transition:color .3s}
-.dgame b{color:var(--hot);text-shadow:var(--gS)}
-.dl:hover .dgame{color:var(--hot)}
-.dsub{display:block;margin-top:6px;font-size:10px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--dim);font-variant-numeric:tabular-nums}
-.darr{display:grid;place-items:center;flex:none;
-  width:clamp(36px,3.4vw,44px);aspect-ratio:1;border-radius:50%;
-  border:1px solid var(--phos);color:var(--phos);font-size:1rem;
-  transition:background .3s,color .3s,transform .4s,box-shadow .3s}
-.dl:hover .darr{background:var(--phos);color:var(--ink);transform:translateY(3px);
-  box-shadow:var(--gM)}
+.go{display:flex;align-items:center;justify-content:center;gap:10px;
+  font:inherit;font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  min-height:48px;padding:0 14px;cursor:none;border:0;
+  background:var(--phos);color:var(--ink);box-shadow:var(--gS);
+  transition:background .25s,box-shadow .25s,transform .25s}
+.go i{font-style:normal;font-size:1.1em;transition:transform .3s}
+.go:hover{background:var(--hot);box-shadow:var(--gM)}
+.go:hover i{transform:translateY(3px)}
 
-.dl.mega .num{-webkit-text-stroke-color:var(--ir)}
-.dl.mega .darr{border-color:var(--ir);color:var(--ir)}
-.dl.mega:hover{background:color-mix(in srgb,var(--ir) 9%,transparent)}
-.dl.mega:hover .darr{background:var(--ir);color:var(--ink);transform:none}
-.dl.mega::after{background:var(--ir);box-shadow:none}
+.pk.mega{border-left:2px solid var(--ir)}
+.pk.mega .pkn{color:var(--ir)}
+.go.alt{background:var(--ir);box-shadow:none}
+.go.alt:hover{background:var(--hot)}
+.go.alt:hover i{transform:translateX(3px)}
 
-.dl[data-locked]{cursor:none}
-.dl[data-locked] .darr{border-color:var(--rule);color:var(--dim)}
-.dl[data-locked]:hover{background:color-mix(in srgb,var(--ir) 7%,transparent)}
-.dl[data-locked]:hover .darr{background:none;color:var(--ir);border-color:var(--ir);transform:none}
-.dl[data-locked]:hover .dgame{color:var(--dim)}
-.dl[data-locked]::after{background:var(--ir);box-shadow:none}
+.go[data-locked]{background:none;color:var(--dim);border:1px solid var(--rule);box-shadow:none}
+.go[data-locked]:hover{background:none;color:var(--ir);border-color:var(--ir)}
+.go[data-locked]:hover i{transform:none}
 
 .cap{display:flex;gap:10px;margin:18px 0 0;font-size:11px;line-height:1.6;color:var(--dim);
   max-width:52ch}
@@ -375,10 +361,10 @@ body.gated{overflow:hidden}
 
 @media (hover:none){
   body{-webkit-tap-highlight-color:transparent}
-  .dl,.hbtn,.op,.door{cursor:pointer}
+  .go,.hbtn,.op,.door{cursor:pointer}
   .hbtn{min-height:34px;padding:8px 13px}
   .op{min-height:auto;padding:20px 18px}
-  .dl:active{background:color-mix(in srgb,var(--phos) 12%,transparent)}
+  .go:active{background:var(--hot)}
 }
 
 @media (max-width:620px){
@@ -387,10 +373,8 @@ body.gated{overflow:hidden}
   .doss{padding:20px 16px}
   .doss h3{font-size:clamp(2.2rem,12vw,3.2rem)}
   .dls{grid-template-columns:1fr}
-  .dl,.dl.mega{grid-template-areas:"num arr" "txt txt";align-items:start}
-  .dl{gap:12px;padding:16px}
-  .num{font-size:1.4rem}
-  .darr{width:42px}
+  .pk{padding:18px 16px}
+  .go{min-height:50px}
   .cap{font-size:12px;max-width:none}
   .lab{letter-spacing:.24em}
   .roster{grid-template-columns:repeat(2,1fr)}
@@ -514,41 +498,44 @@ body.gated{overflow:hidden}
       </header>
 
         <div class="dls">
-          <button class="dl" type="button" data-name="MW1 part 1" data-direct
-            data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part1.mp4">
-            <span class="num">01</span>
-            <span><span class="dgame">Modern Warfare <b>I</b></span>
-              <span class="dsub">Part 1 of 2 · 9:09 · 1.25 GB</span></span>
-            <span class="darr" aria-hidden="true">↓</span>
-          </button>
-          <button class="dl" type="button" data-name="MW1 part 2" data-direct
-            data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part2.mp4">
-            <span class="num">02</span>
-            <span><span class="dgame">Modern Warfare <b>I</b></span>
-              <span class="dsub">Part 2 of 2 · 9:46 · 1.32 GB</span></span>
-            <span class="darr" aria-hidden="true">↓</span>
-          </button>
-          <button class="dl" type="button" data-name="MW2" data-direct
-            data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW2.mp4">
-            <span class="num">03</span>
-            <span><span class="dgame">Modern Warfare <b>II</b></span>
-              <span class="dsub">Complete · 8:06 · 1.16 GB</span></span>
-            <span class="darr" aria-hidden="true">↓</span>
-          </button>
-          <button class="dl" type="button" data-name="MW3" data-direct
-            data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW3.mp4">
-            <span class="num">04</span>
-            <span><span class="dgame">Modern Warfare <b>III</b></span>
-              <span class="dsub">Complete · 11:55 · 1.62 GB</span></span>
-            <span class="darr" aria-hidden="true">↓</span>
-          </button>
-          <button class="dl mega" type="button" data-name="Full scene pack"
-            data-url="https://mega.nz/file/SS4EAQQI#_0fGCxJnfgSKcLeHu5oPYMi6CU1KAQch8r4KsW4Vr0k">
-            <span class="num">05</span>
-            <span><span class="dgame">All three, one file <b>Mega</b></span>
-              <span class="dsub">39:00 · 5.33 GB · opens Mega</span></span>
-            <span class="darr" aria-hidden="true">→</span>
-          </button>
+          <div class="pk">
+            <span class="pkn">01 — Modern Warfare</span>
+            <h4 class="pkt">MW1</h4>
+            <span class="pkm">18:55 · 2.57 GB · two files</span>
+            <div class="pkb">
+              <button class="go" type="button" data-name="MW1 part 1" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part1.mp4">Part 1 <i>↓</i></button>
+              <button class="go" type="button" data-name="MW1 part 2" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part2.mp4">Part 2 <i>↓</i></button>
+            </div>
+          </div>
+          <div class="pk">
+            <span class="pkn">02 — Modern Warfare II</span>
+            <h4 class="pkt">MW2</h4>
+            <span class="pkm">8:06 · 1.16 GB · one file</span>
+            <div class="pkb">
+              <button class="go" type="button" data-name="MW2" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW2.mp4">Download <i>↓</i></button>
+            </div>
+          </div>
+          <div class="pk">
+            <span class="pkn">03 — Modern Warfare III</span>
+            <h4 class="pkt">MW3</h4>
+            <span class="pkm">11:55 · 1.62 GB · one file</span>
+            <div class="pkb">
+              <button class="go" type="button" data-name="MW3" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW3.mp4">Download <i>↓</i></button>
+            </div>
+          </div>
+          <div class="pk mega">
+            <span class="pkn">04 — Everything, one file</span>
+            <h4 class="pkt">Full pack</h4>
+            <span class="pkm">39:00 · 5.33 GB · opens Mega</span>
+            <div class="pkb">
+              <button class="go alt" type="button" data-name="Full scene pack"
+                data-url="https://mega.nz/file/SS4EAQQI#_0fGCxJnfgSKcLeHu5oPYMi6CU1KAQch8r4KsW4Vr0k">Download <i>→</i></button>
+            </div>
+          </div>
         </div>
 
         <p class="cap info"><i></i><span><b>On MW1 — the black bars are meant to be there.</b>
@@ -581,27 +568,33 @@ body.gated{overflow:hidden}
       </header>
 
         <div class="dls">
-          <button class="dl" type="button" data-locked data-name="MW1 cutscenes"
-            data-msg="MW1 cutscenes — still encoding">
-            <span class="num">01</span>
-            <span><span class="dgame">Modern Warfare <b>I</b></span>
-              <span class="dsub">59:15 · encoding now</span></span>
-            <span class="darr" aria-hidden="true">✕</span>
-          </button>
-          <button class="dl" type="button" data-locked data-name="MW2 cutscenes"
-            data-msg="MW2 cutscenes — still encoding">
-            <span class="num">02</span>
-            <span><span class="dgame">Modern Warfare <b>II</b></span>
-              <span class="dsub">38:36 · encoding now</span></span>
-            <span class="darr" aria-hidden="true">✕</span>
-          </button>
-          <button class="dl" type="button" data-locked data-name="MW3 cutscenes"
-            data-msg="MW3 cutscenes — still encoding">
-            <span class="num">03</span>
-            <span><span class="dgame">Modern Warfare <b>III</b></span>
-              <span class="dsub">1:14:44 · encoding now</span></span>
-            <span class="darr" aria-hidden="true">✕</span>
-          </button>
+          <div class="pk">
+            <span class="pkn">01 — Modern Warfare</span>
+            <h4 class="pkt">MW1</h4>
+            <span class="pkm">59:15 · encoding now</span>
+            <div class="pkb">
+              <button class="go" data-locked type="button" data-name="MW1 cutscenes"
+                data-msg="MW1 cutscenes — still encoding">Soon <i>✕</i></button>
+            </div>
+          </div>
+          <div class="pk">
+            <span class="pkn">02 — Modern Warfare II</span>
+            <h4 class="pkt">MW2</h4>
+            <span class="pkm">38:36 · encoding now</span>
+            <div class="pkb">
+              <button class="go" data-locked type="button" data-name="MW2 cutscenes"
+                data-msg="MW2 cutscenes — still encoding">Soon <i>✕</i></button>
+            </div>
+          </div>
+          <div class="pk">
+            <span class="pkn">03 — Modern Warfare III</span>
+            <h4 class="pkt">MW3</h4>
+            <span class="pkm">1:14:44 · encoding now</span>
+            <div class="pkb">
+              <button class="go" data-locked type="button" data-name="MW3 cutscenes"
+                data-msg="MW3 cutscenes — still encoding">Soon <i>✕</i></button>
+            </div>
+          </div>
         </div>
 
         <p class="cap info"><i></i><span><b>Not up yet — I'm converting these now.</b>
@@ -740,7 +733,7 @@ if (fine){
     requestAnimationFrame(trail);
   })();
   document.addEventListener("pointerover", function(e){
-    document.body.classList.toggle("hot", !!e.target.closest("button,a,.op,.dl"));
+    document.body.classList.toggle("hot", !!e.target.closest("button,a,.op,.pk"));
   });
 } else {
   (function orbit(){
@@ -854,7 +847,7 @@ document.querySelectorAll(".doss, .roster").forEach(function(el){ io.observe(el)
 
 var dossiers = document.querySelectorAll(".doss");
 if (fine && !reduce){
-  document.querySelectorAll(".dl").forEach(function(b){
+  document.querySelectorAll(".go").forEach(function(b){
     b.addEventListener("pointerenter", function(){ beep(1760,.03,.025,"sine"); });
   });
   document.querySelectorAll(".op").forEach(function(o){
@@ -989,7 +982,7 @@ function extract(name, locked, url, msg, direct){
     }
   }, 62);
 }
-document.querySelectorAll(".dl").forEach(function(b){
+document.querySelectorAll(".go").forEach(function(b){
   b.addEventListener("click", function(){
     var locked = b.hasAttribute("data-locked"), row = b;
     if (locked && row && !reduce){
