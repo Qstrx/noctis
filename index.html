@@ -23,7 +23,7 @@
   --hot:#e8ffee; --lens:#7fe3ff; --ir:#ff4d1a;
   --gS:0 0 8px rgba(61,255,110,.4); --gM:0 0 26px rgba(61,255,110,.35);
   --gH:0 0 44px rgba(200,255,220,.5);
-  --blend:screen; --grain:.06; --scan:.05; --stroke:rgba(61,255,110,.75);
+  --blend:screen; --grain:.06; --scan:.05;
   --display:Bahnschrift,"DIN Condensed","Franklin Gothic Medium","Arial Narrow","Helvetica Neue",sans-serif;
   --mono:Consolas,"SF Mono",ui-monospace,"Cascadia Mono","Roboto Mono",monospace;
   --gut:clamp(18px,4.5vw,72px); --maxw:1240px;
@@ -32,20 +32,19 @@
   :root{ --ink:#cac4b6; --tube:#d5cfc3; --panel:#ddd8cc; --rule:#a1988a;
     --dim:#6b6355; --text:#241f17; --phos:#0b0906; --hot:#000; --lens:#2c6376; --ir:#b6350b;
     --gS:none; --gM:none; --gH:none; --blend:multiply; --grain:.11; --scan:.07;
-    --stroke:rgba(11,9,6,.8); }
+    }
 }
 :root[data-theme="light"],:root.thermal{
   --ink:#cac4b6; --tube:#d5cfc3; --panel:#ddd8cc; --rule:#a1988a;
   --dim:#6b6355; --text:#241f17; --phos:#0b0906; --hot:#000; --lens:#2c6376; --ir:#b6350b;
   --gS:none; --gM:none; --gH:none; --blend:multiply; --grain:.11; --scan:.07;
-  --stroke:rgba(11,9,6,.8);
 }
 :root[data-theme="dark"],:root.nvg{
   --ink:#010603; --tube:#04120a; --panel:#061a0e; --rule:#0f4a22; --dim:#2b8043;
   --text:#79e295; --phos:#3dff6e; --hot:#e8ffee; --lens:#7fe3ff; --ir:#ff4d1a;
   --gS:0 0 8px rgba(61,255,110,.4); --gM:0 0 26px rgba(61,255,110,.35);
   --gH:0 0 44px rgba(200,255,220,.5);
-  --blend:screen; --grain:.06; --scan:.05; --stroke:rgba(61,255,110,.75);
+  --blend:screen; --grain:.06; --scan:.05;
 }
 
 *{box-sizing:border-box}
@@ -150,28 +149,8 @@ body.booted main{opacity:1}
 .lab::after{content:"";flex:1;height:1px;background:var(--rule)}
 section{padding-top:clamp(90px,17vh,190px)}
 
-/* ---------- HERO ---------- */
-.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:14vh 0 0}
-.hero h1{margin:0;font-family:var(--display);font-stretch:75%;font-weight:700;
-  text-transform:uppercase;line-height:.79;letter-spacing:-.01em;
-  font-size:clamp(4.2rem,17vw,15rem);text-wrap:balance}
-.hero h1 .fill{display:block;color:var(--hot);text-shadow:var(--gH)}
-.hero h1 .out{display:block;color:transparent;-webkit-text-stroke:1.5px var(--stroke);
-  paint-order:stroke fill}
-:root.thermal .hero h1 .fill{text-shadow:none}
-.hero .sub{margin:34px 0 0;max-width:50ch;font-size:15.5px}
-.hero .sub em{color:var(--hot);font-style:normal}
-.hero .stats{display:flex;flex-wrap:wrap;gap:14px 44px;margin-top:40px;
-  font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
-.hero .stats b{display:block;font-family:var(--display);font-stretch:75%;font-weight:700;
-  font-size:2.1rem;line-height:1;color:var(--phos);text-shadow:var(--gS);
-  font-variant-numeric:tabular-nums;margin-bottom:3px}
-.cue{margin-top:auto;padding:8vh 0 4vh;display:flex;align-items:center;gap:12px;
-  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
-.cue span{display:block;width:1px;height:34px;background:linear-gradient(var(--phos),transparent);
-  animation:drop 2s infinite}
-@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}
-  51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+/* the page opens straight on the roster — no hero */
+main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 
 /* ---------- ROSTER (operator select) ---------- */
 .roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
@@ -496,18 +475,6 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
 </div>
 
 <main>
-
-  <header class="hero">
-    <h1><span class="fill" data-scramble>Noctis</span><span class="out" data-scramble>Archive</span></h1>
-    <p class="sub">Scene packs sorted by operator and by game, plus the project files behind my edits. <em>Ultrawide, 60 fps, no watermark, free forever.</em> Take what you need — credit only if you feel like it.</p>
-    <div class="stats">
-      <span><b data-count="39" data-suffix=" min">0</b>Of footage</span>
-      <span><b data-count="3">0</b>Games covered</span>
-      <span><b data-count="60" data-suffix=" fps">0</b>Throughout</span>
-      <span><b data-count="0" data-prefix="€">0</b>Price, always</span>
-    </div>
-    <div class="cue"><span></span>Descend</div>
-  </header>
 
   <!-- ============ SECTION 01 — SCENE PACKS BY OPERATOR ============ -->
   <section id="s1">
@@ -880,7 +847,7 @@ var io = new IntersectionObserver(function(es){
     io.unobserve(el);
   });
 }, { threshold:.22 });
-document.querySelectorAll(".doss, .hero, .roster, .load, .comms").forEach(function(el){ io.observe(el); });
+document.querySelectorAll(".doss, .roster, .load, .comms").forEach(function(el){ io.observe(el); });
 
 /* ============ 9. TILT + MAGNETIC BUTTONS ============ */
 var doss = document.getElementById("doss");
@@ -1068,8 +1035,6 @@ var opened = false;
 function open(){
   if (opened) return; opened = true;
   document.body.classList.add("booted");
-  document.querySelectorAll(".hero [data-scramble]").forEach(scramble);
-  document.querySelectorAll(".hero [data-count]").forEach(countUp);
   if (reduce){ iris.style.display = "none"; return; }
   var r = 0;
   (function step(){
