@@ -401,7 +401,7 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
       </button>
       <button class="op" type="button" aria-pressed="false" data-op="cutscenes">
         <span class="nm"><em>MW I–III</em><strong>Cutscenes</strong></span>
-        <span class="st">Encoding · 2h 52m</span>
+        <span class="st">1 of 3 up · 2h 52m</span>
         <span class="sel-bar"></span>
       </button>
       <button class="op" type="button" aria-pressed="false" data-empty>
@@ -517,10 +517,10 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
           <div class="pk">
             <span class="pkn">02 — Modern Warfare II</span>
             <h4 class="pkt">MW2</h4>
-            <span class="pkm">38:36 · encoding now</span>
+            <span class="pkm">38:36 · on Google Drive</span>
             <div class="pkb">
-              <button class="go" data-locked type="button" data-name="MW2 cutscenes"
-                data-msg="MW2 cutscenes — still encoding">Soon <i>✕</i></button>
+              <button class="go" type="button" data-name="MW2 cutscenes"
+                data-url="https://drive.google.com/file/d/1oxg2-HFapdZli2YJaZ5iuyn9fHFd7gJu/view">Download <i>→</i></button>
             </div>
           </div>
           <div class="pk">
@@ -534,8 +534,8 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
           </div>
         </div>
 
-        <p class="cap info"><i></i><span><b>Not up yet — still converting.</b> Runtimes are final;
-        sizes and links land when the encode does.</span></p>
+        <p class="cap info"><i></i><span><b>MW2 is up, the other two are still converting.</b>
+        Runtimes are final; the remaining links land when the encodes do.</span></p>
     </article>
     </div>
     </div>
@@ -872,7 +872,13 @@ document.querySelectorAll(".go").forEach(function(b){
       notify("Credits are appreciated", name + " — download started");
     } else {
       window.open(url, "_blank", "noopener");
-      notify("Credits are appreciated", name + " — opening on Mega");
+      var host = "the host";
+      try {
+        var h = new URL(url).hostname;
+        host = h.indexOf("mega") > -1 ? "Mega"
+             : h.indexOf("google") > -1 ? "Google Drive" : h;
+      } catch(err){}
+      notify("Credits are appreciated", name + " — opening on " + host);
     }
   });
 });
