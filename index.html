@@ -303,26 +303,19 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .dep[data-locked] .bg{background:var(--ir)}
 .dep[data-locked]:hover{border-color:var(--ir)}
 
-/* ---------- PROJECT FILES ---------- */
-.load{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1px;
-  background:var(--rule);border:1px solid var(--rule)}
-.slot{position:relative;background:var(--tube);padding:30px 24px 26px;display:flex;
-  flex-direction:column;gap:11px;overflow:hidden;transition:background .3s}
-.slot::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .4s;
-  background:radial-gradient(120% 90% at 50% 118%,
-    color-mix(in srgb,var(--phos) 20%,transparent),transparent 70%)}
-.slot:hover::before{opacity:1}
-.slot>*{position:relative}
-.slot .tg{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--lens)}
-.slot h4{margin:0;font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;
-  font-size:1.8rem;line-height:1;color:var(--hot)}
-.slot p{margin:0;font-size:12.5px;color:var(--dim);line-height:1.65;flex:1}
-.slot .sz{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
-  font-variant-numeric:tabular-nums}
-.grab{align-self:flex-start;margin-top:6px;font:inherit;font-size:10.5px;letter-spacing:.24em;
-  text-transform:uppercase;color:var(--phos);background:none;border:0;border-bottom:1px solid transparent;
-  padding:0 0 3px;cursor:none;transition:border-color .3s,text-shadow .3s}
-.grab:hover{border-bottom-color:var(--phos);text-shadow:var(--gS)}
+/* ---------- PROJECT FILES — empty on purpose, not broken ---------- */
+.pending{border:1px solid var(--rule);background:color-mix(in srgb,var(--tube) 70%,transparent);
+  padding:clamp(30px,5vw,52px);display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.pending .pe{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--lens)}
+.pending strong{font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;
+  font-size:clamp(2rem,5vw,3.2rem);line-height:.9;color:var(--hot);text-shadow:var(--gS)}
+.pending p{margin:0;font-size:13px;line-height:1.7;color:var(--dim);max-width:50ch}
+/* redaction bars standing in for the files that aren't here yet */
+.pbars{display:flex;flex-direction:column;gap:9px;margin-top:14px;width:min(340px,80%)}
+.pbars i{height:13px;background:var(--dim);opacity:.28;animation:breathe 3.4s ease-in-out infinite}
+.pbars i:nth-child(2){width:78%;animation-delay:.5s}
+.pbars i:nth-child(3){width:54%;animation-delay:1s}
+@keyframes breathe{0%,100%{opacity:.16}50%{opacity:.4}}
 
 /* ---------- COMMS ---------- */
 .comms{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;
@@ -459,7 +452,7 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
     <button class="door" type="button" data-side="b" data-go="s2">
       <em>02</em>
       <strong>Project files</strong>
-      <span class="dmeta">Projects, presets, LUTs</span>
+      <span class="dmeta">Projects, presets, LUTs — uploading soon</span>
     </button>
   </div>
 </div>
@@ -595,31 +588,12 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
   <!-- ============ SECTION 02 — PROJECT FILES ============ -->
   <section id="s2">
     <p class="lab"><b>02</b> Project files &amp; presets</p>
-    <div class="load">
-      <div class="slot">
-        <span class="tg">.aep — After Effects</span>
-        <h4>Nightfall Edit</h4>
-        <p>The whole project behind the Price edit. Every layer named, every effect live. Pull it apart, swap the footage, steal the stack.</p>
-        <span class="sz">CC 2022+ · 480 MB</span>
-        <button class="grab" type="button" data-name="Nightfall Edit"
-          data-url="https://mega.nz/file/REPLACE-ME-AEP">Pull file →</button>
-      </div>
-      <div class="slot">
-        <span class="tg">.ffx — Preset pack</span>
-        <h4>Gain &amp; Grain</h4>
-        <p>Nineteen presets that fake an intensifier tube: bloom, phosphor bias, sensor grain, halation, flicker. Drop one on an adjustment layer, done.</p>
-        <span class="sz">19 presets · 4 MB</span>
-        <button class="grab" type="button" data-name="Gain &amp; Grain"
-          data-url="https://mega.nz/file/REPLACE-ME-FFX">Pull file →</button>
-      </div>
-      <div class="slot">
-        <span class="tg">.cube — LUTs</span>
-        <h4>Optic Set</h4>
-        <p>Six LUTs matched to real optics — Gen-3 green, white phosphor, white-hot and black-hot thermal. Built for flat log footage.</p>
-        <span class="sz">6 LUTs · 2 MB</span>
-        <button class="grab" type="button" data-name="Optic Set"
-          data-url="https://mega.nz/file/REPLACE-ME-CUBE">Pull file →</button>
-      </div>
+    <div class="pending">
+      <span class="pe">Awaiting upload</span>
+      <strong>Nothing on record yet</strong>
+      <p>Project files, presets and LUTs are on the way — I'm uploading the first batch shortly.
+      Same terms as everything else here: free, no watermark, no sign-in.</p>
+      <div class="pbars"><i></i><i></i><i></i></div>
     </div>
   </section>
 
@@ -733,7 +707,7 @@ if (fine){
     requestAnimationFrame(trail);
   })();
   document.addEventListener("pointerover", function(e){
-    document.body.classList.toggle("hot", !!e.target.closest("button,a,.op,.slot,.freq,.clip"));
+    document.body.classList.toggle("hot", !!e.target.closest("button,a,.op,.freq,.clip"));
   });
 } else {
   (function orbit(){
@@ -848,7 +822,7 @@ var io = new IntersectionObserver(function(es){
     io.unobserve(el);
   });
 }, { threshold:.22 });
-document.querySelectorAll(".doss, .roster, .load, .comms").forEach(function(el){ io.observe(el); });
+document.querySelectorAll(".doss, .roster, .pending, .comms").forEach(function(el){ io.observe(el); });
 
 /* ============ 9. TILT + MAGNETIC BUTTONS ============ */
 var doss = document.getElementById("doss");
@@ -998,9 +972,9 @@ function extract(name, locked, url, msg, direct){
     }
   }, 62);
 }
-document.querySelectorAll(".dep, .grab").forEach(function(b){
+document.querySelectorAll(".dep").forEach(function(b){
   b.addEventListener("click", function(){
-    var locked = b.hasAttribute("data-locked"), row = b.closest(".clip, .slot, .full");
+    var locked = b.hasAttribute("data-locked"), row = b.closest(".clip, .full");
     if (locked && row && !reduce){
       row.classList.add("shake");
       setTimeout(function(){ row.classList.remove("shake"); }, 380);
