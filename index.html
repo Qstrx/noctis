@@ -271,7 +271,8 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   background:color-mix(in srgb,var(--ink) 90%,transparent);padding:var(--gut);text-align:center}
 .ex.on{display:grid}
 .ex h5{margin:0;font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;
-  font-size:clamp(2rem,7vw,4.4rem);line-height:.9;color:var(--hot);text-shadow:var(--gH)}
+  font-size:clamp(1.9rem,6vw,3.8rem);line-height:.92;color:var(--hot);text-shadow:var(--gH);
+  max-width:14ch;text-wrap:balance}
 .ex .ln{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--phos);
   font-variant-numeric:tabular-nums;min-height:1.4em}
 .blocks{display:flex;gap:3px}
@@ -834,28 +835,29 @@ function extract(name, locked, url, msg, direct){
         String(Math.round(n/bits.length*100)).padStart(3,"0") + "%";
     } else {
       clearInterval(timer);
-      exT.textContent = "Package secured";
       ring.classList.remove("go"); void ring.offsetWidth; ring.classList.add("go");
       beep(1320,.28,.05,"sine");
       if (!url || url.indexOf("REPLACE-") > -1){
-        exL.textContent = "No link assigned yet — fill in this button's data-url";
+        exT.textContent = "No link yet";
+        exL.textContent = "This button has no URL assigned";
         setTimeout(closeEx, 2200); return;
       }
+      exT.textContent = "Credits are appreciated";
       if (direct){
         var a = document.createElement("a");
         a.href = url; a.download = ""; a.rel = "noopener";
         document.body.appendChild(a); a.click(); a.remove();
-        exL.textContent = "Download started — " + name;
-        setTimeout(closeEx, 1600);
+        exL.textContent = name + " — your download has started";
+        setTimeout(closeEx, 3200);
         return;
       }
       var w = null;
       try { w = window.open(url, "_blank", "noopener"); } catch(err){ w = null; }
       if (w){
-        exL.textContent = "Channel open — " + name;
-        setTimeout(closeEx, 1500);
+        exL.textContent = name + " — opening on Mega";
+        setTimeout(closeEx, 3200);
       } else {
-        exL.textContent = "Secure channel ready — Mega";
+        exL.textContent = name + " — ready on Mega";
         chan.href = url;
         chan.classList.add("on");
         chan.focus();
