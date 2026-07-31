@@ -150,11 +150,18 @@ section{padding-top:clamp(90px,17vh,190px)}
 
 main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 
-.roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
-  background:var(--rule);border:1px solid var(--rule);margin-bottom:clamp(30px,5vh,56px)}
-.op{position:relative;background:var(--tube);border:0;font:inherit;color:inherit;cursor:none;
-  text-align:left;display:flex;flex-direction:column;padding:22px 20px 20px;
-  min-height:132px;transition:background .3s}
+/* Desktop reads as a file browser: collections pinned left, the open one on the
+   right. Below 880px it folds back to the stacked layout that already worked. */
+.arch{display:grid;grid-template-columns:minmax(186px,236px) 1fr;gap:1px;
+  background:var(--rule);border:1px solid var(--rule)}
+.roster{display:flex;flex-direction:column;align-self:stretch;
+  background:color-mix(in srgb,var(--panel) 40%,transparent)}
+.apane{background:color-mix(in srgb,var(--tube) 72%,transparent);min-width:0}
+.op{position:relative;background:none;border:0;border-bottom:1px solid var(--rule);
+  font:inherit;color:inherit;cursor:none;
+  text-align:left;display:flex;flex-direction:column;padding:18px 18px 16px;
+  transition:background .3s}
+.op:last-child{border-bottom:0}
 .op:hover,.op.sel{background:var(--panel)}
 .op .nm em{display:block;font-style:normal;font-size:9px;letter-spacing:.28em;
   text-transform:uppercase;color:var(--dim)}
@@ -165,19 +172,19 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .op .st{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
   margin-top:auto;padding-top:16px}
 .op.sel .st{color:var(--phos);text-shadow:var(--gS)}
-.op .sel-bar{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--phos);
-  box-shadow:var(--gM);transform:scaleX(0);transform-origin:left;
+.op .sel-bar{position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--phos);
+  box-shadow:var(--gM);transform:scaleY(0);transform-origin:top;
   transition:transform .45s cubic-bezier(.2,.9,.2,1)}
-.op.sel .sel-bar{transform:scaleX(1)}
+.op.sel .sel-bar{transform:scaleY(1)}
+.op.sel{background:color-mix(in srgb,var(--phos) 8%,transparent)}
 .op[data-empty] .nm strong{color:var(--dim)}
 .op[data-empty] .redact{display:inline-block;width:74px;height:14px;background:var(--dim);
   vertical-align:-1px;opacity:.5}
 .op[data-empty]:hover .nm strong{color:var(--ir)}
 
-.doss{position:relative;border:1px solid var(--rule);
-  background:color-mix(in srgb,var(--tube) 72%,transparent);padding:clamp(20px,3vw,34px);
-  transform:translateY(46px);opacity:0;
-  transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s}
+.doss{position:relative;border:0;padding:clamp(20px,2.6vw,34px);
+  transform:translateY(28px);opacity:0;
+  transition:transform .8s cubic-bezier(.2,.8,.2,1),opacity .8s}
 .doss.in{transform:none;opacity:1}
 .doss[hidden]{display:none}
 .stamp.pending{border-color:var(--lens);color:var(--lens);text-shadow:none;box-shadow:none}
@@ -349,7 +356,14 @@ body.gated{overflow:hidden}
 .chan:hover{background:var(--hot)}
 
 @media (max-width:880px){
-  .doss{grid-template-columns:1fr}
+  .arch{grid-template-columns:1fr;border:0;background:none;gap:clamp(26px,5vh,44px)}
+  .roster{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+    background:var(--rule);border:1px solid var(--rule);align-self:auto}
+  .op{border-bottom:0;background:var(--tube);padding:20px 18px;min-height:104px}
+  .op .sel-bar{left:0;right:0;top:auto;bottom:0;width:auto;height:2px;
+    transform:scaleX(0);transform-origin:left}
+  .op.sel .sel-bar{transform:scaleX(1)}
+  .apane{border:1px solid var(--rule)}
   .brk,.ladder{display:none}
   .bar .sm{display:none}
   body{cursor:auto}
@@ -453,7 +467,8 @@ body.gated{overflow:hidden}
   <section id="s1">
     <p class="lab"><b>01</b> Scene packs — pick a collection</p>
 
-    <div class="roster" id="roster">
+    <div class="arch">
+    <aside class="roster" id="roster" aria-label="Collections">
       <button class="op sel" type="button" aria-pressed="true" data-op="price">
         <span class="nm"><em>TF-141</em><strong>John Price</strong></span>
         <span class="st">4 volumes · 39 min</span>
@@ -474,8 +489,9 @@ body.gated{overflow:hidden}
         <span class="st">Awaiting</span>
         <span class="sel-bar"></span>
       </button>
-    </div>
+    </aside>
 
+    <div class="apane">
     <article class="doss" id="doss" data-doss="price">
       <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
       <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
@@ -608,6 +624,8 @@ body.gated{overflow:hidden}
         They come off a 4K source, so each game gets split into parts small enough to download
         without an account. Runtimes are final; sizes and links land when the encode does.</span></p>
     </article>
+    </div>
+    </div>
   </section>
 
   <section id="s2">
