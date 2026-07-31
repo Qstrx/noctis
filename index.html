@@ -7,6 +7,7 @@
 <meta name="description" content="Free Call of Duty scene packs sorted by operator, plus After Effects project files and presets. 60 fps, no watermark, no sign-in.">
 <meta property="og:title" content="NOCTIS // NVG Archive">
 <meta property="og:description" content="Free scene packs, project files and presets. No sign-in, no watermark.">
+<meta property="og:image" content="https://qstrx.github.io/noctis/img/price.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#010603">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23010603'/><circle cx='16' cy='16' r='8' fill='none' stroke='%233dff6e' stroke-width='3'/></svg>">
@@ -205,9 +206,20 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   45%{transform:translate(4px,-2px)}70%{transform:translate(-2px,-1px)}}
 
 .portrait{position:relative;overflow:hidden;border:1px solid var(--rule);transform-style:preserve-3d}
-.portrait canvas{display:block;width:100%;aspect-ratio:4/5;transform:scale(1.04);
-  transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-.doss:hover .portrait canvas{transform:scale(1.09)}
+.portrait img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
+  object-position:50% 42%;transform:scale(1.04);
+  filter:grayscale(1) contrast(1.14) brightness(.84);
+  transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .45s}
+.doss:hover .portrait img{transform:scale(1.09);filter:grayscale(1) contrast(1.2) brightness(1)}
+/* duotone: the tube's hue over the photo's luminance.
+   In thermal the accent goes near-black, so this collapses to grey — correct for black-hot. */
+.portrait .tint{position:absolute;inset:0;background:var(--phos);
+  mix-blend-mode:color;opacity:.92;pointer-events:none}
+.portrait::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(120% 80% at 50% 30%,
+    color-mix(in srgb,var(--phos) 22%,transparent),transparent 68%);
+  mix-blend-mode:screen}
+:root.thermal .portrait::after{mix-blend-mode:multiply;opacity:.4}
 .portrait .cross{position:absolute;inset:0;opacity:.45;
   background:linear-gradient(var(--phos),var(--phos)) center/100% 1px no-repeat,
              linear-gradient(var(--phos),var(--phos)) center/1px 100% no-repeat;
@@ -510,7 +522,8 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
 
       <div>
         <div class="portrait">
-          <canvas width="560" height="700" data-still="7"></canvas>
+          <img src="img/price.jpg" alt="John Price silhouetted while rappelling at night" width="736" height="736">
+          <div class="tint"></div>
           <div class="cross"></div>
           <div class="tag">Frame 0042 — gain auto</div>
         </div>
@@ -838,7 +851,7 @@ var io = new IntersectionObserver(function(es){
       el.classList.add("in");
       beep(1320,.04,.03,"sine");
       setTimeout(function(){ beep(660,.09,.04); }, 800);
-      var cv = el.querySelector(".portrait canvas");
+      var cv = el.querySelector(".portrait img");
       if (cv && !reduce){ cv.classList.add("glitch");
         setTimeout(function(){ cv.classList.remove("glitch"); }, 460); }
     }
@@ -907,7 +920,7 @@ document.querySelectorAll(".op").forEach(function(op){
     doss.classList.remove("in"); void doss.offsetWidth; doss.classList.add("in");
     doss.querySelectorAll("[data-scramble]").forEach(scramble);
     doss.querySelectorAll("[data-count]").forEach(countUp);
-    var cv = doss.querySelector(".portrait canvas");
+    var cv = doss.querySelector(".portrait img");
     if (cv && !reduce){ cv.classList.add("glitch");
       setTimeout(function(){ cv.classList.remove("glitch"); }, 460); }
     beep(1320,.04,.03,"sine");
