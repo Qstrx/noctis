@@ -296,10 +296,13 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .dep[data-locked]:hover{border-color:var(--ir)}
 
 .soon{margin:0;font-size:14px;line-height:1.7;color:var(--text);max-width:48ch}
+#s2{min-height:64vh}
 
 .gate{position:fixed;inset:0;z-index:55;background:var(--ink);
   display:grid;place-items:center;transition:opacity .5s}
-.gate.gone{opacity:0;pointer-events:none}
+.gate.gone{opacity:0;pointer-events:none;visibility:hidden;
+  transition:opacity .5s,visibility 0s .5s}
+body.gated{overflow:hidden}
 .gwrap{display:grid;grid-template-columns:1fr 1px 1fr;align-items:center;
   width:100%;max-width:1080px;padding:0 var(--gut)}
 .gline{align-self:stretch;width:1px;margin:12vh 0;
@@ -391,6 +394,7 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
   .fx-sweep{display:none}
   .doss{opacity:1;transform:none}
   .stamp{opacity:1;transform:rotate(-9deg)}
@@ -413,18 +417,19 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   <div class="tubes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 </div>
 
-<div class="hud" aria-hidden="true">
+<div class="hud">
   <div class="bar">
-    <span class="rec"><i></i>Rec</span>
-    <span class="sm">Gain <b id="gain">+18</b></span>
-    <span class="sm">Grid <b id="grid">38.9072N 077.0369W</b></span>
+    <span class="rec" aria-hidden="true"><i></i>Rec</span>
+    <span class="sm" aria-hidden="true">Gain <b id="gain">+18</b></span>
+    <span class="sm" aria-hidden="true">Grid <b id="grid">38.9072N 077.0369W</b></span>
     <span class="sp"></span>
-    <span class="sm">Zulu <b id="clk">00:00:00</b></span>
-    <button class="hbtn" id="snd" type="button">Audio: off</button>
+    <span class="sm" aria-hidden="true">Zulu <b id="clk">00:00:00</b></span>
+    <button class="hbtn" id="snd" type="button" aria-pressed="false">Audio: off</button>
     <button class="hbtn" id="mode" type="button">Optic: NVG</button>
   </div>
-  <div class="brk tl"></div><div class="brk tr"></div><div class="brk bl"></div><div class="brk br"></div>
-  <div class="ladder" id="ladder"><div class="dep-read" id="depth">000 M</div></div>
+  <div class="brk tl" aria-hidden="true"></div><div class="brk tr" aria-hidden="true"></div>
+  <div class="brk bl" aria-hidden="true"></div><div class="brk br" aria-hidden="true"></div>
+  <div class="ladder" id="ladder" aria-hidden="true"><div class="dep-read" id="depth">000 M</div></div>
 </div>
 
 <div class="gate" id="gate">
@@ -443,11 +448,11 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   </div>
 </div>
 
-<div class="ex" id="ex" role="status" aria-live="polite">
-  <div class="ring" id="ring"></div>
-  <h5 id="exT">Extraction authorized</h5>
-  <div class="ln" id="exL">Decrypting payload 000%</div>
-  <div class="blocks" id="exB"></div>
+<div class="ex" id="ex">
+  <div class="ring" id="ring" aria-hidden="true"></div>
+  <h5 id="exT" role="status">Extraction authorized</h5>
+  <div class="ln" id="exL" aria-hidden="true">Decrypting payload 000%</div>
+  <div class="blocks" id="exB" aria-hidden="true"></div>
   <a class="chan" id="chan" href="#" target="_blank" rel="noopener">Open channel <span>→</span></a>
   <div class="esc">Esc to abort</div>
 </div>
@@ -457,23 +462,23 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   <section id="s1">
     <p class="lab"><b>01</b> Scene packs — select operator</p>
 
-    <div class="roster" id="roster" role="tablist">
-      <button class="op sel" type="button" role="tab" aria-selected="true" data-op="price">
+    <div class="roster" id="roster">
+      <button class="op sel" type="button" aria-pressed="true" data-op="price">
         <span class="nm"><em>TF-141</em><strong>John Price</strong></span>
         <span class="st">4 volumes · 39 min</span>
         <span class="sel-bar"></span>
       </button>
-      <button class="op" type="button" role="tab" aria-selected="false" data-empty>
+      <button class="op" type="button" aria-pressed="false" data-empty>
         <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
         <span class="st">Awaiting</span>
         <span class="sel-bar"></span>
       </button>
-      <button class="op" type="button" role="tab" aria-selected="false" data-empty>
+      <button class="op" type="button" aria-pressed="false" data-empty>
         <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
         <span class="st">Awaiting</span>
         <span class="sel-bar"></span>
       </button>
-      <button class="op" type="button" role="tab" aria-selected="false" data-empty>
+      <button class="op" type="button" aria-pressed="false" data-empty>
         <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
         <span class="st">Awaiting</span>
         <span class="sel-bar"></span>
@@ -591,7 +596,7 @@ function sized(){
   for (var j=0;j<(small?3:7);j++) fog.push({x:Math.random()*W,y:Math.random()*H,r:180+Math.random()*320,
     vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.08,a:.028+Math.random()*.04});
 }
-sized(); addEventListener("resize", sized);
+sized();
 function isTherm(){ return root.classList.contains("thermal") || root.getAttribute("data-theme")==="light"; }
 
 function makeBlob(rgb){
@@ -656,10 +661,20 @@ function buildGrain(){
   }
   gx.putImageData(gf[0],0,0);
 }
-buildGrain(); addEventListener("resize", buildGrain);
+buildGrain();
 
 var last = 0, grainEvery = innerWidth < 760 ? 150 : 85;
-addEventListener("resize", function(){ grainEvery = innerWidth < 760 ? 150 : 85; });
+var lastW = innerWidth, lastH = innerHeight, rzT = null;
+addEventListener("resize", function(){
+  clearTimeout(rzT);
+  rzT = setTimeout(function(){
+    var w = innerWidth, h = innerHeight;
+    if (w === lastW && Math.abs(h - lastH) < 140){ lastH = h; return; }
+    lastW = w; lastH = h;
+    grainEvery = w < 760 ? 150 : 85;
+    sized(); buildGrain();
+  }, 180);
+});
 function loop(t){
   px += (mx-px)*.09; py += (my-py)*.09;
   if (!reduce){
@@ -700,6 +715,7 @@ sndBtn.addEventListener("click", function(){
   if (sndOn && !AC) AC = new (window.AudioContext||window.webkitAudioContext)();
   if (sndOn && AC.state === "suspended") AC.resume();
   sndBtn.textContent = "Audio: " + (sndOn ? "on" : "off");
+  sndBtn.setAttribute("aria-pressed", sndOn ? "true" : "false");
   if (sndOn) beep(880,.05,.05);
 });
 function beep(f,d,v,type){
@@ -839,7 +855,7 @@ document.querySelectorAll(".op").forEach(function(op){
     }
     document.querySelectorAll(".op").forEach(function(o){
       o.classList.toggle("sel", o === op);
-      o.setAttribute("aria-selected", o === op ? "true" : "false");
+      o.setAttribute("aria-pressed", o === op ? "true" : "false");
     });
     doss.classList.remove("in"); void doss.offsetWidth; doss.classList.add("in");
     doss.querySelectorAll("[data-scramble]").forEach(scramble);
@@ -853,9 +869,11 @@ document.querySelectorAll(".op").forEach(function(op){
 });
 
 var gate = document.getElementById("gate"), gateOpen = true;
+document.body.classList.add("gated");
 function dropGate(target){
   if (!gateOpen) return; gateOpen = false;
   gate.classList.add("gone");
+  document.body.classList.remove("gated");
   if (target){
     var el = document.getElementById(target);
     if (el) setTimeout(function(){
