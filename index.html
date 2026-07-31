@@ -249,34 +249,36 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .specs b{display:block;font-size:1.1rem;color:var(--text);font-weight:400;margin-top:3px;
   font-variant-numeric:tabular-nums;letter-spacing:.02em}
 
-/* volume rows — add one <div class="vol"> per pack of this operator */
-.vols{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
-.vol{display:flex;align-items:center;gap:16px;flex-wrap:wrap;
-  padding:16px 0 16px 12px;border-bottom:1px solid var(--rule);position:relative;
-  transition:padding-left .3s,background .3s}
-.vol::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:1px;
-  background:var(--phos);box-shadow:var(--gS);transform:scaleY(0);transition:transform .3s}
-.vol:hover{padding-left:20px;background:linear-gradient(90deg,
-  color-mix(in srgb,var(--phos) 8%,transparent),transparent 65%)}
-.vol:hover::before{transform:scaleY(1)}
-.vol .vt{flex:1;min-width:150px}
-.vol .vt strong{display:block;font-family:var(--display);font-stretch:75%;font-weight:700;
-  font-size:1.28rem;line-height:1.05;text-transform:uppercase;color:var(--hot)}
-.vol .vt em{font-style:normal;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
-.vol .vs{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
-  font-variant-numeric:tabular-nums}
+/* one card per game — add another <article class="clip"> to extend */
+.clips{display:grid;grid-template-columns:repeat(auto-fit,minmax(226px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin-top:26px}
+.clip{position:relative;background:var(--tube);padding:26px 22px 22px;
+  display:flex;flex-direction:column;overflow:hidden;transition:background .3s}
+.clip::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .4s;
+  background:radial-gradient(130% 90% at 50% 118%,
+    color-mix(in srgb,var(--phos) 20%,transparent),transparent 72%)}
+.clip:hover::before{opacity:1}
+.clip>*{position:relative}
+.clip .ce{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
+.clip h4{margin:6px 0 0;font-family:var(--display);font-stretch:75%;font-weight:700;
+  text-transform:uppercase;font-size:clamp(2.6rem,6vw,3.8rem);line-height:.85;
+  color:var(--hot);text-shadow:var(--gS)}
+.clip .cm{margin-top:auto;padding-top:20px;font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--dim);font-variant-numeric:tabular-nums}
+.cbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 
 /* full archive — offered, but honestly labelled as the heavy option */
-.full{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px;padding:22px 22px 22px 20px;
-  border:1px solid var(--rule);border-left:2px solid var(--ir);
+.full{display:flex;align-items:center;gap:clamp(20px,4vw,44px);flex-wrap:wrap;margin-top:1px;
+  padding:30px 26px 30px 24px;border:1px solid var(--rule);border-left:2px solid var(--ir);
   background:color-mix(in srgb,var(--panel) 60%,transparent);transition:background .3s}
 .full:hover{background:color-mix(in srgb,var(--panel) 95%,transparent)}
-.full .ft{flex:1;min-width:230px;display:flex;flex-direction:column;gap:5px}
+.full .ft{flex:1;min-width:240px;display:flex;flex-direction:column;gap:7px}
 .full .ft em{font-style:normal;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ir)}
-.full .ft strong{font-family:var(--display);font-stretch:75%;font-weight:700;font-size:1.6rem;
-  line-height:1;text-transform:uppercase;color:var(--hot)}
-.full .fw{font-size:11.5px;line-height:1.6;color:var(--dim);max-width:50ch}
-.full .fz{font-family:var(--display);font-stretch:75%;font-weight:700;font-size:2rem;
+.full .ft strong{font-family:var(--display);font-stretch:75%;font-weight:700;
+  font-size:clamp(2rem,4.4vw,2.9rem);line-height:.9;text-transform:uppercase;color:var(--hot);
+  text-shadow:var(--gS)}
+.full .fw{font-size:11.5px;line-height:1.6;color:var(--dim);max-width:52ch;margin-top:3px}
+.full .fz{font-family:var(--display);font-stretch:75%;font-weight:700;font-size:2.2rem;
   color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:.01em}
 
 /* transfer-cap notice — a real constraint, stated in the optic's own voice */
@@ -296,6 +298,7 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .dep span,.dep .ar{position:relative;z-index:1;transition:color .25s,transform .35s}
 .dep:hover span,.dep:hover .ar{color:var(--ink)}
 .dep:hover .ar{transform:translateX(5px)}
+.dep.sm{padding:10px 15px;font-size:9.5px;letter-spacing:.2em;gap:9px}
 .dep[data-locked]{border-color:var(--rule);color:var(--dim);box-shadow:none}
 .dep[data-locked] .bg{background:var(--ir)}
 .dep[data-locked]:hover{border-color:var(--ir)}
@@ -534,51 +537,55 @@ footer{margin-top:clamp(80px,14vh,150px);padding-top:26px;border-top:1px solid v
              REPLACE every data-url with your real Mega link.
              Sizes marked TODO are estimates — put the real ones in.
              ========================================================== -->
-        <div class="vols">
-          <div class="vol">
-            <span class="vt"><strong>Vol. 01a — Modern Warfare</strong><em>9:09 · part one of two</em></span>
-            <span class="vs">1.25 GB</span>
-            <button class="dep" type="button" data-name="Price — MW I, part 1" data-direct
-              data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part1.mp4"><span class="bg"></span><span>Deploy</span><span class="ar">→</span></button>
-          </div>
-          <div class="vol">
-            <span class="vt"><strong>Vol. 01b — Modern Warfare</strong><em>9:46 · part two of two</em></span>
-            <span class="vs">1.32 GB</span>
-            <button class="dep" type="button" data-name="Price — MW I, part 2" data-direct
-              data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part2.mp4"><span class="bg"></span><span>Deploy</span><span class="ar">→</span></button>
-          </div>
-          <div class="vol">
-            <span class="vt"><strong>Vol. 02 — Modern Warfare II</strong><em>8:06 · one continuous file</em></span>
-            <span class="vs">1.16 GB</span>
-            <button class="dep" type="button" data-name="Price — MW II" data-direct
-              data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW2.mp4"><span class="bg"></span><span>Deploy</span><span class="ar">→</span></button>
-          </div>
-          <div class="vol">
-            <span class="vt"><strong>Vol. 03 — Modern Warfare III</strong><em>11:55 · one continuous file</em></span>
-            <span class="vs">1.62 GB</span>
-            <button class="dep" type="button" data-name="Price — MW III" data-direct
-              data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW3.mp4"><span class="bg"></span><span>Deploy</span><span class="ar">→</span></button>
-          </div>
-        </div>
+        <p class="cap info"><i></i><span><b>On MW1 — the black bars are meant to be there.</b>
+        Some clips were captured at 4K, a taller frame than the ultrawide format the pack is delivered
+        in. Rather than crop into them and throw away picture, those shots sit inside the frame with
+        bars at the sides. Nothing is cut, nothing is downscaled, and the quality is identical
+        throughout.</span></p>
 
-        <p class="cap info"><i></i><span><b>On Vol. 01 — the black bars are meant to be there.</b>
-        Some Modern Warfare clips were captured at 4K, which is a taller frame than the ultrawide
-        format the pack is delivered in. Rather than crop into them and throw away picture, those shots
-        sit inside the frame with bars at the sides. Nothing is cut, nothing is downscaled, and the
-        quality is identical to every other clip.</span></p>
+        <div class="clips">
+          <article class="clip">
+            <span class="ce">01 — Modern Warfare</span>
+            <h4>MW1</h4>
+            <span class="cm">18:55 · 2.57 GB · two files</span>
+            <div class="cbtns">
+              <button class="dep sm" type="button" data-name="MW1 clips, part 1" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part1.mp4"><span class="bg"></span><span>Part 1</span><span class="ar">→</span></button>
+              <button class="dep sm" type="button" data-name="MW1 clips, part 2" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part2.mp4"><span class="bg"></span><span>Part 2</span><span class="ar">→</span></button>
+            </div>
+          </article>
+          <article class="clip">
+            <span class="ce">02 — Modern Warfare II</span>
+            <h4>MW2</h4>
+            <span class="cm">8:06 · 1.16 GB · one file</span>
+            <div class="cbtns">
+              <button class="dep sm" type="button" data-name="MW2 clips" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW2.mp4"><span class="bg"></span><span>Deploy</span><span class="ar">→</span></button>
+            </div>
+          </article>
+          <article class="clip">
+            <span class="ce">03 — Modern Warfare III</span>
+            <h4>MW3</h4>
+            <span class="cm">11:55 · 1.62 GB · one file</span>
+            <div class="cbtns">
+              <button class="dep sm" type="button" data-name="MW3 clips" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW3.mp4"><span class="bg"></span><span>Deploy</span><span class="ar">→</span></button>
+            </div>
+          </article>
+        </div>
 
         <div class="full">
           <span class="ft">
-            <em>Alternate channel — Mega</em>
-            <strong>Everything in one file</strong>
-            <span class="fw">All three games, 39 minutes, as a single download. Too large for the
-            direct channel, so this one lives on Mega — and at 5.33 GB it sits right on Mega's free
-            transfer cap, so a free account will likely stall near the end. The four volumes above are
-            the same footage and always work. Use this only if you want one file and have MEGA Pro or
-            the desktop app, which resumes.</span>
+            <em>Everything in one file — Mega</em>
+            <strong>Full scene pack</strong>
+            <span class="fw">All three games in a single 39-minute file. Too large for the direct
+            channel, so this one lives on Mega — and at 5.33 GB it sits right on Mega's free transfer
+            cap, so a free account will likely stall near the end. The three above are the same
+            footage and always work.</span>
           </span>
           <span class="fz">5.33 GB</span>
-          <button class="dep" type="button" data-name="Price — Complete"
+          <button class="dep" type="button" data-name="Full scene pack"
             data-url="https://mega.nz/file/SS4EAQQI#_0fGCxJnfgSKcLeHu5oPYMi6CU1KAQch8r4KsW4Vr0k"><span class="bg"></span><span>Deploy all</span><span class="ar">→</span></button>
         </div>
       </div>
@@ -726,7 +733,7 @@ if (fine){
     requestAnimationFrame(trail);
   })();
   document.addEventListener("pointerover", function(e){
-    document.body.classList.toggle("hot", !!e.target.closest("button,a,.op,.slot,.freq,.vol"));
+    document.body.classList.toggle("hot", !!e.target.closest("button,a,.op,.slot,.freq,.clip"));
   });
 } else {
   (function orbit(){
@@ -993,7 +1000,7 @@ function extract(name, locked, url, msg, direct){
 }
 document.querySelectorAll(".dep, .grab").forEach(function(b){
   b.addEventListener("click", function(){
-    var locked = b.hasAttribute("data-locked"), row = b.closest(".vol, .slot");
+    var locked = b.hasAttribute("data-locked"), row = b.closest(".clip, .slot, .full");
     if (locked && row && !reduce){
       row.classList.add("shake");
       setTimeout(function(){ row.classList.remove("shake"); }, 380);
