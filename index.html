@@ -175,8 +175,7 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .op[data-empty]:hover .nm strong{color:var(--ir)}
 
 .doss{position:relative;border:1px solid var(--rule);
-  background:color-mix(in srgb,var(--tube) 72%,transparent);padding:clamp(22px,3.6vw,44px);
-  display:grid;grid-template-columns:minmax(240px,.82fr) 1.18fr;gap:clamp(24px,4vw,54px);
+  background:color-mix(in srgb,var(--tube) 72%,transparent);padding:clamp(20px,3vw,34px);
   transform:translateY(46px);opacity:0;
   transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s}
 .doss.in{transform:none;opacity:1}
@@ -202,64 +201,44 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 @keyframes shk{0%,100%{transform:none}20%{transform:translate(-4px,2px)}
   45%{transform:translate(4px,-2px)}70%{transform:translate(-2px,-1px)}}
 
-.portrait{position:relative;overflow:hidden;border:1px solid var(--rule);transform-style:preserve-3d}
-.portrait canvas{display:block;width:100%;height:auto;aspect-ratio:4/5;
-  transform:scale(1.04);transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-.doss:hover .portrait canvas{transform:scale(1.09)}
-.portrait img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
-  object-position:50% 42%;transform:scale(1.04);
-  filter:grayscale(1) contrast(1.14) brightness(.84);
-  transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .45s}
-.doss:hover .portrait img{transform:scale(1.09);filter:grayscale(1) contrast(1.2) brightness(1)}
-.portrait .tint{position:absolute;inset:0;background:var(--phos);
+/* Identity strip. The photo is a tag on the file, not the subject of the page —
+   it gets a thumbnail, and the downloads get the rest. */
+.dhead{display:flex;align-items:center;gap:clamp(14px,2.6vw,26px);flex-wrap:wrap;
+  padding-bottom:20px;border-bottom:1px solid var(--rule);margin-bottom:22px}
+.dthumb{position:relative;flex:none;display:block;width:clamp(62px,8.5vw,88px);
+  aspect-ratio:1;overflow:hidden;border:1px solid var(--rule)}
+.dthumb img,.dthumb canvas{display:block;width:100%;height:100%;object-fit:cover}
+.dthumb img{filter:grayscale(1) contrast(1.15) brightness(.92);object-position:50% 40%}
+.dthumb .tint{position:absolute;inset:0;background:var(--phos);
   mix-blend-mode:color;opacity:.92;pointer-events:none}
-.portrait::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:radial-gradient(120% 80% at 50% 30%,
-    color-mix(in srgb,var(--phos) 22%,transparent),transparent 68%);
-  mix-blend-mode:screen}
-:root.thermal .portrait::after{mix-blend-mode:multiply;opacity:.4}
-.portrait .cross{position:absolute;inset:0;opacity:.45;
-  background:linear-gradient(var(--phos),var(--phos)) center/100% 1px no-repeat,
-             linear-gradient(var(--phos),var(--phos)) center/1px 100% no-repeat;
-  -webkit-mask:radial-gradient(circle at center,#000 0 40px,transparent 42px);
-  mask:radial-gradient(circle at center,#000 0 40px,transparent 42px)}
-.portrait .tag{position:absolute;left:10px;bottom:9px;font-size:9px;letter-spacing:.24em;
-  text-transform:uppercase;color:var(--hot);text-shadow:var(--gS)}
-.glitch{animation:gl .45s steps(2)}
-@keyframes gl{0%{clip-path:inset(0 0 62% 0);transform:translateX(-9px) scale(1.04)}
-  40%{clip-path:inset(48% 0 18% 0);transform:translateX(10px) scale(1.04)}
-  75%{clip-path:inset(78% 0 0 0);transform:translateX(-5px) scale(1.04)}
-  100%{clip-path:inset(0);transform:scale(1.04)}}
-
-.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
-  border:1px solid var(--rule);border-top:0}
-.strip canvas{display:block;width:100%;aspect-ratio:16/10;
-  filter:brightness(.75);transition:filter .35s,transform .5s}
-.strip canvas:hover{filter:brightness(1.15);transform:scale(1.06)}
-
-.pid{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
+.dwho{flex:1;min-width:180px}
+.pid{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
 .doss h3{font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;
-  font-size:clamp(2.6rem,7vw,5.4rem);line-height:.86;margin:10px 0 6px;color:var(--hot);
-  text-shadow:var(--gS);text-wrap:balance}
-.doss .call{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--lens);
-  margin-bottom:22px}
-.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:16px 20px;
-  border-top:1px solid var(--rule);padding-top:18px;margin-bottom:30px}
-.specs div{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
-.specs b{display:block;font-size:1.1rem;color:var(--text);font-weight:400;margin-top:3px;
-  font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  font-size:clamp(2rem,4.8vw,3.2rem);line-height:.94;margin:4px 0 3px;color:var(--hot);
+  text-shadow:var(--gS)}
+.doss .call{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--lens)}
+.dspec{display:flex;gap:clamp(14px,2.4vw,32px);flex-wrap:wrap}
+.dspec span{font-size:11.5px;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:.05em}
+.dspec em{display:block;font-style:normal;font-size:8.5px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+.glitch{animation:gl .45s steps(2)}
+@keyframes gl{0%{clip-path:inset(0 0 62% 0);transform:translateX(-6px)}
+  40%{clip-path:inset(48% 0 18% 0);transform:translateX(7px)}
+  75%{clip-path:inset(78% 0 0 0);transform:translateX(-4px)}
+  100%{clip-path:inset(0);transform:none}}
 
 /* A manifest, not cards: fixed columns so every row lines up and the
    action always lands in the same place. */
-.clips{border:1px solid var(--rule);margin-top:26px;
-  --cols:1fr 5.5rem 5.5rem clamp(150px,26%,215px)}
+.clips{border:1px solid var(--rule);
+  --cols:1fr 5.5rem 6rem clamp(178px,28%,260px)}
 .chead,.clip{display:grid;grid-template-columns:var(--cols);
   align-items:center;gap:clamp(10px,1.8vw,22px)}
 .chead{padding:11px 18px;border-bottom:1px solid var(--rule);
   background:color-mix(in srgb,var(--panel) 55%,transparent);
   font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
 .chead span:nth-child(2),.chead span:nth-child(3){text-align:right}
-.clip{position:relative;padding:14px 18px;overflow:hidden;transition:background .25s}
+.clip{position:relative;padding:20px;overflow:hidden;transition:background .25s}
 .clip + .clip{border-top:1px solid var(--rule)}
 .clip:hover{background:color-mix(in srgb,var(--phos) 7%,transparent)}
 .clip.alt{border-top:1px solid var(--rule);
@@ -267,7 +246,7 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .clip.alt::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--ir)}
 .clip>*{position:relative;z-index:1}
 .cname{font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;
-  font-size:1.35rem;line-height:1.05;color:var(--text);letter-spacing:.01em;
+  font-size:clamp(1.35rem,2.4vw,1.75rem);line-height:1.05;color:var(--text);letter-spacing:.01em;
   transition:color .25s}
 .cname b{color:var(--hot);font-weight:700;text-shadow:var(--gS)}
 .clip:hover .cname{color:var(--hot)}
@@ -294,8 +273,8 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .dep:hover .ar{transform:translateX(5px)}
 .dep.sm{padding:10px 15px;font-size:9.5px;letter-spacing:.2em;gap:9px}
 /* the row's action: filled, so it reads as the thing to press */
-.cbtns .dep{padding:11px 12px;font-size:9.5px;letter-spacing:.14em;gap:7px;
-  justify-content:center;min-height:38px}
+.cbtns .dep{padding:14px 12px;font-size:10.5px;letter-spacing:.16em;gap:8px;
+  justify-content:center;min-height:50px;font-weight:700}
 .dep.go{background:var(--phos);border-color:var(--phos);box-shadow:var(--gS)}
 .dep.go .bg{background:var(--hot)}
 .dep.go span,.dep.go .ar,.dep.go:hover span,.dep.go:hover .ar{color:var(--ink)}
@@ -388,10 +367,10 @@ body.gated{overflow:hidden}
 }
 
 @media (max-width:620px){
-  .portrait img{aspect-ratio:3/2;object-position:50% 38%}
+  .dhead{gap:14px;padding-bottom:16px;margin-bottom:18px}
+  .dspec{flex:1 1 100%;gap:18px}
   .doss{padding:20px 16px}
   .doss h3{font-size:clamp(2.2rem,12vw,3.2rem)}
-  .specs{grid-template-columns:repeat(2,1fr);gap:14px}
   .chead{display:none}
   .clip{grid-template-columns:1fr auto;gap:4px 14px;padding:16px}
   .cname{grid-column:1/-1;font-size:1.5rem}
@@ -402,7 +381,6 @@ body.gated{overflow:hidden}
   .cap{font-size:12px;max-width:none}
   .lab{letter-spacing:.24em}
   .roster{grid-template-columns:repeat(2,1fr)}
-  .strip{grid-template-columns:repeat(3,1fr)}
   main{padding-bottom:16vh}
 }
 @media (prefers-reduced-motion:reduce){
@@ -503,36 +481,22 @@ body.gated{overflow:hidden}
       <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
       <div class="stamp">Declassified</div>
 
-      <div>
-        <div class="portrait">
+      <header class="dhead">
+        <span class="dthumb">
           <img src="img/price.jpg" alt="John Price silhouetted while rappelling at night" width="736" height="736">
-          <div class="tint"></div>
-          <div class="cross"></div>
-          <div class="tag">Frame 0042 — gain auto</div>
+          <i class="tint"></i>
+        </span>
+        <div class="dwho">
+          <span class="pid">Operator file 01</span>
+          <h3 data-scramble>John Price</h3>
+          <span class="call">Bravo Six — Captain, Task Force 141</span>
         </div>
-        <div class="strip">
-          <canvas width="320" height="200" data-still="11"></canvas>
-          <canvas width="320" height="200" data-still="27"></canvas>
-          <canvas width="320" height="200" data-still="63"></canvas>
+        <div class="dspec">
+          <span><em>Runtime</em>39 min</span>
+          <span><em>Resolution</em>2560×1088</span>
+          <span><em>Frame rate</em>60 fps</span>
         </div>
-      </div>
-
-      <div>
-        <div class="pid">Operator file 01</div>
-        <h3 data-scramble>John Price</h3>
-        <div class="call">Callsign Bravo Six — Captain, Task Force 141</div>
-        <div class="specs">
-          <div>Runtime<b>39 min</b></div>
-          <div>Resolution<b>2560×1088</b></div>
-          <div>Frame rate<b>60 fps</b></div>
-          <div>Volumes<b data-count="4">0</b></div>
-        </div>
-
-        <p class="cap info"><i></i><span><b>On MW1 — the black bars are meant to be there.</b>
-        Some clips were captured at 4K, a taller frame than the ultrawide format the pack is delivered
-        in. Rather than crop into them and throw away picture, those shots sit inside the frame with
-        bars at the sides. Nothing is cut, nothing is downscaled, and the quality is identical
-        throughout.</span></p>
+      </header>
 
         <div class="clips">
           <div class="chead" aria-hidden="true">
@@ -578,10 +542,14 @@ body.gated{overflow:hidden}
           </article>
         </div>
 
-        <p class="cap"><i></i>The Mega file is the same footage as the three above, just in one
+        <p class="cap info"><i></i><span><b>On MW1 — the black bars are meant to be there.</b>
+        Some clips were captured at 4K, a taller frame than the ultrawide format the pack is
+        delivered in. Rather than crop into them and throw away picture, those shots sit inside the
+        frame with bars at the sides. Nothing is cut and nothing is downscaled.</span></p>
+
+        <p class="cap"><i></i><span>The Mega file is the same footage as the three above, just in one
         piece. It sits on Mega's free transfer cap, so a free account will likely stall near the
-        end — take the three separately and you'll never hit it.</p>
-      </div>
+        end — take the three separately and you'll never hit it.</span></p>
     </article>
 
     <article class="doss" id="doss-cuts" data-doss="cutscenes" hidden>
@@ -589,33 +557,19 @@ body.gated{overflow:hidden}
       <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
       <div class="stamp pending">In progress</div>
 
-      <div>
-        <div class="portrait">
-          <canvas width="560" height="700" data-still="41"></canvas>
-          <div class="cross"></div>
-          <div class="tag">Source — 4K</div>
+      <header class="dhead">
+        <span class="dthumb"><canvas width="300" height="300" data-still="41"></canvas></span>
+        <div class="dwho">
+          <span class="pid">Collection 02</span>
+          <h3 data-scramble>Cutscenes</h3>
+          <span class="call">Every cutscene — Modern Warfare I, II and III</span>
         </div>
-        <div class="strip">
-          <canvas width="320" height="200" data-still="52"></canvas>
-          <canvas width="320" height="200" data-still="74"></canvas>
-          <canvas width="320" height="200" data-still="96"></canvas>
+        <div class="dspec">
+          <span><em>Runtime</em>2h 52m</span>
+          <span><em>Source</em>4K</span>
+          <span><em>Status</em>Encoding</span>
         </div>
-      </div>
-
-      <div>
-        <div class="pid">Collection 02</div>
-        <h3 data-scramble>Cutscenes</h3>
-        <div class="call">Every cutscene — Modern Warfare I, II and III</div>
-        <div class="specs">
-          <div>Runtime<b>2h 52m</b></div>
-          <div>Source<b>4K</b></div>
-          <div>Games<b data-count="3">0</b></div>
-          <div>Status<b>Encoding</b></div>
-        </div>
-
-        <p class="cap info"><i></i><span><b>Not up yet — I'm converting these now.</b>
-        They come off a 4K source, so each game gets split into parts small enough to download
-        without an account. Runtimes below are final; sizes and links land when the encode does.</span></p>
+      </header>
 
         <div class="clips">
           <div class="chead" aria-hidden="true">
@@ -649,7 +603,10 @@ body.gated{overflow:hidden}
             </div>
           </article>
         </div>
-      </div>
+
+        <p class="cap info"><i></i><span><b>Not up yet — I'm converting these now.</b>
+        They come off a 4K source, so each game gets split into parts small enough to download
+        without an account. Runtimes are final; sizes and links land when the encode does.</span></p>
     </article>
   </section>
 
@@ -882,7 +839,7 @@ var io = new IntersectionObserver(function(es){
       el.classList.add("in");
       beep(1320,.04,.03,"sine");
       setTimeout(function(){ beep(660,.09,.04); }, 800);
-      var cv = el.querySelector(".portrait img");
+      var cv = el.querySelector(".dthumb img, .dthumb canvas");
       if (cv && !reduce){ cv.classList.add("glitch");
         setTimeout(function(){ cv.classList.remove("glitch"); }, 460); }
     }
@@ -895,17 +852,6 @@ document.querySelectorAll(".doss, .roster").forEach(function(el){ io.observe(el)
 
 var dossiers = document.querySelectorAll(".doss");
 if (fine && !reduce){
-  dossiers.forEach(function(ds){
-    var por = ds.querySelector(".portrait");
-    if (!por) return;
-    ds.addEventListener("pointermove", function(e){
-      var r = por.getBoundingClientRect();
-      var dx = (e.clientX-(r.left+r.width/2))/r.width, dy = (e.clientY-(r.top+r.height/2))/r.height;
-      por.style.transform = "perspective(900px) rotateY("+(dx*6).toFixed(2)+
-        "deg) rotateX("+(-dy*6).toFixed(2)+"deg)";
-    });
-    ds.addEventListener("pointerleave", function(){ por.style.transform = ""; });
-  });
   document.querySelectorAll(".dep").forEach(function(b){
     b.addEventListener("pointermove", function(e){
       var r = b.getBoundingClientRect();
@@ -943,7 +889,7 @@ function showDossier(key){
   target.classList.remove("in"); void target.offsetWidth; target.classList.add("in");
   target.querySelectorAll("[data-scramble]").forEach(scramble);
   target.querySelectorAll("[data-count]").forEach(countUp);
-  var cv = target.querySelector(".portrait img, .portrait canvas");
+  var cv = target.querySelector(".dthumb img, .dthumb canvas");
   if (cv && !reduce){ cv.classList.add("glitch");
     setTimeout(function(){ cv.classList.remove("glitch"); }, 460); }
   beep(1320,.04,.03,"sine");
