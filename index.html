@@ -327,18 +327,20 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   transition:opacity .4s}
 .gwrap:hover .door{opacity:.3}
 .gwrap .door:hover,.gwrap .door:focus-visible{opacity:1}
-.door em{font-style:normal;font-size:9.5px;letter-spacing:.4em;text-transform:uppercase;color:var(--dim)}
-.door strong{position:relative;font-family:var(--display);font-stretch:75%;font-weight:700;
-  text-transform:uppercase;font-size:clamp(2.1rem,5.6vw,4.4rem);line-height:.9;
-  letter-spacing:-.005em;color:var(--text);text-align:center;text-wrap:balance;
-  transition:color .3s,text-shadow .3s}
-.door:hover strong,.door:focus-visible strong{color:var(--hot);text-shadow:var(--gH)}
-.door strong::after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:1px;
-  background:var(--phos);box-shadow:var(--gS);
-  transform:scaleX(0);transition:transform .45s cubic-bezier(.2,.9,.2,1)}
-.door:hover strong::after,.door:focus-visible strong::after{transform:scaleX(1)}
-.dmeta{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
-  text-align:center;max-width:26ch;margin-top:6px}
+/* Two abstract marks instead of labels: hollow stacked frames for footage,
+   solid stacked bars for project data. Different in weight and in axis, so
+   they read apart at a glance without a word between them. */
+.dglyph{width:clamp(140px,19vw,250px);height:auto;color:var(--dim);
+  transition:color .4s,transform .6s cubic-bezier(.2,.8,.2,1),filter .4s}
+.door:hover .dglyph,.door:focus-visible .dglyph{color:var(--hot);transform:scale(1.05);
+  filter:drop-shadow(0 0 16px color-mix(in srgb,var(--phos) 50%,transparent))}
+:root.thermal .door:hover .dglyph{filter:none}
+.dglyph .sweep{opacity:0;transition:opacity .35s}
+.door:hover .sweep,.door:focus-visible .sweep{opacity:.95}
+.door:hover .sy,.door:focus-visible .sy{animation:scanY 2.4s ease-in-out infinite}
+.door:hover .sx,.door:focus-visible .sx{animation:scanX 2.4s ease-in-out infinite}
+@keyframes scanY{0%,100%{transform:translateY(0)}50%{transform:translateY(85px)}}
+@keyframes scanX{0%,100%{transform:translateX(0)}50%{transform:translateX(110px)}}
 
 @media (max-width:760px){
   .gwrap{grid-template-columns:1fr;grid-template-rows:1fr 1px 1fr;max-width:none}
@@ -419,16 +421,33 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 
 <div class="gate" id="gate">
   <div class="gwrap">
-    <button class="door" type="button" data-side="a" data-go="s1">
-      <em>01</em>
-      <strong>Scene packs</strong>
-      <span class="dmeta">My scenepacks</span>
+    <!-- Wordless by design. The labels below are for screen readers and the
+         native tooltip only — nothing renders on screen. -->
+    <button class="door" type="button" data-side="a" data-go="s1"
+            aria-label="Scene packs" title="Scene packs">
+      <svg class="dglyph" viewBox="0 0 200 150" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="11" y="13" width="141" height="87" opacity=".3"></rect>
+          <rect x="29" y="31" width="141" height="87" opacity=".58"></rect>
+          <rect x="47" y="49" width="141" height="87"></rect>
+        </g>
+        <line class="sweep sy" x1="47" y1="50" x2="188" y2="50"
+              stroke="currentColor" stroke-width="2"></line>
+      </svg>
     </button>
     <i class="gline"></i>
-    <button class="door" type="button" data-side="b" data-go="s2">
-      <em>02</em>
-      <strong>Project files</strong>
-      <span class="dmeta">Pjf, presets</span>
+    <button class="door" type="button" data-side="b" data-go="s2"
+            aria-label="Project files and presets" title="Project files and presets">
+      <svg class="dglyph" viewBox="0 0 200 150" aria-hidden="true">
+        <g fill="currentColor">
+          <rect x="16" y="30" width="152" height="13" opacity=".85"></rect>
+          <rect x="16" y="55" width="104" height="13" opacity=".55"></rect>
+          <rect x="16" y="80" width="133" height="13" opacity=".72"></rect>
+          <rect x="16" y="105" width="71" height="13" opacity=".42"></rect>
+        </g>
+        <line class="sweep sx" x1="58" y1="20" x2="58" y2="128"
+              stroke="currentColor" stroke-width="2"></line>
+      </svg>
     </button>
   </div>
 </div>
