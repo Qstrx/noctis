@@ -7,12 +7,12 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="dark">
 <title>Ocean’s Scenepacks</title>
-<meta name="description" content="Free Call of Duty scene packs, plus After Effects project files and presets. 60 fps, no watermark, no sign-in.">
+<meta name="description" content="Free Call of Duty scene packs. 60 fps, no watermark, no sign-in.">
 <link rel="icon" href="img/icon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <meta property="og:title" content="Ocean’s Scenepacks">
-<meta property="og:description" content="Free scene packs, project files and presets. No sign-in, no watermark.">
+<meta property="og:description" content="Free scene packs. No sign-in, no watermark.">
 <meta property="og:image" content="https://qstrx.github.io/noctis/img/price.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#010603">
@@ -121,9 +121,6 @@ body.booted .hud{opacity:1}
   background:linear-gradient(var(--ink),transparent)}
 .bar b{color:var(--phos);font-weight:400;text-shadow:var(--gS);font-variant-numeric:tabular-nums}
 .bar .sp{flex:1}
-.rec{color:var(--ir);display:flex;align-items:center;gap:6px}
-.rec i{width:6px;height:6px;border-radius:50%;background:var(--ir);animation:blip 1.5s infinite}
-@keyframes blip{0%,55%{opacity:1}56%,100%{opacity:.12}}
 .hbtn{pointer-events:auto;background:none;border:1px solid var(--rule);color:var(--dim);
   font:inherit;font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:4px 11px;cursor:none}
 .hbtn:hover{color:var(--phos);border-color:var(--phos);text-shadow:var(--gS)}
@@ -132,12 +129,6 @@ body.booted .hud{opacity:1}
 .brk.tr{top:40px;right:calc(var(--gut) - 10px);border-left:0;border-bottom:0}
 .brk.bl{bottom:40px;left:calc(var(--gut) - 10px);border-right:0;border-top:0}
 .brk.br{bottom:40px;right:calc(var(--gut) - 10px);border-left:0;border-top:0}
-.ladder{position:absolute;right:calc(var(--gut) - 4px);top:50%;transform:translateY(-50%);
-  display:flex;flex-direction:column;align-items:flex-end;gap:7px}
-.ladder .tk{width:14px;height:1px;background:var(--rule);transition:width .3s,background .3s}
-.ladder .tk.on{width:26px;background:var(--phos);box-shadow:var(--gS)}
-.ladder .dep-read{font-size:10px;letter-spacing:.18em;color:var(--phos);margin-bottom:6px;
-  font-variant-numeric:tabular-nums;text-shadow:var(--gS)}
 
 main{position:relative;z-index:10;max-width:var(--maxw);margin:0 auto;
   padding:0 var(--gut) 12vh;opacity:0;transition:opacity 1s .45s}
@@ -187,7 +178,6 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   transition:transform .8s cubic-bezier(.2,.8,.2,1),opacity .8s}
 .doss.in{transform:none;opacity:1}
 .doss[hidden]{display:none}
-.stamp.pending{border-color:var(--lens);color:var(--lens);text-shadow:none;box-shadow:none}
 .doss .lock{position:absolute;background:var(--phos);box-shadow:var(--gM);opacity:0;
   transition:opacity .35s,transform .55s cubic-bezier(.2,.9,.2,1)}
 .doss .lock.h{height:1px;width:64px}
@@ -197,13 +187,6 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .doss .lock.c{bottom:-1px;left:-1px;transform:translate(-30px,30px)}
 .doss .lock.d{bottom:-1px;right:-1px;transform:translate(30px,30px)}
 .doss.in .lock{opacity:1;transform:none}
-.stamp{position:absolute;top:clamp(18px,3vw,34px);right:clamp(18px,3vw,34px);z-index:4;
-  border:2px solid var(--phos);color:var(--phos);padding:5px 12px;font-size:10px;
-  letter-spacing:.26em;text-transform:uppercase;transform:rotate(-9deg) scale(3.4);opacity:0;
-  text-shadow:var(--gS);box-shadow:var(--gS)}
-.doss.in .stamp{animation:slam .5s .8s cubic-bezier(.2,1.2,.3,1) forwards}
-@keyframes slam{0%{transform:rotate(-24deg) scale(3.4);opacity:0}70%{opacity:1}
-  100%{transform:rotate(-9deg) scale(1);opacity:1}}
 .shake{animation:shk .35s}
 @keyframes shk{0%,100%{transform:none}20%{transform:translate(-4px,2px)}
   45%{transform:translate(4px,-2px)}70%{transform:translate(-2px,-1px)}}
@@ -282,45 +265,7 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 
 /* the row's action: filled, so it reads as the thing to press */
 
-.soon{margin:0;font-size:14px;line-height:1.7;color:var(--text);max-width:48ch}
-#s2{min-height:64vh}
 
-.gate{position:fixed;inset:0;z-index:55;background:var(--ink);
-  display:grid;place-items:center;transition:opacity .5s}
-.gate.gone{opacity:0;pointer-events:none;visibility:hidden;
-  transition:opacity .5s,visibility 0s .5s}
-body.gated{overflow:hidden}
-.gwrap{display:grid;grid-template-columns:1fr 1px 1fr;align-items:center;
-  width:100%;max-width:1080px;padding:0 var(--gut)}
-.gline{align-self:stretch;width:1px;margin:12vh 0;
-  background:linear-gradient(transparent,var(--rule) 18%,var(--rule) 82%,transparent)}
-
-.door{background:none;border:0;font:inherit;color:inherit;cursor:none;
-  display:flex;flex-direction:column;align-items:center;gap:14px;
-  padding:clamp(30px,6vh,64px) clamp(14px,3vw,40px);
-  transition:opacity .4s}
-@media (hover:hover){
-  .gwrap:hover .door{opacity:.3}
-  .gwrap .door:hover,.gwrap .door:focus-visible{opacity:1}
-}
-.door em{font-style:normal;font-size:9.5px;letter-spacing:.4em;text-transform:uppercase;color:var(--dim)}
-.door strong{position:relative;font-family:var(--display);font-stretch:75%;font-weight:700;
-  text-transform:uppercase;font-size:clamp(2.1rem,5.6vw,4.4rem);line-height:.9;
-  letter-spacing:-.005em;color:var(--text);text-align:center;text-wrap:balance;
-  transition:color .3s,text-shadow .3s}
-.door:hover strong,.door:focus-visible strong{color:var(--hot);text-shadow:var(--gH)}
-.door strong::after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:1px;
-  background:var(--phos);box-shadow:var(--gS);
-  transform:scaleX(0);transition:transform .45s cubic-bezier(.2,.9,.2,1)}
-.door:hover strong::after,.door:focus-visible strong::after{transform:scaleX(1)}
-.dmeta{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
-  text-align:center;max-width:26ch;margin-top:6px}
-
-@media (max-width:760px){
-  .gwrap{grid-template-columns:1fr;grid-template-rows:1fr 1px 1fr;max-width:none}
-  .gline{width:auto;height:1px;margin:0 8vw;align-self:auto;
-    background:linear-gradient(90deg,transparent,var(--rule) 18%,var(--rule) 82%,transparent)}
-}
 
 .ex{position:fixed;inset:0;z-index:98;display:none;place-content:center;justify-items:center;gap:20px;
   background:color-mix(in srgb,var(--ink) 90%,transparent);padding:var(--gut);text-align:center}
@@ -353,7 +298,7 @@ body.gated{overflow:hidden}
     transform:scaleX(0);transform-origin:left}
   .op.sel .sel-bar{transform:scaleX(1)}
   .apane{border:1px solid var(--rule)}
-  .brk,.ladder{display:none}
+  .brk{display:none}
   .bar .sm{display:none}
   body{cursor:auto}
   .ret{display:none}
@@ -361,7 +306,7 @@ body.gated{overflow:hidden}
 
 @media (hover:none){
   body{-webkit-tap-highlight-color:transparent}
-  .go,.hbtn,.op,.door{cursor:pointer}
+  .go,.hbtn,.op{cursor:pointer}
   .hbtn{min-height:34px;padding:8px 13px}
   .op{min-height:auto;padding:20px 18px}
   .go:active{background:var(--hot)}
@@ -385,7 +330,6 @@ body.gated{overflow:hidden}
   html{scroll-behavior:auto}
   .fx-sweep{display:none}
   .doss{opacity:1;transform:none}
-  .stamp{opacity:1;transform:rotate(-9deg)}
 }
 </style>
 
@@ -407,33 +351,12 @@ body.gated{overflow:hidden}
 
 <div class="hud">
   <div class="bar">
-    <span class="rec" aria-hidden="true"><i></i>Rec</span>
-    <span class="sm" aria-hidden="true">Gain <b id="gain">+18</b></span>
-    <span class="sm" aria-hidden="true">Grid <b id="grid">38.9072N 077.0369W</b></span>
     <span class="sp"></span>
-    <span class="sm" aria-hidden="true">Zulu <b id="clk">00:00:00</b></span>
     <button class="hbtn" id="snd" type="button" aria-pressed="false">Audio: off</button>
     <button class="hbtn" id="mode" type="button">Optic: NVG</button>
   </div>
   <div class="brk tl" aria-hidden="true"></div><div class="brk tr" aria-hidden="true"></div>
   <div class="brk bl" aria-hidden="true"></div><div class="brk br" aria-hidden="true"></div>
-  <div class="ladder" id="ladder" aria-hidden="true"><div class="dep-read" id="depth">000 M</div></div>
-</div>
-
-<div class="gate" id="gate">
-  <div class="gwrap">
-    <button class="door" type="button" data-side="a" data-go="s1">
-      <em>01</em>
-      <strong>Scene packs</strong>
-      <span class="dmeta">My scenepacks</span>
-    </button>
-    <i class="gline"></i>
-    <button class="door" type="button" data-side="b" data-go="s2">
-      <em>02</em>
-      <strong>Project files</strong>
-      <span class="dmeta">Pjf, presets</span>
-    </button>
-  </div>
 </div>
 
 <div class="ex" id="ex">
@@ -448,7 +371,7 @@ body.gated{overflow:hidden}
 <main>
 
   <section id="s1">
-    <p class="lab"><b>01</b> Scene packs — pick a collection</p>
+    <p class="lab">Scene packs</p>
 
     <div class="arch">
     <aside class="roster" id="roster" aria-label="Collections">
@@ -478,8 +401,6 @@ body.gated{overflow:hidden}
     <article class="doss" id="doss" data-doss="price">
       <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
       <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
-      <div class="stamp">Declassified</div>
-
       <header class="dhead">
         <span class="dthumb">
           <img src="img/price.jpg" alt="John Price silhouetted while rappelling at night" width="736" height="736">
@@ -538,21 +459,18 @@ body.gated{overflow:hidden}
           </div>
         </div>
 
-        <p class="cap info"><i></i><span><b>On MW1 — the black bars are meant to be there.</b>
-        Some clips were captured at 4K, a taller frame than the ultrawide format the pack is
-        delivered in. Rather than crop into them and throw away picture, those shots sit inside the
-        frame with bars at the sides. Nothing is cut and nothing is downscaled.</span></p>
+        <p class="cap info"><i></i><span><b>The black bars on MW1 are meant to be there.</b>
+        Some clips were captured at 4K, taller than the ultrawide frame — they sit inside it rather
+        than being cropped. Nothing is cut or downscaled.</span></p>
 
-        <p class="cap"><i></i><span>The Mega file is the same footage as the three above, just in one
-        piece. It sits on Mega's free transfer cap, so a free account will likely stall near the
-        end — take the three separately and you'll never hit it.</span></p>
+        <p class="cap"><i></i><span>The full pack is the same footage in one piece. It sits on Mega's
+        free transfer cap, so a free account will likely stall — take the three separately
+        instead.</span></p>
     </article>
 
     <article class="doss" id="doss-cuts" data-doss="cutscenes" hidden>
       <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
       <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
-      <div class="stamp pending">In progress</div>
-
       <header class="dhead">
         <span class="dthumb"><canvas width="300" height="300" data-still="41"></canvas></span>
         <div class="dwho">
@@ -597,17 +515,11 @@ body.gated{overflow:hidden}
           </div>
         </div>
 
-        <p class="cap info"><i></i><span><b>Not up yet — I'm converting these now.</b>
-        They come off a 4K source, so each game gets split into parts small enough to download
-        without an account. Runtimes are final; sizes and links land when the encode does.</span></p>
+        <p class="cap info"><i></i><span><b>Not up yet — still converting.</b> Runtimes are final;
+        sizes and links land when the encode does.</span></p>
     </article>
     </div>
     </div>
-  </section>
-
-  <section id="s2">
-    <p class="lab"><b>02</b> Project files &amp; presets</p>
-    <p class="soon">I'll upload some project files and presets here soon.</p>
   </section>
 
 </main>
@@ -855,16 +767,6 @@ if (fine && !reduce){
   });
 }
 
-var ladder = document.getElementById("ladder"), depth = document.getElementById("depth");
-for (var i=0;i<12;i++){ var tk = document.createElement("div"); tk.className = "tk"; ladder.appendChild(tk); }
-var tks = ladder.querySelectorAll(".tk");
-addEventListener("scroll", function(){
-  if (innerWidth < 880) return;
-  var max = document.body.scrollHeight - innerHeight, p = max > 0 ? scrollY/max : 0;
-  depth.textContent = String(Math.round(p*860)).padStart(3,"0") + " M";
-  var act = Math.round(p*(tks.length-1));
-  tks.forEach(function(t,ix){ t.classList.toggle("on", ix === act); });
-}, { passive:true });
 
 function showDossier(key){
   var target = null;
@@ -901,27 +803,6 @@ document.querySelectorAll(".op").forEach(function(op){
   });
 });
 
-var gate = document.getElementById("gate"), gateOpen = true;
-document.body.classList.add("gated");
-function dropGate(target){
-  if (!gateOpen) return; gateOpen = false;
-  gate.classList.add("gone");
-  document.body.classList.remove("gated");
-  if (target){
-    var el = document.getElementById(target);
-    if (el) setTimeout(function(){
-      el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-    }, 260);
-  }
-}
-document.querySelectorAll(".door").forEach(function(d){
-  d.addEventListener("pointerenter", function(){ beep(1480,.03,.02,"sine"); });
-  d.addEventListener("click", function(){
-    beep(880,.05,.04,"sine");
-    setTimeout(function(){ beep(1320,.14,.045,"sine"); }, 120);
-    setTimeout(function(){ dropGate(d.dataset.go); }, reduce ? 0 : 260);
-  });
-});
 
 var ex = document.getElementById("ex"), exT = document.getElementById("exT"),
     exL = document.getElementById("exL"), exB = document.getElementById("exB"),
@@ -1010,20 +891,6 @@ function open(){
 setTimeout(open, reduce ? 0 : 1850);
 boot.addEventListener("click", open);
 
-var clk = document.getElementById("clk"), gain = document.getElementById("gain"),
-    grid = document.getElementById("grid");
-setInterval(function(){
-  var d = new Date();
-  clk.textContent = [d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds()]
-    .map(function(n){ return String(n).padStart(2,"0"); }).join(":");
-}, 1000);
-if (!reduce){
-  setInterval(function(){
-    gain.textContent = "+" + (16 + ((Math.random()*5)|0));
-    grid.textContent = (38.9+Math.random()*.02).toFixed(4) + "N 077." +
-      (((Math.random()*900)|0)+100) + "W";
-  }, 2600);
-}
 
 var modeBtn = document.getElementById("mode");
 modeBtn.addEventListener("click", function(){
