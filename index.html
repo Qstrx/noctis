@@ -77,8 +77,6 @@ a{color:inherit;text-decoration:none}
   -webkit-mask:radial-gradient(circle at 50% 50%,transparent var(--r,0%),#000 calc(var(--r,0%) + 14%));
   mask:radial-gradient(circle at 50% 50%,transparent var(--r,0%),#000 calc(var(--r,0%) + 14%))}
 
-/* Above everything, including the boot screen and the download prompt —
-   the pointer is drawn, so it must never end up behind a layer. */
 .ret{position:fixed;z-index:101;width:44px;height:44px;margin:-22px 0 0 -22px;
   pointer-events:none;opacity:0;transition:opacity .4s}
 body.ptr .ret{opacity:1}
@@ -143,8 +141,6 @@ section{padding-top:clamp(90px,17vh,190px)}
 
 main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 
-/* Desktop reads as a file browser: collections pinned left, the open one on the
-   right. Below 880px it folds back to the stacked layout that already worked. */
 .arch{display:grid;grid-template-columns:minmax(186px,236px) 1fr;gap:1px;
   background:var(--rule);border:1px solid var(--rule)}
 .roster{display:flex;flex-direction:column;align-self:stretch;
@@ -189,8 +185,6 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .doss .lock.c{bottom:-1px;left:-1px;transform:translate(-30px,30px)}
 .doss .lock.d{bottom:-1px;right:-1px;transform:translate(30px,30px)}
 .doss.in .lock{opacity:1;transform:none}
-/* The download has already fired by the time this shows — nothing is waiting
-   on it, so it can be loud. It celebrates, it never gates. */
 .hit{position:fixed;inset:0;z-index:99;display:grid;place-items:center;
   background:color-mix(in srgb,var(--ink) 80%,transparent);
   opacity:0;visibility:hidden;pointer-events:none;
@@ -245,8 +239,6 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 @keyframes shk{0%,100%{transform:none}20%{transform:translate(-4px,2px)}
   45%{transform:translate(4px,-2px)}70%{transform:translate(-2px,-1px)}}
 
-/* Identity strip. The photo is a tag on the file, not the subject of the page —
-   it gets a thumbnail, and the downloads get the rest. */
 .dhead{display:flex;align-items:center;gap:clamp(14px,2.6vw,26px);flex-wrap:wrap;
   padding-bottom:20px;border-bottom:1px solid var(--rule);margin-bottom:22px}
 .dthumb{position:relative;flex:none;display:block;width:clamp(62px,8.5vw,88px);
@@ -255,8 +247,6 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .dthumb img{filter:grayscale(1) contrast(1.15) brightness(.92);object-position:50% 40%}
 .dthumb .tint{position:absolute;inset:0;background:var(--phos);
   mix-blend-mode:color;opacity:.92;pointer-events:none}
-/* Banner variant: the art fills the header, the text sits on it.
-   Same duotone as the portrait so it lands in the site's palette. */
 .dhead.banner{position:relative;overflow:hidden;align-items:flex-end;
   min-height:clamp(160px,20vw,230px);padding:clamp(18px,2.6vw,28px);
   border:1px solid var(--rule)}
@@ -286,10 +276,6 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   75%{clip-path:inset(78% 0 0 0);transform:translateX(-4px)}
   100%{clip-path:inset(0);transform:none}}
 
-/* One file, one band — and the whole band is the button. Nothing nested,
-   nothing to aim at: the target is the width of the panel. */
-/* One box per game. Two columns, equal weight, buttons pinned to the bottom
-   so every box lines up whatever the text does. */
 .dls{display:grid;grid-template-columns:1fr 1fr;gap:1px;
   background:var(--rule);border:1px solid var(--rule)}
 .pk{position:relative;display:flex;flex-direction:column;overflow:hidden;
@@ -330,11 +316,6 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 .cap i{flex:none;width:3px;background:var(--ir);opacity:.8}
 .cap.info i{background:var(--lens)}
 .cap.info b{color:var(--text);font-weight:400}
-
-/* the row's action: filled, so it reads as the thing to press */
-
-
-
 
 @media (max-width:880px){
   .arch{grid-template-columns:1fr;border:0;background:none;gap:clamp(26px,5vh,44px)}
@@ -728,7 +709,6 @@ function beep(f,d,v,type){
   o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime + d);
 }
 
-
 var CH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&/*<>";
 function scramble(el){
   if (reduce) return;
@@ -753,8 +733,10 @@ function countUp(el){
   var dec = el.dataset.dec ? +el.dataset.dec : (el.dataset.count.indexOf(".") > -1 ? 1 : 0);
   var pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
   if (reduce){ el.textContent = pre + target.toFixed(dec) + suf; return; }
+  var run = (el._run || 0) + 1; el._run = run;
   var t0 = performance.now(), dur = 1100;
   (function step(now){
+    if (el._run !== run) return;
     var p = Math.min(1,(now-t0)/dur), e = 1-Math.pow(1-p,3);
     el.textContent = pre + (target*e).toFixed(dec) + suf;
     if (p < 1) requestAnimationFrame(step);
@@ -789,7 +771,6 @@ if (fine && !reduce){
     o.addEventListener("pointerenter", function(){ beep(1480,.025,.02,"sine"); });
   });
 }
-
 
 function showDossier(key){
   var target = null;
@@ -826,7 +807,6 @@ document.querySelectorAll(".op").forEach(function(op){
   });
 });
 
-
 var hit = document.getElementById("hit"),
     hitT = document.getElementById("hitT"),
     hitS = document.getElementById("hitS"),
@@ -839,7 +819,6 @@ function hideHit(){
   hit.classList.remove("on","ask");
 }
 
-/* Auto-dismissing message: used for locked packs and missing links. */
 function notify(title, sub, warn){
   clearTimeout(hitTimer); pending = null;
   hitT.textContent = title; hitS.textContent = sub;
@@ -850,8 +829,6 @@ function notify(title, sub, warn){
   hitTimer = setTimeout(hideHit, warn ? 2400 : 2600);
 }
 
-/* The thank-you now stands between the click and the file: it is read first,
-   and the download leaves from the button inside it. */
 function ask(btn, sub){
   clearTimeout(hitTimer);
   pending = btn;
@@ -862,12 +839,11 @@ function ask(btn, sub){
   hit.classList.add("on","ask");
   beep(1180,.07,.04,"sine");
   setTimeout(function(){ beep(1560,.16,.045,"sine"); }, 130);
-  setTimeout(function(){ hitGo.focus(); }, 320);
+  setTimeout(function(){ if (pending) hitGo.focus(); }, 320);
 }
 
 function fire(b){
   var url = b.dataset.url;
-  /* Launched from a real click on this button, so no popup blocking. */
   if (b.hasAttribute("data-direct")){
     var a = document.createElement("a");
     a.href = url; a.download = ""; a.rel = "noopener";
@@ -932,7 +908,6 @@ function open(){
 }
 setTimeout(open, reduce ? 0 : 1850);
 boot.addEventListener("click", open);
-
 
 var modeBtn = document.getElementById("mode");
 modeBtn.addEventListener("click", function(){
