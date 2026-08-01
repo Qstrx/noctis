@@ -1,3 +1,5 @@
-stats.ps1
+﻿stats.ps1
 downloads.cmd
-.download-stats.json
+.download-history.json
+.download-report.html
+
