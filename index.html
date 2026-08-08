@@ -41,9 +41,11 @@
   --gH:0 0 44px rgba(200,255,220,.5);
   --blend:screen; --grain:.06; --scan:.05;
 }
-:root.six:not(.thermal){
+/* second feed runs on an amber optic: always inside its own section,
+   and across the whole scope once you have scrolled into it */
+:root.six:not(.thermal), :root:not(.thermal) #s2{
   --ink:#0a0503; --tube:#150c05; --panel:#1e1409; --rule:#4d3010; --dim:#96682a;
-  --text:#e8be7c; --phos:#ffb443; --hot:#fff2dc; --lens:#7fc8ff; --ir:#ff4d1a;
+  --text:#e8be7c; --phos:#ffb443; --hot:#fff2dc; --lens:#8fbecd; --ir:#ff4d1a;
   --gS:0 0 8px rgba(255,180,67,.42); --gM:0 0 26px rgba(255,180,67,.36);
   --gH:0 0 44px rgba(255,225,170,.5);
 }
@@ -137,28 +139,68 @@ body.booted .hud{opacity:1}
 .brk.br{bottom:40px;right:calc(var(--gut) - 10px);border-left:0;border-top:0}
 
 main{position:relative;z-index:10;max-width:var(--maxw);margin:0 auto;
-  padding:0 var(--gut) 12vh;opacity:0;transition:opacity 1s .45s}
+  padding:clamp(72px,11vh,116px) var(--gut) 12vh;opacity:0;transition:opacity 1s .45s}
 body.booted main{opacity:1}
 .lab{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);
-  display:flex;align-items:center;gap:14px;margin:0 0 30px}
+  display:flex;align-items:center;gap:14px;margin:0 0 clamp(40px,7vh,72px)}
 .lab b{color:var(--phos);font-weight:400;text-shadow:var(--gS)}
 .lab::after{content:"";flex:1;height:1px;background:var(--rule)}
-section{padding-top:clamp(90px,17vh,190px)}
+section{padding-top:0}
 
-main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
+/* section heads */
+.fhead{margin:0 0 clamp(20px,3.4vh,34px)}
+.fno{display:inline-flex;align-items:center;gap:11px;font-family:var(--mono);
+  font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--phos);text-shadow:var(--gS)}
+.fno::before{content:"";width:clamp(20px,4vw,42px);height:1px;background:currentColor}
+.ftit{margin:10px 0 0;font-family:var(--display);font-weight:400;
+  font-size:clamp(32px,5.6vw,62px);line-height:.92;letter-spacing:.015em;
+  text-transform:uppercase;color:var(--hot);text-shadow:var(--gM)}
+.fsub{margin:12px 0 0;font-family:var(--mono);font-size:11.5px;line-height:1.65;
+  letter-spacing:.05em;color:var(--dim);max-width:56ch}
+.fsub b{color:var(--text);font-weight:400}
 
-.feeds{display:flex;align-items:stretch;gap:1px;background:var(--rule);
-  border:1px solid var(--rule);margin-bottom:clamp(22px,4vh,38px);width:fit-content;max-width:100%}
-.feeds .fl{display:flex;align-items:center;padding:0 16px;background:var(--tube);
-  font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
-.feed{position:relative;background:var(--tube);border:0;font:inherit;cursor:none;
-  padding:13px clamp(16px,3vw,30px);color:var(--dim);text-align:left;
-  font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
-  transition:color .3s,background .3s}
-.feed:hover{color:var(--text)}
-.feed.sel{color:var(--ink);background:var(--phos);box-shadow:var(--gS)}
-.feed i{display:block;font-style:normal;font-size:8.5px;letter-spacing:.2em;
-  margin-top:4px;opacity:.75}
+/* handover between the two feeds */
+.hoff{margin:clamp(78px,15vh,168px) 0 clamp(56px,10vh,112px);
+  display:flex;align-items:center;gap:clamp(12px,2.4vw,26px);position:relative}
+.hoff .hl{flex:1;height:1px;min-width:0;
+  background:linear-gradient(90deg,transparent,var(--rule) 30%,var(--rule))}
+.hoff .hl.b{background:linear-gradient(270deg,transparent,var(--rule) 30%,var(--rule))}
+.hoff .hc{display:flex;flex-direction:column;align-items:center;gap:9px;flex:none;
+  text-align:center;padding:0 2px}
+.hoff .hspec{width:clamp(120px,26vw,230px);height:3px;position:relative;overflow:hidden;
+  background:linear-gradient(90deg,#1c7a38,#3dff6e 26%,#9ad46a 50%,#ffb443 74%,#7a4a10);
+  box-shadow:0 0 16px rgba(120,220,120,.28)}
+.hoff .hspec::after{content:"";position:absolute;inset:0;width:32%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  animation:spec 3.6s cubic-bezier(.6,0,.35,1) infinite}
+@keyframes spec{0%{transform:translateX(-120%)}60%,100%{transform:translateX(340%)}}
+.hoff .ht{font-family:var(--mono);font-size:9px;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--dim);white-space:nowrap}
+.hoff .ht b{color:var(--text);font-weight:400}
+:root.thermal .hoff .hspec{background:linear-gradient(90deg,#333,#111 50%,#333);box-shadow:none}
+
+/* feed index rail */
+.rail{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:96;
+  display:flex;flex-direction:column;align-items:flex-end;gap:2px;
+  opacity:0;transition:opacity .8s .7s;pointer-events:none}
+body.booted .rail{opacity:1;pointer-events:auto}
+.rl{writing-mode:vertical-rl;display:flex;align-items:center;gap:10px;
+  text-decoration:none;cursor:none;
+  background:color-mix(in srgb,var(--tube) 86%,transparent);
+  border:1px solid var(--rule);border-right:0;
+  padding:15px 9px;color:var(--dim);font-family:var(--mono);
+  transition:color .3s,background .3s,box-shadow .3s}
+.rl i{width:1px;height:14px;background:currentColor;transition:height .35s}
+.rl b{font-weight:400;font-size:10px;letter-spacing:.2em}
+.rl span{max-height:0;overflow:hidden;opacity:0;white-space:nowrap;
+  font-size:9px;letter-spacing:.26em;text-transform:uppercase;
+  transition:max-height .45s cubic-bezier(.2,.8,.2,1),opacity .3s}
+.rl:hover,.rl:focus-visible{color:var(--text);outline:0}
+.rl:hover span,.rl:focus-visible span,.rl.on span{max-height:150px;opacity:1}
+.rl.on{color:var(--phos);background:color-mix(in srgb,var(--panel) 90%,transparent);
+  box-shadow:var(--gS)}
+.rl.on i{height:26px}
 
 body.tuning main,body.tuning .hud{filter:contrast(1.9) brightness(1.5) saturate(.3)}
 body.tuning #grain{opacity:.5}
@@ -355,9 +397,19 @@ body.tuning .roll{opacity:1;animation:rollDown .42s linear}
   .op.sel .sel-bar{transform:scaleX(1)}
   .apane{border:1px solid var(--rule)}
   .brk{display:none}
-  .bar .sm{display:none}
   body{cursor:auto}
   .ret{display:none}
+}
+
+/* below this the side rail would crowd the panels, so it docks to the bottom */
+@media (max-width:960px){
+  .rail{right:auto;left:50%;top:auto;bottom:14px;transform:translateX(-50%);
+    flex-direction:row;align-items:stretch;gap:1px;
+    background:var(--rule);border:1px solid var(--rule)}
+  .rl{writing-mode:horizontal-tb;border:0;padding:10px 14px;gap:8px;
+    background:color-mix(in srgb,var(--tube) 94%,transparent)}
+  .rl i{display:none}
+  .rl span,.rl.on span,.rl:hover span{max-height:none;opacity:1}
 }
 
 @media (hover:none){
@@ -379,7 +431,12 @@ body.tuning .roll{opacity:1;animation:rollDown .42s linear}
   .cap{font-size:12px;max-width:none}
   .lab{letter-spacing:.24em}
   .roster{grid-template-columns:repeat(2,1fr)}
-  main{padding-bottom:16vh}
+  main{padding-bottom:18vh}
+  .hoff{margin:clamp(52px,11vh,92px) 0 clamp(38px,7vh,66px);gap:12px}
+  .hoff .ht{font-size:8.5px;letter-spacing:.24em}
+  .fsub{font-size:11px}
+  .rl b{font-size:9.5px}
+  .rl span{font-size:8.5px;letter-spacing:.2em}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
@@ -389,7 +446,7 @@ body.tuning .roll{opacity:1;animation:rollDown .42s linear}
 }
 </style>
 
-<h2 class="sr-only">Ocean’s Scenepacks is a night-vision themed archive with two sections: scene packs, grouped into collections, and After Effects project files and presets. Everything is free to download.</h2>
+<h2 class="sr-only">Ocean’s Scenepacks is a night-vision themed archive of free scene packs, in two separate feeds: Call of Duty, covering John Price and the Modern Warfare campaign cutscenes, and Six, covering Joe Graves across both seasons.</h2>
 
 <canvas id="scene" class="fx"></canvas>
 <canvas id="grain" class="fx"></canvas>
@@ -428,59 +485,50 @@ body.tuning .roll{opacity:1;animation:rollDown .42s linear}
   </div>
 </div>
 
+<nav class="rail" id="rail" aria-label="Feeds">
+  <a class="rl on" href="#s1" data-rl="s1"><i aria-hidden="true"></i><b>01</b><span>Call of Duty</span></a>
+  <a class="rl" href="#s2" data-rl="s2"><i aria-hidden="true"></i><b>02</b><span>Six</span></a>
+</nav>
+
 <main>
 
-  <section id="s1">
-    <p class="lab">Scene packs</p>
+  <p class="lab">Scene packs <b>·</b> two feeds</p>
 
-    <div class="feeds" role="group" aria-label="Source">
-      <span class="fl" aria-hidden="true">Feed</span>
-      <button class="feed sel" type="button" data-uni="mw" aria-pressed="true">Modern Warfare<i>Call of Duty</i></button>
-      <button class="feed" type="button" data-uni="six" aria-pressed="false">Six<i>Joe Graves</i></button>
-    </div>
+  <section id="s1">
+    <header class="fhead">
+      <span class="fno">Feed 01</span>
+      <h2 class="ftit" data-scramble>Call of Duty</h2>
+      <p class="fsub">John Price across <b>Modern Warfare I, II and III</b>, plus every campaign
+      cutscene from the three games. Phosphor optic.</p>
+    </header>
 
     <div class="arch">
-    <aside class="roster" id="roster" aria-label="Collections">
-      <button class="op sel" type="button" aria-pressed="true" data-op="price" data-uni="mw">
+    <aside class="roster" aria-label="Call of Duty collections">
+      <button class="op sel" type="button" aria-pressed="true" data-op="price">
         <span class="nm"><em>TF-141</em><strong>John Price</strong></span>
         <span class="st">4 volumes · 39 min</span>
         <span class="sel-bar"></span>
       </button>
-      <button class="op" type="button" aria-pressed="false" data-op="cutscenes" data-uni="mw">
+      <button class="op" type="button" aria-pressed="false" data-op="cutscenes">
         <span class="nm"><em>MW I–III</em><strong>Cutscenes</strong></span>
         <span class="st">3 volumes · 2h 52m</span>
         <span class="sel-bar"></span>
       </button>
-      <button class="op" type="button" aria-pressed="false" data-empty data-uni="mw">
+      <button class="op" type="button" aria-pressed="false" data-empty>
         <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
         <span class="st">Awaiting</span>
         <span class="sel-bar"></span>
       </button>
-      <button class="op" type="button" aria-pressed="false" data-empty data-uni="mw">
+      <button class="op" type="button" aria-pressed="false" data-empty>
         <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
         <span class="st">Awaiting</span>
         <span class="sel-bar"></span>
       </button>
 
-      <button class="op sel" type="button" aria-pressed="true" data-op="six-s1" data-uni="six" hidden>
-        <span class="nm"><em>Joe Graves</em><strong>Season 1</strong></span>
-        <span class="st">2 volumes · 8 episodes</span>
-        <span class="sel-bar"></span>
-      </button>
-      <button class="op" type="button" aria-pressed="false" data-op="six-s2" data-uni="six" hidden>
-        <span class="nm"><em>Joe Graves</em><strong>Season 2</strong></span>
-        <span class="st">2 volumes · 10 episodes</span>
-        <span class="sel-bar"></span>
-      </button>
-      <button class="op" type="button" aria-pressed="false" data-empty data-uni="six" hidden>
-        <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
-        <span class="st">Awaiting</span>
-        <span class="sel-bar"></span>
-      </button>
     </aside>
 
     <div class="apane">
-    <article class="doss" id="doss" data-doss="price" data-uni="mw">
+    <article class="doss" id="doss" data-doss="price">
       <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
       <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
       <header class="dhead">
@@ -550,7 +598,7 @@ body.tuning .roll{opacity:1;animation:rollDown .42s linear}
         instead.</span></p>
     </article>
 
-    <article class="doss" id="doss-cuts" data-doss="cutscenes" data-uni="mw" hidden>
+    <article class="doss" id="doss-cuts" data-doss="cutscenes" hidden>
       <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
       <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
       <header class="dhead banner">
@@ -604,8 +652,48 @@ body.tuning .roll{opacity:1;animation:rollDown .42s linear}
         page — hit the download arrow there. Large files show a virus-scan warning first; that is
         normal, carry on.</span></p>
     </article>
+    </div>
+    </div>
+  </section>
 
-    <article class="doss" id="doss-six1" data-doss="six-s1" data-uni="six" hidden>
+  <div class="hoff" id="hoff">
+    <i class="hl" aria-hidden="true"></i>
+    <div class="hc">
+      <i class="hspec" aria-hidden="true"></i>
+      <span class="ht"><b>Feed 02</b> · amber optic</span>
+    </div>
+    <i class="hl b" aria-hidden="true"></i>
+  </div>
+
+  <section id="s2">
+    <header class="fhead">
+      <span class="fno">Feed 02</span>
+      <h2 class="ftit" data-scramble>Six</h2>
+      <p class="fsub">Joe Graves through <b>both seasons</b> of the series, cut into episode
+      blocks. Its own feed, its own optic — nothing shared with the Call of Duty side.</p>
+    </header>
+
+    <div class="arch">
+    <aside class="roster" aria-label="Six collections">
+      <button class="op sel" type="button" aria-pressed="true" data-op="six-s1">
+        <span class="nm"><em>Joe Graves</em><strong>Season 1</strong></span>
+        <span class="st">2 volumes · 8 episodes</span>
+        <span class="sel-bar"></span>
+      </button>
+      <button class="op" type="button" aria-pressed="false" data-op="six-s2">
+        <span class="nm"><em>Joe Graves</em><strong>Season 2</strong></span>
+        <span class="st">2 volumes · 10 episodes</span>
+        <span class="sel-bar"></span>
+      </button>
+      <button class="op" type="button" aria-pressed="false" data-empty>
+        <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
+        <span class="st">Awaiting</span>
+        <span class="sel-bar"></span>
+      </button>
+    </aside>
+
+    <div class="apane">
+    <article class="doss" id="doss-six1" data-doss="six-s1">
       <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
       <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
 
@@ -647,7 +735,7 @@ body.tuning .roll{opacity:1;animation:rollDown .42s linear}
         cut.</span></p>
     </article>
 
-    <article class="doss" id="doss-six2" data-doss="six-s2" data-uni="six" hidden>
+    <article class="doss" id="doss-six2" data-doss="six-s2" hidden>
       <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
       <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
 
@@ -704,7 +792,7 @@ var mx = innerWidth/2, my = innerHeight/2, px = mx, py = my;
 
 var sc = document.getElementById("scene"), s = sc.getContext("2d"), W, H, motes = [], fog = [];
 function sized(){
-  W = sc.width = innerWidth; H = sc.height = innerHeight;
+  W = sc.width = Math.max(1, innerWidth); H = sc.height = Math.max(1, innerHeight);
   motes = []; fog = [];
   var small = innerWidth < 760;
   var n = Math.min(small ? 55 : 180, Math.round(W*H/(small ? 5200 : 9000)));
@@ -727,14 +815,16 @@ function makeBlob(rgb){
   return c;
 }
 var blobNvgMote = makeBlob("180,255,205"), blobNvgFog = makeBlob("40,190,90");
+var blobSixMote = makeBlob("255,230,180"), blobSixFog = makeBlob("190,110,20");
 var blobThMote  = makeBlob("10,8,6"),      blobThFog  = makeBlob("10,8,6");
 
 function drawScene(t){
   s.clearRect(0,0,W,H);
-  var th = isTherm();
+  var th = isTherm(), am = !th && root.classList.contains("six");
   s.globalCompositeOperation = th ? "multiply" : "lighter";
-  var base = th ? "10,8,6" : "40,190,90";
-  var spMote = th ? blobThMote : blobNvgMote, spFog = th ? blobThFog : blobNvgFog;
+  var base = th ? "10,8,6" : (am ? "190,110,20" : "40,190,90");
+  var spMote = th ? blobThMote : (am ? blobSixMote : blobNvgMote),
+      spFog  = th ? blobThFog  : (am ? blobSixFog  : blobNvgFog);
 
   for (var f=0;f<fog.length;f++){
     var o = fog[f]; o.x += o.vx; o.y += o.vy;
@@ -768,7 +858,8 @@ function drawScene(t){
 var gc = document.getElementById("grain"), gx = gc.getContext("2d"), gf = [], gi = 0;
 function buildGrain(){
   var div = innerWidth < 760 ? 3 : 2;
-  var w = gc.width = Math.ceil(innerWidth/div), h = gc.height = Math.ceil(innerHeight/div);
+  var w = gc.width  = Math.max(1, Math.ceil(innerWidth/div)),
+      h = gc.height = Math.max(1, Math.ceil(innerHeight/div));
   gf = [];
   for (var f=0;f<3;f++){
     var im = gx.createImageData(w,h), d = im.data;
@@ -895,9 +986,8 @@ var io = new IntersectionObserver(function(es){
     io.unobserve(el);
   });
 }, { threshold:.22 });
-document.querySelectorAll(".doss, .roster").forEach(function(el){ io.observe(el); });
+document.querySelectorAll(".doss, .roster, .fhead").forEach(function(el){ io.observe(el); });
 
-var dossiers = document.querySelectorAll(".doss");
 if (fine && !reduce){
   document.querySelectorAll(".go").forEach(function(b){
     b.addEventListener("pointerenter", function(){ beep(1760,.03,.025,"sine"); });
@@ -907,9 +997,9 @@ if (fine && !reduce){
   });
 }
 
-function showDossier(key){
+function showDossier(scope, key){
   var target = null;
-  dossiers.forEach(function(ds){
+  scope.querySelectorAll(".doss").forEach(function(ds){
     var match = ds.dataset.doss === key;
     ds.hidden = !match;
     if (match) target = ds;
@@ -926,40 +1016,6 @@ function showDossier(key){
   setTimeout(function(){ beep(660,.09,.04); }, 800);
 }
 
-var feeds = document.querySelectorAll(".feed");
-function setUniverse(uni){
-  root.classList.toggle("six", uni === "six");
-  feeds.forEach(function(f){
-    var on = f.dataset.uni === uni;
-    f.classList.toggle("sel", on);
-    f.setAttribute("aria-pressed", on ? "true" : "false");
-  });
-  var first = null;
-  document.querySelectorAll(".op").forEach(function(o){
-    var on = o.dataset.uni === uni;
-    o.hidden = !on;
-    if (on && !first && o.dataset.op) first = o;
-  });
-  document.querySelectorAll(".op").forEach(function(o){
-    var isFirst = (o === first);
-    o.classList.toggle("sel", isFirst);
-    o.setAttribute("aria-pressed", isFirst ? "true" : "false");
-  });
-  if (first) showDossier(first.dataset.op);
-}
-feeds.forEach(function(f){
-  f.addEventListener("click", function(){
-    if (f.classList.contains("sel")) return;
-    beep(240,.14,.05,"sawtooth");
-    document.body.classList.add("tuning");
-    setTimeout(function(){
-      setUniverse(f.dataset.uni);
-      beep(1180,.09,.04,"sine");
-    }, reduce ? 0 : 190);
-    setTimeout(function(){ document.body.classList.remove("tuning"); }, reduce ? 0 : 440);
-  });
-});
-
 document.querySelectorAll(".op").forEach(function(op){
   op.addEventListener("click", function(){
     if (op.hasAttribute("data-empty")){
@@ -968,13 +1024,50 @@ document.querySelectorAll(".op").forEach(function(op){
       setTimeout(function(){ op.classList.remove("shake"); }, 380);
       return;
     }
-    document.querySelectorAll(".op").forEach(function(o){
+    var sect = op.closest("section");
+    sect.querySelectorAll(".op").forEach(function(o){
       o.classList.toggle("sel", o === op);
       o.setAttribute("aria-pressed", o === op ? "true" : "false");
     });
-    showDossier(op.dataset.op);
+    showDossier(sect, op.dataset.op);
   });
 });
+
+/* The optic follows the scroll: crossing the handover swaps the whole
+   scope from phosphor to amber, and back on the way up. */
+var hoff = document.getElementById("hoff"),
+    rails = document.querySelectorAll(".rl"),
+    feed = "s1";
+
+function setFeed(next){
+  if (next === feed) return;
+  feed = next;
+  var six = next === "s2";
+  root.classList.toggle("six", six);
+  rails.forEach(function(r){ r.classList.toggle("on", r.dataset.rl === next); });
+  if (reduce) return;
+  document.body.classList.add("tuning");
+  beep(six ? 900 : 1240, .09, .035, "sine");
+  setTimeout(function(){ beep(six ? 1240 : 900, .05, .025, "sine"); }, 130);
+  setTimeout(function(){ document.body.classList.remove("tuning"); }, 430);
+}
+
+/* A trip line across the middle of the optic: whichever side the divider
+   sits on decides the feed. Read on every frame the page actually scrolls,
+   so a fast flick can never skip the crossing. */
+var queued = false;
+function readFeed(){
+  queued = false;
+  setFeed(hoff.getBoundingClientRect().top < innerHeight * .48 ? "s2" : "s1");
+}
+function scheduleFeed(){
+  if (queued) return;
+  queued = true;
+  requestAnimationFrame(readFeed);
+}
+addEventListener("scroll", scheduleFeed, { passive:true });
+addEventListener("resize", scheduleFeed, { passive:true });
+readFeed();
 
 var hit = document.getElementById("hit"),
     hitT = document.getElementById("hitT"),
