@@ -1,0 +1,955 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="color-scheme" content="dark">
+<title>Six — Joe Graves Scene Packs</title>
+<meta name="description" content="Free Joe Graves scene packs from Six. One file per episode, straight from the Blu-ray.">
+<link rel="icon" href="img/icon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<meta property="og:title" content="Six — Joe Graves Scene Packs">
+<meta property="og:description" content="Every episode, one file each. No sign-in, no watermark.">
+<meta property="og:image" content="https://qstrx.github.io/noctis/img/joe.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#070605">
+</head>
+<body>
+<style>
+:root{
+  --cod-ink:#010603; --cod-text:#79e295; --cod-phos:#3dff6e; --cod-hot:#e8ffee;
+
+  --ink:#070605; --panel:#0f0d0a; --rule:#332813; --dim:#8a6f3e;
+  --text:#d8b877; --amber:#ffb43c; --hot:#fff4dc; --red:#ff3b24;
+
+  --mono:Consolas,"SF Mono",ui-monospace,"Cascadia Mono",monospace;
+  --disp:Bahnschrift,"DIN Condensed","Franklin Gothic Medium","Arial Narrow",sans-serif;
+  --gut:clamp(18px,4.5vw,72px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#000;color:var(--text);font-family:var(--mono);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-text-size-adjust:100%;text-size-adjust:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+
+/* ═════════════════════════  SIX  ═════════════════════════ */
+/* dvh, not vh: on a phone 100vh is the *tallest* the viewport ever gets, so
+   it leaves a phantom scroll while the browser bar is showing */
+.world{opacity:0;transition:opacity .6s;background:var(--ink);
+  min-height:100vh;min-height:100dvh}
+.world.on{opacity:1}
+
+#terrain{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:.55}
+.veilw{position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse 76% 84% at 50% 44%,transparent 44%,
+    color-mix(in srgb,var(--ink) 45%,transparent) 74%,var(--ink) 100%)}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:8;pointer-events:none;
+  display:flex;align-items:center;gap:16px;
+  padding:calc(12px + env(safe-area-inset-top,0px))
+          calc(var(--gut) + env(safe-area-inset-right,0px)) 12px
+          calc(var(--gut) + env(safe-area-inset-left,0px));
+  font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
+  background:linear-gradient(var(--ink),transparent)}
+.topbar .live{color:var(--red);display:flex;align-items:center;gap:8px}
+.topbar .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 9px var(--red);animation:blink 1.6s steps(1) infinite}
+@keyframes blink{50%{opacity:.2}}
+.topbar .sp{flex:1}
+.topbar b{color:var(--amber);font-weight:400;font-variant-numeric:tabular-nums}
+
+/* the page declares viewport-fit=cover, so the notch and the home indicator
+   have to be paid for explicitly or content slides underneath them */
+.wrap{position:relative;z-index:5;max-width:1100px;margin:0 auto;
+  padding:calc(clamp(62px,10vh,96px) + env(safe-area-inset-top,0px))
+          calc(var(--gut) + env(safe-area-inset-right,0px))
+          calc(14vh + env(safe-area-inset-bottom,0px))
+          calc(var(--gut) + env(safe-area-inset-left,0px))}
+.back{display:inline-flex;align-items:center;gap:10px;font-size:9.5px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:clamp(24px,4vh,42px)}
+.back::before{content:"";width:20px;height:1px;background:currentColor}
+.back:hover{color:var(--amber)}
+
+.subject{display:flex;align-items:flex-end;gap:clamp(14px,3vw,28px);flex-wrap:wrap;
+  padding-bottom:18px;border-bottom:1px solid var(--rule)}
+
+/* the subject, held in the sensor: brackets echo the reticle on the grid.
+   the tint is kept light so the goggle tubes stay cool against the amber. */
+.portrait{position:relative;flex:none;align-self:center;
+  width:clamp(76px,10vw,112px);aspect-ratio:1;overflow:hidden;
+  background:var(--panel);border:1px solid var(--rule)}
+.portrait img{display:block;width:100%;height:100%;object-fit:cover;
+  filter:contrast(1.06) saturate(.92)}
+.portrait .ptint{position:absolute;inset:0;background:var(--amber);
+  mix-blend-mode:color;opacity:.22;pointer-events:none}
+.portrait .pscan{position:absolute;inset:0;pointer-events:none;opacity:.13;
+  background:repeating-linear-gradient(to bottom,var(--amber) 0 1px,transparent 1px 3px)}
+.portrait .pc{position:absolute;width:10px;height:10px;border:1px solid var(--amber);
+  pointer-events:none}
+.portrait .pc.a{left:4px;top:4px;border-width:1px 0 0 1px}
+.portrait .pc.b{right:4px;top:4px;border-width:1px 1px 0 0}
+.portrait .pc.c{left:4px;bottom:4px;border-width:0 0 1px 1px}
+.portrait .pc.d{right:4px;bottom:4px;border-width:0 1px 1px 0}
+.subject h2{margin:9px 0 0;font-family:var(--disp);font-size:clamp(32px,6.2vw,62px);line-height:.88;
+  text-transform:uppercase;color:var(--hot);text-shadow:0 0 22px rgba(255,180,60,.22)}
+.subject .meta{margin-left:auto;display:flex;gap:clamp(14px,3vw,30px);flex-wrap:wrap}
+.subject .meta div{font-size:12.5px;color:var(--text);font-variant-numeric:tabular-nums}
+.subject .meta em{display:block;font-style:normal;font-size:8.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+
+/* where the files come from. Dense on purpose: a statement carrying the
+   specs on its back, rather than two icons with a long empty wire between. */
+.prov{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(13px,2vw,20px);
+  margin-top:20px;padding:clamp(14px,2vw,18px) clamp(14px,2.2vw,20px);
+  border:1px solid var(--rule);border-left:2px solid var(--amber);
+  background:color-mix(in srgb,var(--panel) 62%,transparent)}
+.provin{min-width:0;flex:1 1 auto}
+.provk{display:block;font-size:8px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:5px}
+.provline{margin:0;font-family:var(--disp);font-weight:400;
+  font-size:clamp(16px,2.3vw,23px);line-height:1.15;letter-spacing:.015em;
+  color:var(--hot)}
+.provline b{font-weight:400;color:var(--amber);
+  box-shadow:inset 0 -2px 0 rgba(255,180,60,.4)}
+
+/* pushed to the far edge so the row spans the full width instead of
+   trailing off into empty space */
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:0 0 0 auto;padding:0;
+  justify-content:flex-end;flex:0 1 auto}
+.chip{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+  border:1px solid var(--rule);padding:5px 9px;white-space:nowrap;
+  background:color-mix(in srgb,var(--ink) 45%,transparent)}
+.chip.hi{color:var(--ink);background:var(--amber);border-color:var(--amber)}
+
+.disc{position:relative;flex:none;width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--amber);overflow:hidden;margin-top:2px;
+  box-shadow:0 0 14px rgba(255,180,60,.24)}
+.disc::before{content:"";position:absolute;inset:38%;border-radius:50%;
+  border:1px solid var(--amber);opacity:.55;z-index:2}
+.disc::after{content:"";position:absolute;inset:-40%;
+  background:conic-gradient(from 0turn,transparent 0 62%,rgba(255,180,60,.55) 80%,transparent 92%);
+  animation:discSpin 3.6s linear infinite}
+@keyframes discSpin{to{transform:rotate(1turn)}}
+
+@media (max-width:760px){
+  .prov{gap:12px;padding:14px}
+  .disc{width:28px;height:28px}
+  .provin{flex-basis:calc(100% - 40px)}
+  /* line the chips up under the sentence, past the disc, not under the disc */
+  .chips{margin-left:0;justify-content:flex-start;flex-basis:100%;padding-left:40px}
+  .chip{font-size:8.5px;padding:4px 8px;letter-spacing:.16em}
+}
+@media (prefers-reduced-motion:reduce){ .disc::after{animation:none} }
+
+.season{margin-top:clamp(38px,6.5vh,68px)}
+.shead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.sno{font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--amber)}
+.sname{margin:0;font-family:var(--disp);font-size:clamp(19px,2.6vw,27px);text-transform:uppercase;
+  color:var(--hot);letter-spacing:.03em}
+.smeta{margin-left:auto;font-size:10.5px;letter-spacing:.12em;color:var(--dim)}
+
+/* Column count is picked to divide the episode count exactly, so a season
+   never ends on a half-empty row. Set from script; 2 is a safe fallback. */
+.grid{position:relative;display:grid;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);grid-template-columns:repeat(var(--cols,2),1fr)}
+
+.ret{position:absolute;z-index:4;pointer-events:none;opacity:0;
+  transition:transform .34s cubic-bezier(.2,.85,.25,1),width .34s cubic-bezier(.2,.85,.25,1),
+             height .34s cubic-bezier(.2,.85,.25,1),opacity .25s}
+.ret.on{opacity:1}
+.ret i{position:absolute;width:13px;height:13px;border:1px solid var(--red);
+  transition:border-color .3s}
+.ret i:nth-child(1){left:-1px;top:-1px;border-width:1px 0 0 1px}
+.ret i:nth-child(2){right:-1px;top:-1px;border-width:1px 1px 0 0}
+.ret i:nth-child(3){left:-1px;bottom:-1px;border-width:0 0 1px 1px}
+.ret i:nth-child(4){right:-1px;bottom:-1px;border-width:0 1px 1px 0}
+.ret.hold i{border-color:var(--amber)}
+
+.ep{position:relative;display:flex;flex-direction:column;align-items:stretch;
+  background:color-mix(in srgb,var(--panel) 72%,transparent);
+  padding:0;text-align:left;overflow:hidden;
+  transition:background .25s;
+  opacity:0;transform:translateY(6px);animation:rise .5s ease forwards;
+  animation-delay:calc(var(--i,0) * 26ms)}
+@keyframes rise{to{opacity:1;transform:none}}
+.ep:hover,.ep:focus-visible{background:color-mix(in srgb,var(--panel) 96%,transparent);outline:0}
+
+/* the still: a frame from the episode, sitting in the palette rather than
+   fighting it. it lifts and warms up under the reticle. */
+.shot{position:relative;display:block;width:100%;aspect-ratio:16/9;
+  overflow:hidden;background:#0a0806;line-height:0}
+.shot img{width:100%;height:100%;object-fit:cover;display:block;
+  filter:contrast(1.04) saturate(.72) brightness(.72);
+  transition:filter .4s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+.ep:hover .shot img,.ep:focus-visible .shot img{
+  filter:contrast(1.06) saturate(1) brightness(1);transform:scale(1.05)}
+.shot .tint{position:absolute;inset:0;background:var(--amber);
+  mix-blend-mode:color;opacity:.2;transition:opacity .4s}
+.ep:hover .shot .tint,.ep:focus-visible .shot .tint{opacity:.07}
+.shot::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to bottom,transparent 45%,rgba(15,13,10,.9))}
+
+.epinfo{display:flex;flex-direction:column;gap:5px;padding:12px 13px 13px}
+.epk{font-size:8.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim)}
+.epn{font-family:var(--disp);font-size:clamp(24px,3.2vw,32px);line-height:.9;
+  color:var(--hot);letter-spacing:.02em;transition:color .25s}
+.ep:hover .epn,.ep:focus-visible .epn{color:var(--amber)}
+.epm{font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums}
+/* pinned to the still, not to the card, so a longer caption can never
+   push it down over the text */
+.epa{position:absolute;right:8px;bottom:8px;z-index:2;
+  width:26px;height:26px;display:grid;place-content:center;
+  font-size:13px;color:var(--hot);background:rgba(10,8,6,.62);
+  border:1px solid rgba(255,180,60,.35);
+  transition:color .25s,background .25s,border-color .25s,transform .25s}
+.ep:hover .epa,.ep:focus-visible .epa{color:var(--ink);background:var(--amber);
+  border-color:var(--amber);transform:translateY(2px)}
+
+/* nothing filed yet: a dead slot in the feed, hatched and dark */
+.ep.pending .shot{background:
+  repeating-linear-gradient(-45deg,transparent 0 8px,rgba(138,111,62,.06) 8px 16px),
+  #0a0806}
+.ep.pending .shot::before{content:"";position:absolute;left:50%;top:50%;
+  width:16px;height:16px;translate:-50% -50%;border:1px solid var(--rule);border-radius:50%}
+.ep.pending .epn{color:var(--dim)}
+.ep.pending .epa{color:var(--rule);border-color:var(--rule);background:rgba(10,8,6,.5)}
+.ep.pending:hover .epn,.ep.pending:focus-visible .epn{color:var(--text)}
+.ep.pending:hover .epa,.ep.pending:focus-visible .epa{
+  color:var(--red);border-color:var(--red);background:rgba(10,8,6,.7);transform:none}
+.ep.ready::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;z-index:3;
+  background:var(--amber);box-shadow:0 0 10px rgba(255,180,60,.45)}
+
+
+/* the "this is not a fault" notice: shown on the way in and acknowledged,
+   so nobody meets a stray frame without having been told first */
+/* ── the cut notice: instead of describing the stray frame, it shows one ──
+   A strip of film runs under a playhead. The frames of the clip light amber
+   as it passes; the two at the edges light red, because they came from the
+   scene next door. The warning demonstrates itself. */
+.ntbox{position:relative;border:1px solid var(--amber);background:var(--panel);
+  padding:clamp(26px,4vw,40px);max-width:660px;width:100%;
+  max-height:calc(100dvh - 48px);overflow-y:auto;
+  display:flex;flex-direction:column;align-items:stretch;gap:clamp(18px,3vw,26px);
+  animation:ntIn .45s cubic-bezier(.2,.85,.25,1) both}
+@keyframes ntIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+/* transform, not margin: margin on an absolute child enlarges the scrollable
+   area and made the dialog sprout a scrollbar while the brackets flew in */
+.ntb{position:absolute;width:15px;height:15px;border:1px solid var(--amber)}
+/* they start inward and open out to the corners, so nothing ever sits
+   outside the box and the dialog never flashes a scrollbar */
+.ntb.tl{left:6px;top:6px;border-width:1px 0 0 1px;--tx:10px;--ty:10px}
+.ntb.tr{right:6px;top:6px;border-width:1px 1px 0 0;--tx:-10px;--ty:10px}
+.ntb.bl{left:6px;bottom:6px;border-width:0 0 1px 1px;--tx:10px;--ty:-10px}
+.ntb.br{right:6px;bottom:6px;border-width:0 1px 1px 0;--tx:-10px;--ty:-10px}
+.ntbox.intro .ntb{animation:ntBrk .5s cubic-bezier(.2,.85,.25,1) both}
+@keyframes ntBrk{
+  from{opacity:0;transform:translate(var(--tx,0),var(--ty,0))}
+  to{opacity:1;transform:none}}
+
+.ntk{font-size:9px;letter-spacing:.36em;text-transform:uppercase;color:var(--red);
+  display:flex;align-items:center;gap:8px;align-self:flex-start}
+.ntk::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 9px var(--red);animation:blink 1.6s steps(1) infinite}
+
+/* Two statements, and in each one the meat is set large while the framing
+   clause stays small. There is no headline competing with them: the words
+   of the message are the biggest thing in the box. */
+.ntbody{display:flex;flex-direction:column;gap:clamp(18px,3vw,26px)}
+/* Readable by default. The staggered reveal is layered on top and removed
+   again once it has played, so text that MUST be read can never end up
+   stranded at opacity 0 if the animation never runs. */
+.stmt{position:relative;padding-left:clamp(34px,6vw,52px)}
+.ntbox.intro .stmt{animation:ntLine .55s cubic-bezier(.2,.85,.25,1) both;
+  animation-delay:var(--d,0s)}
+@keyframes ntLine{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.stmt::before{content:"";position:absolute;left:0;top:4px;bottom:2px;width:2px;
+  background:var(--amber);box-shadow:0 0 10px rgba(255,180,60,.4)}
+.stmt.warn::before{background:var(--red);box-shadow:0 0 10px rgba(255,59,36,.45)}
+.sno{position:absolute;left:12px;top:2px;font-family:var(--mono);font-size:9px;
+  letter-spacing:.2em;color:var(--dim)}
+.stmt.warn .sno{color:var(--red)}
+
+.lead{margin:0 0 6px;font-size:11.5px;line-height:1.55;letter-spacing:.04em;
+  color:var(--dim)}
+.loud{margin:0;font-family:var(--disp);font-weight:400;
+  font-size:clamp(21px,3.4vw,30px);line-height:1.12;letter-spacing:.015em;
+  color:var(--hot);text-shadow:0 0 22px rgba(255,180,60,.22)}
+.loud b{font-weight:400;color:var(--amber)}
+.stmt.warn .loud b{color:var(--red);box-shadow:inset 0 -2px 0 rgba(255,59,36,.5)}
+
+/* the evidence, kept small and under the sentence it belongs to */
+.proof{margin-top:14px;max-width:290px}
+.proof canvas{display:block;width:100%;height:clamp(50px,11vw,62px);
+  background:#050403;border:1px solid var(--rule)}
+.plab{display:flex;justify-content:space-between;gap:6px;margin-top:6px;
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.plab b{font-weight:400;color:var(--red);flex:1;white-space:nowrap}
+.plab b:last-child{text-align:right}
+.plab em{font-style:normal;color:var(--amber);flex:1;text-align:center;white-space:nowrap}
+
+/* the button arms itself once the lines have landed */
+.ntbox .hgo{position:relative;margin-top:8px;align-self:stretch;overflow:hidden;
+  background:none;border:1px solid var(--rule);color:var(--dim);
+  transition:background .35s,color .35s,border-color .35s}
+.ntbox .hgo span{position:relative;z-index:2}
+.ntbox .hgo .fill{position:absolute;left:0;top:0;bottom:0;width:0;z-index:1;
+  background:color-mix(in srgb,var(--amber) 22%,transparent)}
+.ntbox .hgo.filling .fill{animation:ntFill 1.3s linear forwards}
+@keyframes ntFill{to{width:100%}}
+.ntbox .hgo:not([disabled]){background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.ntbox .hgo:not([disabled]):hover{box-shadow:0 0 24px rgba(255,180,60,.45)}
+.ntbox .hgo[disabled]{cursor:wait}
+
+/* short screens: give the notice back its vertical room so the whole
+   message and its button sit on one screenful */
+@media (max-height:700px){
+  .ntbox{padding:18px 18px 20px;gap:15px}
+  .ntbody{gap:16px}
+  .loud{font-size:clamp(18px,4.6vw,22px)}
+  .proof{margin-top:10px}
+  .proof canvas{height:44px}
+}
+@media (max-height:460px){
+  .ntbox{gap:12px}
+  .ntbody{gap:12px}
+  .proof{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .ntbox.intro .stmt,.ntbox.intro .ntb{animation:none}
+  .ntbox .hgo .fill{display:none}
+}
+
+
+/* ── credits step, same as the Call of Duty side ── */
+.hit{position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;
+  padding:calc(24px + env(safe-area-inset-top,0px))
+          calc(24px + env(safe-area-inset-right,0px))
+          calc(24px + env(safe-area-inset-bottom,0px))
+          calc(24px + env(safe-area-inset-left,0px));
+  background:color-mix(in srgb,var(--ink) 82%,transparent);
+  opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.hit.on{opacity:1;visibility:visible}
+.hitin{border:1px solid var(--amber);background:var(--panel);padding:clamp(26px,4vw,40px);
+  max-width:420px;width:100%;text-align:center;display:flex;flex-direction:column;gap:12px}
+.hitin strong{font-family:var(--disp);font-weight:400;font-size:clamp(24px,4vw,32px);
+  text-transform:uppercase;color:var(--hot);letter-spacing:.03em}
+.hitin span{font-size:12px;color:var(--dim)}
+.hgo{margin-top:8px;min-height:48px;background:var(--amber);color:var(--ink);
+  font-size:10px;letter-spacing:.28em;text-transform:uppercase;padding:14px 20px}
+.hno{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);padding:6px}
+.hno:hover{color:var(--text)}
+
+/* ── in-theme message, instead of a browser alert ── */
+.toast{position:fixed;left:50%;bottom:26px;translate:-50% 0;z-index:97;
+  border:1px solid var(--rule);background:var(--panel);color:var(--text);
+  padding:12px 20px;font-size:11px;letter-spacing:.14em;
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .3s,visibility .3s,transform .3s;max-width:min(90vw,460px);text-align:center}
+.toast.on{opacity:1;visibility:visible;transform:none}
+.toast b{color:var(--amber);font-weight:400}
+
+@media (max-width:620px){
+  /* micro-labels get a touch bigger at arm's length */
+  .epk,.chip,.provk,.subject .meta em{font-size:9px}
+  .ep{min-height:96px}
+  .subject .meta{margin-left:0;flex-basis:100%}
+  .smeta{margin-left:0;flex-basis:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .ep{opacity:1;transform:none}
+}
+</style>
+
+<h1 class="sr">Six — Joe Graves scene packs, one file per episode, cut straight from the Blu-ray.</h1>
+
+<!-- ══════════════════════ SIX ══════════════════════ -->
+<div class="world on" id="world">
+  <canvas id="terrain" aria-hidden="true"></canvas>
+  <div class="veilw" aria-hidden="true"></div>
+
+  <div class="topbar" aria-hidden="true">
+    <span class="live">Live</span>
+    <span>MQ-9 · <b>Reaper</b></span>
+    <span class="sp"></span>
+    <span id="clk">00:00:00Z</span>
+  </div>
+
+  <div class="wrap">
+    <a class="back" href="./">Back to the choice</a>
+
+    <div class="subject">
+      <span class="portrait">
+        <img src="img/joe.jpg" alt="Joe Graves under red light, quad-tube night vision raised to his eyes"
+          width="736" height="736" decoding="async">
+        <i class="ptint" aria-hidden="true"></i>
+        <i class="pscan" aria-hidden="true"></i>
+        <i class="pc a" aria-hidden="true"></i><i class="pc b" aria-hidden="true"></i>
+        <i class="pc c" aria-hidden="true"></i><i class="pc d" aria-hidden="true"></i>
+      </span>
+      <div>
+        <h2>Joe Graves</h2>
+      </div>
+      <div class="meta">
+        <div><em>Seasons</em>2</div>
+        <div><em>Episodes</em>18</div>
+        <div><em>Files</em>18</div>
+      </div>
+    </div>
+
+    <div class="prov">
+      <i class="disc" aria-hidden="true"></i>
+      <div class="provin">
+        <span class="provk">Source</span>
+        <p class="provline">Cut directly from the <b>Blu-ray source</b></p>
+      </div>
+      <ul class="chips">
+        <li class="chip hi">No re-encode</li>
+        <li class="chip">1920×1080</li>
+        <li class="chip">24 fps</li>
+        <li class="chip">H.264 · AAC</li>
+      </ul>
+    </div>
+
+
+    <section class="season">
+      <header class="shead">
+        <span class="sno">Season 01</span>
+        <h3 class="sname">Eight episodes</h3>
+        <span class="smeta">Cut, not up yet</span>
+      </header>
+      <div class="grid" id="g1"></div>
+    </section>
+
+    <section class="season">
+      <header class="shead">
+        <span class="sno">Season 02</span>
+        <h3 class="sname">Ten episodes</h3>
+        <span class="smeta">1h 27m · 13.6 GB · one file each</span>
+      </header>
+      <div class="grid" id="g2"></div>
+    </section>
+
+  </div>
+</div>
+
+<div class="hit" id="notice">
+  <div class="ntbox" role="dialog" aria-modal="true" aria-labelledby="ntT" aria-describedby="ntBody">
+    <i class="ntb tl" aria-hidden="true"></i><i class="ntb tr" aria-hidden="true"></i>
+    <i class="ntb bl" aria-hidden="true"></i><i class="ntb br" aria-hidden="true"></i>
+
+    <span class="ntk" id="ntT">Notice</span>
+
+    <div class="ntbody" id="ntBody">
+      <section class="stmt" style="--d:.1s">
+        <span class="sno" aria-hidden="true">01</span>
+        <p class="lead">To preserve maximum quality and avoid additional re-encoding,</p>
+        <p class="loud">the clips were cut <b>directly from the Blu-ray source</b>.</p>
+      </section>
+
+      <section class="stmt warn" style="--d:.75s">
+        <span class="sno" aria-hidden="true">02</span>
+        <p class="lead">As a result,</p>
+        <p class="loud">the <b>first or last frame</b> may occasionally belong to
+          the adjacent scene.</p>
+        <div class="proof" aria-hidden="true">
+          <canvas id="ntFilm"></canvas>
+          <span class="plab"><b>other scene</b><em>your clip</em><b>other scene</b></span>
+        </div>
+      </section>
+    </div>
+
+    <button class="hgo arm" id="ntOk" type="button" disabled>
+      <i class="fill" aria-hidden="true"></i><span>OK, got it</span>
+    </button>
+  </div>
+</div>
+
+<div class="hit" id="hit">
+  <div class="hitin" role="dialog" aria-modal="true" aria-labelledby="hitT">
+    <strong id="hitT">Remember to give credits</strong>
+    <span id="hitS">Season 1, episode 1</span>
+    <button class="hgo" id="hitGo" type="button">Start download</button>
+    <button class="hno" id="hitNo" type="button">Cancel</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+"use strict";
+var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+var world = document.getElementById("world");
+
+/* ─────────────────────────────────────────────────────────────
+   Episode data. Everything is driven from here: fill in runtime,
+   size and url as each episode gets cut, and the box, the counter
+   and the progress bar all follow on their own.
+   The three marked ready below are placeholders, to show what a
+   finished episode looks like next to a pending one.
+   ───────────────────────────────────────────────────────────── */
+var REL = "https://github.com/Qstrx/noctis/releases/download/six-s2/";
+
+/* One still per episode, named after its box. Add a season here the day its
+   frames exist and every box in it picks up an image on its own. */
+var SHOTS = { 2: "img/six/s2-e" };
+
+var EPISODES = {
+  /* season 1 is cut but not uploaded yet, so it stays pending on purpose:
+     a box only turns on once its file is actually reachable. */
+  1: [
+    { ep:1 }, { ep:2 }, { ep:3 }, { ep:4 },
+    { ep:5 }, { ep:6 }, { ep:7 }, { ep:8 }
+  ],
+  2: [
+    { ep:1,  run:"9:25",  size:"1.51 GB", url:REL+"Six-S2-E01.mp4" },
+    { ep:2,  run:"11:35", size:"1.83 GB", url:REL+"Six-S2-E02.mp4" },
+    { ep:3,  run:"7:48",  size:"1.30 GB", url:REL+"Six-S2-E03.mp4" },
+    { ep:4,  run:"6:47",  size:"1.12 GB", url:REL+"Six-S2-E04.mp4" },
+    { ep:5,  run:"5:13",  size:"0.87 GB", url:REL+"Six-S2-E05.mp4" },
+    { ep:6,  run:"8:33",  size:"1.26 GB", url:REL+"Six-S2-E06.mp4" },
+    { ep:7,  run:"8:06",  size:"1.24 GB", url:REL+"Six-S2-E07.mp4" },
+    { ep:8,  run:"6:57",  size:"1.24 GB", url:REL+"Six-S2-E08.mp4" },
+    { ep:9,  run:"8:05",  size:"1.35 GB", url:REL+"Six-S2-E09.mp4" },
+    { ep:10, run:"14:51", size:"1.83 GB", url:REL+"Six-S2-E10.mp4" }
+  ]
+};
+
+function buildSeason(host, season){
+  var ret = document.createElement("i");
+  ret.className = "ret";
+  ret.innerHTML = "<i></i><i></i><i></i><i></i>";
+  ret.setAttribute("aria-hidden","true");
+  host.appendChild(ret);
+
+  EPISODES[season].forEach(function(d, idx){
+    var ready = !!d.url;
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "ep " + (ready ? "ready" : "pending");
+    b.style.setProperty("--i", idx);
+    b.dataset.season = season;
+    b.dataset.ep = d.ep;
+    if (ready) b.dataset.url = d.url;
+    var nn = (d.ep < 10 ? "0" : "") + d.ep;
+    var stillSrc = SHOTS[season] ? SHOTS[season] + nn + ".jpg" : null;
+    b.innerHTML =
+      '<span class="shot">' +
+        (stillSrc
+          ? '<img src="' + stillSrc + '" alt="" width="480" height="270" decoding="async">' +
+            '<i class="tint"></i>'
+          : '') +
+        '<span class="epa" aria-hidden="true">' + (ready ? "↓" : "○") + '</span>' +
+      '</span>' +
+      '<span class="epinfo">' +
+        '<span class="epk">Episode</span>' +
+        '<span class="epn">' + nn + '</span>' +
+        '<span class="epm">' + (ready ? d.run + " · " + d.size : "not filed yet") + '</span>' +
+      '</span>';
+    b.setAttribute("aria-label",
+      "Season " + season + ", episode " + d.ep + (ready ? ", " + d.run + ", " + d.size + ", download" : ", not filed yet"));
+    host.appendChild(b);
+  });
+  wireGrid(host, ret);
+  layoutGrid(host);
+}
+
+/* Pick the widest column count that divides the episode count exactly, so the
+   last row is always full. Works for whatever counts the seasons end up having. */
+function layoutGrid(host){
+  var n = host.querySelectorAll(".ep").length;
+  if (!n) return;
+  /* how many boxes fit at a comfortable size, then the widest count that
+     divides the episodes exactly — so a phone held sideways gets more
+     columns instead of two huge cards */
+  var avail = host.clientWidth || innerWidth;
+  var max = Math.max(2, Math.min(5, Math.floor(avail / 118)));
+  var cols = Math.min(n, max);
+  for (var c = max; c >= 2; c--){ if (n % c === 0){ cols = c; break; } }
+  host.style.setProperty("--cols", cols);
+}
+
+/* ── the reticle: follows what you point at, and stays on what you pick ── */
+function wireGrid(host, ret){
+  var held = null;
+
+  function place(el, hold){
+    var h = host.getBoundingClientRect(), r = el.getBoundingClientRect();
+    ret.style.width  = r.width  + "px";
+    ret.style.height = r.height + "px";
+    ret.style.transform = "translate(" + (r.left - h.left) + "px," + (r.top - h.top) + "px)";
+    ret.classList.add("on");
+    ret.classList.toggle("hold", !!hold);
+  }
+  function restore(){
+    if (held) place(held, true);
+    else { ret.classList.remove("on","hold"); }
+  }
+
+  host.addEventListener("pointerover", function(e){
+    var b = e.target.closest(".ep"); if (b) place(b, b === held);
+  });
+  host.addEventListener("focusin", function(e){
+    var b = e.target.closest(".ep"); if (b) place(b, b === held);
+  });
+  host.addEventListener("pointerleave", restore);
+  host.addEventListener("focusout", function(e){
+    if (!host.contains(e.relatedTarget)) restore();
+  });
+
+  /* arrow keys walk the grid, using however many columns actually fit */
+  host.addEventListener("keydown", function(e){
+    var keys = ["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"];
+    if (keys.indexOf(e.key) === -1) return;
+    var eps = [].slice.call(host.querySelectorAll(".ep"));
+    var i = eps.indexOf(document.activeElement);
+    if (i === -1) return;
+    e.preventDefault();
+    var cols = getComputedStyle(host).gridTemplateColumns.split(" ").filter(Boolean).length || 1;
+    var n = i;
+    if (e.key === "ArrowLeft")  n = i - 1;
+    if (e.key === "ArrowRight") n = i + 1;
+    if (e.key === "ArrowUp")    n = i - cols;
+    if (e.key === "ArrowDown")  n = i + cols;
+    if (e.key === "Home")       n = 0;
+    if (e.key === "End")        n = eps.length - 1;
+    if (n < 0 || n >= eps.length) return;
+    eps[n].focus();
+  });
+
+  host.addEventListener("click", function(e){
+    var b = e.target.closest(".ep"); if (!b) return;
+    held = b;
+    place(b, true);
+    if (b.dataset.url) ask(b);
+    else toast("Season " + b.dataset.season + ", episode " + b.dataset.ep + " — <b>not filed yet</b>");
+  });
+
+  host._reposition = function(){
+    var cur = host.querySelector(".ep:hover") || held;
+    if (cur && ret.classList.contains("on")) place(cur, cur === held);
+  };
+}
+
+buildSeason(document.getElementById("g1"), 1);
+buildSeason(document.getElementById("g2"), 2);
+
+/* ── the count on the choice screen reads the boxes, so it can never
+      disagree with what is actually downloadable ── */
+function refreshProgress(){
+  var total = document.querySelectorAll(".ep").length;
+  var ready = document.querySelectorAll(".ep.ready").length;
+  var el = document.getElementById("gateCount");
+  if (el) el.textContent = ready === 0 ? total + " episodes"
+                                       : ready + " of " + total + " ready";
+}
+refreshProgress();
+
+/* ── credits step before any download ── */
+var hit = document.getElementById("hit"), hitS = document.getElementById("hitS"),
+    hitGo = document.getElementById("hitGo"), hitNo = document.getElementById("hitNo"),
+    pending = null;
+function ask(b){
+  pending = b;
+  hitS.textContent = "Season " + b.dataset.season + ", episode " + b.dataset.ep;
+  hit.classList.add("on");
+  setTimeout(function(){ if (pending) hitGo.focus(); }, 60);
+}
+function closeHit(){ pending = null; hit.classList.remove("on"); }
+hitGo.addEventListener("click", function(){
+  if (!pending) return;
+  var b = pending;
+  closeHit();
+  /* released assets carry Content-Disposition: attachment, so this saves
+     the file rather than opening a tab */
+  var a = document.createElement("a");
+  a.href = b.dataset.url; a.download = ""; a.rel = "noopener";
+  document.body.appendChild(a); a.click(); a.remove();
+  toast("Download started — <b>S" + b.dataset.season + " E" + b.dataset.ep + "</b>");
+});
+hitNo.addEventListener("click", closeHit);
+hit.addEventListener("click", function(e){ if (e.target === hit) closeHit(); });
+addEventListener("keydown", function(e){ if (e.key === "Escape" && pending) closeHit(); });
+
+/* ── in-theme message ── */
+var toastEl = document.getElementById("toast"), toastT = null;
+function toast(html){
+  toastEl.innerHTML = html;
+  toastEl.classList.add("on");
+  clearTimeout(toastT);
+  toastT = setTimeout(function(){ toastEl.classList.remove("on"); }, 2600);
+}
+
+/* ── the drifting terrain: one slow layer, nothing else ── */
+function makeTerrain(canvas, opts){
+  var x = canvas.getContext("2d"), W=1, H=1, raf=null, t0=0;
+  opts = opts || {};
+  function size(){
+    var r = canvas.getBoundingClientRect();
+    W = canvas.width  = Math.max(1, Math.round(r.width  || 1));
+    H = canvas.height = Math.max(1, Math.round(r.height || 1));
+  }
+  function draw(now){
+    var t = (now - t0)/1000, cell = opts.cell || 46, pan = (t*7) % cell;
+    x.clearRect(0,0,W,H);
+    x.lineWidth = 1;
+    x.strokeStyle = "rgba(255,180,60,.07)";
+    x.beginPath();
+    for (var gx=-cell+pan; gx<W+cell; gx+=cell){ x.moveTo(gx,0); x.lineTo(gx,H); }
+    for (var gy=-cell+pan; gy<H+cell; gy+=cell){ x.moveTo(0,gy); x.lineTo(W,gy); }
+    x.stroke();
+    var sx = ((t*0.06) % 1.4 - 0.2) * W;
+    var g = x.createLinearGradient(sx-70,0,sx+70,0);
+    g.addColorStop(0,"rgba(255,180,60,0)");
+    g.addColorStop(.5,"rgba(255,180,60,.10)");
+    g.addColorStop(1,"rgba(255,180,60,0)");
+    x.fillStyle = g; x.fillRect(sx-70, 0, 140, H);
+    raf = requestAnimationFrame(draw);
+  }
+  return {
+    start:function(){ if (raf || reduce) return; size(); t0 = performance.now(); raf = requestAnimationFrame(draw); },
+    stop:function(){ if (raf){ cancelAnimationFrame(raf); raf = null; } },
+    resize:function(){ if (raf) size(); }
+  };
+}
+var terrain = makeTerrain(document.getElementById("terrain"), { cell:52 });
+
+/* ── opening ── */
+/* The cut notice is shown on the way in and has to be acknowledged.
+   Once per visit: going back to the choice and returning does not nag again. */
+var notice = document.getElementById("notice"),
+    ntOk   = document.getElementById("ntOk"),
+    noticeSeen = false;
+
+/* ── the film inside the notice ──────────────────────────────────────
+   Ten frames of a strip. The eight in the middle hold one shot, warm and
+   drifting. The two at the ends hold a different one, cold and moving the
+   other way. A head sweeps across; whatever it is over lifts out of the
+   dark. When it reaches an end frame the brackets snap red around it, so
+   you watch a stray frame get caught instead of reading about one. */
+var film = document.getElementById("ntFilm"), fx = film.getContext("2d"),
+    fW = 1, fH = 1, fRaf = null, fT0 = 0, FRAMES = 3, CYCLE = 3.6;
+
+function filmSize(){
+  var r = film.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+  fW = Math.max(1, Math.round(r.width));
+  fH = Math.max(1, Math.round(r.height));
+  film.width  = Math.round(fW * dpr);
+  film.height = Math.round(fH * dpr);
+  fx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+/* one frame of footage: a horizon, a couple of soft bodies drifting,
+   grain. `cold` swaps it for the neighbouring scene. */
+function shot(x, y, w, h, t, cold, lit){
+  fx.save();
+  fx.beginPath(); fx.rect(x, y, w, h); fx.clip();
+
+  var g = fx.createLinearGradient(0, y, 0, y + h);
+  if (cold){
+    g.addColorStop(0, "#0d1a22"); g.addColorStop(.55, "#132630"); g.addColorStop(1, "#070d12");
+  } else {
+    g.addColorStop(0, "#241505"); g.addColorStop(.5, "#3d2409"); g.addColorStop(1, "#150c03");
+  }
+  fx.fillStyle = g; fx.fillRect(x, y, w, h);
+
+  /* horizon sits at a different height in the other scene */
+  var hz = y + h * (cold ? .38 : .62);
+  fx.strokeStyle = cold ? "rgba(150,210,235,.30)" : "rgba(255,190,90,.28)";
+  fx.lineWidth = 1;
+  fx.beginPath(); fx.moveTo(x, hz); fx.lineTo(x + w, hz); fx.stroke();
+
+  /* bodies: warm ones drift right and settle low, cold ones sweep left */
+  var n = cold ? 2 : 3;
+  for (var i = 0; i < n; i++){
+    var ph = i * 2.1 + (cold ? 1.3 : 0);
+    var dir = cold ? -1 : 1;
+    var bx = x + w * (.5 + Math.sin(t * (cold ? .9 : .55) * dir + ph) * .32);
+    var by = hz + Math.sin(t * .7 + ph * 1.7) * h * .12 + (cold ? h * .16 : -h * .05);
+    var br = Math.max(1, h * (cold ? .17 : .21));
+    var rg = fx.createRadialGradient(bx, by, 0, bx, by, br);
+    if (cold){
+      rg.addColorStop(0, "rgba(170,225,255,.62)"); rg.addColorStop(1, "rgba(120,190,230,0)");
+    } else {
+      rg.addColorStop(0, "rgba(255,205,120,.66)"); rg.addColorStop(1, "rgba(255,150,40,0)");
+    }
+    fx.fillStyle = rg;
+    fx.beginPath(); fx.arc(bx, by, br, 0, 6.283); fx.fill();
+  }
+
+  /* the head lifts the frame out of the dark as it goes past */
+  fx.fillStyle = "rgba(255,255,255," + (lit * .16).toFixed(3) + ")";
+  fx.fillRect(x, y, w, h);
+  fx.fillStyle = "rgba(0,0,0," + (0.5 - lit * 0.42).toFixed(3) + ")";
+  fx.fillRect(x, y, w, h);
+
+  fx.restore();
+}
+
+function renderFilm(t, p){
+  fx.clearRect(0, 0, fW, fH);
+
+  var perf = Math.max(3, Math.round(fH * .11)), pad = 4, gap = 3;
+  var fy = perf + pad, fh = fH - (perf + pad) * 2;
+  var fw = (fW - pad * 2 - gap * (FRAMES - 1)) / FRAMES;
+
+  /* the strip is hidden on short screens, where the canvas measures 0 and
+     these come out negative — a negative radius throws and kills the loop */
+  if (fh <= 4 || fw <= 4) return;
+
+  /* film base */
+  fx.fillStyle = "#0b0906"; fx.fillRect(0, 0, fW, fH);
+
+  /* sprocket holes, top and bottom */
+  fx.fillStyle = "#000";
+  for (var hx = 6; hx < fW - 6; hx += 17){
+    fx.fillRect(hx, Math.round(perf * .22), 7, Math.max(3, perf * .55));
+    fx.fillRect(hx, fH - perf + Math.round(perf * .22), 7, Math.max(3, perf * .55));
+  }
+
+  var headX = p * fW;
+
+  for (var i = 0; i < FRAMES; i++){
+    var x = pad + i * (fw + gap);
+    var centre = x + fw / 2;
+    var d = Math.abs(headX - centre) / (fw * 1.15);
+    var lit = Math.max(0, 1 - d);
+    var edge = (i === 0 || i === FRAMES - 1);
+
+    shot(x, fy, fw, fh, t, edge, lit);
+
+    /* frame border, and red brackets that snap shut on a caught frame */
+    if (edge && lit > .25){
+      var a = Math.min(1, (lit - .25) / .5);
+      fx.strokeStyle = "rgba(255,59,36," + a.toFixed(3) + ")";
+      fx.lineWidth = 1.5;
+      var arm = Math.min(fw, fh) * .34, o = 1;
+      fx.beginPath();
+      fx.moveTo(x - o, fy + arm); fx.lineTo(x - o, fy - o); fx.lineTo(x + arm, fy - o);
+      fx.moveTo(x + fw - arm, fy - o); fx.lineTo(x + fw + o, fy - o); fx.lineTo(x + fw + o, fy + arm);
+      fx.moveTo(x - o, fy + fh - arm); fx.lineTo(x - o, fy + fh + o); fx.lineTo(x + arm, fy + fh + o);
+      fx.moveTo(x + fw - arm, fy + fh + o); fx.lineTo(x + fw + o, fy + fh + o); fx.lineTo(x + fw + o, fy + fh - arm);
+      fx.stroke();
+    } else {
+      fx.strokeStyle = "rgba(255,180,60,.13)";
+      fx.lineWidth = 1;
+      fx.strokeRect(x + .5, fy + .5, fw - 1, fh - 1);
+    }
+  }
+
+  /* the head itself */
+  var hg = fx.createLinearGradient(headX - 14, 0, headX + 14, 0);
+  hg.addColorStop(0, "rgba(255,244,220,0)");
+  hg.addColorStop(.5, "rgba(255,244,220,.5)");
+  hg.addColorStop(1, "rgba(255,244,220,0)");
+  fx.fillStyle = hg; fx.fillRect(headX - 14, 0, 28, fH);
+  fx.fillStyle = "rgba(255,255,255,.9)"; fx.fillRect(headX - 1, 0, 2, fH);
+}
+
+function drawFilm(now){
+  var t = (now - fT0) / 1000;
+  var r = film.getBoundingClientRect();
+  /* re-measure if the strip changed size, e.g. rotating into landscape */
+  if (Math.round(r.width) !== fW || Math.round(r.height) !== fH) filmSize();
+  renderFilm(t, (t % CYCLE) / CYCLE);
+  fRaf = requestAnimationFrame(drawFilm);
+}
+
+function startFilm(){
+  if (fRaf) return;
+  filmSize();
+  /* Paint one pose immediately, head parked on the first frame. That is the
+     whole picture when motion is turned down, and it also means the strip is
+     never a blank black box while waiting for the first animation frame. */
+  renderFilm(0.7, 0.045);
+  if (reduce) return;
+  fT0 = performance.now(); fRaf = requestAnimationFrame(drawFilm);
+}
+function stopFilm(){ if (fRaf){ cancelAnimationFrame(fRaf); fRaf = null; } }
+
+var armT = null, introT = null, ntBoxEl = notice.querySelector(".ntbox");
+
+function showNotice(){
+  if (noticeSeen) return;
+  notice.classList.add("on");
+  startFilm();
+
+  /* play the reveal, then drop it: the settled state is the plain one */
+  clearTimeout(introT);
+  ntBoxEl.classList.remove("intro");
+  void ntBoxEl.offsetWidth;
+  if (!reduce){
+    ntBoxEl.classList.add("intro");
+    introT = setTimeout(function(){ ntBoxEl.classList.remove("intro"); }, 1500);
+  }
+
+  /* The button stays shut until the lines have had time to land, so the
+     notice gets read rather than clicked past. Driven by the clock, not by
+     tick count: a throttled timer can never leave it stuck closed. */
+  var wait = reduce ? 0 : 1300;
+  clearTimeout(armT);
+  ntOk.disabled = true;
+  ntOk.classList.remove("filling");
+  void ntOk.offsetWidth;
+  if (wait) ntOk.classList.add("filling");
+  armT = setTimeout(function(){
+    ntOk.disabled = false;
+    ntOk.classList.remove("filling");
+    ntOk.focus();
+  }, wait);
+}
+function ackNotice(){
+  if (ntOk.disabled) return;
+  noticeSeen = true;
+  clearTimeout(armT); armT = null;
+  clearTimeout(introT); introT = null;
+  ntBoxEl.classList.remove("intro");
+  notice.classList.remove("on");
+  stopFilm();
+}
+ntOk.addEventListener("click", ackNotice);
+addEventListener("keydown", function(e){
+  if (e.key === "Escape" && notice.classList.contains("on")) ackNotice();
+});
+
+/* ── the only telemetry left ── */
+var clk = document.getElementById("clk"), clkT = null;
+function startClock(){
+  if (clkT) return;
+  function tick(){
+    var d = new Date();
+    function p(n){ return (n<10?"0":"")+n; }
+    clk.textContent = p(d.getUTCHours())+":"+p(d.getUTCMinutes())+":"+p(d.getUTCSeconds())+"Z";
+  }
+  tick(); clkT = setInterval(tick, 1000);
+}
+function stopClock(){ clearInterval(clkT); clkT = null; }
+
+addEventListener("resize", function(){
+  terrain.resize();
+  if (fRaf) filmSize();
+  document.querySelectorAll(".grid").forEach(function(g){
+    layoutGrid(g);
+    if (g._reposition) g._reposition();
+  });
+}, { passive:true });
+
+/* the page opens straight into the feed, so start everything on load —
+   after the declarations above, since var assignments are not hoisted */
+terrain.start();
+startClock();
+refreshProgress();
+showNotice();
+})();
+</script>
+</body>
+</html>

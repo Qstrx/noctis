@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="color-scheme" content="dark">
+<title>Call of Duty — Ocean’s Scenepacks</title>
+<meta name="description" content="Free Call of Duty scene packs. 60 fps, no watermark, no sign-in.">
+<link rel="icon" href="img/icon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<meta property="og:title" content="Ocean’s Scenepacks">
+<meta property="og:description" content="Free scene packs. No sign-in, no watermark.">
+<meta property="og:image" content="https://qstrx.github.io/noctis/img/price.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#010603">
+</head>
+<body><style>
+:root{
+  --ink:#010603; --tube:#04120a; --panel:#061a0e;
+  --rule:#0f4a22; --dim:#2b8043; --text:#79e295; --phos:#3dff6e;
+  --hot:#e8ffee; --lens:#7fe3ff; --ir:#ff4d1a;
+  --gS:0 0 8px rgba(61,255,110,.4); --gM:0 0 26px rgba(61,255,110,.35);
+  --gH:0 0 44px rgba(200,255,220,.5);
+  --blend:screen; --grain:.06; --scan:.05;
+  --display:Bahnschrift,"DIN Condensed","Franklin Gothic Medium","Arial Narrow","Helvetica Neue",sans-serif;
+  --mono:Consolas,"SF Mono",ui-monospace,"Cascadia Mono","Roboto Mono",monospace;
+  --gut:clamp(18px,4.5vw,72px); --maxw:1240px;
+}
+:root[data-theme="light"],:root.thermal{
+  --ink:#cac4b6; --tube:#d5cfc3; --panel:#ddd8cc; --rule:#a1988a;
+  --dim:#6b6355; --text:#241f17; --phos:#0b0906; --hot:#000; --lens:#2c6376; --ir:#b6350b;
+  --gS:none; --gM:none; --gH:none; --blend:multiply; --grain:.11; --scan:.07;
+}
+:root[data-theme="dark"],:root.nvg{
+  --ink:#010603; --tube:#04120a; --panel:#061a0e; --rule:#0f4a22; --dim:#2b8043;
+  --text:#79e295; --phos:#3dff6e; --hot:#e8ffee; --lens:#7fe3ff; --ir:#ff4d1a;
+  --gS:0 0 8px rgba(61,255,110,.4); --gM:0 0 26px rgba(61,255,110,.35);
+  --gH:0 0 44px rgba(200,255,220,.5);
+  --blend:screen; --grain:.06; --scan:.05;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--text);font-family:var(--mono);
+  font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none}
+@media (hover:none){body{cursor:auto}}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+::selection{background:var(--phos);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--phos);outline-offset:4px}
+
+.fx{position:fixed;inset:0;pointer-events:none}
+#scene{z-index:1}
+#grain{z-index:60;mix-blend-mode:var(--blend);opacity:var(--grain)}
+.fx-scan{z-index:61;opacity:var(--scan);
+  background:repeating-linear-gradient(to bottom,
+    color-mix(in srgb,var(--phos) 60%,transparent) 0 1px,transparent 1px 3px)}
+.fx-halo{z-index:59;mix-blend-mode:screen;opacity:.9;
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
+    color-mix(in srgb,var(--phos) 13%,transparent),transparent 72%)}
+:root.thermal .fx-halo{mix-blend-mode:multiply;opacity:.5}
+.fx-vig{z-index:62;background:radial-gradient(ellipse 70% 85% at 50% 46%,
+  transparent 38%,
+  color-mix(in srgb,var(--ink) 30%,transparent) 72%,
+  color-mix(in srgb,var(--ink) 72%,transparent) 100%)}
+.fx-sweep{z-index:63;height:220px;inset:auto 0 auto 0;opacity:.42;
+  background:linear-gradient(to bottom,transparent,
+    color-mix(in srgb,var(--hot) 30%,transparent) 50%,transparent);
+  animation:sweep 9s linear infinite}
+@keyframes sweep{from{transform:translateY(-260px)}to{transform:translateY(100vh)}}
+.fx-flick{z-index:64;background:var(--hot);opacity:0;animation:flick 11s steps(1) infinite}
+@keyframes flick{0%,97.3%,100%{opacity:0}97.5%{opacity:.04}98%{opacity:0}98.2%{opacity:.022}}
+.fx-iris{z-index:96;background:var(--ink);
+  -webkit-mask:radial-gradient(circle at 50% 50%,transparent var(--r,0%),#000 calc(var(--r,0%) + 14%));
+  mask:radial-gradient(circle at 50% 50%,transparent var(--r,0%),#000 calc(var(--r,0%) + 14%))}
+
+.ret{position:fixed;z-index:101;width:44px;height:44px;margin:-22px 0 0 -22px;
+  pointer-events:none;opacity:0;transition:opacity .4s}
+body.ptr .ret{opacity:1}
+.ret i{position:absolute;background:var(--phos);box-shadow:var(--gS);transition:all .25s}
+.ret i:nth-child(1){left:0;top:50%;width:12px;height:1px}
+.ret i:nth-child(2){right:0;top:50%;width:12px;height:1px}
+.ret i:nth-child(3){top:0;left:50%;height:12px;width:1px}
+.ret i:nth-child(4){bottom:0;left:50%;height:12px;width:1px}
+.ret b{position:absolute;inset:14px;border:1px solid var(--phos);border-radius:50%;
+  box-shadow:var(--gS);transition:inset .3s,border-radius .3s,transform .3s}
+body.hot .ret b{inset:4px;border-radius:2px;transform:rotate(45deg);border-color:var(--hot)}
+body.hot .ret i{background:var(--hot)}
+
+.boot{position:fixed;inset:0;z-index:100;background:var(--ink);display:grid;place-content:center}
+.tubes{display:flex;gap:clamp(9px,2.2vw,24px)}
+.tubes i{display:block;width:clamp(36px,7vw,72px);aspect-ratio:1;border-radius:50%;
+  border:2px solid var(--rule);opacity:.22;transform:scale(.94);
+  animation:ignite .55s cubic-bezier(.2,.8,.3,1) forwards}
+.tubes i:nth-child(1){animation-delay:.18s}
+.tubes i:nth-child(2){animation-delay:.44s}
+.tubes i:nth-child(3){animation-delay:.70s}
+.tubes i:nth-child(4){animation-delay:.96s}
+@keyframes ignite{
+  0%  {opacity:.22;border-color:var(--rule);box-shadow:none;transform:scale(.94)}
+  55% {opacity:1;border-color:var(--hot);transform:scale(1.06);
+       box-shadow:0 0 34px rgba(200,255,220,.55),inset 0 0 24px rgba(140,255,180,.35)}
+  100%{opacity:1;border-color:var(--phos);transform:scale(1);
+       box-shadow:0 0 18px rgba(61,255,110,.45),inset 0 0 14px rgba(61,255,110,.2)}
+}
+:root.thermal .tubes i{animation-name:igniteT}
+@keyframes igniteT{
+  0%  {opacity:.22;border-color:var(--rule);transform:scale(.94)}
+  55% {opacity:1;border-color:var(--hot);transform:scale(1.06)}
+  100%{opacity:1;border-color:var(--phos);transform:scale(1)}
+}
+body.booted .boot{opacity:0;pointer-events:none;transition:opacity .7s}
+
+.hud{position:fixed;inset:0;z-index:70;pointer-events:none;opacity:0;transition:opacity 1s .3s}
+body.booted .hud{opacity:1}
+.bar{position:absolute;left:0;right:0;display:flex;gap:clamp(10px,2.6vw,30px);align-items:center;
+  padding:11px var(--gut);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
+  background:linear-gradient(var(--ink),transparent)}
+.bar b{color:var(--phos);font-weight:400;text-shadow:var(--gS);font-variant-numeric:tabular-nums}
+.bar .sp{flex:1}
+.hbtn{pointer-events:auto;background:none;border:1px solid var(--rule);color:var(--dim);
+  font:inherit;font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:4px 11px;cursor:none}
+.hbtn:hover{color:var(--phos);border-color:var(--phos);text-shadow:var(--gS)}
+.brk{position:absolute;width:22px;height:22px;border:1px solid var(--dim);opacity:.7}
+.brk.tl{top:40px;left:calc(var(--gut) - 10px);border-right:0;border-bottom:0}
+.brk.tr{top:40px;right:calc(var(--gut) - 10px);border-left:0;border-bottom:0}
+.brk.bl{bottom:40px;left:calc(var(--gut) - 10px);border-right:0;border-top:0}
+.brk.br{bottom:40px;right:calc(var(--gut) - 10px);border-left:0;border-top:0}
+
+main{position:relative;z-index:10;max-width:var(--maxw);margin:0 auto;
+  padding:0 var(--gut) 12vh;opacity:0;transition:opacity 1s .45s}
+body.booted main{opacity:1}
+.back{display:inline-flex;align-items:center;gap:10px;font-size:9.5px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:clamp(20px,3.5vh,34px);cursor:none}
+.back::before{content:"";width:20px;height:1px;background:currentColor}
+.back:hover{color:var(--phos);text-shadow:var(--gS)}
+@media (hover:none){.back{cursor:pointer}}
+.lab{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);
+  display:flex;align-items:center;gap:14px;margin:0 0 30px}
+.lab b{color:var(--phos);font-weight:400;text-shadow:var(--gS)}
+.lab::after{content:"";flex:1;height:1px;background:var(--rule)}
+section{padding-top:clamp(90px,17vh,190px)}
+
+main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
+
+.arch{display:grid;grid-template-columns:minmax(186px,236px) 1fr;gap:1px;
+  background:var(--rule);border:1px solid var(--rule)}
+.roster{display:flex;flex-direction:column;align-self:stretch;
+  background:color-mix(in srgb,var(--panel) 40%,transparent)}
+.apane{background:color-mix(in srgb,var(--tube) 72%,transparent);min-width:0}
+.op{position:relative;background:none;border:0;border-bottom:1px solid var(--rule);
+  font:inherit;color:inherit;cursor:none;
+  text-align:left;display:flex;flex-direction:column;padding:18px 18px 16px;
+  transition:background .3s}
+.op:last-child{border-bottom:0}
+.op:hover,.op.sel{background:var(--panel)}
+.op .nm em{display:block;font-style:normal;font-size:9px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--dim)}
+.op .nm strong{display:block;font-family:var(--display);font-stretch:75%;font-weight:700;
+  font-size:1.5rem;line-height:1.05;text-transform:uppercase;color:var(--text);
+  margin-top:5px;transition:color .3s}
+.op:hover .nm strong,.op.sel .nm strong{color:var(--hot);text-shadow:var(--gS)}
+.op .st{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
+  margin-top:auto;padding-top:16px}
+.op.sel .st{color:var(--phos);text-shadow:var(--gS)}
+.op .sel-bar{position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--phos);
+  box-shadow:var(--gM);transform:scaleY(0);transform-origin:top;
+  transition:transform .45s cubic-bezier(.2,.9,.2,1)}
+.op.sel .sel-bar{transform:scaleY(1)}
+.op.sel{background:color-mix(in srgb,var(--phos) 8%,transparent)}
+.op[data-empty] .nm strong{color:var(--dim)}
+.op[data-empty] .redact{display:inline-block;width:74px;height:14px;background:var(--dim);
+  vertical-align:-1px;opacity:.5}
+.op[data-empty]:hover .nm strong{color:var(--ir)}
+
+.doss{position:relative;border:0;padding:clamp(20px,2.6vw,34px);
+  transform:translateY(28px);opacity:0;
+  transition:transform .8s cubic-bezier(.2,.8,.2,1),opacity .8s}
+.doss.in{transform:none;opacity:1}
+.doss[hidden]{display:none}
+.doss .lock{position:absolute;background:var(--phos);box-shadow:var(--gM);opacity:0;
+  transition:opacity .35s,transform .55s cubic-bezier(.2,.9,.2,1)}
+.doss .lock.h{height:1px;width:64px}
+.doss .lock.v{width:1px;height:64px}
+.doss .lock.a{top:-1px;left:-1px;transform:translate(-30px,-30px)}
+.doss .lock.b{top:-1px;right:-1px;transform:translate(30px,-30px)}
+.doss .lock.c{bottom:-1px;left:-1px;transform:translate(-30px,30px)}
+.doss .lock.d{bottom:-1px;right:-1px;transform:translate(30px,30px)}
+.doss.in .lock{opacity:1;transform:none}
+.hit{position:fixed;inset:0;z-index:99;display:grid;place-items:center;
+  background:color-mix(in srgb,var(--ink) 80%,transparent);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .35s,visibility 0s .35s}
+.hit.on{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .2s}
+
+.hitin{display:grid;justify-items:center;gap:18px;text-align:center;padding:0 22px}
+.hitin strong{font-family:var(--display);font-stretch:75%;font-weight:700;
+  text-transform:uppercase;font-size:clamp(2.2rem,8vw,5.4rem);line-height:.9;
+  color:var(--hot);text-shadow:var(--gH);max-width:12ch;text-wrap:balance}
+.hitin span{font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--phos);text-shadow:var(--gS)}
+.hit.on .hitin strong{animation:hitPop .65s cubic-bezier(.16,1,.3,1) both}
+.hit.on .hitin span{animation:hitUp .5s .2s both}
+@keyframes hitPop{
+  0%{opacity:0;transform:scale(.88);filter:blur(12px)}
+  100%{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes hitUp{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:none}}
+
+.hring{position:absolute;width:130px;aspect-ratio:1;border:1px solid var(--phos);
+  border-radius:50%;opacity:0;pointer-events:none}
+.hit.on .hring{animation:hitRing 1.15s cubic-bezier(.1,.7,.3,1) both}
+@keyframes hitRing{0%{opacity:.85;transform:scale(.28)}100%{opacity:0;transform:scale(9)}}
+
+.hline{position:absolute;height:1px;width:0;background:var(--phos);
+  box-shadow:var(--gM);pointer-events:none}
+.hline.l{right:50%}
+.hline.r{left:50%}
+.hit.on .hline{animation:hitLine .85s .08s cubic-bezier(.2,.9,.2,1) both}
+@keyframes hitLine{0%{width:0;opacity:0}28%{opacity:1}100%{width:44%;opacity:0}}
+
+.hgo{display:flex;align-items:center;gap:12px;margin-top:8px;
+  font:inherit;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  min-height:54px;padding:0 clamp(24px,4vw,38px);border:0;cursor:none;
+  background:var(--phos);color:var(--ink);box-shadow:var(--gM);
+  transition:background .25s,box-shadow .25s}
+.hgo i{font-size:1.15em;transition:transform .3s}
+.hgo:hover{background:var(--hot);box-shadow:var(--gH)}
+.hgo:hover i{transform:translateY(3px)}
+.hno{background:none;border:0;font:inherit;font-size:9.5px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--dim);cursor:none;padding:8px 6px;
+  transition:color .25s}
+.hno:hover{color:var(--phos)}
+.hit:not(.ask) .hgo,.hit:not(.ask) .hno{display:none}
+.hit.on.ask .hgo{animation:hitUp .45s .3s both}
+.hit.on.ask .hno{animation:hitUp .45s .42s both}
+
+.hit.warn .hitin strong,.hit.warn .hitin span{color:var(--ir);text-shadow:none}
+.hit.warn .hring{border-color:var(--ir)}
+.hit.warn .hline{background:var(--ir);box-shadow:none}
+.shake{animation:shk .35s}
+@keyframes shk{0%,100%{transform:none}20%{transform:translate(-4px,2px)}
+  45%{transform:translate(4px,-2px)}70%{transform:translate(-2px,-1px)}}
+
+.dhead{display:flex;align-items:center;gap:clamp(14px,2.6vw,26px);flex-wrap:wrap;
+  padding-bottom:20px;border-bottom:1px solid var(--rule);margin-bottom:22px}
+.dthumb{position:relative;flex:none;display:block;width:clamp(62px,8.5vw,88px);
+  aspect-ratio:1;overflow:hidden;border:1px solid var(--rule)}
+.dthumb img,.dthumb canvas{display:block;width:100%;height:100%;object-fit:cover}
+.dthumb img{filter:grayscale(1) contrast(1.15) brightness(.92);object-position:50% 40%}
+.dthumb .tint{position:absolute;inset:0;background:var(--phos);
+  mix-blend-mode:color;opacity:.92;pointer-events:none}
+.dhead.banner{position:relative;overflow:hidden;align-items:flex-end;
+  min-height:clamp(160px,20vw,230px);padding:clamp(18px,2.6vw,28px);
+  border:1px solid var(--rule)}
+.dbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:50% 38%;filter:grayscale(1) contrast(1.08) brightness(.62)}
+.dbg-tint{position:absolute;inset:0;background:var(--phos);mix-blend-mode:color;opacity:.9}
+.dbg-scrim{position:absolute;inset:0;background:linear-gradient(95deg,
+  color-mix(in srgb,var(--ink) 90%,transparent),
+  color-mix(in srgb,var(--ink) 55%,transparent) 55%,
+  color-mix(in srgb,var(--ink) 25%,transparent))}
+.dhead.banner .dwho,.dhead.banner .dspec{position:relative;z-index:1}
+.dhead.banner .dspec{align-self:flex-end}
+.dwho{flex:1;min-width:180px}
+.pid{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
+.doss h3{font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;
+  font-size:clamp(2rem,4.8vw,3.2rem);line-height:.94;margin:4px 0 3px;color:var(--hot);
+  text-shadow:var(--gS)}
+.doss .call{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--lens)}
+.dspec{display:flex;gap:clamp(14px,2.4vw,32px);flex-wrap:wrap}
+.dspec span{font-size:11.5px;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:.05em}
+.dspec em{display:block;font-style:normal;font-size:8.5px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+.glitch{animation:gl .45s steps(2)}
+@keyframes gl{0%{clip-path:inset(0 0 62% 0);transform:translateX(-6px)}
+  40%{clip-path:inset(48% 0 18% 0);transform:translateX(7px)}
+  75%{clip-path:inset(78% 0 0 0);transform:translateX(-4px)}
+  100%{clip-path:inset(0);transform:none}}
+
+.dls{display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--rule);border:1px solid var(--rule)}
+.pk{position:relative;display:flex;flex-direction:column;overflow:hidden;
+  background:color-mix(in srgb,var(--panel) 62%,transparent);
+  padding:clamp(18px,2vw,24px);transition:background .3s}
+.pk:hover{background:color-mix(in srgb,var(--panel) 95%,transparent)}
+.pk:last-child:nth-child(odd){grid-column:1/-1}
+.pk > *{position:relative;z-index:1}
+.pkn{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+.pkt{margin:8px 0 0;font-family:var(--display);font-stretch:75%;font-weight:700;
+  text-transform:uppercase;font-size:clamp(1.5rem,2.6vw,2.05rem);line-height:1;
+  color:var(--hot);text-shadow:var(--gS)}
+.pkm{margin:10px 0 auto;padding-bottom:20px;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text);font-variant-numeric:tabular-nums}
+.pkb{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px}
+
+.go{display:flex;align-items:center;justify-content:center;gap:10px;
+  font:inherit;font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  min-height:48px;padding:0 14px;cursor:none;border:0;
+  background:var(--phos);color:var(--ink);box-shadow:var(--gS);
+  transition:background .25s,box-shadow .25s,transform .25s}
+.go i{font-style:normal;font-size:1.1em;transition:transform .3s}
+.go:hover{background:var(--hot);box-shadow:var(--gM)}
+.go:hover i{transform:translateY(3px)}
+
+.pk.mega{border-left:2px solid var(--ir)}
+.pk.mega .pkn{color:var(--ir)}
+.go.alt{background:var(--ir);box-shadow:none}
+.go.alt:hover{background:var(--hot)}
+.go.alt:hover i{transform:translateX(3px)}
+
+.go[data-locked]{background:none;color:var(--dim);border:1px solid var(--rule);box-shadow:none}
+.go[data-locked]:hover{background:none;color:var(--ir);border-color:var(--ir)}
+.go[data-locked]:hover i{transform:none}
+
+.cap{display:flex;gap:10px;margin:18px 0 0;font-size:11px;line-height:1.6;color:var(--dim);
+  max-width:52ch}
+.cap i{flex:none;width:3px;background:var(--ir);opacity:.8}
+.cap.info i{background:var(--lens)}
+.cap.info b{color:var(--text);font-weight:400}
+
+@media (max-width:880px){
+  .arch{grid-template-columns:1fr;border:0;background:none;gap:clamp(26px,5vh,44px)}
+  .roster{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+    background:var(--rule);border:1px solid var(--rule);align-self:auto}
+  .op{border-bottom:0;background:var(--tube);padding:20px 18px;min-height:104px}
+  .op .sel-bar{left:0;right:0;top:auto;bottom:0;width:auto;height:2px;
+    transform:scaleX(0);transform-origin:left}
+  .op.sel .sel-bar{transform:scaleX(1)}
+  .apane{border:1px solid var(--rule)}
+  .brk{display:none}
+  .bar .sm{display:none}
+  body{cursor:auto}
+  .ret{display:none}
+}
+
+@media (hover:none){
+  body{-webkit-tap-highlight-color:transparent}
+  .go,.hbtn,.op{cursor:pointer}
+  .hbtn{min-height:34px;padding:8px 13px}
+  .op{min-height:auto;padding:20px 18px}
+  .go:active{background:var(--hot)}
+}
+
+@media (max-width:620px){
+  .dhead{gap:14px;padding-bottom:16px;margin-bottom:18px}
+  .dspec{flex:1 1 100%;gap:18px}
+  .doss{padding:20px 16px}
+  .doss h3{font-size:clamp(2.2rem,12vw,3.2rem)}
+  .dls{grid-template-columns:1fr}
+  .pk{padding:18px 16px}
+  .go{min-height:50px}
+  .cap{font-size:12px;max-width:none}
+  .lab{letter-spacing:.24em}
+  .roster{grid-template-columns:repeat(2,1fr)}
+  main{padding-bottom:16vh}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .fx-sweep{display:none}
+  .doss{opacity:1;transform:none}
+}
+</style>
+
+<h2 class="sr-only">Call of Duty scene packs: John Price across Modern Warfare I to III, and every campaign cutscene from the three games. Everything is free to download.</h2>
+
+<canvas id="scene" class="fx"></canvas>
+<canvas id="grain" class="fx"></canvas>
+<div class="fx fx-halo" id="halo"></div>
+<div class="fx fx-scan"></div>
+<div class="fx fx-sweep"></div>
+<div class="fx fx-flick"></div>
+<div class="fx fx-vig"></div>
+<div class="fx fx-iris" id="iris"></div>
+<div class="ret" id="ret"><i></i><i></i><i></i><i></i><b></b></div>
+
+<div class="boot" id="boot" role="status" aria-label="Starting up">
+  <div class="tubes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+</div>
+
+<div class="hud">
+  <div class="bar">
+    <span class="sp"></span>
+    <button class="hbtn" id="snd" type="button" aria-pressed="false">Audio: off</button>
+    <button class="hbtn" id="mode" type="button">Optic: NVG</button>
+  </div>
+  <div class="brk tl" aria-hidden="true"></div><div class="brk tr" aria-hidden="true"></div>
+  <div class="brk bl" aria-hidden="true"></div><div class="brk br" aria-hidden="true"></div>
+</div>
+
+<div class="hit" id="hit">
+  <i class="hring" aria-hidden="true"></i>
+  <i class="hline l" aria-hidden="true"></i>
+  <i class="hline r" aria-hidden="true"></i>
+  <div class="hitin" role="dialog" aria-modal="true" aria-labelledby="hitT">
+    <strong id="hitT">Remember to give credits</strong>
+    <span id="hitS">Download started</span>
+    <button class="hgo" id="hitGo" type="button">Start download <i aria-hidden="true">↓</i></button>
+    <button class="hno" id="hitNo" type="button">Cancel</button>
+  </div>
+</div>
+
+<main>
+
+  <section id="s1">
+    <a class="back" href="./">Back to the choice</a>
+    <p class="lab">Scene packs</p>
+
+    <div class="arch">
+    <aside class="roster" id="roster" aria-label="Collections">
+      <button class="op sel" type="button" aria-pressed="true" data-op="price">
+        <span class="nm"><em>TF-141</em><strong>John Price</strong></span>
+        <span class="st">4 volumes · 39 min</span>
+        <span class="sel-bar"></span>
+      </button>
+      <button class="op" type="button" aria-pressed="false" data-op="cutscenes">
+        <span class="nm"><em>MW I–III</em><strong>Cutscenes</strong></span>
+        <span class="st">3 volumes · 2h 52m</span>
+        <span class="sel-bar"></span>
+      </button>
+      <button class="op" type="button" aria-pressed="false" data-empty>
+        <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
+        <span class="st">Awaiting</span>
+        <span class="sel-bar"></span>
+      </button>
+      <button class="op" type="button" aria-pressed="false" data-empty>
+        <span class="nm"><em>No file</em><strong><i class="redact"></i></strong></span>
+        <span class="st">Awaiting</span>
+        <span class="sel-bar"></span>
+      </button>
+    </aside>
+
+    <div class="apane">
+    <article class="doss" id="doss" data-doss="price">
+      <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
+      <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
+      <header class="dhead">
+        <span class="dthumb">
+          <img src="img/price.jpg" alt="John Price silhouetted while rappelling at night" width="736" height="736">
+          <i class="tint"></i>
+        </span>
+        <div class="dwho">
+          <span class="pid">Operator file 01</span>
+          <h3 data-scramble>John Price</h3>
+          <span class="call">Bravo Six — Captain, Task Force 141</span>
+        </div>
+        <div class="dspec">
+          <span><em>Runtime</em>39 min</span>
+          <span><em>Resolution</em>2560×1088</span>
+          <span><em>Frame rate</em>60 fps</span>
+        </div>
+      </header>
+
+        <div class="dls">
+          <div class="pk">
+            <span class="pkn">01 — Modern Warfare</span>
+            <h4 class="pkt">MW1</h4>
+            <span class="pkm">18:51 · 2.56 GB · two files</span>
+            <div class="pkb">
+              <button class="go" type="button" data-name="MW1 part 1" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part1.mp4">Part 1 <i>↓</i></button>
+              <button class="go" type="button" data-name="MW1 part 2" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part2.mp4">Part 2 <i>↓</i></button>
+            </div>
+          </div>
+          <div class="pk">
+            <span class="pkn">02 — Modern Warfare II</span>
+            <h4 class="pkt">MW2</h4>
+            <span class="pkm">8:06 · 1.16 GB · one file</span>
+            <div class="pkb">
+              <button class="go" type="button" data-name="MW2" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW2.mp4">Download <i>↓</i></button>
+            </div>
+          </div>
+          <div class="pk">
+            <span class="pkn">03 — Modern Warfare III</span>
+            <h4 class="pkt">MW3</h4>
+            <span class="pkm">11:55 · 1.62 GB · one file</span>
+            <div class="pkb">
+              <button class="go" type="button" data-name="MW3" data-direct
+                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW3.mp4">Download <i>↓</i></button>
+            </div>
+          </div>
+          <div class="pk mega">
+            <span class="pkn">04 — Everything, one file</span>
+            <h4 class="pkt">Full pack</h4>
+            <span class="pkm">39:00 · 5.33 GB · opens Mega</span>
+            <div class="pkb">
+              <button class="go alt" type="button" data-name="Full scene pack"
+                data-url="https://mega.nz/file/SS4EAQQI#_0fGCxJnfgSKcLeHu5oPYMi6CU1KAQch8r4KsW4Vr0k">Download <i>→</i></button>
+            </div>
+          </div>
+        </div>
+
+        <p class="cap info"><i></i><span><b>The black bars on MW1 are meant to be there.</b>
+        Some clips were captured at 4K, taller than the ultrawide frame — they sit inside it rather
+        than being cropped. Nothing is cut or downscaled.</span></p>
+
+        <p class="cap"><i></i><span>The full pack is the same footage in one piece. It sits on Mega's
+        free transfer cap, so a free account will likely stall — take the three separately
+        instead.</span></p>
+    </article>
+
+    <article class="doss" id="doss-cuts" data-doss="cutscenes" hidden>
+      <i class="lock h a"></i><i class="lock v a"></i><i class="lock h b"></i><i class="lock v b"></i>
+      <i class="lock h c"></i><i class="lock v c"></i><i class="lock h d"></i><i class="lock v d"></i>
+      <header class="dhead banner">
+        <img class="dbg" src="img/banner.jpg" alt="Modern Warfare II key art" width="960" height="540">
+        <i class="dbg-tint" aria-hidden="true"></i>
+        <i class="dbg-scrim" aria-hidden="true"></i>
+        <div class="dwho">
+          <span class="pid">Collection 02</span>
+          <h3 data-scramble>Cutscenes</h3>
+          <span class="call">Every cutscene — Modern Warfare I, II and III</span>
+        </div>
+        <div class="dspec">
+          <span><em>Runtime</em>2h 52m</span>
+          <span><em>Resolution</em>2560×1440</span>
+          <span><em>Frame rate</em>60 fps</span>
+          <span><em>Volumes</em>3</span>
+        </div>
+      </header>
+
+        <div class="dls">
+          <div class="pk">
+            <span class="pkn">01 — Modern Warfare</span>
+            <h4 class="pkt">MW1</h4>
+            <span class="pkm">59:15 · 4.51 GB · on Google Drive</span>
+            <div class="pkb">
+              <button class="go" type="button" data-name="MW1 cutscenes"
+                data-url="https://drive.google.com/file/d/1lP5NG8kCMl4PpKJKyOi3KVMiDZNnuBlP/view">Download <i>→</i></button>
+            </div>
+          </div>
+          <div class="pk">
+            <span class="pkn">02 — Modern Warfare II</span>
+            <h4 class="pkt">MW2</h4>
+            <span class="pkm">38:36 · 3.67 GB · on Google Drive</span>
+            <div class="pkb">
+              <button class="go" type="button" data-name="MW2 cutscenes"
+                data-url="https://drive.google.com/file/d/1oxg2-HFapdZli2YJaZ5iuyn9fHFd7gJu/view">Download <i>→</i></button>
+            </div>
+          </div>
+          <div class="pk">
+            <span class="pkn">03 — Modern Warfare III</span>
+            <h4 class="pkt">MW3</h4>
+            <span class="pkm">1:14:44 · 5.73 GB · on Google Drive</span>
+            <div class="pkb">
+              <button class="go" type="button" data-name="MW3 cutscenes"
+                data-url="https://drive.google.com/file/d/1ALgxOjOu_UF4f5RGsHnBsxDVpRm510zu/view">Download <i>→</i></button>
+            </div>
+          </div>
+        </div>
+
+        <p class="cap info"><i></i><span><b>All three are up on Google Drive.</b> Each opens its Drive
+        page — hit the download arrow there. Large files show a virus-scan warning first; that is
+        normal, carry on.</span></p>
+    </article>
+    </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+"use strict";
+var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+var fine = matchMedia("(hover:hover)").matches;
+var root = document.documentElement;
+var mx = innerWidth/2, my = innerHeight/2, px = mx, py = my;
+
+var sc = document.getElementById("scene"), s = sc.getContext("2d"), W, H, motes = [], fog = [];
+function sized(){
+  W = sc.width = innerWidth; H = sc.height = innerHeight;
+  motes = []; fog = [];
+  var small = innerWidth < 760;
+  var n = Math.min(small ? 55 : 180, Math.round(W*H/(small ? 5200 : 9000)));
+  for (var i=0;i<n;i++) motes.push({x:Math.random()*W,y:Math.random()*H,z:.25+Math.random()*.75,
+    r:.5+Math.random()*1.9,vx:(Math.random()-.5)*.16,vy:-.05-Math.random()*.22,ph:Math.random()*6.28});
+  for (var j=0;j<(small?3:7);j++) fog.push({x:Math.random()*W,y:Math.random()*H,r:180+Math.random()*320,
+    vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.08,a:.028+Math.random()*.04});
+}
+sized();
+function isTherm(){ return root.classList.contains("thermal") || root.getAttribute("data-theme")==="light"; }
+
+function makeBlob(rgb){
+  var c = document.createElement("canvas"), n = 64;
+  c.width = c.height = n;
+  var x = c.getContext("2d");
+  var g = x.createRadialGradient(n/2,n/2,0,n/2,n/2,n/2);
+  g.addColorStop(0,"rgba("+rgb+",1)");
+  g.addColorStop(1,"rgba("+rgb+",0)");
+  x.fillStyle = g; x.fillRect(0,0,n,n);
+  return c;
+}
+var blobNvgMote = makeBlob("180,255,205"), blobNvgFog = makeBlob("40,190,90");
+var blobThMote  = makeBlob("10,8,6"),      blobThFog  = makeBlob("10,8,6");
+
+function drawScene(t){
+  s.clearRect(0,0,W,H);
+  var th = isTherm();
+  s.globalCompositeOperation = th ? "multiply" : "lighter";
+  var base = th ? "10,8,6" : "40,190,90";
+  var spMote = th ? blobThMote : blobNvgMote, spFog = th ? blobThFog : blobNvgFog;
+
+  for (var f=0;f<fog.length;f++){
+    var o = fog[f]; o.x += o.vx; o.y += o.vy;
+    if (o.x < -o.r) o.x = W+o.r; if (o.x > W+o.r) o.x = -o.r;
+    if (o.y < -o.r) o.y = H+o.r; if (o.y > H+o.r) o.y = -o.r;
+    s.globalAlpha = o.a;
+    s.drawImage(spFog, o.x-o.r, o.y-o.r, o.r*2, o.r*2);
+  }
+  s.globalAlpha = 1;
+
+  var beam = s.createRadialGradient(px,py,0,px,py,330);
+  beam.addColorStop(0,"rgba("+base+",.09)"); beam.addColorStop(.5,"rgba("+base+",.035)");
+  beam.addColorStop(1,"rgba("+base+",0)");
+  s.fillStyle = beam; s.fillRect(0,0,W,H);
+
+  for (var i=0;i<motes.length;i++){
+    var m = motes[i];
+    m.x += m.vx*m.z + Math.sin(t/2600 + m.ph)*.16; m.y += m.vy*m.z;
+    if (m.y < -6){ m.y = H+6; m.x = Math.random()*W; }
+    if (m.x < -6) m.x = W+6; if (m.x > W+6) m.x = -6;
+    var dx = m.x-px, dy = m.y-py;
+    var lit = Math.max(0, 1 - Math.sqrt(dx*dx+dy*dy)/340);
+    var r = m.r*m.z*(1+lit*1.5), d2 = r*8;
+    s.globalAlpha = (.05 + lit*.72)*m.z;
+    s.drawImage(spMote, m.x-d2/2, m.y-d2/2, d2, d2);
+  }
+  s.globalAlpha = 1;
+  s.globalCompositeOperation = "source-over";
+}
+
+var gc = document.getElementById("grain"), gx = gc.getContext("2d"), gf = [], gi = 0;
+function buildGrain(){
+  var div = innerWidth < 760 ? 3 : 2;
+  var w = gc.width = Math.ceil(innerWidth/div), h = gc.height = Math.ceil(innerHeight/div);
+  gf = [];
+  for (var f=0;f<3;f++){
+    var im = gx.createImageData(w,h), d = im.data;
+    for (var i=0;i<d.length;i+=4){ var v = Math.random()*255;
+      d[i]=v*.32; d[i+1]=v; d[i+2]=v*.42; d[i+3]=255; }
+    gf.push(im);
+  }
+  gx.putImageData(gf[0],0,0);
+}
+buildGrain();
+
+var last = 0, grainEvery = innerWidth < 760 ? 150 : 85;
+var lastW = innerWidth, lastH = innerHeight, rzT = null;
+addEventListener("resize", function(){
+  clearTimeout(rzT);
+  rzT = setTimeout(function(){
+    var w = innerWidth, h = innerHeight;
+    if (w === lastW && Math.abs(h - lastH) < 140){ lastH = h; return; }
+    lastW = w; lastH = h;
+    grainEvery = w < 760 ? 150 : 85;
+    sized(); buildGrain();
+  }, 180);
+});
+function loop(t){
+  px += (mx-px)*.09; py += (my-py)*.09;
+  if (!reduce){
+    drawScene(t);
+    if (t-last > grainEvery){ gx.putImageData(gf[gi=(gi+1)%3],0,0); last = t; }
+  }
+  requestAnimationFrame(loop);
+}
+if (reduce) drawScene(0);
+requestAnimationFrame(loop);
+
+var ret = document.getElementById("ret"), halo = document.getElementById("halo");
+var rx = mx, ry = my;
+if (fine){
+  addEventListener("pointermove", function(e){ mx = e.clientX; my = e.clientY;
+    document.body.classList.add("ptr"); });
+  (function trail(){
+    rx += (mx-rx)*.22; ry += (my-ry)*.22;
+    ret.style.transform = "translate("+rx+"px,"+ry+"px)";
+    halo.style.setProperty("--mx", rx+"px"); halo.style.setProperty("--my", ry+"px");
+    requestAnimationFrame(trail);
+  })();
+  document.addEventListener("pointerover", function(e){
+    document.body.classList.toggle("hot", !!e.target.closest("button,a,.op,.pk"));
+  });
+} else {
+  (function orbit(){
+    var t = Date.now()/4200;
+    mx = innerWidth*(.5+Math.cos(t)*.3); my = innerHeight*(.45+Math.sin(t*1.3)*.25);
+    halo.style.setProperty("--mx", mx+"px"); halo.style.setProperty("--my", my+"px");
+    requestAnimationFrame(orbit);
+  })();
+}
+
+var AC = null, sndOn = false, sndBtn = document.getElementById("snd");
+sndBtn.addEventListener("click", function(){
+  sndOn = !sndOn;
+  if (sndOn && !AC) AC = new (window.AudioContext||window.webkitAudioContext)();
+  if (sndOn && AC.state === "suspended") AC.resume();
+  sndBtn.textContent = "Audio: " + (sndOn ? "on" : "off");
+  sndBtn.setAttribute("aria-pressed", sndOn ? "true" : "false");
+  if (sndOn) beep(880,.05,.05);
+});
+function beep(f,d,v,type){
+  if (!sndOn || !AC) return;
+  var o = AC.createOscillator(), g = AC.createGain();
+  o.type = type || "square"; o.frequency.value = f;
+  g.gain.setValueAtTime(v, AC.currentTime);
+  g.gain.exponentialRampToValueAtTime(.0001, AC.currentTime + d);
+  o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime + d);
+}
+
+var CH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&/*<>";
+function scramble(el){
+  if (reduce) return;
+  var final = el.dataset.final || el.textContent;
+  el.dataset.final = final;
+  var i = 0;
+  clearInterval(el._sid);
+  el._sid = setInterval(function(){
+    var out = "";
+    for (var k=0;k<final.length;k++){
+      if (k < i) out += final[k];
+      else if (final[k] === " ") out += " ";
+      else out += CH[(Math.random()*CH.length)|0];
+    }
+    el.textContent = out; i += .5;
+    if (i >= final.length){ clearInterval(el._sid); el.textContent = final; }
+  }, 34);
+}
+
+function countUp(el){
+  var target = parseFloat(el.dataset.count);
+  var dec = el.dataset.dec ? +el.dataset.dec : (el.dataset.count.indexOf(".") > -1 ? 1 : 0);
+  var pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
+  if (reduce){ el.textContent = pre + target.toFixed(dec) + suf; return; }
+  var run = (el._run || 0) + 1; el._run = run;
+  var t0 = performance.now(), dur = 1100;
+  (function step(now){
+    if (el._run !== run) return;
+    var p = Math.min(1,(now-t0)/dur), e = 1-Math.pow(1-p,3);
+    el.textContent = pre + (target*e).toFixed(dec) + suf;
+    if (p < 1) requestAnimationFrame(step);
+  })(t0);
+}
+
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if (!e.isIntersecting) return;
+    var el = e.target;
+    if (el.classList.contains("doss")){
+      el.classList.add("in");
+      beep(1320,.04,.03,"sine");
+      setTimeout(function(){ beep(660,.09,.04); }, 800);
+      var cv = el.querySelector(".dthumb img, .dthumb canvas");
+      if (cv && !reduce){ cv.classList.add("glitch");
+        setTimeout(function(){ cv.classList.remove("glitch"); }, 460); }
+    }
+    el.querySelectorAll("[data-scramble]").forEach(scramble);
+    el.querySelectorAll("[data-count]").forEach(countUp);
+    io.unobserve(el);
+  });
+}, { threshold:.22 });
+document.querySelectorAll(".doss, .roster").forEach(function(el){ io.observe(el); });
+
+var dossiers = document.querySelectorAll(".doss");
+if (fine && !reduce){
+  document.querySelectorAll(".go").forEach(function(b){
+    b.addEventListener("pointerenter", function(){ beep(1760,.03,.025,"sine"); });
+  });
+  document.querySelectorAll(".op").forEach(function(o){
+    o.addEventListener("pointerenter", function(){ beep(1480,.025,.02,"sine"); });
+  });
+}
+
+function showDossier(key){
+  var target = null;
+  dossiers.forEach(function(ds){
+    var match = ds.dataset.doss === key;
+    ds.hidden = !match;
+    if (match) target = ds;
+  });
+  if (!target) return;
+  io.unobserve(target);
+  target.classList.remove("in"); void target.offsetWidth; target.classList.add("in");
+  target.querySelectorAll("[data-scramble]").forEach(scramble);
+  target.querySelectorAll("[data-count]").forEach(countUp);
+  var cv = target.querySelector(".dthumb img, .dthumb canvas");
+  if (cv && !reduce){ cv.classList.add("glitch");
+    setTimeout(function(){ cv.classList.remove("glitch"); }, 460); }
+  beep(1320,.04,.03,"sine");
+  setTimeout(function(){ beep(660,.09,.04); }, 800);
+}
+
+document.querySelectorAll(".op").forEach(function(op){
+  op.addEventListener("click", function(){
+    if (op.hasAttribute("data-empty")){
+      notify("Empty slot", "Nothing filed here yet", true);
+      op.classList.add("shake");
+      setTimeout(function(){ op.classList.remove("shake"); }, 380);
+      return;
+    }
+    document.querySelectorAll(".op").forEach(function(o){
+      o.classList.toggle("sel", o === op);
+      o.setAttribute("aria-pressed", o === op ? "true" : "false");
+    });
+    showDossier(op.dataset.op);
+  });
+});
+
+var hit = document.getElementById("hit"),
+    hitT = document.getElementById("hitT"),
+    hitS = document.getElementById("hitS"),
+    hitGo = document.getElementById("hitGo"),
+    hitNo = document.getElementById("hitNo"),
+    hitTimer = null, pending = null;
+
+function hideHit(){
+  clearTimeout(hitTimer); pending = null;
+  hit.classList.remove("on","ask");
+}
+
+function notify(title, sub, warn){
+  clearTimeout(hitTimer); pending = null;
+  hitT.textContent = title; hitS.textContent = sub;
+  hit.classList.remove("ask");
+  hit.classList.toggle("warn", !!warn);
+  hit.classList.remove("on"); void hit.offsetWidth; hit.classList.add("on");
+  beep(warn ? 200 : 1180, warn ? .22 : .09, .045, warn ? "sawtooth" : "sine");
+  hitTimer = setTimeout(hideHit, warn ? 2400 : 2600);
+}
+
+function ask(btn, sub){
+  clearTimeout(hitTimer);
+  pending = btn;
+  hitT.textContent = "Remember to give credits";
+  hitS.textContent = sub;
+  hit.classList.remove("warn");
+  hit.classList.remove("on"); void hit.offsetWidth;
+  hit.classList.add("on","ask");
+  beep(1180,.07,.04,"sine");
+  setTimeout(function(){ beep(1560,.16,.045,"sine"); }, 130);
+  setTimeout(function(){ if (pending) hitGo.focus(); }, 320);
+}
+
+function fire(b){
+  var url = b.dataset.url;
+  if (b.hasAttribute("data-direct")){
+    var a = document.createElement("a");
+    a.href = url; a.download = ""; a.rel = "noopener";
+    document.body.appendChild(a); a.click(); a.remove();
+  } else {
+    window.open(url, "_blank", "noopener");
+  }
+}
+
+hitGo.addEventListener("click", function(){
+  if (!pending) return;
+  fire(pending);
+  hideHit();
+});
+hitNo.addEventListener("click", hideHit);
+hit.addEventListener("click", function(e){ if (e.target === hit) hideHit(); });
+addEventListener("keydown", function(e){ if (e.key === "Escape") hideHit(); });
+
+document.querySelectorAll(".go").forEach(function(b){
+  b.addEventListener("click", function(){
+    var name = b.dataset.name || "File";
+
+    if (b.hasAttribute("data-locked")){
+      if (!reduce){
+        b.classList.add("shake");
+        setTimeout(function(){ b.classList.remove("shake"); }, 380);
+      }
+      notify("Not ready yet", b.dataset.msg || (name + " is still encoding"), true);
+      return;
+    }
+
+    var url = b.dataset.url;
+    if (!url || url.indexOf("REPLACE-") > -1){
+      notify("No link yet", name + " has no URL assigned", true);
+      return;
+    }
+
+    var where = "";
+    if (!b.hasAttribute("data-direct")){
+      try {
+        var h = new URL(url).hostname;
+        where = h.indexOf("mega") > -1 ? " · opens Mega"
+              : h.indexOf("google") > -1 ? " · opens Google Drive" : "";
+      } catch(err){}
+    }
+    ask(b, name + where);
+  });
+});
+
+var boot = document.getElementById("boot"), iris = document.getElementById("iris");
+var opened = false;
+function open(){
+  if (opened) return; opened = true;
+  document.body.classList.add("booted");
+  if (reduce){ iris.style.display = "none"; return; }
+  var r = 0;
+  (function step(){
+    r += (118-r)*.075;
+    iris.style.setProperty("--r", r.toFixed(1)+"%");
+    if (r < 115) requestAnimationFrame(step); else iris.style.display = "none";
+  })();
+}
+setTimeout(open, reduce ? 0 : 1850);
+boot.addEventListener("click", open);
+
+var modeBtn = document.getElementById("mode");
+modeBtn.addEventListener("click", function(){
+  var th = root.classList.toggle("thermal");
+  root.classList.toggle("nvg", !th);
+  root.setAttribute("data-theme", th ? "light" : "dark");
+  modeBtn.textContent = "Optic: " + (th ? "Thermal" : "NVG");
+  beep(th ? 440 : 880,.07,.04);
+});
+})();
+</script>
+
+</body>
+</html>
