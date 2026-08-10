@@ -285,10 +285,49 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   background:var(--rule);border:1px solid var(--rule)}
 .pk{position:relative;display:flex;flex-direction:column;overflow:hidden;
   background:color-mix(in srgb,var(--panel) 62%,transparent);
-  padding:clamp(18px,2vw,24px);transition:background .3s}
+  transition:background .3s}
 .pk:hover{background:color-mix(in srgb,var(--panel) 95%,transparent)}
 .pk:last-child:nth-child(odd){grid-column:1/-1}
 .pk > *{position:relative;z-index:1}
+
+/* a frame from the pack itself, carrying the same duotone as the rest
+   of the optic so it reads as footage seen through the tube */
+.pkshot{display:block;width:100%;aspect-ratio:16/9;overflow:hidden;line-height:0;
+  background:var(--tube);border-bottom:1px solid var(--rule)}
+.pkshot img{display:block;width:100%;height:100%;object-fit:cover;
+  filter:grayscale(1) contrast(1.12) brightness(.72);
+  transition:filter .45s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.pk:hover .pkshot img{filter:grayscale(1) contrast(1.16) brightness(1);transform:scale(1.045)}
+.pkshot .tint{position:absolute;inset:0;background:var(--phos);
+  mix-blend-mode:color;opacity:.9;pointer-events:none}
+.pkshot::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to bottom,transparent 48%,
+    color-mix(in srgb,var(--panel) 88%,transparent))}
+.pkin{display:flex;flex-direction:column;flex:1;padding:clamp(18px,2vw,24px)}
+
+/* in-app browsers (TikTok, Instagram…) have no system downloader wired up,
+   so a file every normal browser saves just opens in a viewer instead */
+.iab{position:fixed;left:0;right:0;bottom:0;z-index:96;
+  padding:14px calc(16px + env(safe-area-inset-right,0px))
+          calc(14px + env(safe-area-inset-bottom,0px))
+          calc(16px + env(safe-area-inset-left,0px));
+  background:var(--panel);border-top:2px solid var(--ir);
+  box-shadow:0 -14px 40px rgba(0,0,0,.6)}
+.iab[hidden]{display:none}
+.iabin{max-width:640px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.iabtx{flex:1 1 260px;min-width:0}
+.iabtx strong{display:block;font-family:var(--display);font-stretch:75%;font-weight:700;
+  font-size:clamp(15px,3.4vw,19px);text-transform:uppercase;letter-spacing:.02em;color:var(--hot)}
+.iabtx span{display:block;margin-top:4px;font-size:11.5px;line-height:1.55;color:var(--dim)}
+.iabtx b{color:var(--phos);font-weight:400}
+.iabb{display:flex;gap:8px;flex:0 0 auto}
+.iabb button{min-height:42px;padding:10px 16px;font:inherit;font-size:9.5px;letter-spacing:.22em;
+  text-transform:uppercase;border:1px solid var(--rule);color:var(--text);cursor:none;
+  background:color-mix(in srgb,var(--ink) 40%,transparent)}
+.iabb #iabCopy{background:var(--phos);border-color:var(--phos);color:var(--ink)}
+@media (hover:none){.iabb button{cursor:pointer}}
+.iaburl{flex:1 1 100%;font-size:10.5px;color:var(--text);word-break:break-all;
+  user-select:all;-webkit-user-select:all;padding:8px 10px;border:1px dashed var(--rule)}
 .pkn{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
 .pkt{margin:8px 0 0;font-family:var(--display);font-stretch:75%;font-weight:700;
   text-transform:uppercase;font-size:clamp(1.5rem,2.6vw,2.05rem);line-height:1;
@@ -404,6 +443,21 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
   </div>
 </div>
 
+<div class="iab" id="iab" role="alert" hidden>
+  <div class="iabin">
+    <div class="iabtx">
+      <strong>Downloads don’t work in here</strong>
+      <span>You opened this inside an app. Tap the <b>⋯</b> menu and choose
+        <b>Open in browser</b> — then the files save normally.</span>
+    </div>
+    <div class="iabb">
+      <button type="button" id="iabCopy">Copy link</button>
+      <button type="button" id="iabClose">Dismiss</button>
+    </div>
+    <code class="iaburl" id="iabUrl" hidden></code>
+  </div>
+</div>
+
 <main>
 
   <section id="s1">
@@ -457,41 +511,55 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 
         <div class="dls">
           <div class="pk">
-            <span class="pkn">01 — Modern Warfare</span>
-            <h4 class="pkt">MW1</h4>
-            <span class="pkm">18:51 · 2.56 GB · two files</span>
-            <div class="pkb">
-              <button class="go" type="button" data-name="MW1 part 1" data-direct
-                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part1.mp4">Part 1 <i>↓</i></button>
-              <button class="go" type="button" data-name="MW1 part 2" data-direct
-                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part2.mp4">Part 2 <i>↓</i></button>
+            <span class="pkshot"><img src="img/cod/price-mw1.jpg" alt="" width="480" height="204"
+              decoding="async"><i class="tint" aria-hidden="true"></i></span>
+            <div class="pkin">
+              <span class="pkn">01 — Modern Warfare</span>
+              <h4 class="pkt">MW1</h4>
+              <span class="pkm">18:51 · 2.56 GB · two files</span>
+              <div class="pkb">
+                <button class="go" type="button" data-name="MW1 part 1" data-direct
+                  data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part1.mp4">Part 1 <i>↓</i></button>
+                <button class="go" type="button" data-name="MW1 part 2" data-direct
+                  data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part2.mp4">Part 2 <i>↓</i></button>
+              </div>
             </div>
           </div>
           <div class="pk">
-            <span class="pkn">02 — Modern Warfare II</span>
-            <h4 class="pkt">MW2</h4>
-            <span class="pkm">8:06 · 1.16 GB · one file</span>
-            <div class="pkb">
-              <button class="go" type="button" data-name="MW2" data-direct
-                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW2.mp4">Download <i>↓</i></button>
+            <span class="pkshot"><img src="img/cod/price-mw2.jpg" alt="" width="480" height="204"
+              decoding="async"><i class="tint" aria-hidden="true"></i></span>
+            <div class="pkin">
+              <span class="pkn">02 — Modern Warfare II</span>
+              <h4 class="pkt">MW2</h4>
+              <span class="pkm">8:06 · 1.16 GB · one file</span>
+              <div class="pkb">
+                <button class="go" type="button" data-name="MW2" data-direct
+                  data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW2.mp4">Download <i>↓</i></button>
+              </div>
             </div>
           </div>
           <div class="pk">
-            <span class="pkn">03 — Modern Warfare III</span>
-            <h4 class="pkt">MW3</h4>
-            <span class="pkm">11:55 · 1.62 GB · one file</span>
-            <div class="pkb">
-              <button class="go" type="button" data-name="MW3" data-direct
-                data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW3.mp4">Download <i>↓</i></button>
+            <span class="pkshot"><img src="img/cod/price-mw3.jpg" alt="" width="480" height="204"
+              decoding="async"><i class="tint" aria-hidden="true"></i></span>
+            <div class="pkin">
+              <span class="pkn">03 — Modern Warfare III</span>
+              <h4 class="pkt">MW3</h4>
+              <span class="pkm">11:55 · 1.62 GB · one file</span>
+              <div class="pkb">
+                <button class="go" type="button" data-name="MW3" data-direct
+                  data-url="https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW3.mp4">Download <i>↓</i></button>
+              </div>
             </div>
           </div>
           <div class="pk mega">
-            <span class="pkn">04 — Everything, one file</span>
-            <h4 class="pkt">Full pack</h4>
-            <span class="pkm">39:00 · 5.33 GB · opens Mega</span>
-            <div class="pkb">
-              <button class="go alt" type="button" data-name="Full scene pack"
-                data-url="https://mega.nz/file/SS4EAQQI#_0fGCxJnfgSKcLeHu5oPYMi6CU1KAQch8r4KsW4Vr0k">Download <i>→</i></button>
+            <div class="pkin">
+              <span class="pkn">04 — Everything, one file</span>
+              <h4 class="pkt">Full pack</h4>
+              <span class="pkm">39:00 · 5.33 GB · opens Mega</span>
+              <div class="pkb">
+                <button class="go alt" type="button" data-name="Full scene pack"
+                  data-url="https://mega.nz/file/SS4EAQQI#_0fGCxJnfgSKcLeHu5oPYMi6CU1KAQch8r4KsW4Vr0k">Download <i>→</i></button>
+              </div>
             </div>
           </div>
         </div>
@@ -527,30 +595,42 @@ main > section:first-of-type{padding-top:clamp(72px,11vh,116px)}
 
         <div class="dls">
           <div class="pk">
-            <span class="pkn">01 — Modern Warfare</span>
-            <h4 class="pkt">MW1</h4>
-            <span class="pkm">59:15 · 4.51 GB · on Google Drive</span>
-            <div class="pkb">
-              <button class="go" type="button" data-name="MW1 cutscenes"
-                data-url="https://drive.google.com/file/d/1lP5NG8kCMl4PpKJKyOi3KVMiDZNnuBlP/view">Download <i>→</i></button>
+            <span class="pkshot"><img src="img/cod/cuts-mw1.jpg" alt="" width="480" height="270"
+              decoding="async"><i class="tint" aria-hidden="true"></i></span>
+            <div class="pkin">
+              <span class="pkn">01 — Modern Warfare</span>
+              <h4 class="pkt">MW1</h4>
+              <span class="pkm">59:15 · 4.51 GB · on Google Drive</span>
+              <div class="pkb">
+                <button class="go" type="button" data-name="MW1 cutscenes"
+                  data-url="https://drive.google.com/file/d/1lP5NG8kCMl4PpKJKyOi3KVMiDZNnuBlP/view">Download <i>→</i></button>
+              </div>
             </div>
           </div>
           <div class="pk">
-            <span class="pkn">02 — Modern Warfare II</span>
-            <h4 class="pkt">MW2</h4>
-            <span class="pkm">38:36 · 3.67 GB · on Google Drive</span>
-            <div class="pkb">
-              <button class="go" type="button" data-name="MW2 cutscenes"
-                data-url="https://drive.google.com/file/d/1oxg2-HFapdZli2YJaZ5iuyn9fHFd7gJu/view">Download <i>→</i></button>
+            <span class="pkshot"><img src="img/cod/cuts-mw2.jpg" alt="" width="480" height="270"
+              decoding="async"><i class="tint" aria-hidden="true"></i></span>
+            <div class="pkin">
+              <span class="pkn">02 — Modern Warfare II</span>
+              <h4 class="pkt">MW2</h4>
+              <span class="pkm">38:36 · 3.67 GB · on Google Drive</span>
+              <div class="pkb">
+                <button class="go" type="button" data-name="MW2 cutscenes"
+                  data-url="https://drive.google.com/file/d/1oxg2-HFapdZli2YJaZ5iuyn9fHFd7gJu/view">Download <i>→</i></button>
+              </div>
             </div>
           </div>
           <div class="pk">
-            <span class="pkn">03 — Modern Warfare III</span>
-            <h4 class="pkt">MW3</h4>
-            <span class="pkm">1:14:44 · 5.73 GB · on Google Drive</span>
-            <div class="pkb">
-              <button class="go" type="button" data-name="MW3 cutscenes"
-                data-url="https://drive.google.com/file/d/1ALgxOjOu_UF4f5RGsHnBsxDVpRm510zu/view">Download <i>→</i></button>
+            <span class="pkshot"><img src="img/cod/cuts-mw3.jpg" alt="" width="480" height="270"
+              decoding="async"><i class="tint" aria-hidden="true"></i></span>
+            <div class="pkin">
+              <span class="pkn">03 — Modern Warfare III</span>
+              <h4 class="pkt">MW3</h4>
+              <span class="pkm">1:14:44 · 5.73 GB · on Google Drive</span>
+              <div class="pkb">
+                <button class="go" type="button" data-name="MW3 cutscenes"
+                  data-url="https://drive.google.com/file/d/1ALgxOjOu_UF4f5RGsHnBsxDVpRm510zu/view">Download <i>→</i></button>
+              </div>
             </div>
           </div>
         </div>
@@ -824,6 +904,28 @@ function hideHit(){
   clearTimeout(hitTimer); pending = null;
   hit.classList.remove("on","ask");
 }
+
+/* An embedded web view cannot hand a file to the system downloader, and
+   nothing on the page can override that — the only real fix is leaving the
+   app, so say it plainly and hand over the address. */
+(function(){
+  var ua = navigator.userAgent || "";
+  var inApp = /FBAN|FBAV|FB_IAB|Instagram|Snapchat|Twitter|LinkedInApp|Line\/|MicroMessenger|Pinterest/i.test(ua)
+           || /BytedanceWebview|Bytedance|musical_ly|TikTok|trill/i.test(ua);
+  if (!inApp) return;
+  var bar = document.getElementById("iab");
+  if (!bar) return;
+  bar.hidden = false;
+  var urlEl = document.getElementById("iabUrl");
+  document.getElementById("iabClose").addEventListener("click", function(){ bar.hidden = true; });
+  document.getElementById("iabCopy").addEventListener("click", function(){
+    var href = location.href;
+    function reveal(){ urlEl.textContent = href; urlEl.hidden = false; }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(href).then(reveal, reveal);
+    } else reveal();
+  });
+})();
 
 function notify(title, sub, warn){
   clearTimeout(hitTimer); pending = null;

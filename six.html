@@ -39,6 +39,47 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 :focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 
+/* ═══════════════════════  THE WAY IN  ═══════════════════════
+   Call of Duty ignites four tubes; here four brackets converge and lock,
+   which is the gesture the rest of the page is built on. Driven entirely
+   by CSS so the cover always clears, even if the script never runs. */
+.boot{position:fixed;inset:0;z-index:100;background:var(--ink);
+  display:grid;place-content:center;
+  animation:bootOut .55s ease 1.45s forwards}
+@keyframes bootOut{to{opacity:0;visibility:hidden}}
+
+.lock{position:relative;width:clamp(116px,24vw,200px);aspect-ratio:1}
+.lock i{position:absolute;display:block}
+.lock .b{width:26%;height:26%;border:1px solid var(--amber);
+  opacity:0;animation:lockIn .75s cubic-bezier(.16,.9,.28,1) forwards}
+.lock .tl{left:0;top:0;border-width:1px 0 0 1px;--tx:-70px;--ty:-70px;animation-delay:.1s}
+.lock .tr{right:0;top:0;border-width:1px 1px 0 0;--tx:70px;--ty:-70px;animation-delay:.22s}
+.lock .bl{left:0;bottom:0;border-width:0 0 1px 1px;--tx:-70px;--ty:70px;animation-delay:.34s}
+.lock .br{right:0;bottom:0;border-width:0 1px 1px 0;--tx:70px;--ty:70px;animation-delay:.46s}
+@keyframes lockIn{
+  from{opacity:0;transform:translate(var(--tx),var(--ty)) scale(1.4)}
+  to{opacity:1;transform:none}
+}
+.lock .dot{left:50%;top:50%;width:7px;height:7px;margin:-3.5px 0 0 -3.5px;
+  border-radius:50%;background:var(--red);opacity:0;
+  animation:lockDot .7s ease .62s forwards}
+@keyframes lockDot{
+  0%{opacity:0;transform:scale(.2);box-shadow:0 0 0 rgba(255,59,36,0)}
+  45%{opacity:1;transform:scale(1.5);box-shadow:0 0 26px rgba(255,59,36,.9)}
+  100%{opacity:1;transform:scale(1);box-shadow:0 0 12px rgba(255,59,36,.6)}
+}
+.lock .scan{left:-6%;right:-6%;top:50%;height:1px;background:var(--amber);
+  box-shadow:0 0 12px var(--amber);opacity:0;
+  animation:lockScan .95s ease-out .2s forwards}
+@keyframes lockScan{
+  0%{opacity:0;transform:scaleX(0)}
+  35%{opacity:.85;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(1)}
+}
+@media (prefers-reduced-motion:reduce){
+  .boot{display:none}
+}
+
 /* ═════════════════════════  SIX  ═════════════════════════ */
 /* dvh, not vh: on a phone 100vh is the *tallest* the viewport ever gets, so
    it leaves a phantom scroll while the browser bar is showing */
@@ -347,6 +388,30 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .hno{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);padding:6px}
 .hno:hover{color:var(--text)}
 
+/* ── in-app browsers (TikTok, Instagram…) cannot hand a file to the system
+      downloader, so the only honest fix is to say so and offer the link ── */
+.iab{position:fixed;left:0;right:0;bottom:0;z-index:96;
+  padding:14px calc(16px + env(safe-area-inset-right,0px))
+          calc(14px + env(safe-area-inset-bottom,0px))
+          calc(16px + env(safe-area-inset-left,0px));
+  background:var(--panel);border-top:2px solid var(--red);
+  box-shadow:0 -14px 40px rgba(0,0,0,.6)}
+.iab[hidden]{display:none}
+.iabin{max-width:640px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.iabtx{flex:1 1 260px;min-width:0}
+.iabtx strong{display:block;font-family:var(--disp);font-weight:400;
+  font-size:clamp(15px,3.4vw,19px);text-transform:uppercase;letter-spacing:.03em;
+  color:var(--hot)}
+.iabtx span{display:block;margin-top:4px;font-size:11.5px;line-height:1.55;color:var(--dim)}
+.iabtx b{color:var(--amber);font-weight:400}
+.iabb{display:flex;gap:8px;flex:0 0 auto}
+.iabb button{min-height:42px;padding:10px 16px;font-size:9.5px;letter-spacing:.22em;
+  text-transform:uppercase;border:1px solid var(--rule);color:var(--text);
+  background:color-mix(in srgb,var(--ink) 40%,transparent)}
+.iabb #iabCopy{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.iaburl{flex:1 1 100%;font-size:10.5px;color:var(--text);word-break:break-all;
+  user-select:all;-webkit-user-select:all;padding:8px 10px;border:1px dashed var(--rule)}
+
 /* ── in-theme message, instead of a browser alert ── */
 .toast{position:fixed;left:50%;bottom:26px;translate:-50% 0;z-index:97;
   border:1px solid var(--rule);background:var(--panel);color:var(--text);
@@ -370,6 +435,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 </style>
 
 <h1 class="sr">Six — Joe Graves scene packs, one file per episode, cut straight from the Blu-ray.</h1>
+
+<div class="boot" id="boot" role="status" aria-label="Starting up">
+  <div class="lock" aria-hidden="true">
+    <i class="b tl"></i><i class="b tr"></i><i class="b bl"></i><i class="b br"></i>
+    <i class="scan"></i>
+    <i class="dot"></i>
+  </div>
+</div>
 
 <!-- ══════════════════════ SIX ══════════════════════ -->
 <div class="world on" id="world">
@@ -479,6 +552,21 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <span id="hitS">Season 1, episode 1</span>
     <button class="hgo" id="hitGo" type="button">Start download</button>
     <button class="hno" id="hitNo" type="button">Cancel</button>
+  </div>
+</div>
+
+<div class="iab" id="iab" role="alert" hidden>
+  <div class="iabin">
+    <div class="iabtx">
+      <strong>Downloads don’t work in here</strong>
+      <span>You opened this inside an app. Tap the <b>⋯</b> menu and choose
+        <b>Open in browser</b> — then the files save normally.</span>
+    </div>
+    <div class="iabb">
+      <button type="button" id="iabCopy">Copy link</button>
+      <button type="button" id="iabClose">Dismiss</button>
+    </div>
+    <code class="iaburl" id="iabUrl" hidden></code>
   </div>
 </div>
 
@@ -921,6 +1009,36 @@ addEventListener("keydown", function(e){
   if (e.key === "Escape" && notice.classList.contains("on")) ackNotice();
 });
 
+/* ── in-app browser warning ──────────────────────────────────────────
+   TikTok, Instagram and friends open links in an embedded web view. Those
+   views have no system downloader wired up, so a file that every normal
+   browser saves either does nothing or opens in a viewer. Nothing on the
+   page can override that — the only real fix is to leave the app, so say
+   it plainly and hand over the address. */
+function inAppBrowser(){
+  var ua = navigator.userAgent || "";
+  if (/FBAN|FBAV|FB_IAB|Instagram|Snapchat|Twitter|LinkedInApp|Line\/|MicroMessenger|Pinterest/i.test(ua)) return true;
+  if (/BytedanceWebview|Bytedance|musical_ly|TikTok|trill/i.test(ua)) return true;
+  return false;
+}
+(function(){
+  if (!inAppBrowser()) return;
+  var bar = document.getElementById("iab");
+  if (!bar) return;
+  bar.hidden = false;
+  var urlEl = document.getElementById("iabUrl");
+  document.getElementById("iabClose").addEventListener("click", function(){ bar.hidden = true; });
+  document.getElementById("iabCopy").addEventListener("click", function(){
+    var href = location.href;
+    function reveal(){ urlEl.textContent = href; urlEl.hidden = false; }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(href).then(function(){
+        toast("Link copied — paste it in your browser");
+      }, reveal);
+    } else reveal();
+  });
+})();
+
 /* ── the only telemetry left ── */
 var clk = document.getElementById("clk"), clkT = null;
 function startClock(){
@@ -943,12 +1061,13 @@ addEventListener("resize", function(){
   });
 }, { passive:true });
 
-/* the page opens straight into the feed, so start everything on load —
-   after the declarations above, since var assignments are not hoisted */
+/* start everything on load — after the declarations above, since var
+   assignments are not hoisted. The notice waits for the cover to clear,
+   otherwise it would be arming behind it. */
 terrain.start();
 startClock();
 refreshProgress();
-showNotice();
+setTimeout(showNotice, reduce ? 0 : 2050);
 })();
 </script>
 </body>
