@@ -123,9 +123,6 @@ every campaign cutscene, or Six, with Joe Graves episode by episode.</h1>
 "use strict";
 var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* Both halves run live behind the type, so the two worlds are already
-   moving before you pick one: phosphor rising on the left, terrain
-   drifting under a slow sweep on the right. */
 function sizeCanvas(c){
   var r = c.getBoundingClientRect();
   c.width  = Math.max(1, Math.round(r.width  || 1));
@@ -133,7 +130,6 @@ function sizeCanvas(c){
   return [c.width, c.height];
 }
 
-/* left: phosphor motes */
 var pc = document.getElementById("pvCod"), px = pc.getContext("2d");
 var pw = 1, ph = 1, motes = [], praf = null, pt0 = 0;
 function pvSize(){
@@ -159,7 +155,6 @@ function pvDraw(now){
   praf = requestAnimationFrame(pvDraw);
 }
 
-/* right: drifting terrain under a slow sweep */
 var sc = document.getElementById("pvSix"), sx = sc.getContext("2d");
 var sw = 1, sh = 1, sraf = null, st0 = 0;
 function svSize(){ var d = sizeCanvas(sc); sw = d[0]; sh = d[1]; }

@@ -41,10 +41,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 :focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 
-/* ═══════════════════════  THE WAY IN  ═══════════════════════
-   Call of Duty ignites four tubes; here four brackets converge and lock,
-   which is the gesture the rest of the page is built on. Driven entirely
-   by CSS so the cover always clears, even if the script never runs. */
+
+
 .boot{position:fixed;inset:0;z-index:100;background:var(--ink);
   display:grid;place-content:center;
   animation:bootOut .55s ease 1.45s forwards}
@@ -82,9 +80,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .boot{display:none}
 }
 
-/* ═════════════════════════  SIX  ═════════════════════════ */
-/* dvh, not vh: on a phone 100vh is the *tallest* the viewport ever gets, so
-   it leaves a phantom scroll while the browser bar is showing */
+
+
+
 .world{opacity:0;transition:opacity .6s;background:var(--ink);
   min-height:100vh;min-height:100dvh}
 .world.on{opacity:1}
@@ -94,22 +92,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   background:radial-gradient(ellipse 76% 84% at 50% 44%,transparent 44%,
     color-mix(in srgb,var(--ink) 45%,transparent) 74%,var(--ink) 100%)}
 
-.topbar{position:fixed;top:0;left:0;right:0;z-index:8;pointer-events:none;
-  display:flex;align-items:center;gap:16px;
-  padding:calc(12px + env(safe-area-inset-top,0px))
-          calc(var(--gut) + env(safe-area-inset-right,0px)) 12px
-          calc(var(--gut) + env(safe-area-inset-left,0px));
-  font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);
-  background:linear-gradient(var(--ink),transparent)}
-.topbar .live{color:var(--red);display:flex;align-items:center;gap:8px}
-.topbar .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);
-  box-shadow:0 0 9px var(--red);animation:blink 1.6s steps(1) infinite}
-@keyframes blink{50%{opacity:.2}}
-.topbar .sp{flex:1}
-.topbar b{color:var(--amber);font-weight:400;font-variant-numeric:tabular-nums}
 
-/* the page declares viewport-fit=cover, so the notch and the home indicator
-   have to be paid for explicitly or content slides underneath them */
+@keyframes blink{50%{opacity:.2}}
+
+
+
 .wrap{position:relative;z-index:5;max-width:1100px;margin:0 auto;
   padding:calc(clamp(62px,10vh,96px) + env(safe-area-inset-top,0px))
           calc(var(--gut) + env(safe-area-inset-right,0px))
@@ -123,8 +110,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .subject{display:flex;align-items:flex-end;gap:clamp(14px,3vw,28px);flex-wrap:wrap;
   padding-bottom:18px;border-bottom:1px solid var(--rule)}
 
-/* the subject, held in the sensor: brackets echo the reticle on the grid.
-   the tint is kept light so the goggle tubes stay cool against the amber. */
+
+
 .portrait{position:relative;flex:none;align-self:center;
   width:clamp(76px,10vw,112px);aspect-ratio:1;overflow:hidden;
   background:var(--panel);border:1px solid var(--rule)}
@@ -147,8 +134,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .subject .meta em{display:block;font-style:normal;font-size:8.5px;letter-spacing:.24em;
   text-transform:uppercase;color:var(--dim);margin-bottom:4px}
 
-/* where the files come from. Dense on purpose: a statement carrying the
-   specs on its back, rather than two icons with a long empty wire between. */
+
+
 .prov{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(13px,2vw,20px);
   margin-top:20px;padding:clamp(14px,2vw,18px) clamp(14px,2.2vw,20px);
   border:1px solid var(--rule);border-left:2px solid var(--amber);
@@ -162,8 +149,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .provline b{font-weight:400;color:var(--amber);
   box-shadow:inset 0 -2px 0 rgba(255,180,60,.4)}
 
-/* pushed to the far edge so the row spans the full width instead of
-   trailing off into empty space */
+
+
 .chips{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:0 0 0 auto;padding:0;
   justify-content:flex-end;flex:0 1 auto}
 .chip{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
@@ -185,7 +172,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .prov{gap:12px;padding:14px}
   .disc{width:28px;height:28px}
   .provin{flex-basis:calc(100% - 40px)}
-  /* line the chips up under the sentence, past the disc, not under the disc */
+
   .chips{margin-left:0;justify-content:flex-start;flex-basis:100%;padding-left:40px}
   .chip{font-size:8.5px;padding:4px 8px;letter-spacing:.16em}
 }
@@ -198,8 +185,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   color:var(--hot);letter-spacing:.03em}
 .smeta{margin-left:auto;font-size:10.5px;letter-spacing:.12em;color:var(--dim)}
 
-/* Column count is picked to divide the episode count exactly, so a season
-   never ends on a half-empty row. Set from script; 2 is a safe fallback. */
+
+
 .grid{position:relative;display:grid;gap:1px;background:var(--rule);
   border:1px solid var(--rule);grid-template-columns:repeat(var(--cols,2),1fr)}
 
@@ -224,8 +211,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @keyframes rise{to{opacity:1;transform:none}}
 .ep:hover,.ep:focus-visible{background:color-mix(in srgb,var(--panel) 96%,transparent);outline:0}
 
-/* the still: a frame from the episode, sitting in the palette rather than
-   fighting it. it lifts and warms up under the reticle. */
+
+
 .shot{position:relative;display:block;width:100%;aspect-ratio:16/9;
   overflow:hidden;background:#0a0806;line-height:0}
 .shot img{width:100%;height:100%;object-fit:cover;display:block;
@@ -245,8 +232,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   color:var(--hot);letter-spacing:.02em;transition:color .25s}
 .ep:hover .epn,.ep:focus-visible .epn{color:var(--amber)}
 .epm{font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums}
-/* pinned to the still, not to the card, so a longer caption can never
-   push it down over the text */
+
+
 .epa{position:absolute;right:8px;bottom:8px;z-index:2;
   width:26px;height:26px;display:grid;place-content:center;
   font-size:13px;color:var(--hot);background:rgba(10,8,6,.62);
@@ -255,7 +242,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ep:hover .epa,.ep:focus-visible .epa{color:var(--ink);background:var(--amber);
   border-color:var(--amber);transform:translateY(2px)}
 
-/* nothing filed yet: a dead slot in the feed, hatched and dark */
+
 .ep.pending .shot{background:
   repeating-linear-gradient(-45deg,transparent 0 8px,rgba(138,111,62,.06) 8px 16px),
   #0a0806}
@@ -270,23 +257,21 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   background:var(--amber);box-shadow:0 0 10px rgba(255,180,60,.45)}
 
 
-/* the "this is not a fault" notice: shown on the way in and acknowledged,
-   so nobody meets a stray frame without having been told first */
-/* ── the cut notice: instead of describing the stray frame, it shows one ──
-   A strip of film runs under a playhead. The frames of the clip light amber
-   as it passes; the two at the edges light red, because they came from the
-   scene next door. The warning demonstrates itself. */
+
+
+
+
 .ntbox{position:relative;border:1px solid var(--amber);background:var(--panel);
   padding:clamp(26px,4vw,40px);max-width:660px;width:100%;
   max-height:calc(100dvh - 48px);overflow-y:auto;
   display:flex;flex-direction:column;align-items:stretch;gap:clamp(18px,3vw,26px);
   animation:ntIn .45s cubic-bezier(.2,.85,.25,1) both}
 @keyframes ntIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
-/* transform, not margin: margin on an absolute child enlarges the scrollable
-   area and made the dialog sprout a scrollbar while the brackets flew in */
+
+
 .ntb{position:absolute;width:15px;height:15px;border:1px solid var(--amber)}
-/* they start inward and open out to the corners, so nothing ever sits
-   outside the box and the dialog never flashes a scrollbar */
+
+
 .ntb.tl{left:6px;top:6px;border-width:1px 0 0 1px;--tx:10px;--ty:10px}
 .ntb.tr{right:6px;top:6px;border-width:1px 1px 0 0;--tx:-10px;--ty:10px}
 .ntb.bl{left:6px;bottom:6px;border-width:0 0 1px 1px;--tx:10px;--ty:-10px}
@@ -301,13 +286,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ntk::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);
   box-shadow:0 0 9px var(--red);animation:blink 1.6s steps(1) infinite}
 
-/* Two statements, and in each one the meat is set large while the framing
-   clause stays small. There is no headline competing with them: the words
-   of the message are the biggest thing in the box. */
+
+
 .ntbody{display:flex;flex-direction:column;gap:clamp(18px,3vw,26px)}
-/* Readable by default. The staggered reveal is layered on top and removed
-   again once it has played, so text that MUST be read can never end up
-   stranded at opacity 0 if the animation never runs. */
+
+
 .stmt{position:relative;padding-left:clamp(34px,6vw,52px)}
 .ntbox.intro .stmt{animation:ntLine .55s cubic-bezier(.2,.85,.25,1) both;
   animation-delay:var(--d,0s)}
@@ -327,7 +310,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .loud b{font-weight:400;color:var(--amber)}
 .stmt.warn .loud b{color:var(--red);box-shadow:inset 0 -2px 0 rgba(255,59,36,.5)}
 
-/* the evidence, kept small and under the sentence it belongs to */
+
 .proof{margin-top:14px;max-width:290px}
 .proof canvas{display:block;width:100%;height:clamp(50px,11vw,62px);
   background:#050403;border:1px solid var(--rule)}
@@ -337,7 +320,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .plab b:last-child{text-align:right}
 .plab em{font-style:normal;color:var(--amber);flex:1;text-align:center;white-space:nowrap}
 
-/* the button arms itself once the lines have landed */
+
 .ntbox .hgo{position:relative;margin-top:8px;align-self:stretch;overflow:hidden;
   justify-content:center;min-height:48px;font-size:10px;letter-spacing:.28em;
   background:none;border:1px solid var(--rule);color:var(--dim);box-shadow:none;
@@ -352,8 +335,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ntbox .hgo:not([disabled]):hover{box-shadow:0 0 24px rgba(255,180,60,.45)}
 .ntbox .hgo[disabled]{cursor:wait}
 
-/* short screens: give the notice back its vertical room so the whole
-   message and its button sit on one screenful */
+
+
 @media (max-height:700px){
   .ntbox{padding:18px 18px 20px;gap:15px}
   .ntbody{gap:16px}
@@ -373,8 +356,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 
 
-/* ── credits step, same as the Call of Duty side ── */
-/* the cut notice keeps its own plain overlay */
+
+
 .ovl{position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;
   padding:calc(24px + env(safe-area-inset-top,0px))
           calc(24px + env(safe-area-inset-right,0px))
@@ -384,8 +367,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
 .ovl.on{opacity:1;visibility:visible}
 
-/* the credits step, matched to the Call of Duty side so both worlds ask
-   for the same thing in the same voice — only the colour changes */
+
+
 .hit{position:fixed;inset:0;z-index:99;display:grid;place-items:center;
   padding:calc(20px + env(safe-area-inset-top,0px))
           calc(20px + env(safe-area-inset-right,0px))
@@ -437,8 +420,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .hit.on.ask .hgo{animation:hitUp .45s .3s both}
 .hit.on.ask .hno{animation:hitUp .45s .42s both}
 
-/* ── in-app browsers (TikTok, Instagram…) cannot hand a file to the system
-      downloader, so the only honest fix is to say so and offer the link ── */
+
+
 .iab{position:fixed;left:0;right:0;bottom:0;z-index:96;
   padding:14px calc(16px + env(safe-area-inset-right,0px))
           calc(14px + env(safe-area-inset-bottom,0px))
@@ -461,7 +444,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .iaburl{flex:1 1 100%;font-size:10.5px;color:var(--text);word-break:break-all;
   user-select:all;-webkit-user-select:all;padding:8px 10px;border:1px dashed var(--rule)}
 
-/* ── in-theme message, instead of a browser alert ── */
+
 .toast{position:fixed;left:50%;bottom:26px;translate:-50% 0;z-index:97;
   border:1px solid var(--rule);background:var(--panel);color:var(--text);
   padding:12px 20px;font-size:11px;letter-spacing:.14em;
@@ -471,7 +454,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .toast b{color:var(--amber);font-weight:400}
 
 @media (max-width:620px){
-  /* micro-labels get a touch bigger at arm's length */
+
   .epk,.chip,.provk,.subject .meta em{font-size:9px}
   .ep{min-height:96px}
   .subject .meta{margin-left:0;flex-basis:100%}
@@ -493,17 +476,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   </div>
 </div>
 
-<!-- ══════════════════════ SIX ══════════════════════ -->
+
 <div class="world on" id="world">
   <canvas id="terrain" aria-hidden="true"></canvas>
   <div class="veilw" aria-hidden="true"></div>
-
-  <div class="topbar" aria-hidden="true">
-    <span class="live">Live</span>
-    <span>MQ-9 · <b>Reaper</b></span>
-    <span class="sp"></span>
-    <span id="clk">00:00:00Z</span>
-  </div>
 
   <div class="wrap">
     <a class="back" href="./">Back to the choice</a>
@@ -630,22 +606,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 var world = document.getElementById("world");
 
-/* ─────────────────────────────────────────────────────────────
-   Episode data. Everything is driven from here: fill in runtime,
-   size and url as each episode gets cut, and the box, the counter
-   and the progress bar all follow on their own.
-   The three marked ready below are placeholders, to show what a
-   finished episode looks like next to a pending one.
-   ───────────────────────────────────────────────────────────── */
+
+
 var REL = "https://github.com/Qstrx/noctis/releases/download/six-s2/";
 
-/* One still per episode, named after its box. Add a season here the day its
-   frames exist and every box in it picks up an image on its own. */
+
+
 var SHOTS = { 2: "img/six/s2-e" };
 
 var EPISODES = {
-  /* season 1 is cut but not uploaded yet, so it stays pending on purpose:
-     a box only turns on once its file is actually reachable. */
+
+
   1: [
     { ep:1 }, { ep:2 }, { ep:3 }, { ep:4 },
     { ep:5 }, { ep:6 }, { ep:7 }, { ep:8 }
@@ -703,14 +674,13 @@ function buildSeason(host, season){
   layoutGrid(host);
 }
 
-/* Pick the widest column count that divides the episode count exactly, so the
-   last row is always full. Works for whatever counts the seasons end up having. */
+
+
 function layoutGrid(host){
   var n = host.querySelectorAll(".ep").length;
   if (!n) return;
-  /* how many boxes fit at a comfortable size, then the widest count that
-     divides the episodes exactly — so a phone held sideways gets more
-     columns instead of two huge cards */
+
+
   var avail = host.clientWidth || innerWidth;
   var max = Math.max(2, Math.min(5, Math.floor(avail / 118)));
   var cols = Math.min(n, max);
@@ -718,7 +688,7 @@ function layoutGrid(host){
   host.style.setProperty("--cols", cols);
 }
 
-/* ── the reticle: follows what you point at, and stays on what you pick ── */
+
 function wireGrid(host, ret){
   var held = null;
 
@@ -746,7 +716,7 @@ function wireGrid(host, ret){
     if (!host.contains(e.relatedTarget)) restore();
   });
 
-  /* arrow keys walk the grid, using however many columns actually fit */
+
   host.addEventListener("keydown", function(e){
     var keys = ["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"];
     if (keys.indexOf(e.key) === -1) return;
@@ -783,8 +753,8 @@ function wireGrid(host, ret){
 buildSeason(document.getElementById("g1"), 1);
 buildSeason(document.getElementById("g2"), 2);
 
-/* ── the count on the choice screen reads the boxes, so it can never
-      disagree with what is actually downloadable ── */
+
+
 function refreshProgress(){
   var total = document.querySelectorAll(".ep").length;
   var ready = document.querySelectorAll(".ep.ready").length;
@@ -794,14 +764,14 @@ function refreshProgress(){
 }
 refreshProgress();
 
-/* ── credits step before any download ── */
+
 var hit = document.getElementById("hit"), hitS = document.getElementById("hitS"),
     hitGo = document.getElementById("hitGo"), hitNo = document.getElementById("hitNo"),
     pending = null;
 function ask(b){
   pending = b;
   hitS.textContent = "Season " + b.dataset.season + ", episode " + b.dataset.ep;
-  hit.classList.remove("on","ask"); void hit.offsetWidth;   /* replay the ring */
+  hit.classList.remove("on","ask"); void hit.offsetWidth;
   hit.classList.add("on","ask");
   setTimeout(function(){ if (pending) hitGo.focus(); }, 320);
 }
@@ -810,9 +780,8 @@ hitGo.addEventListener("click", function(){
   if (!pending) return;
   var b = pending;
   closeHit();
-  /* the file lives on github.com while the page is on github.io, so the
-     download attribute is ignored — what actually saves it is the
-     Content-Disposition: attachment header the release serves */
+
+
   var a = document.createElement("a");
   a.href = b.dataset.url; a.download = ""; a.rel = "noopener";
   document.body.appendChild(a); a.click(); a.remove();
@@ -822,7 +791,7 @@ hitNo.addEventListener("click", closeHit);
 hit.addEventListener("click", function(e){ if (e.target === hit) closeHit(); });
 addEventListener("keydown", function(e){ if (e.key === "Escape" && pending) closeHit(); });
 
-/* ── in-theme message ── */
+
 var toastEl = document.getElementById("toast"), toastT = null;
 function toast(html){
   toastEl.innerHTML = html;
@@ -831,7 +800,7 @@ function toast(html){
   toastT = setTimeout(function(){ toastEl.classList.remove("on"); }, 2600);
 }
 
-/* ── the drifting terrain: one slow layer, nothing else ── */
+
 function makeTerrain(canvas, opts){
   var x = canvas.getContext("2d"), W=1, H=1, raf=null, t0=0;
   opts = opts || {};
@@ -865,19 +834,15 @@ function makeTerrain(canvas, opts){
 }
 var terrain = makeTerrain(document.getElementById("terrain"), { cell:52 });
 
-/* ── opening ── */
-/* The cut notice is shown on the way in and has to be acknowledged.
-   Once per visit: going back to the choice and returning does not nag again. */
+
+
+
 var notice = document.getElementById("notice"),
     ntOk   = document.getElementById("ntOk"),
     noticeSeen = false;
 
-/* ── the film inside the notice ──────────────────────────────────────
-   Ten frames of a strip. The eight in the middle hold one shot, warm and
-   drifting. The two at the ends hold a different one, cold and moving the
-   other way. A head sweeps across; whatever it is over lifts out of the
-   dark. When it reaches an end frame the brackets snap red around it, so
-   you watch a stray frame get caught instead of reading about one. */
+
+
 var film = document.getElementById("ntFilm"), fx = film.getContext("2d"),
     fW = 1, fH = 1, fRaf = null, fT0 = 0, FRAMES = 3, CYCLE = 3.6;
 
@@ -890,8 +855,8 @@ function filmSize(){
   fx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
-/* one frame of footage: a horizon, a couple of soft bodies drifting,
-   grain. `cold` swaps it for the neighbouring scene. */
+
+
 function shot(x, y, w, h, t, cold, lit){
   fx.save();
   fx.beginPath(); fx.rect(x, y, w, h); fx.clip();
@@ -904,13 +869,13 @@ function shot(x, y, w, h, t, cold, lit){
   }
   fx.fillStyle = g; fx.fillRect(x, y, w, h);
 
-  /* horizon sits at a different height in the other scene */
+
   var hz = y + h * (cold ? .38 : .62);
   fx.strokeStyle = cold ? "rgba(150,210,235,.30)" : "rgba(255,190,90,.28)";
   fx.lineWidth = 1;
   fx.beginPath(); fx.moveTo(x, hz); fx.lineTo(x + w, hz); fx.stroke();
 
-  /* bodies: warm ones drift right and settle low, cold ones sweep left */
+
   var n = cold ? 2 : 3;
   for (var i = 0; i < n; i++){
     var ph = i * 2.1 + (cold ? 1.3 : 0);
@@ -928,7 +893,7 @@ function shot(x, y, w, h, t, cold, lit){
     fx.beginPath(); fx.arc(bx, by, br, 0, 6.283); fx.fill();
   }
 
-  /* the head lifts the frame out of the dark as it goes past */
+
   fx.fillStyle = "rgba(255,255,255," + (lit * .16).toFixed(3) + ")";
   fx.fillRect(x, y, w, h);
   fx.fillStyle = "rgba(0,0,0," + (0.5 - lit * 0.42).toFixed(3) + ")";
@@ -944,14 +909,14 @@ function renderFilm(t, p){
   var fy = perf + pad, fh = fH - (perf + pad) * 2;
   var fw = (fW - pad * 2 - gap * (FRAMES - 1)) / FRAMES;
 
-  /* the strip is hidden on short screens, where the canvas measures 0 and
-     these come out negative — a negative radius throws and kills the loop */
+
+
   if (fh <= 4 || fw <= 4) return;
 
-  /* film base */
+
   fx.fillStyle = "#0b0906"; fx.fillRect(0, 0, fW, fH);
 
-  /* sprocket holes, top and bottom */
+
   fx.fillStyle = "#000";
   for (var hx = 6; hx < fW - 6; hx += 17){
     fx.fillRect(hx, Math.round(perf * .22), 7, Math.max(3, perf * .55));
@@ -969,7 +934,7 @@ function renderFilm(t, p){
 
     shot(x, fy, fw, fh, t, edge, lit);
 
-    /* frame border, and red brackets that snap shut on a caught frame */
+
     if (edge && lit > .25){
       var a = Math.min(1, (lit - .25) / .5);
       fx.strokeStyle = "rgba(255,59,36," + a.toFixed(3) + ")";
@@ -988,7 +953,7 @@ function renderFilm(t, p){
     }
   }
 
-  /* the head itself */
+
   var hg = fx.createLinearGradient(headX - 14, 0, headX + 14, 0);
   hg.addColorStop(0, "rgba(255,244,220,0)");
   hg.addColorStop(.5, "rgba(255,244,220,.5)");
@@ -1000,7 +965,7 @@ function renderFilm(t, p){
 function drawFilm(now){
   var t = (now - fT0) / 1000;
   var r = film.getBoundingClientRect();
-  /* re-measure if the strip changed size, e.g. rotating into landscape */
+
   if (Math.round(r.width) !== fW || Math.round(r.height) !== fH) filmSize();
   renderFilm(t, (t % CYCLE) / CYCLE);
   fRaf = requestAnimationFrame(drawFilm);
@@ -1009,9 +974,8 @@ function drawFilm(now){
 function startFilm(){
   if (fRaf) return;
   filmSize();
-  /* Paint one pose immediately, head parked on the first frame. That is the
-     whole picture when motion is turned down, and it also means the strip is
-     never a blank black box while waiting for the first animation frame. */
+
+
   renderFilm(0.7, 0.045);
   if (reduce) return;
   fT0 = performance.now(); fRaf = requestAnimationFrame(drawFilm);
@@ -1025,7 +989,7 @@ function showNotice(){
   notice.classList.add("on");
   startFilm();
 
-  /* play the reveal, then drop it: the settled state is the plain one */
+
   clearTimeout(introT);
   ntBoxEl.classList.remove("intro");
   void ntBoxEl.offsetWidth;
@@ -1034,9 +998,8 @@ function showNotice(){
     introT = setTimeout(function(){ ntBoxEl.classList.remove("intro"); }, 1500);
   }
 
-  /* The button stays shut until the lines have had time to land, so the
-     notice gets read rather than clicked past. Driven by the clock, not by
-     tick count: a throttled timer can never leave it stuck closed. */
+
+
   var wait = reduce ? 0 : 1300;
   clearTimeout(armT);
   ntOk.disabled = true;
@@ -1063,12 +1026,8 @@ addEventListener("keydown", function(e){
   if (e.key === "Escape" && notice.classList.contains("on")) ackNotice();
 });
 
-/* ── in-app browser warning ──────────────────────────────────────────
-   TikTok, Instagram and friends open links in an embedded web view. Those
-   views have no system downloader wired up, so a file that every normal
-   browser saves either does nothing or opens in a viewer. Nothing on the
-   page can override that — the only real fix is to leave the app, so say
-   it plainly and hand over the address. */
+
+
 function inAppBrowser(){
   var ua = navigator.userAgent || "";
   if (/FBAN|FBAV|FB_IAB|Instagram|Snapchat|Twitter|LinkedInApp|Line\/|MicroMessenger|Pinterest/i.test(ua)) return true;
@@ -1093,19 +1052,6 @@ function inAppBrowser(){
   });
 })();
 
-/* ── the only telemetry left ── */
-var clk = document.getElementById("clk"), clkT = null;
-function startClock(){
-  if (clkT) return;
-  function tick(){
-    var d = new Date();
-    function p(n){ return (n<10?"0":"")+n; }
-    clk.textContent = p(d.getUTCHours())+":"+p(d.getUTCMinutes())+":"+p(d.getUTCSeconds())+"Z";
-  }
-  tick(); clkT = setInterval(tick, 1000);
-}
-function stopClock(){ clearInterval(clkT); clkT = null; }
-
 addEventListener("resize", function(){
   terrain.resize();
   if (fRaf) filmSize();
@@ -1115,11 +1061,9 @@ addEventListener("resize", function(){
   });
 }, { passive:true });
 
-/* start everything on load — after the declarations above, since var
-   assignments are not hoisted. The notice waits for the cover to clear,
-   otherwise it would be arming behind it. */
+
+
 terrain.start();
-startClock();
 refreshProgress();
 setTimeout(showNotice, reduce ? 0 : 2050);
 })();
