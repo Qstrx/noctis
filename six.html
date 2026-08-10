@@ -24,6 +24,8 @@
 
   --ink:#070605; --panel:#0f0d0a; --rule:#332813; --dim:#8a6f3e;
   --text:#d8b877; --amber:#ffb43c; --hot:#fff4dc; --red:#ff3b24;
+  --gS:0 0 8px rgba(255,180,60,.42); --gM:0 0 26px rgba(255,180,60,.36);
+  --gH:0 0 44px rgba(255,225,170,.5);
 
   --mono:Consolas,"SF Mono",ui-monospace,"Cascadia Mono",monospace;
   --disp:Bahnschrift,"DIN Condensed","Franklin Gothic Medium","Arial Narrow",sans-serif;
@@ -337,8 +339,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* the button arms itself once the lines have landed */
 .ntbox .hgo{position:relative;margin-top:8px;align-self:stretch;overflow:hidden;
-  background:none;border:1px solid var(--rule);color:var(--dim);
+  justify-content:center;min-height:48px;font-size:10px;letter-spacing:.28em;
+  background:none;border:1px solid var(--rule);color:var(--dim);box-shadow:none;
   transition:background .35s,color .35s,border-color .35s}
+.ntbox .hgo:hover{box-shadow:none}
 .ntbox .hgo span{position:relative;z-index:2}
 .ntbox .hgo .fill{position:absolute;left:0;top:0;bottom:0;width:0;z-index:1;
   background:color-mix(in srgb,var(--amber) 22%,transparent)}
@@ -370,23 +374,68 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 
 /* ── credits step, same as the Call of Duty side ── */
-.hit{position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;
+/* the cut notice keeps its own plain overlay */
+.ovl{position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;
   padding:calc(24px + env(safe-area-inset-top,0px))
           calc(24px + env(safe-area-inset-right,0px))
           calc(24px + env(safe-area-inset-bottom,0px))
           calc(24px + env(safe-area-inset-left,0px));
   background:color-mix(in srgb,var(--ink) 82%,transparent);
   opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
-.hit.on{opacity:1;visibility:visible}
-.hitin{border:1px solid var(--amber);background:var(--panel);padding:clamp(26px,4vw,40px);
-  max-width:420px;width:100%;text-align:center;display:flex;flex-direction:column;gap:12px}
-.hitin strong{font-family:var(--disp);font-weight:400;font-size:clamp(24px,4vw,32px);
-  text-transform:uppercase;color:var(--hot);letter-spacing:.03em}
-.hitin span{font-size:12px;color:var(--dim)}
-.hgo{margin-top:8px;min-height:48px;background:var(--amber);color:var(--ink);
-  font-size:10px;letter-spacing:.28em;text-transform:uppercase;padding:14px 20px}
-.hno{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);padding:6px}
-.hno:hover{color:var(--text)}
+.ovl.on{opacity:1;visibility:visible}
+
+/* the credits step, matched to the Call of Duty side so both worlds ask
+   for the same thing in the same voice — only the colour changes */
+.hit{position:fixed;inset:0;z-index:99;display:grid;place-items:center;
+  padding:calc(20px + env(safe-area-inset-top,0px))
+          calc(20px + env(safe-area-inset-right,0px))
+          calc(20px + env(safe-area-inset-bottom,0px))
+          calc(20px + env(safe-area-inset-left,0px));
+  background:color-mix(in srgb,var(--ink) 80%,transparent);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .35s,visibility 0s .35s}
+.hit.on{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .2s}
+
+.hitin{display:grid;justify-items:center;gap:18px;text-align:center;padding:0 22px}
+.hitin strong{font-family:var(--disp);font-weight:400;
+  text-transform:uppercase;font-size:clamp(2.2rem,8vw,5.4rem);line-height:.9;
+  color:var(--hot);text-shadow:var(--gH);max-width:12ch;text-wrap:balance}
+.hitin span{font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--amber);text-shadow:var(--gS)}
+.hit.on .hitin strong{animation:hitPop .65s cubic-bezier(.16,1,.3,1) both}
+.hit.on .hitin span{animation:hitUp .5s .2s both}
+@keyframes hitPop{
+  0%{opacity:0;transform:scale(.88);filter:blur(12px)}
+  100%{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes hitUp{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:none}}
+
+.hring{position:absolute;width:130px;aspect-ratio:1;border:1px solid var(--amber);
+  border-radius:50%;opacity:0;pointer-events:none}
+.hit.on .hring{animation:hitRing 1.15s cubic-bezier(.1,.7,.3,1) both}
+@keyframes hitRing{0%{opacity:.85;transform:scale(.28)}100%{opacity:0;transform:scale(9)}}
+
+.hline{position:absolute;height:1px;width:0;background:var(--amber);
+  box-shadow:var(--gM);pointer-events:none}
+.hline.l{right:50%}
+.hline.r{left:50%}
+.hit.on .hline{animation:hitLine .85s .08s cubic-bezier(.2,.9,.2,1) both}
+@keyframes hitLine{0%{width:0;opacity:0}28%{opacity:1}100%{width:44%;opacity:0}}
+
+.hgo{display:flex;align-items:center;gap:12px;margin-top:8px;
+  font:inherit;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  min-height:54px;padding:0 clamp(24px,4vw,38px);border:0;
+  background:var(--amber);color:var(--ink);box-shadow:var(--gM);
+  transition:background .25s,box-shadow .25s}
+.hgo i{font-size:1.15em;font-style:normal;transition:transform .3s}
+.hgo:hover{background:var(--hot);box-shadow:var(--gH)}
+.hgo:hover i{transform:translateY(3px)}
+.hno{background:none;border:0;font:inherit;font-size:9.5px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--dim);transition:color .25s;
+  min-height:44px;padding:10px 18px}
+.hno:hover{color:var(--amber)}
+.hit:not(.ask) .hgo,.hit:not(.ask) .hno{display:none}
+.hit.on.ask .hgo{animation:hitUp .45s .3s both}
+.hit.on.ask .hno{animation:hitUp .45s .42s both}
 
 /* ── in-app browsers (TikTok, Instagram…) cannot hand a file to the system
       downloader, so the only honest fix is to say so and offer the link ── */
@@ -514,7 +563,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   </div>
 </div>
 
-<div class="hit" id="notice">
+<div class="ovl" id="notice">
   <div class="ntbox" role="dialog" aria-modal="true" aria-labelledby="ntT" aria-describedby="ntBody">
     <i class="ntb tl" aria-hidden="true"></i><i class="ntb tr" aria-hidden="true"></i>
     <i class="ntb bl" aria-hidden="true"></i><i class="ntb br" aria-hidden="true"></i>
@@ -547,10 +596,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 </div>
 
 <div class="hit" id="hit">
+  <i class="hring" aria-hidden="true"></i>
+  <i class="hline l" aria-hidden="true"></i>
+  <i class="hline r" aria-hidden="true"></i>
   <div class="hitin" role="dialog" aria-modal="true" aria-labelledby="hitT">
     <strong id="hitT">Remember to give credits</strong>
     <span id="hitS">Season 1, episode 1</span>
-    <button class="hgo" id="hitGo" type="button">Start download</button>
+    <button class="hgo" id="hitGo" type="button">Start download <i aria-hidden="true">↓</i></button>
     <button class="hno" id="hitNo" type="button">Cancel</button>
   </div>
 </div>
@@ -749,16 +801,18 @@ var hit = document.getElementById("hit"), hitS = document.getElementById("hitS")
 function ask(b){
   pending = b;
   hitS.textContent = "Season " + b.dataset.season + ", episode " + b.dataset.ep;
-  hit.classList.add("on");
-  setTimeout(function(){ if (pending) hitGo.focus(); }, 60);
+  hit.classList.remove("on","ask"); void hit.offsetWidth;   /* replay the ring */
+  hit.classList.add("on","ask");
+  setTimeout(function(){ if (pending) hitGo.focus(); }, 320);
 }
-function closeHit(){ pending = null; hit.classList.remove("on"); }
+function closeHit(){ pending = null; hit.classList.remove("on","ask"); }
 hitGo.addEventListener("click", function(){
   if (!pending) return;
   var b = pending;
   closeHit();
-  /* released assets carry Content-Disposition: attachment, so this saves
-     the file rather than opening a tab */
+  /* the file lives on github.com while the page is on github.io, so the
+     download attribute is ignored — what actually saves it is the
+     Content-Disposition: attachment header the release serves */
   var a = document.createElement("a");
   a.href = b.dataset.url; a.download = ""; a.rel = "noopener";
   document.body.appendChild(a); a.click(); a.remove();
