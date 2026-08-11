@@ -231,9 +231,31 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .epn{font-family:var(--disp);font-size:clamp(24px,3.2vw,32px);line-height:.9;
   color:var(--hot);letter-spacing:.02em;transition:color .25s}
 .ep:hover .epn,.ep:focus-visible .epn{color:var(--amber)}
-.epn em{font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.16em;
-  color:var(--amber);vertical-align:.42em;margin-left:6px}
 .epm{font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums}
+
+
+
+.ep.split{cursor:default}
+.parts{display:flex;gap:4px;margin-top:3px}
+.pbtn{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;gap:4px;
+  padding:6px 4px;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;
+  white-space:nowrap;
+  color:var(--text);border:1px solid var(--rule);
+  background:color-mix(in srgb,var(--ink) 55%,transparent);
+  transition:color .25s,background .25s,border-color .25s}
+.pbtn i{font-style:normal;font-size:11px;line-height:1}
+.pbtn em{font-style:normal;color:var(--dim);font-variant-numeric:tabular-nums;
+  letter-spacing:.04em;transition:color .25s}
+.pbtn:hover,.pbtn:focus-visible{color:var(--ink);background:var(--amber);border-color:var(--amber);
+  outline:0}
+.pbtn:hover em,.pbtn:focus-visible em{color:var(--ink)}
+.ep.split:has(.pbtn:focus-visible){background:color-mix(in srgb,var(--panel) 96%,transparent)}
+.ep.split:has(.pbtn:focus-visible) .shot img{
+  filter:contrast(1.06) saturate(1) brightness(1);transform:scale(1.05)}
+.ep.split:has(.pbtn:focus-visible) .shot .tint{opacity:.07}
+
+
+.slot{background:color-mix(in srgb,var(--panel) 34%,transparent)}
 
 
 .epa{position:absolute;right:8px;bottom:8px;z-index:2;
@@ -459,6 +481,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   .epk,.chip,.provk,.subject .meta em{font-size:9px}
   .ep{min-height:96px}
+  .pbtn em{display:none}
   .subject .meta{margin-left:0;flex-basis:100%}
   .smeta{margin-left:0;flex-basis:100%}
 }
@@ -625,8 +648,10 @@ var EPISODES = {
     { ep:2,  run:"14:05", size:"1.83 GB", url:REL1+"Six-S1-E02.mp4" },
     { ep:3,  run:"10:57", size:"1.83 GB", url:REL1+"Six-S1-E03.mp4" },
     { ep:4,  run:"11:19", size:"1.83 GB", url:REL1+"Six-S1-E04.mp4" },
-    { ep:5,  part:1, run:"9:07",  size:"1.83 GB", url:REL1+"Six-S1-E05-Part1.mp4" },
-    { ep:5,  part:2, run:"10:14", size:"1.83 GB", url:REL1+"Six-S1-E05-Part2.mp4" },
+    { ep:5,  run:"19:21", size:"3.66 GB", parts:[
+      { part:1, run:"9:07",  size:"1.83 GB", url:REL1+"Six-S1-E05-Part1.mp4" },
+      { part:2, run:"10:14", size:"1.83 GB", url:REL1+"Six-S1-E05-Part2.mp4" }
+    ] },
     { ep:6,  run:"9:58",  size:"1.83 GB", url:REL1+"Six-S1-E06.mp4" },
     { ep:7,  run:"7:19",  size:"1.36 GB", url:REL1+"Six-S1-E07.mp4" },
     { ep:8,  run:"7:16",  size:"1.39 GB", url:REL1+"Six-S1-E08.mp4" }
@@ -653,32 +678,39 @@ function buildSeason(host, season){
   host.appendChild(ret);
 
   EPISODES[season].forEach(function(d, idx){
-    var ready = !!d.url;
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "ep " + (ready ? "ready" : "pending");
+    var parts = d.parts || null;
+    var ready = !!d.url || !!parts;
+    var b = document.createElement(parts ? "div" : "button");
+    if (!parts) b.type = "button";
+    b.className = "ep " + (ready ? "ready" : "pending") + (parts ? " split" : "");
     b.style.setProperty("--i", idx);
     b.dataset.season = season;
     b.dataset.ep = d.ep;
-    if (d.part) b.dataset.part = d.part;
-    if (ready) b.dataset.url = d.url;
+    if (d.url) b.dataset.url = d.url;
     var nn = (d.ep < 10 ? "0" : "") + d.ep;
-    var stillSrc = SHOTS[season] ? SHOTS[season] + nn + (d.part ? "p" + d.part : "") + ".jpg" : null;
+    var stillSrc = SHOTS[season] ? SHOTS[season] + nn + ".jpg" : null;
     b.innerHTML =
       '<span class="shot">' +
         (stillSrc
           ? '<img src="' + stillSrc + '" alt="" width="480" height="270" decoding="async">' +
             '<i class="tint"></i>'
           : '') +
-        '<span class="epa" aria-hidden="true">' + (ready ? "↓" : "○") + '</span>' +
+        (parts ? '' : '<span class="epa" aria-hidden="true">' + (ready ? "↓" : "○") + '</span>') +
       '</span>' +
       '<span class="epinfo">' +
         '<span class="epk">Episode</span>' +
-        '<span class="epn">' + nn + (d.part ? '<em>P' + d.part + '</em>' : '') + '</span>' +
+        '<span class="epn">' + nn + '</span>' +
         '<span class="epm">' + (ready ? d.run + " · " + d.size : "not filed yet") + '</span>' +
+        (parts ? '<span class="parts">' + parts.map(function(p){
+          return '<button type="button" class="pbtn" data-season="' + season + '" data-ep="' + d.ep +
+                 '" data-part="' + p.part + '" data-url="' + p.url + '" aria-label="Season ' + season +
+                 ', episode ' + d.ep + ', part ' + p.part + ' of ' + parts.length + ', ' + p.run +
+                 ', ' + p.size + ', download">' +
+                 '<i aria-hidden="true">↓</i>Part ' + p.part + '<em>' + p.run + '</em></button>';
+        }).join("") + '</span>' : '') +
       '</span>';
-    b.setAttribute("aria-label",
-      "Season " + season + ", episode " + d.ep + (d.part ? ", part " + d.part + " of 2" : "") +
+    if (!parts) b.setAttribute("aria-label",
+      "Season " + season + ", episode " + d.ep +
       (ready ? ", " + d.run + ", " + d.size + ", download" : ", not filed yet"));
     host.appendChild(b);
   });
@@ -696,8 +728,18 @@ function layoutGrid(host){
   var avail = host.clientWidth || innerWidth;
   var max = Math.max(2, Math.min(5, Math.floor(avail / 118)));
   var cols = Math.min(n, max);
-  for (var c = max; c >= 2; c--){ if (n % c === 0){ cols = c; break; } }
   host.style.setProperty("--cols", cols);
+
+
+  var need = (cols - n % cols) % cols;
+  var slots = host.querySelectorAll(".slot");
+  for (var i = slots.length; i > need; i--) host.removeChild(slots[i - 1]);
+  for (var j = slots.length; j < need; j++){
+    var s = document.createElement("i");
+    s.className = "slot";
+    s.setAttribute("aria-hidden", "true");
+    host.appendChild(s);
+  }
 }
 
 
@@ -733,7 +775,8 @@ function wireGrid(host, ret){
     var keys = ["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"];
     if (keys.indexOf(e.key) === -1) return;
     var eps = [].slice.call(host.querySelectorAll(".ep"));
-    var i = eps.indexOf(document.activeElement);
+    var cur = document.activeElement && document.activeElement.closest(".ep");
+    var i = eps.indexOf(cur);
     if (i === -1) return;
     e.preventDefault();
     var cols = getComputedStyle(host).gridTemplateColumns.split(" ").filter(Boolean).length || 1;
@@ -745,15 +788,20 @@ function wireGrid(host, ret){
     if (e.key === "Home")       n = 0;
     if (e.key === "End")        n = eps.length - 1;
     if (n < 0 || n >= eps.length) return;
-    eps[n].focus();
+    var t = eps[n];
+    (t.tagName === "BUTTON" ? t : t.querySelector("button") || t).focus();
   });
 
   host.addEventListener("click", function(e){
     var b = e.target.closest(".ep"); if (!b) return;
     held = b;
     place(b, true);
-    if (b.dataset.url) ask(b);
-    else toast("Season " + b.dataset.season + ", episode " + b.dataset.ep + " — <b>not filed yet</b>");
+
+
+    var t = e.target.closest("[data-url]");
+    if (t) ask(t);
+    else if (!b.querySelector("[data-url]"))
+      toast("Season " + b.dataset.season + ", episode " + b.dataset.ep + " — <b>not filed yet</b>");
   });
 
   host._reposition = function(){
