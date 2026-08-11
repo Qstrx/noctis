@@ -187,8 +187,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 
 
-.grid{position:relative;display:grid;gap:1px;background:var(--rule);
-  border:1px solid var(--rule);grid-template-columns:repeat(var(--cols,2),1fr)}
+.grid{position:relative;display:grid;gap:1px;
+  grid-template-columns:repeat(var(--cols,2),1fr)}
 
 .ret{position:absolute;z-index:4;pointer-events:none;opacity:0;
   transition:transform .34s cubic-bezier(.2,.85,.25,1),width .34s cubic-bezier(.2,.85,.25,1),
@@ -204,6 +204,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 .ep{position:relative;display:flex;flex-direction:column;align-items:stretch;
   background:color-mix(in srgb,var(--panel) 72%,transparent);
+  box-shadow:0 0 0 1px var(--rule);
   padding:0;text-align:left;overflow:hidden;
   transition:background .25s;
   opacity:0;transform:translateY(6px);animation:rise .5s ease forwards;
@@ -253,9 +254,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ep.split:has(.pbtn:focus-visible) .shot img{
   filter:contrast(1.06) saturate(1) brightness(1);transform:scale(1.05)}
 .ep.split:has(.pbtn:focus-visible) .shot .tint{opacity:.07}
-
-
-.slot{background:color-mix(in srgb,var(--panel) 34%,transparent)}
 
 
 .epa{position:absolute;right:8px;bottom:8px;z-index:2;
@@ -729,17 +727,6 @@ function layoutGrid(host){
   var max = Math.max(2, Math.min(5, Math.floor(avail / 118)));
   var cols = Math.min(n, max);
   host.style.setProperty("--cols", cols);
-
-
-  var need = (cols - n % cols) % cols;
-  var slots = host.querySelectorAll(".slot");
-  for (var i = slots.length; i > need; i--) host.removeChild(slots[i - 1]);
-  for (var j = slots.length; j < need; j++){
-    var s = document.createElement("i");
-    s.className = "slot";
-    s.setAttribute("aria-hidden", "true");
-    host.appendChild(s);
-  }
 }
 
 
