@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; media-src https://github.com https://release-assets.githubusercontent.com; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="dark">
 <title>Six — Joe Graves Scene Packs</title>
@@ -487,6 +487,213 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   *{animation:none!important;transition:none!important}
   .ep{opacity:1;transform:none}
 }
+/* Episode previews share the feed's amber palette and load only on demand. */
+.preview-intro{display:flex;align-items:center;gap:18px;margin-top:30px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.preview-mark{display:grid;place-items:center;flex:none;width:46px;height:46px;color:var(--amber);border:1px solid var(--rule);background:var(--panel);font-size:18px}
+.preview-intro h3{margin:0 0 5px;font-family:var(--disp);font-size:clamp(22px,3vw,30px);font-weight:400;color:var(--hot);line-height:1.1}
+.preview-intro p{margin:0;font-size:11px;color:var(--text)}
+.ep:focus-within .shot img{filter:contrast(1.06) saturate(1) brightness(1)}
+.ep:focus-within{outline:1px solid var(--amber);outline-offset:0}
+.ep-open{display:block;padding:0;text-align:left;width:100%}
+.ep-open .epa{width:32px;height:32px;font-size:12px}
+.ep-actions{display:flex;border-top:1px solid var(--rule);margin-top:auto}
+.ep-actions button{min-height:44px;font-size:9px;padding:8px;letter-spacing:.05em}
+.ep-watch{flex:1;color:var(--amber);text-align:left}
+.ep-save{border-left:1px solid var(--rule);width:40px;flex:none;font-size:16px!important}
+.ep-actions button:hover{background:var(--amber);color:var(--ink)}
+.ep .parts{margin:0;border-top:1px solid var(--rule);gap:0}
+.ep .pbtn{border:0;min-height:44px;font-size:9px;padding:6px 3px;letter-spacing:0}
+.ep .pbtn + .pbtn{border-left:1px solid var(--rule)}
+.preview-dialog{padding:0;width:calc(100% - 48px);max-width:1160px;max-height:calc(100dvh - 48px);border:1px solid #65451e;background:#0c0a07;color:#d8b877;box-shadow:0 28px 120px #000c;overflow:auto;color-scheme:dark}
+.preview-dialog::backdrop{background:#030201e8;backdrop-filter:blur(12px)}
+.preview-dialog[open]{animation:ntIn .25s ease both}
+.preview-dialog [hidden]{display:none!important}
+.preview-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--rule);padding:12px 18px;background:#0c0a07}
+.preview-label{display:flex;align-items:center;gap:9px;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--amber)}
+.preview-label::before{content:"";width:5px;height:5px;background:var(--amber);box-shadow:var(--gS)}
+.preview-close{min-width:44px;min-height:44px;border:1px solid var(--rule);font-size:22px;line-height:1}
+.preview-close:hover{color:var(--hot);border-color:var(--amber)}
+.preview-layout{display:grid;grid-template-columns:minmax(0,1fr) 256px}
+.preview-main{min-width:0}
+.preview-heading{padding:22px 24px 18px}
+.preview-eyebrow{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+.preview-heading h2{margin:7px 0 9px;font-family:var(--disp);font-weight:400;font-size:clamp(26px,4vw,42px);line-height:1;color:var(--hot)}
+.preview-meta{margin:0;font-size:10px;color:#b79b6a}
+.preview-screen{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden}
+.preview-screen video{display:block;width:100%;height:100%;object-fit:contain}
+.preview-state{position:absolute;left:14px;top:14px;max-width:calc(100% - 28px);padding:8px 12px;background:#070605ed;border:1px solid var(--rule);font-size:10px;pointer-events:none}
+.preview-error{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;background:#090705ed;text-align:center}
+.preview-error strong{font-family:var(--disp);font-weight:400;font-size:24px;color:var(--hot)}
+.preview-error p{max-width:46ch;margin:0;font-size:11px}
+.preview-error button{min-height:44px;padding:8px 20px;color:var(--amber);border:1px solid var(--amber)}
+.preview-tools{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:14px 20px;border-bottom:1px solid var(--rule)}
+.preview-tools button,.preview-tools input,.preview-tools select{min-height:40px;background:#151008;border:1px solid var(--rule);color:var(--text);font:inherit;font-size:10px;border-radius:0}
+.preview-tools button{padding:7px 12px}
+.preview-tools button:hover{border-color:var(--amber);color:var(--hot)}
+.preview-tools label{display:flex;align-items:center;gap:7px;font-size:10px}
+.preview-jump{display:flex;gap:6px;align-items:center;margin-left:auto}
+.preview-tools input{width:64px;padding:6px 8px;font-variant-numeric:tabular-nums}
+.preview-tools select{padding:6px}
+.preview-dialog button:disabled,.preview-dialog input:disabled{opacity:.4;cursor:default}
+.preview-feedback{flex-basis:100%;font-size:10px;margin:0;color:var(--amber)}
+.preview-parts{display:flex;gap:6px;margin-top:14px}
+.preview-parts button{border:1px solid var(--rule);padding:8px 13px;min-height:40px;font-size:10px}
+.preview-parts button[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.preview-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:18px 20px}
+.preview-bottom p{flex:1 1 180px;margin:0;color:#b79b6a;font-size:10px;line-height:1.7}
+.preview-bottom button{min-height:44px;padding:10px 14px;font-size:10px;border:1px solid var(--rule)}
+.preview-bottom .preview-download{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.preview-bottom button:hover{border-color:var(--hot)}
+.preview-link{flex-basis:100%;width:100%;padding:10px;font:inherit;font-size:11px;color:var(--hot);background:var(--panel);border:1px solid var(--rule)}
+.preview-sidebar{border-left:1px solid var(--rule);display:flex;flex-direction:column;min-width:0;min-height:0;background:#100d09}
+.preview-sidebar-head{padding:22px 16px 14px;border-bottom:1px solid var(--rule)}
+.preview-sidebar-head h3{margin:0 0 12px;font-size:10px;letter-spacing:.18em;font-weight:400;text-transform:uppercase;color:var(--hot)}
+.preview-seasons{display:flex;gap:6px}
+.preview-seasons button{flex:1;min-height:40px;border:1px solid var(--rule);font-size:10px}
+.preview-seasons button[aria-pressed="true"]{color:var(--amber);border-color:var(--amber);background:#211707}
+.preview-list{list-style:none;padding:6px;margin:0;overflow:auto;max-height:480px;flex:1}
+.preview-list li{margin:0}
+.preview-episode{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:9px;border:1px solid transparent;min-height:66px}
+.preview-episode img{width:70px;height:auto;aspect-ratio:16/9;object-fit:cover;filter:saturate(.65);flex:none}
+.preview-episode strong{display:block;color:var(--hot);font-size:11px;font-weight:400}
+.preview-episode small{display:block;margin-top:4px;color:#b79b6a;font-size:9px}
+.preview-episode:hover{background:#211707}
+.preview-episode[aria-current="true"]{border-color:#725021;background:#2b1d09;box-shadow:inset 2px 0 var(--amber)}
+.preview-episode[aria-current="true"] strong{color:var(--amber)}
+.preview-nav{display:flex;gap:1px;border-top:1px solid var(--rule);background:var(--rule)}
+.preview-nav button{flex:1;background:#100d09;font-size:10px;padding:14px 5px;min-height:44px}
+.preview-nav button:hover:not(:disabled){color:var(--amber);background:#211707}
+body.preview-open{overflow:hidden}
+@media (max-width:800px){
+  .preview-dialog{width:calc(100% - 24px);max-height:calc(100dvh - 24px)}
+  .preview-layout{grid-template-columns:minmax(0,1fr)}
+  .preview-sidebar{border-left:0;border-top:1px solid var(--rule)}
+  .preview-sidebar-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px}
+  .preview-sidebar-head h3{margin:0}
+  .preview-seasons{min-width:200px}
+  .preview-list{display:flex;flex:none;max-height:none;overflow-x:auto;padding:8px;gap:6px;scroll-snap-type:x proximity}
+  .preview-list li{flex:0 0 146px;scroll-snap-align:start}
+  .preview-episode{display:block;padding:8px}
+  .preview-episode img{width:100%;margin-bottom:8px}
+  .preview-heading{padding:18px}
+}
+@media (max-width:440px){
+  .preview-dialog{width:100%;max-width:none;max-height:100dvh;border-left:0;border-right:0}
+  .preview-top{padding:8px 12px}
+  .preview-tools{padding:12px;gap:6px}
+  .preview-jump{margin-left:0;flex-basis:100%}
+  .preview-bottom{padding:14px}
+  .preview-sidebar-head h3{font-size:9px;letter-spacing:.08em}
+  .preview-seasons{min-width:180px}
+}
+
+/* Touch layouts: readable controls, a compact scene browser and safe screen edges. */
+.preview-dialog{overscroll-behavior:contain}
+.preview-feedback:empty{display:none}
+.preview-download small{font:inherit;margin-left:6px}
+@media (max-width:800px), (max-width:1000px) and (max-height:500px) and (orientation:landscape){
+  .preview-label{font-size:10px;letter-spacing:.18em}
+  .preview-heading h2{font-size:28px}
+  .preview-meta{font-size:12px}
+  .preview-tools{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:8px;padding:12px 16px}
+  .preview-tools button,.preview-tools input,.preview-tools select{min-height:48px;font-size:13px}
+  .preview-tools input,.preview-tools select{font-size:16px}
+  .preview-tools>label{min-width:0}
+  .preview-speed-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .preview-tools select{width:100%;padding:8px 12px}
+  .preview-jump{grid-column:1/-1;margin:0;gap:10px}
+  .preview-jump label{font-size:12px;white-space:nowrap}
+  .preview-jump input{flex:1;min-width:0;width:0}
+  .preview-jump button{min-width:60px;color:var(--amber);border-color:#725021}
+  .preview-feedback{grid-column:1/-1;font-size:12px;line-height:1.5}
+  .preview-parts{gap:8px;margin-top:12px}
+  .preview-parts button{flex:1;min-height:44px;font-size:12px}
+  .preview-bottom{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:14px 16px}
+  .preview-bottom button{min-width:0;min-height:52px;font-size:12px;padding:8px}
+  #previewShare{grid-column:1;grid-row:1}
+  #previewDownload{grid-column:2;grid-row:1}
+  .preview-download small{display:block;margin:2px 0 0;font-size:10px;letter-spacing:.05em}
+  .preview-bottom p{grid-column:1/-1;grid-row:2;font-size:11px;line-height:1.55;color:#bda57b}
+  .preview-link{grid-column:1/-1;font-size:16px;min-width:0}
+  .preview-sidebar-head{padding:12px 16px;gap:12px}
+  .preview-sidebar-head h3{font-size:10px;line-height:1.6;letter-spacing:.12em}
+  .preview-seasons{min-width:0;flex:0 0 194px;gap:4px;padding:3px;border:1px solid var(--rule);background:#090704}
+  .preview-seasons button{min-height:44px;border-color:transparent;font-size:11px}
+  .preview-seasons button[aria-pressed="true"]{background:#35240d;border-color:#725021}
+  .preview-list{gap:8px;padding:12px 16px;scroll-padding-inline:16px;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#725021 #100d09}
+  .preview-list li{flex-basis:136px;scroll-snap-align:center}
+  .preview-episode{padding:7px}
+  .preview-episode img{margin-bottom:8px}
+  .preview-episode strong{font-size:12px;line-height:1.4}
+  .preview-episode small{font-size:10px;line-height:1.5}
+  .preview-nav button{min-height:48px;font-size:12px}
+  .preview-error{padding:16px;gap:8px}
+  .preview-error strong{font-size:22px;line-height:1.15}
+  .preview-error p{font-size:12px;line-height:1.5}
+  .preview-error button{font-size:12px;min-height:44px}
+  .preview-state{font-size:12px;line-height:1.5}
+}
+@media (max-width:600px){
+  .preview-dialog{inset:0;margin:0;width:100%;max-width:none;height:100dvh;max-height:100dvh;border:0;
+    padding-bottom:env(safe-area-inset-bottom,0px)}
+  .preview-top{min-height:56px;padding:calc(6px + env(safe-area-inset-top,0px))
+    calc(16px + env(safe-area-inset-right,0px)) 6px calc(16px + env(safe-area-inset-left,0px))}
+  .preview-close{border-color:transparent;background:#20170d}
+  .preview-heading{padding:14px calc(16px + env(safe-area-inset-right,0px))
+    14px calc(16px + env(safe-area-inset-left,0px))}
+  .preview-eyebrow{display:none}
+  .preview-heading h2{font-size:clamp(24px,6.6vw,30px);margin:0 0 7px;line-height:1.1}
+  .preview-tools,.preview-bottom,.preview-sidebar-head,.preview-list{
+    padding-left:calc(16px + env(safe-area-inset-left,0px));padding-right:calc(16px + env(safe-area-inset-right,0px))}
+  .preview-intro{gap:14px;margin-top:24px;padding:20px 0}
+  .preview-intro h3{font-size:24px;line-height:1.1}
+  .preview-intro p{font-size:12px;line-height:1.65}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .epinfo{padding:12px;gap:7px}
+  .epk{font-size:10px;color:#b79b6a}
+  .epn{font-size:32px}
+  .epm{font-size:11px;color:#b79b6a}
+  .ep-actions button{min-height:48px;font-size:11px;padding:10px}
+  .ep-save{width:44px}
+  .ep .pbtn{min-height:44px;font-size:10px}
+}
+@media (max-width:350px){
+  .preview-sidebar-head h3{max-width:8ch}
+  .preview-seasons{flex-basis:182px}
+  .preview-error{padding:10px;gap:6px}
+  .preview-error strong{font-size:19px}
+  .preview-error p{font-size:11px;line-height:1.35}
+}
+@media (max-width:1000px) and (max-height:500px) and (orientation:landscape){
+  .preview-dialog{inset:0;margin:0;width:100%;max-width:none;height:100dvh;max-height:100dvh;border:0;
+    padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+  .preview-top{min-height:48px;padding:2px 12px;padding-top:calc(2px + env(safe-area-inset-top,0px))}
+  .preview-layout{display:grid;grid-template-columns:minmax(0,1fr) 220px}
+  .preview-heading{padding:10px 16px}
+  .preview-eyebrow{display:none}
+  .preview-heading h2{font-size:22px;line-height:1.1;margin:0 0 5px}
+  .preview-meta{font-size:11px;line-height:1.4}
+  .preview-parts{margin-top:8px;gap:8px}
+  .preview-parts button{min-height:44px;padding:4px 12px;font-size:11px;flex:1}
+  .preview-screen{aspect-ratio:auto;height:calc(100dvh - 123px - env(safe-area-inset-top,0px));min-height:120px}
+  .preview-main:has(.preview-parts:not([hidden])) .preview-screen{height:calc(100dvh - 175px - env(safe-area-inset-top,0px))}
+  .preview-sidebar{border-top:0;border-left:1px solid var(--rule)}
+  .preview-sidebar-head{display:block;padding:10px 12px}
+  .preview-sidebar-head h3{margin:0 0 8px;max-width:none}
+  .preview-seasons{min-width:0;display:flex}
+  .preview-seasons button{min-height:44px;font-size:11px}
+  .preview-list{display:block;flex:0 1 auto;max-height:calc(100dvh - 206px);overflow:auto;padding:4px 6px}
+  .preview-episode{display:flex;gap:8px;min-height:64px;padding:6px}
+  .preview-episode img{width:64px;margin:0}
+  .preview-episode strong{font-size:11px}
+  .preview-episode small{font-size:9px}
+  .preview-nav button{min-height:48px;font-size:11px}
+}
+@media (hover:none){
+  .preview-dialog button,.ep button{touch-action:manipulation}
+  .preview-dialog button:active:not(:disabled){filter:brightness(1.25)}
+}
+
 </style>
 
 <h1 class="sr">Six — Joe Graves scene packs, one file per episode, cut straight from the Blu-ray.</h1>
@@ -540,6 +747,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     </div>
 
 
+    <section class="preview-intro" aria-label="Episode previews">
+      <span class="preview-mark" aria-hidden="true">▶</span>
+      <div><h3>Find the scene. Keep your space.</h3>
+        <p>Preview each episode’s scene pack. Download only the one you need.</p></div>
+    </section>
+
     <section class="season">
       <header class="shead">
         <span class="sno">Season 01</span>
@@ -560,6 +773,65 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   </div>
 </div>
+
+<dialog class="preview-dialog" id="preview" aria-labelledby="previewTitle" aria-describedby="previewDescription">
+  <header class="preview-top">
+    <span class="preview-label">Six / Scene preview</span>
+    <button type="button" class="preview-close" id="previewClose" aria-label="Close preview" autofocus>×</button>
+  </header>
+  <div class="preview-layout">
+    <div class="preview-main">
+      <div class="preview-heading">
+        <span class="preview-eyebrow">Joe Graves / Scene archive</span>
+        <h2 id="previewTitle">Season 01 / Episode 01</h2>
+        <p class="preview-meta" id="previewMeta"></p>
+        <div class="preview-parts" id="previewParts" aria-label="Episode parts" hidden></div>
+      </div>
+      <div class="preview-screen">
+        <video id="previewVideo" controls playsinline preload="none" aria-label="Episode scene pack preview"></video>
+        <span class="preview-state" id="previewState" role="status">Loading preview…</span>
+        <div class="preview-error" id="previewError" role="alert" hidden>
+          <strong>Preview unavailable</strong>
+          <p>The video could not load. Check your connection and try again, or use the download below.</p>
+          <button type="button" id="previewRetry">Try again</button>
+        </div>
+      </div>
+      <div class="preview-tools">
+        <button type="button" id="previewBack" aria-label="Back 10 seconds" disabled>−10s</button>
+        <button type="button" id="previewForward" aria-label="Forward 10 seconds" disabled>+10s</button>
+        <label><span class="preview-speed-label">Speed</span> <select id="previewSpeed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+        <div class="preview-jump">
+          <label for="previewTime">Jump to</label>
+          <input id="previewTime" type="text" inputmode="numeric" placeholder="150 sec" aria-label="Jump to time in seconds, or minutes and seconds" aria-describedby="previewTimeHint previewFeedback" maxlength="8" disabled>
+          <button type="button" id="previewJump" disabled>Go →</button>
+          <span class="sr" id="previewTimeHint">Enter seconds, such as 150, or minutes and seconds, such as 02:30.</span>
+        </div>
+        <p class="preview-feedback" id="previewFeedback" role="status"></p>
+      </div>
+      <footer class="preview-bottom">
+        <p id="previewDescription">Preview the scene pack, then save the one you need.<br>Original quality · uses data while you watch.</p>
+        <button type="button" id="previewShare" disabled>Copy scene link</button>
+        <button type="button" class="preview-download" id="previewDownload">Download ↓</button>
+        <input class="preview-link" id="previewLink" type="text" readonly aria-label="Scene link — copy this URL" hidden>
+      </footer>
+    </div>
+    <aside class="preview-sidebar" aria-label="Browse episodes">
+      <div class="preview-sidebar-head">
+        <h3>Find your scene</h3>
+        <div class="preview-seasons" aria-label="Choose a season">
+          <button type="button" data-preview-season="1" aria-pressed="true">Season 01</button>
+          <button type="button" data-preview-season="2" aria-pressed="false">Season 02</button>
+        </div>
+      </div>
+      <ol class="preview-list" id="previewList" aria-label="Season 1 episodes"></ol>
+      <nav class="preview-nav" aria-label="Preview navigation">
+        <button type="button" id="previewPrevious">← Previous</button>
+        <button type="button" id="previewNext">Next →</button>
+      </nav>
+    </aside>
+  </div>
+</dialog>
+
 
 <div class="ovl" id="notice">
   <div class="ntbox" role="dialog" aria-modal="true" aria-labelledby="ntT" aria-describedby="ntBody">
@@ -671,51 +943,36 @@ function buildSeason(host, season){
   var ret = document.createElement("i");
   ret.className = "ret";
   ret.innerHTML = "<i></i><i></i><i></i><i></i>";
-  ret.setAttribute("aria-hidden","true");
+  ret.setAttribute("aria-hidden", "true");
   host.appendChild(ret);
-
   EPISODES[season].forEach(function(d, idx){
-    var parts = d.parts || null;
-    var ready = !!d.url || !!parts;
-    var b = document.createElement(parts ? "div" : "button");
-    if (!parts) b.type = "button";
+    var parts = d.parts || null, ready = !!d.url || !!parts;
+    var b = document.createElement("article");
     b.className = "ep " + (ready ? "ready" : "pending") + (parts ? " split" : "");
     b.style.setProperty("--i", idx);
     b.dataset.season = season;
     b.dataset.ep = d.ep;
-    if (d.url) b.dataset.url = d.url;
-    var nn = (d.ep < 10 ? "0" : "") + d.ep;
-    var stillSrc = SHOTS[season] ? SHOTS[season] + nn + ".jpg" : null;
-    b.innerHTML =
-      '<span class="shot">' +
-        (stillSrc
-          ? '<img src="' + stillSrc + '" alt="" width="480" height="270" decoding="async">' +
-            '<i class="tint"></i>'
-          : '') +
-        (parts ? '' : '<span class="epa" aria-hidden="true">' + (ready ? "↓" : "○") + '</span>') +
-      '</span>' +
-      '<span class="epinfo">' +
-        '<span class="epk">Episode</span>' +
-        '<span class="epn">' + nn + '</span>' +
-        '<span class="epm">' + (ready ? d.run + " · " + d.size : "not filed yet") + '</span>' +
-        (parts ? '<span class="parts">' + parts.map(function(p){
-          return '<button type="button" class="pbtn" data-season="' + season + '" data-ep="' + d.ep +
-                 '" data-part="' + p.part + '" data-url="' + p.url + '" aria-label="Season ' + season +
-                 ', episode ' + d.ep + ', part ' + p.part + ' of ' + parts.length + ', ' + p.run +
-                 ', ' + p.size + ', download">' +
-                 '<i aria-hidden="true">↓</i>Part ' + p.part + '<em>' + p.run + '</em></button>';
-        }).join("") + '</span>' : '') +
-      '</span>';
-    if (!parts) b.setAttribute("aria-label",
-      "Season " + season + ", episode " + d.ep +
-      (ready ? ", " + d.run + ", " + d.size + ", download" : ", not filed yet"));
+    var nn = String(d.ep).padStart(2, "0");
+    var label = "Season " + season + ", episode " + d.ep;
+    b.setAttribute("aria-label", label);
+    b.innerHTML = '<button type="button" class="ep-open" data-preview aria-label="Preview ' + label.toLowerCase() + '">' +
+      '<span class="shot"><img src="' + SHOTS[season] + nn + '.jpg" alt="" width="480" height="270" decoding="async">' +
+      '<i class="tint" aria-hidden="true"></i><span class="epa" aria-hidden="true">▶</span></span>' +
+      '<span class="epinfo"><span class="epk">Episode</span><span class="epn">' + nn + '</span>' +
+      '<span class="epm">' + (ready ? d.run + " · " + d.size : "not filed yet") + '</span></span></button>' +
+      '<div class="ep-actions"><button type="button" class="ep-watch" data-preview aria-label="Preview ' + label.toLowerCase() + '">Preview ↗</button>' +
+      (parts ? '' : '<button type="button" class="ep-save" data-season="' + season + '" data-ep="' + d.ep +
+        '" data-url="' + (d.url || '') + '" aria-label="Download ' + label.toLowerCase() + '">↓</button>') + '</div>' +
+      (parts ? '<div class="parts">' + parts.map(function(p){
+        return '<button type="button" class="pbtn" data-season="' + season + '" data-ep="' + d.ep +
+          '" data-part="' + p.part + '" data-url="' + p.url + '" aria-label="Download ' + label.toLowerCase() +
+          ', part ' + p.part + ', ' + p.size + '">↓ Part ' + p.part + '</button>';
+      }).join("") + '</div>' : '');
     host.appendChild(b);
   });
   wireGrid(host, ret);
   layoutGrid(host);
 }
-
-
 
 function layoutGrid(host){
   var n = host.querySelectorAll(".ep").length;
@@ -784,8 +1041,13 @@ function wireGrid(host, ret){
     place(b, true);
 
 
+    var watch = e.target.closest("[data-preview]");
+    if (watch){
+      openPreview(b.dataset.season, b.dataset.ep, 1, watch);
+      return;
+    }
     var t = e.target.closest("[data-url]");
-    if (t) ask(t);
+    if (t && t.dataset.url) ask(t);
     else if (!b.querySelector("[data-url]"))
       toast("Season " + b.dataset.season + ", episode " + b.dataset.ep + " — <b>not filed yet</b>");
   });
@@ -847,6 +1109,280 @@ function toast(html){
   clearTimeout(toastT);
   toastT = setTimeout(function(){ toastEl.classList.remove("on"); }, 2600);
 }
+
+
+/* Native media requests stream byte ranges; no video is fetched with the page. */
+var preview = document.getElementById("preview");
+var previewVideo = document.getElementById("previewVideo");
+var previewState = document.getElementById("previewState");
+var previewError = document.getElementById("previewError");
+var previewList = document.getElementById("previewList");
+var previewParts = document.getElementById("previewParts");
+var previewFeedback = document.getElementById("previewFeedback");
+var previewLink = document.getElementById("previewLink");
+var previewSpeed = document.getElementById("previewSpeed");
+var previewTime = document.getElementById("previewTime");
+var previewPrevious = document.getElementById("previewPrevious");
+var previewNext = document.getElementById("previewNext");
+var previewReadyControls = ["previewBack", "previewForward", "previewTime", "previewJump", "previewShare"];
+var previewFiles = [], previewIndex = -1, previewOpener = null, previewLoad = 0;
+var previewTarget = 0, previewTimer = null, previewPendingLink = null;
+function padEpisode(n){ return String(n).padStart(2, "0"); }
+Object.keys(EPISODES).forEach(function(s){
+  EPISODES[s].forEach(function(ep){
+    (ep.parts || [ep]).forEach(function(file){
+      if (file.url) previewFiles.push({season:Number(s), ep:ep.ep, part:file.part || 1, entry:ep, file:file});
+    });
+  });
+});
+function previewControls(ready){
+  previewReadyControls.forEach(function(id){ document.getElementById(id).disabled = !ready; });
+}
+function previewStatus(message){
+  if (!preview.open) return;
+  previewState.textContent = message;
+  previewState.hidden = !message;
+}
+function previewFailed(){
+  if (!preview.open || previewIndex < 0) return;
+  clearTimeout(previewTimer);
+  previewStatus("");
+  previewError.hidden = false;
+  previewControls(false);
+}
+function alignPreviewSelection(){
+  var id = previewLoad;
+  requestAnimationFrame(function(){
+    if (!preview.open || id !== previewLoad) return;
+    var selected = previewList.querySelector('[aria-current="true"]');
+    if (!selected){ previewList.scrollLeft = 0; previewList.scrollTop = 0; return; }
+    var rail = previewList.getBoundingClientRect(), card = selected.getBoundingClientRect();
+    if (getComputedStyle(previewList).display === "flex"){
+      previewList.scrollLeft += card.left - rail.left - (previewList.clientWidth - card.width) / 2;
+    } else {
+      previewList.scrollTop += card.top - rail.top - (previewList.clientHeight - card.height) / 2;
+    }
+  });
+}
+function drawPreviewList(season){
+  var current = previewFiles[previewIndex];
+  preview.querySelectorAll("[data-preview-season]").forEach(function(button){
+    button.setAttribute("aria-pressed", String(Number(button.dataset.previewSeason) === season));
+  });
+  previewList.setAttribute("aria-label", "Season " + season + " episodes");
+  previewList.innerHTML = EPISODES[season].map(function(ep){
+    var selected = current && current.season === season && current.ep === ep.ep;
+    return '<li><button type="button" class="preview-episode" data-preview-ep="' + ep.ep +
+      '" data-season="' + season + '"' + (selected ? ' aria-current="true"' : '') +
+      ' aria-label="Preview season ' + season + ', episode ' + ep.ep + '">' +
+      '<img src="' + SHOTS[season] + padEpisode(ep.ep) + '.jpg" width="140" height="79" alt="" loading="lazy">' +
+      '<span><strong>Episode ' + padEpisode(ep.ep) + '</strong><small>' + ep.run +
+      (ep.parts ? ' · 2 parts' : ' · scene pack') + '</small></span></button></li>';
+  }).join("");
+  alignPreviewSelection();
+}
+function loadPreview(index, time){
+  if (index < 0 || index >= previewFiles.length) return;
+  var focusWasInsideList = previewList.contains(document.activeElement);
+  var focusWasInsideParts = previewParts.contains(document.activeElement);
+  previewIndex = index;
+  var current = previewFiles[index], id = ++previewLoad;
+  clearTimeout(previewTimer);
+  previewVideo.pause();
+  previewVideo.removeAttribute("src");
+  previewVideo.replaceChildren();
+  previewControls(false);
+  previewTarget = Math.max(0, Number(time) || 0);
+  previewTime.value = "";
+  previewTime.removeAttribute("aria-invalid");
+  previewFeedback.textContent = "";
+  previewLink.hidden = true;
+  previewError.hidden = true;
+  document.getElementById("previewTitle").textContent = "Season " + padEpisode(current.season) + " / Episode " + padEpisode(current.ep);
+  document.getElementById("previewMeta").textContent = current.file.run + " · 1080p · Scene pack" +
+    (current.entry.parts ? " · Part " + current.part + " of " + current.entry.parts.length : "");
+  document.getElementById("previewDownload").innerHTML = "<span>Download ↓</span><small>" + current.file.size + "</small>";
+  previewVideo.poster = SHOTS[current.season] + padEpisode(current.ep) + ".jpg";
+  previewVideo.setAttribute("aria-label", "Joe Graves, season " + current.season + ", episode " + current.ep +
+    (current.entry.parts ? ", part " + current.part : "") + " scene pack");
+  previewParts.hidden = !current.entry.parts;
+  previewParts.innerHTML = (current.entry.parts || []).map(function(part){
+    return '<button type="button" data-preview-part="' + part.part + '" aria-pressed="' +
+      (part.part === current.part) + '">Part ' + part.part + ' · ' + part.run + '</button>';
+  }).join("");
+  previewPrevious.disabled = index === 0;
+  previewNext.disabled = index === previewFiles.length - 1;
+  drawPreviewList(current.season);
+  if (focusWasInsideList) previewList.querySelector('[aria-current="true"]').focus({preventScroll:true});
+  if (focusWasInsideParts){
+    var selectedPart = previewParts.querySelector('[aria-pressed="true"]');
+    if (selectedPart) selectedPart.focus({preventScroll:true});
+  }
+  previewStatus("Loading preview…");
+  previewVideo.preload = "metadata";
+  var source = document.createElement("source");
+  source.type = "video/mp4";
+  source.src = current.file.url;
+  source.addEventListener("error", function(){ if (id === previewLoad) previewFailed(); });
+  previewVideo.appendChild(source);
+  previewVideo.load();
+  previewVideo.playbackRate = Number(previewSpeed.value);
+  previewTimer = setTimeout(function(){
+    if (id === previewLoad && previewVideo.readyState < 3 && previewError.hidden)
+      previewStatus("Still loading. Original-quality video may take a little longer.");
+  }, 15000);
+  var play = previewVideo.play();
+  if (play) play.catch(function(error){
+    if (id !== previewLoad || !preview.open) return;
+    if (error.name === "NotAllowedError") previewStatus("Press play to start the preview.");
+    else if (error.name !== "AbortError") previewFailed();
+  });
+}
+function openPreview(season, episode, part, opener, time){
+  var index = previewFiles.findIndex(function(item){
+    return item.season === Number(season) && item.ep === Number(episode) && item.part === (Number(part) || 1);
+  });
+  if (index < 0) return;
+  if (!preview.open){
+    previewOpener = opener || document.querySelector('.ep[data-season="' + season + '"][data-ep="' + episode + '"] .ep-open');
+    closeHit();
+    preview.showModal();
+    document.body.classList.add("preview-open");
+    terrain.stop();
+  }
+  loadPreview(index, time);
+}
+function releasePreview(){
+  ++previewLoad;
+  clearTimeout(previewTimer);
+  previewVideo.pause();
+  previewVideo.removeAttribute("src");
+  previewVideo.replaceChildren();
+  previewVideo.preload = "none";
+  previewVideo.load();
+  previewIndex = -1;
+  document.body.classList.remove("preview-open");
+  terrain.start();
+  if (previewOpener && previewOpener.isConnected) previewOpener.focus({preventScroll:true});
+}
+function closePreview(){ if (preview.open) preview.close(); }
+preview.addEventListener("close", releasePreview);
+document.getElementById("previewClose").addEventListener("click", closePreview);
+preview.addEventListener("click", function(event){
+  if (event.target !== preview) return;
+  var rect = preview.getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closePreview();
+});
+preview.addEventListener("keydown", function(event){
+  if (event.key !== "Tab") return;
+  var controls = [].slice.call(preview.querySelectorAll("button:not(:disabled), input:not(:disabled), select, video[controls]"))
+    .filter(function(control){ return control.getClientRects().length > 0; });
+  var first = controls[0], last = controls[controls.length - 1];
+  if (event.shiftKey && document.activeElement === first){ event.preventDefault(); last.focus(); }
+  else if (!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
+});
+function revealPreviewForTouch(event){
+  if (event.detail && matchMedia("(max-width:800px), (max-width:1000px) and (max-height:500px)").matches)
+    preview.scrollTop = 0;
+}
+previewList.addEventListener("click", function(event){
+  var button = event.target.closest("[data-preview-ep]");
+  if (button){ openPreview(button.dataset.season, button.dataset.previewEp, 1); revealPreviewForTouch(event); }
+});
+preview.querySelectorAll("[data-preview-season]").forEach(function(button){
+  button.addEventListener("click", function(){ drawPreviewList(Number(button.dataset.previewSeason)); });
+});
+previewParts.addEventListener("click", function(event){
+  var button = event.target.closest("[data-preview-part]"), current = previewFiles[previewIndex];
+  if (button && current) openPreview(current.season, current.ep, button.dataset.previewPart);
+});
+previewPrevious.addEventListener("click", function(event){ loadPreview(previewIndex - 1); revealPreviewForTouch(event); });
+previewNext.addEventListener("click", function(event){ loadPreview(previewIndex + 1); revealPreviewForTouch(event); });
+document.getElementById("previewRetry").addEventListener("click", function(){ loadPreview(previewIndex, previewTarget || previewVideo.currentTime); });
+previewVideo.addEventListener("loadedmetadata", function(){
+  if (!preview.open || previewIndex < 0 || !Number.isFinite(previewVideo.duration)) return;
+  previewControls(true);
+  previewVideo.playbackRate = Number(previewSpeed.value);
+  if (previewTarget){
+    previewVideo.currentTime = Math.min(previewTarget, Math.max(0, previewVideo.duration - 0.1));
+    previewTarget = 0;
+  }
+  if (previewVideo.paused) previewStatus("Press play to explore the scene pack.");
+});
+previewVideo.addEventListener("playing", function(){ clearTimeout(previewTimer); previewStatus(""); });
+previewVideo.addEventListener("waiting", function(){ if (previewError.hidden) previewStatus("Buffering…"); });
+previewVideo.addEventListener("seeking", function(){ if (previewError.hidden) previewStatus("Finding your scene…"); });
+previewVideo.addEventListener("seeked", function(){ previewStatus(""); });
+previewVideo.addEventListener("canplay", function(){ clearTimeout(previewTimer); previewStatus(""); });
+previewVideo.addEventListener("error", previewFailed);
+previewSpeed.addEventListener("change", function(){ previewVideo.playbackRate = Number(previewSpeed.value); });
+function seekPreview(time){
+  if (!Number.isFinite(previewVideo.duration)) return;
+  previewVideo.currentTime = Math.max(0, Math.min(time, Math.max(0, previewVideo.duration - 0.1)));
+}
+document.getElementById("previewBack").addEventListener("click", function(){ seekPreview(previewVideo.currentTime - 10); });
+document.getElementById("previewForward").addEventListener("click", function(){ seekPreview(previewVideo.currentTime + 10); });
+function jumpPreview(){
+  var value = previewTime.value.trim(), match = /^(\d{1,4}):([0-5]\d)$/.exec(value);
+  var seconds = match ? Number(match[1]) * 60 + Number(match[2]) : /^\d{1,6}$/.test(value) ? Number(value) : NaN;
+  if (!Number.isFinite(seconds) || !Number.isFinite(previewVideo.duration) || seconds >= previewVideo.duration){
+    previewTime.setAttribute("aria-invalid", "true");
+    previewFeedback.textContent = "Enter a time within this part, such as 02:30, or a number of seconds.";
+    return;
+  }
+  previewTime.removeAttribute("aria-invalid");
+  previewFeedback.textContent = "";
+  seekPreview(seconds);
+  if (matchMedia("(pointer:coarse)").matches) previewTime.blur();
+}
+document.getElementById("previewJump").addEventListener("click", jumpPreview);
+previewTime.addEventListener("keydown", function(event){ if (event.key === "Enter"){ event.preventDefault(); jumpPreview(); } });
+document.getElementById("previewShare").addEventListener("click", function(){
+  var current = previewFiles[previewIndex];
+  if (!current) return;
+  var url = new URL(location.href), id = previewLoad;
+  url.hash = "preview=s" + current.season + "-e" + padEpisode(current.ep) + "-p" + current.part + "&t=" + Math.floor(previewVideo.currentTime || 0);
+  function reveal(){
+    if (!preview.open || id !== previewLoad) return;
+    previewLink.value = url.href;
+    previewLink.hidden = false;
+    previewLink.focus();
+    previewLink.select();
+    previewFeedback.textContent = "Copy this link to share the scene at this time.";
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url.href).then(function(){
+      if (preview.open && id === previewLoad) previewFeedback.textContent = "Scene link copied, including this timestamp.";
+    }, reveal);
+  } else reveal();
+});
+document.getElementById("previewDownload").addEventListener("click", function(){
+  var current = previewFiles[previewIndex];
+  if (!current) return;
+  var button = document.querySelector('.ep [data-url="' + current.file.url + '"]');
+  closePreview();
+  if (button) ask(button);
+});
+function readPreviewLink(){
+  var params = new URLSearchParams(location.hash.slice(1));
+  var match = /^s([12])-e(\d{2})-p([12])$/.exec(params.get("preview") || "");
+  var seconds = params.get("t") || "0";
+  if (!match || !/^\d{1,6}$/.test(seconds)) return null;
+  var valid = previewFiles.some(function(item){ return item.season === Number(match[1]) && item.ep === Number(match[2]) && item.part === Number(match[3]); });
+  return valid ? {season:Number(match[1]), ep:Number(match[2]), part:Number(match[3]), time:Number(seconds)} : null;
+}
+function openPendingPreview(){
+  if (!previewPendingLink) return;
+  var link = previewPendingLink;
+  previewPendingLink = null;
+  openPreview(link.season, link.ep, link.part, null, link.time);
+}
+previewPendingLink = readPreviewLink();
+addEventListener("hashchange", function(){
+  previewPendingLink = readPreviewLink();
+  if (noticeSeen) openPendingPreview();
+});
+document.addEventListener("visibilitychange", function(){ if (document.hidden && preview.open) previewVideo.pause(); });
 
 
 function makeTerrain(canvas, opts){
@@ -1033,7 +1569,7 @@ function stopFilm(){ if (fRaf){ cancelAnimationFrame(fRaf); fRaf = null; } }
 var armT = null, introT = null, ntBoxEl = notice.querySelector(".ntbox");
 
 function showNotice(){
-  if (noticeSeen) return;
+  if (noticeSeen || preview.open) return;
   notice.classList.add("on");
   startFilm();
 
@@ -1068,6 +1604,7 @@ function ackNotice(){
   ntBoxEl.classList.remove("intro");
   notice.classList.remove("on");
   stopFilm();
+  openPendingPreview();
 }
 ntOk.addEventListener("click", ackNotice);
 addEventListener("keydown", function(e){
@@ -1102,6 +1639,7 @@ function inAppBrowser(){
 
 addEventListener("resize", function(){
   terrain.resize();
+  if (preview.open) alignPreviewSelection();
   if (fRaf) filmSize();
   document.querySelectorAll(".grid").forEach(function(g){
     layoutGrid(g);
