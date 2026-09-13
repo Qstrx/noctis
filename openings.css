@@ -1,0 +1,43 @@
+/* Three entrances, each with its own choreography. */
+.intro-dialog[data-kind=cod] .intro-shutter{display:none}
+.intro-dialog[data-kind=cod] .intro-art{opacity:.24}
+.intro-dialog[data-kind=cod] .intro-art img{animation:none;transform:none}
+.intro-fragments{position:absolute;inset:0;overflow:hidden}
+.intro-fragments i{position:absolute;left:calc(var(--slice) * 20%);width:20.1%;height:100%;top:0;background-image:linear-gradient(0deg,#060909bd,transparent 70%),url('img/price.jpg');background-size:500% 100%,500% auto;background-position:calc(var(--slice) * 25%) 50%;background-repeat:no-repeat;background-color:#080c0d;filter:grayscale(.8);animation:fragment-arrive 1.6s calc(var(--slice) * .12s) cubic-bezier(.17,.8,.22,1) both}
+.intro-fragments i:nth-child(even){animation-name:fragment-arrive-up}
+.intro-fragments:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#060a0d90,transparent 25%,transparent 75%,#060a0d90),linear-gradient(0deg,#060a0de0,transparent 50%,#060a0d50)}
+.intro-dialog[data-kind=cod] .intro-content{animation:cod-title 1.25s .65s both}
+.intro-dialog[data-kind=cod] .intro-content h2{font-size:clamp(55px,10vw,155px);letter-spacing:.01em;line-height:1.1;text-shadow:0 8px 60px #000}
+.intro-dialog[data-kind=cod] .intro-scan{width:40%;background:linear-gradient(90deg,transparent,#ffd9a329,transparent);animation:intro-scan 2.5s .5s both}
+.intro-dialog[data-kind=home] .intro-shutter,.intro-dialog[data-kind=home] .intro-art,.intro-dialog[data-kind=home] .intro-scan{display:none}
+.intro-dialog[data-kind=home]{background:radial-gradient(ellipse at 50% 50%,#132b3a,#05090e 62%)!important}
+.intro-dialog[data-kind=home] .intro-content{justify-content:flex-end;padding-bottom:19vh;animation:home-wordmark 1.4s .3s both}
+.intro-dialog[data-kind=home] .intro-content h2{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:clamp(30px,4vw,57px);text-transform:lowercase;letter-spacing:-.07em;margin:8px 0}
+.intro-dialog[data-kind=home] .intro-content>p:first-child,.intro-dialog[data-kind=home] .intro-rule{display:none}
+.intro-dialog[data-kind=home] .intro-content>p:last-child{font-size:12px;letter-spacing:.12em;margin-top:16px}
+.intro-seal{position:absolute;left:50%;top:40%;translate:-50% -50%;width:min(40vw,300px);aspect-ratio:1;display:grid;place-items:center}
+.intro-seal b{font-family:Arial,Helvetica,sans-serif;font-size:clamp(100px,19vw,240px);font-weight:400;line-height:1;animation:seal-reveal 1.4s both;color:#d9eef7;text-shadow:0 0 70px #9cdcff65}
+.intro-seal i{position:absolute;inset:0;border:1px solid #a9d8eb57;border-radius:50%;animation:seal-wave 2.5s cubic-bezier(.12,.5,.3,1) both}
+.intro-seal i:nth-child(2){animation-delay:.18s}
+.intro-seal i:nth-child(3){animation-delay:.36s}
+/* Optical reflections keep moving behind the readable catalog. */
+.ambient-optic{position:absolute;width:min(76vw,1050px);aspect-ratio:1;right:-18%;top:5%;opacity:.34;animation:ambient-orbit 26s ease-in-out infinite alternate}
+.ambient-optic i{position:absolute;inset:0;border:1px solid #a6dce81f;border-radius:50%;box-shadow:0 0 35px #aaddec06,inset 0 0 35px #aaddec06;animation:lens-turn 60s linear infinite}
+.ambient-optic i:nth-child(2){inset:6%;border:5px solid transparent;border-left-color:#8fccdf21;border-right-color:#cc304314;animation-direction:reverse;animation-duration:38s}
+.ambient-optic i:nth-child(3){inset:10%;border-style:dashed;border-color:#aaddec15;animation-duration:75s}
+.season-head{position:relative;overflow:hidden;min-height:112px;padding-top:25px;padding-bottom:25px;background:#07111a}
+.season-head:before{content:'';position:absolute;inset:-20% 0 -20% 26%;background-image:linear-gradient(90deg,#07111a 3%,#07111a15 60%,#07111a80),url('img/six/s1-e01.jpg');background-size:cover;background-position:50% 38%;opacity:.4;animation:season-image 19s ease-in-out infinite alternate}
+#season2 .season-head:before{background-image:linear-gradient(90deg,#07111a 3%,#07111a15 60%,#07111a80),url('img/six/s2-e01.jpg');animation-direction:alternate-reverse}
+.season-head:after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 20%,#acdfed17 50%,transparent 65%);background-size:220% 100%;animation:thumbnail-light 11s linear infinite}
+.season-head>*{position:relative;z-index:1}.season-number{font-size:61px}.season-head>.eyebrow{text-shadow:0 1px 6px #000}
+@keyframes fragment-arrive{from{transform:translateY(-100%);opacity:.3}to{transform:translateY(0);opacity:.85}}
+@keyframes fragment-arrive-up{from{transform:translateY(100%);opacity:.3}to{transform:translateY(0);opacity:.85}}
+@keyframes cod-title{from{clip-path:inset(0 100% 0 0);transform:translateX(-35px)}to{clip-path:inset(0);transform:translateX(0)}}
+@keyframes home-wordmark{from{opacity:0;transform:translateY(20px);filter:blur(8px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes seal-reveal{from{opacity:0;transform:scale(.6);filter:blur(12px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes seal-wave{0%{opacity:0;transform:scale(.3)}20%{opacity:1}100%{opacity:0;transform:scale(3)}}
+@keyframes ambient-orbit{from{transform:translateY(-3%) scale(.96)}to{transform:translateY(8%) scale(1.07)}}
+@keyframes lens-turn{to{transform:rotate(360deg)}}
+@keyframes season-image{from{transform:scale(1) translateX(-1%)}to{transform:scale(1.12) translateX(1%)}}
+@media(max-width:600px){.season-head{min-height:100px;padding-top:21px;padding-bottom:21px}.season-number{font-size:49px}.ambient-optic{width:110vw;right:-65%;top:25%}.intro-dialog[data-kind=six] .intro-content h2{font-size:36vw}.intro-dialog[data-kind=cod] .intro-content h2{max-width:9ch;font-size:20vw}.intro-fragments i{background-size:500% 100%,auto 100%;background-position:calc(var(--slice) * 25%) 50%}.intro-seal{width:48vw;top:39%}.intro-dialog[data-kind=home] .intro-content{padding-bottom:25vh}.intro-dialog[data-kind=home] .intro-content h2{font-size:40px}.intro-content p{max-width:29ch;line-height:1.8}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
