@@ -1,0 +1,133 @@
+/* The catalogue in the home's language: near black, one accent,
+   big type in rows, and the footage of whatever you are pointing at behind it. */
+
+/* With the utility buttons gone the masthead has only two children,
+   so the nav has to be centred on its own rather than pinned right. */
+.masthead nav{margin-inline:auto}
+
+.catalog-shell{max-width:1500px;padding:0 clamp(20px,4.4vw,86px) 0;margin:auto}
+
+/* ---- the stage: the row you are on plays behind the page ---- */
+.cat-stage{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.cat-stage img{position:absolute;inset:-3%;width:106%;height:106%;object-fit:cover;
+  object-position:var(--fx,50%) var(--fy,50%);
+  filter:grayscale(.5) brightness(.62) contrast(1.04);
+  transition:opacity 1.1s cubic-bezier(.4,0,.2,1),filter 1s cubic-bezier(.4,0,.2,1);
+  animation:cat-push 28s ease-in-out infinite alternate}
+.cat-stage img.is-out{opacity:0}
+body.row-live .cat-stage img{filter:grayscale(0) brightness(.84) contrast(1)}
+@keyframes cat-push{from{transform:scale(1.02)}to{transform:scale(1.1)}}
+.cat-stage::after{content:'';position:absolute;inset:0;background:
+  radial-gradient(96% 78% at 62% 40%,rgba(6,9,11,.34) 0%,rgba(6,9,11,.72) 52%,rgba(6,9,11,.94) 100%),
+  linear-gradient(100deg,rgba(6,9,11,.92) 0%,rgba(6,9,11,.7) 34%,rgba(6,9,11,.42) 70%,rgba(6,9,11,.72) 100%)}
+
+/* ---- the page head ---- */
+.cat-head{padding:clamp(34px,7vh,86px) 0 clamp(22px,4vh,44px)}
+.cat-kicker{display:flex;align-items:center;gap:12px;margin:0 0 clamp(12px,2vh,20px);
+  font:400 .6875rem/1 var(--mono);letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+.cat-kicker i{width:6px;height:6px;background:var(--accent);transform:rotate(45deg);
+  box-shadow:0 0 14px rgba(var(--accent-rgb),.8)}
+.collection-title{margin:0;font-family:var(--display);text-transform:uppercase;font-weight:400;
+  line-height:.84;letter-spacing:-.03em;font-size:clamp(52px,9.4vw,148px);color:var(--accent);
+  filter:drop-shadow(0 8px 32px #04070a)}
+.collection-title:focus-visible{outline:2px solid var(--paper);outline-offset:10px}
+.cat-sub{margin:clamp(14px,2vh,22px) 0 0;font-size:.9375rem;line-height:1.5;color:var(--ink-soft,#c3ccce)}
+.cat-facts{display:flex;flex-wrap:wrap;gap:10px 26px;margin:clamp(16px,2.4vh,26px) 0 0;padding:0;list-style:none;
+  font:400 .6875rem/1.6 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.cat-facts b{font-weight:400;color:var(--accent)}
+.cat-tools{margin-top:clamp(18px,2.6vh,28px)}
+.cat-tools .source-open{font:400 .6875rem/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);background:none;border:0;border-bottom:1px solid rgba(var(--accent-rgb),.4);
+  padding:0 0 7px;cursor:pointer;transition:color .4s,border-color .4s}
+.cat-tools .source-open:hover{color:var(--accent);border-color:var(--accent)}
+.cat-tools .source-open:focus-visible{outline:2px solid var(--paper);outline-offset:6px}
+
+/* ---- a group of rows ---- */
+.cat-group{padding-block:clamp(20px,3.4vh,40px) 0}
+.cat-group-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  padding-bottom:clamp(12px,1.8vh,18px);border-bottom:1px solid rgba(var(--accent-rgb),.28)}
+.cat-group-head h2{margin:0;font:400 .75rem/1 var(--mono);letter-spacing:.28em;text-transform:uppercase;color:var(--paper)}
+.cat-group-head h2 span{color:var(--muted)}
+.cat-group-head p{margin:0;font:400 .6875rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+/* ---- the row ---- */
+.cat-row{position:relative;display:grid;align-items:center;gap:clamp(14px,1.8vw,30px);
+  grid-template-columns:auto minmax(0,1fr) auto auto;
+  padding:clamp(14px,2vh,22px) 0;border-bottom:1px solid var(--line);
+  transition:background .5s var(--ease)}
+.cat-row:hover{background:linear-gradient(90deg,rgba(var(--accent-rgb),.07),transparent 62%)}
+/* ---- the frame: every row carries its own still ---- */
+.cat-frame{position:relative;flex:none;width:clamp(104px,11.8vw,178px)}
+.cat-shot{display:block;width:100%;aspect-ratio:16/9;overflow:hidden;background:#080b0d;
+  border:1px solid var(--line);border-radius:2px;
+  transition:border-color .45s var(--ease),box-shadow .5s var(--ease)}
+.cat-shot img{width:100%;height:100%;object-fit:cover;object-position:var(--fx,50%) var(--fy,50%);
+  filter:grayscale(.72) brightness(.64) contrast(1.06);
+  transition:filter .5s var(--ease),transform .9s var(--ease)}
+.cat-row.is-live .cat-shot{border-color:rgba(var(--accent-rgb),.6);
+  box-shadow:0 0 0 1px rgba(var(--accent-rgb),.2),0 14px 40px -16px rgba(var(--accent-rgb),.45)}
+.cat-row.is-live .cat-shot img{filter:none;transform:scale(1.07)}
+/* the frame number, sat on the corner of the still */
+.cat-no{position:absolute;top:0;left:0;z-index:2;padding:7px 9px;
+  font:400 .625rem/1 var(--mono);letter-spacing:.2em;color:var(--paper);
+  text-shadow:0 1px 6px #000,0 0 14px #000;transition:color .4s}
+.cat-row.is-live .cat-no{color:var(--accent)}
+/* the viewfinder locks onto the still itself */
+.cat-frame i{position:absolute;width:11px;height:11px;border:1.5px solid var(--accent);opacity:0;
+  transition:opacity .34s var(--ease),transform .45s var(--ease);pointer-events:none}
+.cat-frame i:nth-of-type(1){top:-7px;left:-7px;border-right:0;border-bottom:0;transform:translate(-8px,-8px)}
+.cat-frame i:nth-of-type(2){top:-7px;right:-7px;border-left:0;border-bottom:0;transform:translate(8px,-8px)}
+.cat-frame i:nth-of-type(3){bottom:-7px;left:-7px;border-right:0;border-top:0;transform:translate(-8px,8px)}
+.cat-frame i:nth-of-type(4){bottom:-7px;right:-7px;border-left:0;border-top:0;transform:translate(8px,8px)}
+.cat-row.is-live .cat-frame i{opacity:1;transform:none}
+
+.cat-name{min-width:0}
+.cat-name h3{margin:0;font-family:var(--display);text-transform:uppercase;font-weight:400;
+  line-height:.92;letter-spacing:-.02em;font-size:clamp(24px,3.1vw,48px);color:var(--paper);
+  transition:color .45s var(--ease),transform .6s var(--ease)}
+.cat-row.is-live .cat-name h3{color:var(--accent);transform:translateX(6px)}
+.cat-name p{margin:6px 0 0;font:400 .6875rem/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.cat-spec{display:flex;gap:clamp(12px,1.8vw,30px);font:400 .75rem/1 var(--mono);letter-spacing:.1em;
+  color:var(--muted);white-space:nowrap;transition:color .4s}
+.cat-spec b{font-weight:400;color:var(--paper);font-variant-numeric:tabular-nums}
+.cat-row.is-live .cat-spec b{color:var(--accent)}
+
+.cat-acts{display:flex;align-items:center;gap:8px;flex:none}
+.cat-act{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;
+  font:400 .6875rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);background:rgba(10,14,16,.55);border:1px solid var(--line);border-radius:2px;
+  cursor:pointer;transition:color .35s,border-color .35s,background .35s}
+.cat-act svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.6}
+.cat-act:hover{color:var(--accent);border-color:rgba(var(--accent-rgb),.55);background:rgba(var(--accent-rgb),.08)}
+.cat-act:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+.cat-act.is-primary{color:var(--bg);background:var(--accent);border-color:var(--accent);font-weight:700}
+.cat-act.is-primary:hover{background:var(--paper);border-color:var(--paper);color:var(--bg)}
+
+.cat-note{margin:clamp(14px,2vh,20px) 0 0;font:400 .6875rem/1.6 var(--mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted)}
+
+.page-footer{margin-top:clamp(40px,7vh,90px)}
+
+@media(max-width:1080px){
+  .cat-row{grid-template-columns:auto minmax(0,1fr) auto;row-gap:12px}
+  .cat-spec{grid-column:2/-1;order:3}
+  .cat-acts{order:2}
+  .cat-name h3{font-size:clamp(22px,3.8vw,34px)}
+}
+@media(max-width:720px){
+  .cat-head{padding-top:clamp(24px,5vh,44px)}
+  .collection-title{font-size:clamp(46px,13.5vw,84px)}
+  .cat-row{grid-template-columns:clamp(92px,26vw,120px) minmax(0,1fr);row-gap:12px;padding-block:18px}
+  .cat-frame{width:100%}
+  .cat-name h3{font-size:clamp(23px,6.4vw,34px)}
+  .cat-spec{grid-column:1/-1;order:3;flex-wrap:wrap;gap:8px 18px;white-space:normal}
+  .cat-acts{grid-column:1/-1;order:4;flex-wrap:wrap}
+  .cat-act{flex:1 1 auto;justify-content:center}
+  .cat-group-head{gap:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  .cat-stage img{animation:none!important;transition:none!important}
+  .cat-row,.cat-name h3,.cat-no i{transition:none!important}
+}
+body[data-motion=off] .cat-stage img{animation:none}
