@@ -1,47 +1,38 @@
 # Ocean’s Scenepacks
 
-A static scene archive for John Price, Call of Duty campaign cutscenes, and Joe Graves from SIX, under the night sky of the AuroraGrab 3.0 reference.
+A static cinema archive for Call of Duty campaign cutscenes, John Price scene packs and Joe Graves from SIX.
 
 ## Run locally
-
-From this folder, run:
 
 ```sh
 python -m http.server 8765 --bind 127.0.0.1
 ```
 
-Open http://127.0.0.1:8765. No build step, package installation, or server backend is required. GitHub Pages can serve these files directly.
+Open http://127.0.0.1:8765. No build step or backend is required; the site remains compatible with GitHub Pages.
+
+## Experience
+
+Home is two full-window photographic destinations, with supplied Anton lettering and the real AuroraGrab sky layered over the imagery. Selecting a destination expands its photograph to the viewport in 420ms. It holds while the document loads, then settles into the collection header in 560ms. Main content stays at opacity 1 without clipping or page scaling. The one-use photo handoff expires after six seconds. Navigation between archives remains immediate; returning to home carries the selected photograph back to its choice.
+
+The foreground owns the initial lens-resolution sequence; the sky starts settled. The sky renderer retains its original time, energy and pulse transfer, reduced render resolution, 30/20fps limits, and suspension when hidden or when a preview opens. The rejected clip gate and cross-document View Transition prototype are absent from the shipped implementation.
+
+COD has three campaign cutscenes, three John Price files and a separate complete file beside the character trilogy. SIX has two artwork-led chapters with eight and ten episode rows. Search, filters, source notes, multipart selection, native preview dialogs, original downloads and SIX timestamp sharing remain available.
+
+Pause or device reduced motion uses immediate links and clears photographic motion. Escape cancels departure before navigation starts. Back restoration removes the traveling frame and restores interaction. Without JavaScript, animation support or session storage, the underlying links and visible destination content remain usable.
 
 ## Files
 
-- `index.html`, `home.css`: two equal photographic compositions labeled Call of Duty / SIX, dissolving into the real sky.
-- `cod.html`, `six.html`, `archive.css`: prominent archive chapters, responsive grids, and the complete searchable collections.
-- `site.css`: shared AuroraGrab Night tokens, controls, and player layouts.
-- `site.js`: search, filters, download selection, COD previews, and the motion preference.
-- `motion.css`, `motion.js`: the polar-curtain navigation mask, selection feedback, interruptible filter layouts, and dialog transitions.
-- `aurora.js`: the WebGL sky, seeded stars, Lofoten ridges, reflection, layered sky introduction, coupled passage fronts, and navigation state transfer.
-- `archive-data.js`: original pack metadata and download URLs.
-- `player.js`: the SIX preview player, episode navigation, and timestamp sharing.
-- `img/`: supplied scene stills and icons; image comments retain source provenance.
+- `index.html`, `home.css`: cinematic binary chooser and bounded direct-load lens entrance.
+- `cod.html`, `six.html`, `archive.css`: photographic collection headers, film rows and responsive chapters.
+- `site.css`, `site.js`: shared Night controls, search, filters and source download/preview behavior.
+- `motion.css`, `motion.js`: isolated photo passage, local filter/dialog feedback and motion cleanup.
+- `aurora.js`: the preserved real sky, stars, mountain detail, reflection and sky transfer.
+- `archive-data.js`, `player.js`: original file metadata and SIX player/timestamp functions.
+- `DESIGN.md`, `.impeccable/design.json`, `PRODUCT.md`: current visual and product contracts.
+- `img/`: supplied scene stills, icons, self-hosted Anton and its OFL notice. Source pixels are unchanged.
 
-## Behavior
+## Verification
 
-The home contains the Ocean’s brand, an accessible motion icon, and two destination links. Source photographs dissolve at their edges into the actual aurora; large destination names keep the choice clear. “Call of” is a smaller prefix above “Duty”. The two complete compositions provide equal hit areas and stack on phones.
+All 25 original article blocks remain byte-identical. Layout and images were checked across all pages at 1440, 390, 2265 and 1024px; home also fits 320px and short landscape. Real photo passages, keyboard links, Escape, pause, reduced motion, browser back and no-JavaScript links passed. A delayed destination test records the outgoing photograph at the exact full viewport at 850ms and the incoming photograph already present at first paint. Main opacity remains 1 and inert state clears on arrival and back.
 
-Call of Duty has three clear sections: Campaign cutscenes (3), John Price (3), and the adjacent All in one complete pack (1). SIX has two prominent season chapters with 8 and 10 episodes. Source information, previews, original downloads, multipart choices, and SIX timestamp links remain available.
-
-Selecting a destination closes a clipped passage around the chosen link’s horizontal center in 400ms. Two temporary fronts in the existing aurora shader follow the same progress and easing. The closed mask holds while the destination loads; the destination reopens it in 520ms. The main remains at opacity 1 without navigation scale or translation. Direct loads start visible, and no per-card page-entry sequence runs. Escape cancels the passage and restores focus; back-cache restoration clears the gate. Without a ready WebGL renderer, Web Animations, or enabled motion, navigation uses ordinary links. Modified clicks retain native browser behavior.
-
-A one-use session record carries shader time, energy, pulse progress, and gate geometry across navigation. The gate contributes no light at rest, preserving the approved ordinary sky. Initial home entry retains the source app’s layered curtain, star, ridge, and reflection timings. The passage adapts its `paint.progress()` principle of coupling a visible light front to interface progress. The shader stays capped at 30 fps on desktop and 20 fps on mobile, using its existing animation clock and canvas.
-
-The motion icon remembers the preference and exposes an accessible pause/resume label. The operating system’s reduced-motion setting takes precedence. Pause cancels pending spatial effects, resets the gate, settles an unfinished sky introduction, and commits pending navigation immediately. The sky stops when the page is hidden or a preview opens. Devices without WebGL retain the static night sky and foreground; unavailable storage preserves visible content and an independent sky on each page.
-
-Search and filters update visibility and result counts immediately. Visible archive cards then bridge to their new positions; rapid input cancels prior movement. Preview dialogs enter in 350ms and dismiss in 220ms. Preview-to-download switches to the selected file action immediately. Video files load only when a preview opens. Downloads retain the original GitHub release assets, Google Drive, and Mega links; SIX retains its timestamp format.
-
-## Validation
-
-The cinematic checks passed nine views covering desktop widths of 1440 and 2265px, mobile 390/320px, and 844px landscape, along with both collection passages, Escape, back navigation, keyboard access, pause, reduced motion, and no-JavaScript content. Archive grouping, cards, and filters passed at 320, 390, 1024, and 1440px; full archive/player regression also passed. During an 850ms delayed destination load, the outgoing main remained at opacity 1 and transform none with a closed clip, closed gate, and inert state, then restored on arrival and back navigation. Current tokens and motion behavior are recorded in `DESIGN.md` and `.impeccable/design.json`.
-
-Video requests were deliberately blocked to verify recovery; complete multi-gigabyte downloads were not performed. Release asset URLs were checked against GitHub release metadata.
-
-The incoming passage is primed before the first paint. A frame-sampling check confirms COD and SIX arrive fully clipped, then open and restore an unclipped view; direct loads remain immediately visible.
+Archive/player regression passed: filters, search and empty reset, source providers, multipart choices, preview failure recovery, video cleanup, episode/part navigation, timestamp links and focus restoration. Media requests were deliberately blocked for recovery tests; complete remote playback and multi-gigabyte downloads were not streamed.
