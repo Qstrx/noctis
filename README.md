@@ -14,29 +14,34 @@ Open http://127.0.0.1:8765. No build step, package installation, or server backe
 
 ## Files
 
-- `index.html`: a two-choice home with the Ocean’s brand, motion icon, and photographed Call of Duty / SIX links.
-- `cod.html`, `six.html`: the complete searchable collection pages.
-- `site.css`: shared AuroraGrab Night styling and archive layouts.
-- `home.css`: the centered home choices and short-screen layouts.
+- `index.html`, `home.css`: two equal photographic compositions labeled Call of Duty / SIX, dissolving into the real sky.
+- `cod.html`, `six.html`, `archive.css`: prominent archive chapters, responsive grids, and the complete searchable collections.
+- `site.css`: shared AuroraGrab Night tokens, controls, and player layouts.
 - `site.js`: search, filters, download selection, COD previews, and the motion preference.
-- `motion.css`, `motion.js`: whole-main arrival/departure, selection feedback, interruptible filter layouts, and dialog transitions.
-- `aurora.js`: the adapted WebGL sky, seeded stars, Lofoten ridges, reflection, app-style sky introduction, and navigation state transfer.
+- `motion.css`, `motion.js`: the polar-curtain navigation mask, selection feedback, interruptible filter layouts, and dialog transitions.
+- `aurora.js`: the WebGL sky, seeded stars, Lofoten ridges, reflection, layered sky introduction, coupled passage fronts, and navigation state transfer.
 - `archive-data.js`: original pack metadata and download URLs.
 - `player.js`: the SIX preview player, episode navigation, and timestamp sharing.
-- `img/`: supplied scene stills and icons; image comments record source provenance.
+- `img/`: supplied scene stills and icons; image comments retain source provenance.
 
 ## Behavior
 
-The home contains two destinations. Both choices arrive together with the complete main view: a 450ms opacity change and 550ms vertical arrival, delayed 180ms on home. Navigation fades the main for 300ms while it scales toward .985 over 450ms. Navigation starts at 300ms; the completed effects hold until the destination document replaces the page. Escape cancels the departure and restores focus; page exit or back-cache restoration clears held effects. Modified clicks and browsers without Web Animations keep native link behavior.
+The home contains the Ocean’s brand, an accessible motion icon, and two destination links. Source photographs dissolve at their edges into the actual aurora; large destination names keep the choice clear. “Call of” is a smaller prefix above “Duty”. The two complete compositions provide equal hit areas and stack on phones.
 
-The approved sky’s final palette, seeded artwork, and reflection remain intact. Initial home entry introduces the curtain, stars, ridges, and reflection using the source app’s layered timings. Hovering or focusing a choice gently raises aurora energy; confirming a destination triggers a 1300ms light wave. A one-use session record carries shader time, energy, and pulse progress across navigation, so collection pages resume the same sky phase rather than restart its introduction. The shader remains capped at 30 fps on desktop and 20 fps on mobile.
+Call of Duty has three clear sections: Campaign cutscenes (3), John Price (3), and the adjacent All in one complete pack (1). SIX has two prominent season chapters with 8 and 10 episodes. Source information, previews, original downloads, multipart choices, and SIX timestamp links remain available.
 
-The motion icon controls the interface and sky, remembers the preference, and has an accessible pause/resume label. The operating system’s reduced-motion setting takes precedence. Pause cancels pending interface movement, settles an unfinished sky introduction, and commits pending navigation immediately. The sky stops when the page is hidden or a preview is open. Devices without WebGL retain the static night sky and foreground; storage failures preserve ordinary navigation and an independent sky on each page.
+Selecting a destination closes a clipped passage around the chosen link’s horizontal center in 400ms. Two temporary fronts in the existing aurora shader follow the same progress and easing. The closed mask holds while the destination loads; the destination reopens it in 520ms. The main remains at opacity 1 without navigation scale or translation. Direct loads start visible, and no per-card page-entry sequence runs. Escape cancels the passage and restores focus; back-cache restoration clears the gate. Without a ready WebGL renderer, Web Animations, or enabled motion, navigation uses ordinary links. Modified clicks retain native browser behavior.
 
-Search and filters change visibility and result counts immediately. Visible archive cards then bridge to their new positions; rapid input cancels prior movement. Preview dialogs enter in 350ms and dismiss in 220ms. Preview-to-download switches to the selected file action immediately. Video files load only when a preview opens. Downloads retain the original GitHub release assets, Google Drive, and Mega links; SIX retains its timestamp format.
+A one-use session record carries shader time, energy, pulse progress, and gate geometry across navigation. The gate contributes no light at rest, preserving the approved ordinary sky. Initial home entry retains the source app’s layered curtain, star, ridge, and reflection timings. The passage adapts its `paint.progress()` principle of coupling a visible light front to interface progress. The shader stays capped at 30 fps on desktop and 20 fps on mobile, using its existing animation clock and canvas.
+
+The motion icon remembers the preference and exposes an accessible pause/resume label. The operating system’s reduced-motion setting takes precedence. Pause cancels pending spatial effects, resets the gate, settles an unfinished sky introduction, and commits pending navigation immediately. The sky stops when the page is hidden or a preview opens. Devices without WebGL retain the static night sky and foreground; unavailable storage preserves visible content and an independent sky on each page.
+
+Search and filters update visibility and result counts immediately. Visible archive cards then bridge to their new positions; rapid input cancels prior movement. Preview dialogs enter in 350ms and dismiss in 220ms. Preview-to-download switches to the selected file action immediately. Video files load only when a preview opens. Downloads retain the original GitHub release assets, Google Drive, and Mega links; SIX retains its timestamp format.
 
 ## Validation
 
-The current world was verified in Edge with Playwright at 1440×960, 390×844, 320×640, 844×390, and 2265×1244. Checks covered continuous shader time and pulse, focus, Escape cancellation, keyboard navigation, back navigation, pause/reduced motion, visible no-JavaScript content, and icon labels. Archive regression covered search/filter/empty states, multipart choices, provider labels, preview failure recovery, episode/part navigation, timestamp deep links, and focus restoration. Navigation checks wait for the documented 300ms departure. With the destination response delayed 1100ms, the outgoing page still had opacity 0, scale .985, and an inert main at 700ms; destination arrival and back navigation restored the view.
+The cinematic checks passed nine views covering desktop widths of 1440 and 2265px, mobile 390/320px, and 844px landscape, along with both collection passages, Escape, back navigation, keyboard access, pause, reduced motion, and no-JavaScript content. Archive grouping, cards, and filters passed at 320, 390, 1024, and 1440px; full archive/player regression also passed. During an 850ms delayed destination load, the outgoing main remained at opacity 1 and transform none with a closed clip, closed gate, and inert state, then restored on arrival and back navigation. Current tokens and motion behavior are recorded in `DESIGN.md` and `.impeccable/design.json`.
 
-Video requests were deliberately blocked to verify recovery; complete multi-gigabyte downloads were not performed. Release asset URLs were checked against GitHub release metadata. Current design tokens and motion behavior are recorded in `DESIGN.md` and `.impeccable/design.json`.
+Video requests were deliberately blocked to verify recovery; complete multi-gigabyte downloads were not performed. Release asset URLs were checked against GitHub release metadata.
+
+The incoming passage is primed before the first paint. A frame-sampling check confirms COD and SIX arrive fully clipped, then open and restore an unclipped view; direct loads remain immediately visible.

@@ -21,26 +21,38 @@ colors:
 typography:
   display:
     fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
-    fontSize: "clamp(40px, 4.2vw, 60px)"
+    fontSize: "clamp(68px, 7.4vw, 96px)"
     fontWeight: 300
-    lineHeight: 1.05
+    lineHeight: 0.98
     letterSpacing: "-.035em"
   headline:
     fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
-    fontSize: "clamp(38px, 4.4vw, 60px)"
+    fontSize: "clamp(42px, 4.8vw, 68px)"
     fontWeight: 300
     lineHeight: 1.15
     letterSpacing: "-.035em"
   title:
     fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
-    fontSize: "23px"
-    fontWeight: 350
-    lineHeight: 1.5
+    fontSize: "clamp(32px, 3.2vw, 44px)"
+    fontWeight: 300
+    lineHeight: 1.15
+    letterSpacing: "-.03em"
+  season-title:
+    fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
+    fontSize: "clamp(42px, 4.5vw, 62px)"
+    fontWeight: 300
+    lineHeight: 1.15
+    letterSpacing: "-.03em"
+  choice-prefix:
+    fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
+    fontSize: ".44em"
+    fontWeight: 300
+    lineHeight: 1.2
     letterSpacing: "-.02em"
   pack-title:
     fontFamily: '"Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif'
-    fontSize: "15px"
-    fontWeight: 550
+    fontSize: "16px"
+    fontWeight: 500
     lineHeight: 1.4
     letterSpacing: "-.01em"
   body:
@@ -48,6 +60,12 @@ typography:
     fontSize: "15px"
     fontWeight: 400
     lineHeight: 1.5
+  cod-pack-title:
+    fontFamily: '"Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif'
+    fontSize: "18px"
+    fontWeight: 500
+    lineHeight: 1.4
+    letterSpacing: "-.01em"
   label:
     fontFamily: '"Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif'
     fontSize: "12px"
@@ -55,7 +73,7 @@ typography:
     lineHeight: 1.5
   action:
     fontFamily: '"Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif'
-    fontSize: "11px"
+    fontSize: "12px"
     fontWeight: 500
     lineHeight: 1.5
 rounded:
@@ -74,9 +92,10 @@ spacing:
   content: "20px"
   panel: "24px"
   dialog: "28px"
-  choice: "32px"
+  chapter: "32px"
   section: "36px"
   wide: "64px"
+  catalog-section: "84px"
 components:
   button-primary:
     backgroundColor: "{colors.action-mint-bg}"
@@ -84,7 +103,7 @@ components:
     typography: "{typography.action}"
     rounded: "{rounded.control}"
     padding: "9px 11px"
-    height: "40px"
+    height: "44px"
   button-primary-hover:
     backgroundColor: "{colors.mint}"
     textColor: "{colors.mint-ink}"
@@ -94,7 +113,14 @@ components:
     typography: "{typography.action}"
     rounded: "{rounded.control}"
     padding: "9px 11px"
-    height: "40px"
+    height: "44px"
+  button-complete:
+    backgroundColor: "{colors.mint}"
+    textColor: "{colors.mint-ink}"
+    typography: "{typography.action}"
+    rounded: "{rounded.control}"
+    padding: "9px 11px"
+    height: "44px"
   button-download:
     backgroundColor: "{colors.mint}"
     textColor: "{colors.mint-ink}"
@@ -139,12 +165,11 @@ components:
     backgroundColor: "{colors.panel-strong}"
     rounded: "{rounded.media}"
   home-choice:
-    backgroundColor: "{colors.panel-strong}"
+    backgroundColor: "transparent"
     textColor: "{colors.ink}"
     typography: "{typography.display}"
     rounded: "{rounded.panel}"
     padding: "0"
-    height: "clamp(320px, 43svh, 440px)"
   dialog:
     backgroundColor: "{colors.dialog-bg}"
     textColor: "{colors.ink}"
@@ -159,15 +184,15 @@ components:
 
 Ocean’s Scenepacks carries the user-pinned AuroraGrab 3.0 reference into a browser archive: a navy-black sky, green aurora curtains with violet upper light, sharp stars, dark mountain ridges, and reflected water. Light Segoe headings and mint actions sit above this atmosphere. The sky is decorative; supplied character and episode stills remain the visual evidence for the footage.
 
-The world is quiet, spacious, and precise. Translucent blue-black controls preserve the night beneath them, while photographic surfaces and modal players provide stronger local contrast. Complete views arrive and withdraw together, following the app’s choreography; the aurora’s clock and light wave carry between pages. The reference explicitly determines the Segoe families, light display weights, palette, and aurora grammar; this is the pinned-reference exemption to a generic instruction to replace familiar system typography.
+The world is quiet, spacious, and precise. Photographs dissolve into the real sky instead of ending in visible boxes; prominent destination names give the home a clear choice. Archive chapters and translucent controls provide readable structure. Selecting a destination closes a passage between two polar light fronts and reopens it onto the archive; the aurora’s clock continues between pages. This browser transition adapts the source app’s progress-coupled light-front principle. The reference determines the Segoe families, light display weights, palette, and aurora grammar; this is the pinned-reference exemption to a generic instruction to replace familiar system typography.
 
 **Key Characteristics:**
 
 - A procedural northern sky behind real source stills.
 - Light Segoe display lettering with compact Segoe text controls.
 - Mint actions, pale text, and restrained translucent borders.
-- Rounded media surfaces and pill-shaped global or final actions.
-- Complete-view arrival and departure with a continuous northern sky.
+- Dissolved photographic compositions, large destination names, and distinct archive chapters.
+- A polar-curtain passage coupled to the continuous northern sky.
 - Ambient motion that stops for accessibility preferences, manual pause, and preview playback.
 
 ## Colors
@@ -202,10 +227,11 @@ The palette places a luminous mint accent against a deep blue-black field. The f
 
 ### Hierarchy
 
-- **Display** (`display`): the two home collection labels, with balanced wrapping, light weight, and close tracking. Mobile uses (40px), narrowing to (36px) at (400px); the short landscape layout uses (32px).
+- **Display** (`display`): the large “Duty” and “SIX” destination names. Mobile uses `clamp(58px, 17vw, 80px)`; short landscape uses (60px). “Call of” sits above “Duty” in the smaller `choice-prefix` role with a (7px) lower margin. These are the intentional type relationships of the current compositions.
 - **Headline** (`headline`): collection heading. Mobile overrides use (43px), then (35px) at the narrowest breakpoint.
-- **Title** (`title`): catalog group headings; mobile uses (22px).
-- **Pack title** (`pack-title`): episode and campaign titles; mobile uses (13px).
+- **Title** (`title`): Campaign cutscenes and John Price chapter headings; mobile uses (34px), narrowing to (30px) at (400px). “All in one” uses (32px) on desktop, (40px) up to (1100px), then the mobile chapter scale.
+- **Season title** (`season-title`): the prominent Season 1 and Season 2 headings; mobile uses (36px), then (32px) at (400px).
+- **Pack title** (`pack-title`, `cod-pack-title`): SIX episode titles use (16px), then (15px) on mobile. Call of Duty titles use (18px), rising to (20px) in the single-column mobile layout; its complete-pack title uses (17px) on desktop.
 - **Body** (`body`): archive descriptions and dialog copy. Source-note paragraphs are limited to (72ch) with a relaxed line height of (1.7).
 - **Label and action** (`label`, `action`): source facts, navigation support, and buttons. Shipping small text bottoms out at (11px). Time and file-size rows use tabular numerals.
 - **Preview title:** light display text at `clamp(24px, 3vw, 36px)`, line height (1.2), and tracking (-.025em). The download heading uses (30px) at weight (300).
@@ -218,11 +244,15 @@ Archive page chrome and content align to a centered container capped at (1280px)
 
 The archive uses generous page spacing and compact local controls. Reused steps are recorded in frontmatter. Archive header height starts at (100px). At (760px), it wraps into a brand-and-motion row plus a full-width navigation row, with a minimum combined height of (116px). The active navigation line moves from (24px) above the header base to (8px) above the mobile navigation base.
 
-The home is a literal two-choice view: the Ocean’s brand and an icon-only motion control above two photographed page links labeled “Call of Duty” and “SIX”. Its main region caps at (1120px) and centers the choices within the space beneath an (88px) header, with (100px) lower padding. Equal columns use a (28px) gap; each choice has height `clamp(320px, 43svh, 440px)`. At (1100px), the gap becomes (24px) and label padding drops from (32px) to (28px).
+The home remains a literal two-choice view: the Ocean’s brand and an icon-only motion control above two equal photographed links labeled “Call of Duty” and “SIX”. Its main region caps at (1440px), with an (88px) header and (16px / 52px) upper/lower padding. The composition grid reaches (680px) high and uses two equal columns with a gap of `clamp(36px, 6vw, 96px)`. At (1100px), its gap is (36px). Each entire composition is a hit area; visible imagery dissolves through intersecting vertical and horizontal masks.
 
-At (760px), the home header is (84px), choices stack with a (20px) gap, their height becomes `clamp(190px, 28svh, 236px)`, and lower main padding is (64px). Label padding becomes (24px), then (22px) at (400px). On short mobile screens up to (640px) high, the header is (72px), gap (16px), lower padding (32px), and choice height `clamp(148px, 27svh, 190px)`. At heights up to (540px) with widths of at least (560px), choices return to two columns and use height `max(150px, calc(100svh - 140px))`. The home contains no counts, descriptions, duplicated navigation, or footer.
+At (760px), the home header is (72px); equal rows stack without an inter-row gap, within the remaining viewport and a (760px) composition-height cap. Main lower padding is (32px). Labels align to the outer content edges; their photographs shift right beneath them. At heights up to (540px) with widths of at least (560px), the header is (64px), choices return to equal columns with a (36px) gap, and lower padding is (24px). The home contains no counts, descriptions, duplicated navigation, or footer.
 
-Catalog grids use four columns with gaps of (28px / 22px), three columns up to (1100px), and two columns up to (760px) with gaps of (25px / 14px). Images keep a (16:9) cover ratio. Card actions stack on mobile and increase from a (40px) minimum height to (42px). The toolbar wraps at the mobile breakpoint; search becomes full width.
+Call of Duty uses three explicit sections: Campaign cutscenes (3 packs), John Price (3 packs), and the adjacent All in one complete pack (1 file). Campaign and character trilogies use three equal columns with (28px) gaps. Below the campaign chapter, the character trilogy and complete pack use a (3fr / 1fr) layout with a (244px) minimum complete-pack column, a (36px) gap, and (84px) upper spacing. A quiet divider and (28px) inset separate the complete pack. Up to (1100px), that pack moves below the trilogy into a two-column heading-and-media composition. Up to (760px), all Call of Duty packs become one column with (36px) gaps, the complete pack follows its chapter heading, and preview/download actions remain side by side. Hidden chapters collapse their surrounding layout during filtering.
+
+SIX uses two prominent season chapters containing (8) and (10) episodes. Their headings pair source totals with a supplied season still. Episode grids use four columns with gaps of (36px / 24px), three columns up to (1100px), then two columns with gaps of (32px / 16px) on mobile, narrowing to a (14px) column gap at (400px). Chapters are separated by (84px), reducing to (64px) on mobile. Season stills use (288 × 132px), then (112 × 112px), and (96 × 104px) at (400px). SIX actions stack on mobile. All archive card actions use a (44px) minimum height. The toolbar wraps on mobile and search becomes full width.
+
+Archive covers retain (16:9) framing, except the adjacent desktop complete-pack cover, which uses (1.25) before returning to (16:9) at (1100px). Catalog lower padding is (84px), or (56px) on mobile.
 
 Collection portraits scale from (224 × 130px) to (114 × 106px), then (90 × 96px) at (400px). The preview dialog has a desktop media-and-sidebar grid with a (260px) sidebar. At (760px), that sidebar moves below the player; its episode list becomes a horizontally scrollable strip of (148px) items. Preview width changes from a (1280px) cap with (24px) side clearance to (10px) side clearance. Download dialogs cap at (520px).
 
@@ -230,19 +260,20 @@ Preserve semantic page structure: a skip link to the single main region, labeled
 
 ## Elevation & Depth
 
-Depth comes from the sky, photographic overlays, translucent surfaces, and sparse hairline borders. Home choices have no box shadow. Regular archive cards remain open against the page; only their active cover feedback gains a local shadow. Modal dialogs provide the structural lifted surface.
+Depth comes from the sky, masked photographic edges, translucent surfaces, and sparse hairline borders. Home compositions have no backing panel or box shadow; a restrained text shadow anchors their large names. Archive cards remain open against the page; only their active cover feedback gains a local shadow. Modal dialogs provide the structural lifted surface.
 
 ### Shadow Vocabulary
 
 - **Modal surface** (`0 30px 100px #0009`): lifts preview and download dialogs over the page.
 - **Thumbnail feedback** (`0 8px 26px rgba(0,0,0,.45)`): appears only on hover or keyboard focus while the cover lifts.
+- **Destination lettering** (`0 3px 18px rgba(0,0,0,.65)`): a text shadow beneath the home names.
 - **Modal backdrop:** `rgba(1,4,9,.72)` with a (10px) backdrop blur.
 
 **The Local Contrast Rule.** Place dark local backing and gradients behind readable content; the aurora never supplies the contrast required by a label or control.
 
 ## Shapes
 
-Control corners use the frontmatter’s `control` radius. Desktop thumbnails and collection portraits use `media`; mobile grid thumbnails reduce to `control`. Large collection doors and dialogs use `panel`. Tiny episode thumbnails use `thumbnail`, cover labels use `badge`, and loading-state labels use `status`. Motion controls and final download actions use the `pill` radius.
+Control corners use the frontmatter’s `control` radius. Call of Duty covers, desktop SIX covers, portraits, and season stills use `media`; mobile SIX covers reduce to `control`. Dialogs and the home link hit areas use `panel`, but the home’s photographic edges dissolve through masks. Tiny player episode thumbnails use `thumbnail`, cover labels use `badge`, and loading-state labels use `status`. Motion controls and final download actions use the `pill` radius. Home arrows sit in circular outlines.
 
 Thin borders structure navigation dividers, search fields, actions, and dialog chrome. Media clips to its rounded bounds. The brand is a small inline wave mark; other icons are inline strokes, with filled play triangles for preview actions.
 
@@ -250,7 +281,7 @@ Thin borders structure navigation dividers, search fields, actions, and dialog c
 
 ### Buttons
 
-Card download actions use a mint wash and edge with mint lettering; hover fills them with mint and switches the lettering to Mint Ink. Secondary preview and external-file actions use Action Glass and Control Edge. Both use compact padding and the action type role. Desktop minimum height is (40px); mobile is (42px).
+Card download actions use a mint wash and edge with mint lettering; hover fills them with mint and switches the lettering to Mint Ink. The complete-pack action is solid mint at rest and brightens on hover. Secondary preview and external-file actions use Action Glass and Control Edge. All archive card actions use compact padding, the action type role, and a (44px) minimum height.
 
 Final download and multipart-choice actions use solid mint, pill corners, a (48px) minimum height, and (13px) semibold text. The final action brightens on hover. Disabled buttons reduce opacity to (.45). Focus uses a (2px) mint outline with a (3px) offset for controls; ordinary links use a (5px) offset.
 
@@ -274,9 +305,11 @@ Use the supplied stills in `img/cod`, `img/six`, `img/price.jpg`, and `img/joe.j
 
 Archive cards show title, source facts, duration, file size, and independent preview/download actions. Archive thumbnails scale to (1.035) with a slight brightness increase during hover or keyboard focus.
 
-Home choices use the real Price and Graves photographs with a dark vertical gradient and only the destination name and arrow. Images rest at brightness (.88) and saturation (.9); hover, keyboard focus, or selection resolves them to full brightness and saturation while scaling to (1.025). Image travel takes (550ms), while filter, arrow, and mint selection-line feedback takes (350ms). The arrow shifts (4px), and the unselected choice dims to (.62) when motion is enabled. Focus uses a (2px) mint outline with a (6px) offset.
+Home choices use the real Price and Graves photographs as frameless compositions with only the destination name and a circular arrow. Intersecting masks dissolve the top, bottom, and side edges into the actual sky. Images rest at brightness (.8), saturation (.8), and scale (1.025); hover, keyboard focus, or selection resolves them to full brightness and saturation at scale (1.065). Image scale resolves in (700ms), filters in (400ms), the arrow travels (4px) in (400ms), its color/border responds in (200ms), and the thin mint line extends in (450ms). Arrow circles are (48px), or (44px) on mobile. Focus uses a (2px) mint outline with an (8px) offset, reducing to (4px) on mobile.
 
-Whole-main arrival follows the app: opacity resolves in (450ms), and (8px) vertical travel in (550ms), with an (180ms) delay on home and no delay on archives. All visible main content arrives together. Navigation withdraws the whole main with a (300ms) fade and a (450ms) scale toward (.985); navigation starts at (300ms), and the finished effects hold until the destination document replaces the page. The sky and header remain outside this main animation. During departure the main becomes inert, repeat activation is ignored, and Escape restores the view and focus. Held effects remain tracked and clear on cancellation, page exit, or back-cache restoration. Ordinary links remain the fallback when motion or Web Animations are unavailable; modified clicks keep native browser behavior.
+The signature navigation is a polar-curtain passage. The main stays at opacity (1) and has no navigation transform. Instead, left and right clipping boundaries converge on the chosen link’s horizontal center in (400ms), while two temporary shader light fronts track those boundaries. The closed mask holds until the destination document replaces the page. A valid transferred arrival opens the clipping window in (520ms), in step with the real aurora. Both use the source app’s easing. The sky and header remain outside the mask.
+
+During departure the main becomes inert, repeat activation is ignored, and Escape cancels the mask and gate while restoring focus. Back-cache restoration exposes the loaded view immediately. Pause or reduced-motion cancels spatial effects and commits pending navigation immediately. Direct loads keep main content visible without an entry animation. Ordinary links remain the fallback without a ready WebGL renderer, Web Animations, or enabled motion; modified clicks retain native browser behavior.
 
 Filtering reads each card's current visual position, updates visibility and counts synchronously, then bridges visible cards to their new layout in (350ms). Newly included visible packs enter in (400ms). Rapid changes cancel the preceding motion before taking over. Fine-pointer hover and keyboard focus lift the thumbnail by (3px) with a soft offset shadow; control press uses scale (.97). None of these states delay an action.
 
@@ -296,7 +329,9 @@ The shader is timer-paced to at most (30 fps) on desktop and (20 fps) at widths 
 
 Initial home entry uses the source app’s layered sky arrival: curtain opacity takes (1400ms); stars take (1500ms) after (150ms); the three ridge layers take (1100ms) after (250 / 380 / 510ms) and rise from (34 / 46 / 58px); reflected ridges take (1000ms) after (650ms). The introduction finishes at (1650ms). Layers are cached once per resize and composited within the existing renderer. Archive entry and valid transferred arrivals skip this sky introduction.
 
-Resting energy is (.35), focused home-choice energy is (.6), initial-intro target energy is (1.25) for its first (1500ms), and confirmed navigation or changed archive filters raises energy to at least (1.35). The confirmation wave sweeps left to right over (1300ms); energy settles through the implemented interpolation. Before navigation, a one-use session transfer records shader time, energy, and pulse progress. The next page accepts records up to (5000ms) old and advances the shader clock by the elapsed navigation time, so the curtain and uncompleted wave continue instead of restarting. Unavailable storage falls back to each page’s independent sky.
+Resting energy is (.35), focused home-choice energy is (.6), and initial-intro target energy is (1.25) for its first (1500ms). Changed archive filters trigger the existing (1300ms) left-to-right wave at energy of at least (1.35). Navigation instead uses the coupled polar light fronts. Their contribution is zero when the gate is at rest, preserving the approved ordinary background. This adaptation follows the AuroraGrab 3.0 reference’s `paint.progress()` principle: a visible light front follows interface progress, with reduced-motion respected.
+
+Before navigation, a one-use session transfer records shader time, energy, pulse progress, and gate origin/bounds. The next page accepts records up to (5000ms) old, advances the shader clock by elapsed navigation time, and reopens the gate around the same horizontal origin using its own main bounds. Unavailable storage falls back to each page’s independent sky and visible content.
 
 The motion button exposes its pressed state and retains “Motion on” or “Motion paused” as its state label. Manual choice is stored as `oceans-motion` when local storage is available. Device reduced-motion takes precedence and disables the button with an explanatory title. Pausing cancels pending Web Animations and completes an in-progress dismissal or navigation immediately. Both paused and reduced-motion paths remove spatial travel and smooth scrolling while keeping (100ms) control color feedback. They finish an in-progress sky introduction and return energy to (.35). Default HTML content stays visible without JavaScript or animation support. The sky stops while a preview is open, while the document is hidden, and on page exit; the retained frame remains visible when animation is disabled.
 
@@ -313,7 +348,8 @@ The WebGL renderer requests low-power operation, falls back to medium shader pre
 - **Do** preserve the documented mobile grid, full-width search, stacked actions, and preview episode strip.
 - **Do** retain native semantics, labeled controls, visible focus, live result feedback, and dialog focus return.
 - **Do** honor manual pause, device reduced-motion, hidden-document suspension, and the shader frame-rate limits.
-- **Do** animate a complete main view on arrival and departure, carrying the sky’s clock and pulse between pages.
+- **Do** couple the clipping passage to temporary fronts in the real aurora and carry sky/gate state between pages.
+- **Do** preserve the three Call of Duty sections and two prominent SIX season chapters.
 
 ### Don't:
 
@@ -324,3 +360,4 @@ The WebGL renderer requests low-power operation, falls back to medium shader pre
 - **Don't** increase ambient rendering frequency or add motion that bypasses the motion preference.
 - **Don't** turn the unboxed catalog cards into a separate shadowed panel for every archive item.
 - **Don't** reintroduce home descriptions, counts, duplicate links, a footer, per-card page-entry choreography, or a photograph flying into the collection portrait.
+- **Don't** replace the curtain passage with a whole-main fade, scale, or translation, or leave gate light in the resting sky.

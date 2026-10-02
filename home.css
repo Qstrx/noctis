@@ -1,236 +1,101 @@
-/* Two destinations inside AuroraGrab's night window. The sky owns the space. */
-body[data-world=home] {
-  min-height: 100svh;
-}
-body[data-world=home] .site-header {
-  min-height: 88px;
-  padding: 0;
-  border-bottom: 0;
-  flex-wrap: nowrap;
-}
+/* Two pieces of cinema open onto the northern sky. */
+body[data-world=home] { min-height: 100svh; }
+body[data-world=home] .site-header { min-height: 88px; border: 0; flex-wrap: nowrap; }
 body[data-world=home] .motion-toggle {
-  width: 44px;
-  height: 44px;
-  min-height: 44px;
-  padding: 0;
-  margin: 0;
-  flex: 0 0 44px;
-  background: transparent;
+  width: 44px; height: 44px; min-height: 44px; padding: 0;
+  flex: 0 0 44px; background: transparent;
 }
-body[data-world=home] .motion-toggle svg {
-  width: 18px;
-  height: 18px;
-  flex-basis: 18px;
-}
-body[data-world=home] .motion-toggle:hover {
-  background: rgba(111, 245, 191, .08);
-}
+body[data-world=home] .motion-toggle svg { width: 18px; height: 18px; flex-basis: 18px; }
 body[data-world=home] .home-main {
-  display: grid;
-  place-items: center;
-  width: min(1120px, calc(100% - 96px));
-  min-height: 0;
-  height: calc(100svh - 88px);
-  padding: 24px 0 100px;
-  transform-origin: center center;
+  width: min(1440px, calc(100% - 96px)); height: calc(100svh - 88px);
+  padding: 16px 0 52px; display: grid; place-items: center;
 }
 body[data-world=home] .collections {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px;
+  width: 100%; height: min(680px, 100%); display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(36px, 6vw, 96px);
 }
 body[data-world=home] .world-choice {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: clamp(320px, 43svh, 440px);
-  min-height: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 16px;
-  background: var(--panel-strong);
-  box-shadow: none;
-  transition: opacity .35s var(--ease);
+  position: relative; isolation: isolate; min-width: 0; min-height: 0;
+  display: block; border-radius: 16px; background: none;
 }
-body[data-world=home] .world-choice > img {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: brightness(.88) saturate(.9);
-  transform: none;
-  transition: transform .55s var(--ease), filter .35s var(--ease);
+body[data-world=home] .choice-photo {
+  position: absolute; inset: 0 0 0 8%; overflow: hidden;
+  mask-image: linear-gradient(180deg, transparent, #000 12%, #000 62%, transparent 96%),
+    linear-gradient(90deg, transparent, #000 10%, #000 88%, transparent);
+  mask-composite: intersect;
 }
-body[data-world=home] .door-price > img {
-  object-position: 52% 44%;
+body[data-world=home] .door-six .choice-photo { inset: 6% 8% -2% 0; }
+body[data-world=home] .choice-photo img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.8) saturate(.8); transform: scale(1.025);
+  transition: filter 400ms var(--ease), transform 700ms var(--ease);
 }
-body[data-world=home] .door-six > img {
-  object-position: 50% 36%;
-}
-body[data-world=home] .door-shade {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(180deg,
-    rgba(2, 8, 12, .08),
-    rgba(2, 8, 12, .04) 38%,
-    rgba(2, 8, 12, .62) 72%,
-    rgba(2, 8, 12, .94));
-}
+body[data-world=home] .door-price img { object-position: 55% 44%; }
+body[data-world=home] .door-six img { object-position: 50% 37%; }
 body[data-world=home] .choice-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  width: 100%;
-  padding: 32px;
+  position: absolute; left: 4%; right: 4%; bottom: 9%; display: flex;
+  align-items: flex-end; justify-content: space-between; gap: 24px;
 }
 body[data-world=home] .choice-label h2 {
-  font: 300 clamp(40px, 4.2vw, 60px)/1.05 var(--display);
-  letter-spacing: -.035em;
-  text-wrap: balance;
+  font: 300 clamp(68px, 7.4vw, 96px)/.98 var(--display);
+  letter-spacing: -.035em; text-shadow: 0 3px 18px rgba(0, 0, 0, .65);
 }
-body[data-world=home] .choice-label svg {
-  width: 26px;
-  height: 26px;
-  flex: 0 0 26px;
-  opacity: .65;
-  color: var(--ink);
-  transition: transform .35s var(--ease), opacity .35s ease, color .35s ease;
+body[data-world=home] .choice-label h2 > span { display: block; }
+body[data-world=home] .choice-prefix {
+  font-size: .44em; line-height: 1.2; letter-spacing: -.02em; margin-bottom: 7px;
 }
-/* The same thin mint selection line as AuroraGrab's format choices. */
-body[data-world=home] .world-choice::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2px;
-  background: var(--mint);
-  opacity: 0;
-  transform: scaleX(.82);
-  transform-origin: center center;
-  transition: transform .35s var(--ease), opacity .35s ease;
+body[data-world=home] .choice-label > svg {
+  width: 48px; height: 48px; flex: 0 0 48px; padding: 12px;
+  border: 1px solid var(--line-strong); border-radius: 50%; margin-bottom: 8px;
+  color: var(--ink); transition: color 200ms, border-color 200ms, transform 400ms var(--ease);
 }
-body[data-world=home] .world-choice:is(:focus-visible, .is-selected)::after {
-  opacity: 1;
-  transform: scaleX(1);
+body[data-world=home] .choice-label::after {
+  content: ''; position: absolute; left: 0; right: 72px; bottom: -20px;
+  height: 1px; background: var(--mint); transform: scaleX(0); transform-origin: left;
+  transition: transform 450ms var(--ease);
 }
-body[data-world=home] .world-choice:is(:focus-visible, .is-selected) .choice-label svg {
-  color: var(--mint);
-  opacity: 1;
-  transform: translateX(4px);
+body[data-world=home] .world-choice:is(.is-selected, :focus-visible) .choice-photo img {
+  filter: brightness(1) saturate(1); transform: scale(1.065);
 }
-body[data-world=home] .world-choice:focus-visible {
-  outline: 2px solid var(--mint);
-  outline-offset: 6px;
+body[data-world=home] .world-choice:is(.is-selected, :focus-visible) .choice-label > svg {
+  color: var(--mint); border-color: var(--mint); transform: translateX(4px);
 }
-@media (hover: hover) and (pointer: fine) {
-  body[data-world=home] .world-choice:hover::after {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-  body[data-world=home] .world-choice:hover .choice-label svg {
-    color: var(--mint);
-    opacity: 1;
-    transform: translateX(4px);
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  body[data-world=home][data-motion=on] .world-choice:is(:focus-visible, .is-selected) > img {
-    transform: scale(1.025);
-    filter: brightness(1) saturate(1);
-  }
-  body[data-world=home][data-motion=on][data-choice=cod] .door-six,
-  body[data-world=home][data-motion=on][data-choice=six] .door-price {
-    opacity: .62;
-  }
-}
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  body[data-world=home][data-motion=on] .world-choice:hover > img {
-    transform: scale(1.025);
-    filter: brightness(1) saturate(1);
-  }
-}
+body[data-world=home] .world-choice:is(.is-selected, :focus-visible) .choice-label::after { transform: scaleX(1); }
+body[data-world=home] .world-choice:focus-visible { outline: 2px solid var(--mint); outline-offset: 8px; }
 @media (max-width: 1100px) {
-  body[data-world=home] .home-main {
-    width: calc(100% - 64px);
-  }
-  body[data-world=home] .collections { gap: 24px; }
-  body[data-world=home] .choice-label { padding: 28px; }
+  body[data-world=home] .home-main { width: calc(100% - 64px); }
+  body[data-world=home] .collections { gap: 36px; }
 }
 @media (max-width: 760px) {
-  body[data-world=home] .site-header { min-height: 84px; }
+  body[data-world=home] .site-header { min-height: 72px; }
   body[data-world=home] .home-main {
-    width: calc(100% - 40px);
-    height: calc(100svh - 84px);
-    padding: 18px 0 64px;
+    width: calc(100% - 40px); height: calc(100svh - 72px); padding: 0 0 32px;
   }
   body[data-world=home] .collections {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
+    height: 100%; max-height: 760px; grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 0;
   }
-  body[data-world=home] .world-choice {
-    height: clamp(190px, 28svh, 236px);
-  }
-  body[data-world=home] .choice-label { padding: 24px; }
-  body[data-world=home] .choice-label h2 { font-size: 40px; }
-  body[data-world=home] .choice-label svg {
-    width: 24px;
-    height: 24px;
-    flex-basis: 24px;
-  }
-}
-@media (max-width: 400px) {
-  body[data-world=home] .choice-label { padding: 22px; gap: 16px; }
-  body[data-world=home] .choice-label h2 { font-size: 36px; }
-}
-@media (max-height: 640px) and (max-width: 760px) {
-  body[data-world=home] .site-header { min-height: 72px; }
-  body[data-world=home] .home-main {
-    height: calc(100svh - 72px);
-    padding: 12px 0 32px;
-  }
-  body[data-world=home] .collections { gap: 16px; }
-  body[data-world=home] .world-choice { height: clamp(148px, 27svh, 190px); }
-  body[data-world=home] .choice-label { padding: 20px; }
+  body[data-world=home] .choice-photo { inset: 0 0 -3% 12%; }
+  body[data-world=home] .door-six .choice-photo { inset: -3% 0 -3% 12%; }
+  body[data-world=home] .door-price img { object-position: 55% 38%; }
+  body[data-world=home] .door-six img { object-position: 50% 35%; }
+  body[data-world=home] .choice-label { left: 0; right: 0; bottom: 10%; gap: 16px; }
+  body[data-world=home] .choice-label h2 { font-size: clamp(58px, 17vw, 80px); }
+  body[data-world=home] .choice-label > svg { width: 44px; height: 44px; flex-basis: 44px; padding: 11px; }
+  body[data-world=home] .choice-label::after { right: 64px; bottom: -12px; }
+  body[data-world=home] .world-choice:focus-visible { outline-offset: 4px; }
 }
 @media (max-height: 540px) and (min-width: 560px) {
-  body[data-world=home] .site-header { min-height: 72px; }
-  body[data-world=home] .home-main {
-    height: calc(100svh - 72px);
-    padding: 12px 0 32px;
-  }
-  body[data-world=home] .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  body[data-world=home] .world-choice { height: max(150px, calc(100svh - 140px)); }
-  body[data-world=home] .choice-label { padding: 20px; gap: 16px; }
-  body[data-world=home] .choice-label h2 { font-size: 32px; }
+  body[data-world=home] .site-header { min-height: 64px; }
+  body[data-world=home] .home-main { height: calc(100svh - 64px); padding: 0 0 24px; }
+  body[data-world=home] .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); gap: 36px; }
+  body[data-world=home] .choice-label h2 { font-size: 60px; }
 }
-body[data-world=home][data-motion=off] .world-choice > img,
-body[data-world=home][data-motion=off] .choice-label svg,
-body[data-world=home][data-motion=off] .world-choice::after {
-  transform: none !important;
-  transition-property: color, filter, opacity !important;
-  transition-duration: 100ms !important;
-}
+body[data-world=home][data-motion=off] .choice-photo img,
+body[data-world=home][data-motion=off] .choice-label > svg,
+body[data-world=home][data-motion=off] .choice-label::after { transform: none !important; transition: color 100ms, filter 100ms, opacity 100ms; }
 @media (prefers-reduced-motion: reduce) {
-  body[data-world=home] .world-choice > img,
-  body[data-world=home] .choice-label svg,
-  body[data-world=home] .world-choice::after {
-    transform: none !important;
-  }
-  body[data-world=home] .world-choice,
-  body[data-world=home] .world-choice > img,
-  body[data-world=home] .choice-label svg,
-  body[data-world=home] .world-choice::after {
-    transition-property: color, filter, opacity !important;
-    transition-duration: 100ms !important;
-  }
+  body[data-world=home] .choice-photo img,
+  body[data-world=home] .choice-label > svg,
+  body[data-world=home] .choice-label::after { transform: none !important; transition: color 100ms, filter 100ms, opacity 100ms; }
 }

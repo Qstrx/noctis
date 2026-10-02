@@ -47,6 +47,28 @@
   let targetParallax = [0, 0];
   let resizeTimer = 0;
   let contextLost = false;
+  let gate = null;
+  let gateClosure = 0;
+  let gateArrival = null;
+
+  function gateConfig(value) {
+    if (!value || !Number.isFinite(value.origin) || !value.bounds
+      || !Number.isFinite(value.bounds.left) || !Number.isFinite(value.bounds.right)) return null;
+    const { left, right } = value.bounds;
+    if (left < 0 || right > 1 || right - left < .01 || value.origin < left || value.origin > right) return null;
+    return { origin: value.origin, bounds: { left, right } };
+  }
+  function gateStatus(state) {
+    canvas.dataset.gate = state;
+    canvas.dataset.gateClosure = gateClosure.toFixed(3);
+  }
+  function resetGate() {
+    gate = null;
+    gateClosure = 0;
+    gateArrival = null;
+    gateStatus('idle');
+  }
+  gateStatus('idle');
 
   // A collection is another view of the same sky, as in AuroraGrab's shell.
   // A one-use transfer carries the curtain's clock and light wave across pages.
@@ -69,6 +91,13 @@
     energy = clamp(value.energy, 0, 1.5);
     const elapsed = value.pulseElapsed + value.age;
     pulseStart = value.pulseElapsed >= 0 && elapsed < 1300 ? performance.now() - elapsed : 0;
+    const incomingGate = gateConfig(value.gate);
+    if (incomingGate) {
+      gate = { ...incomingGate, state: 'closed', from: 1, to: 1, startedAt: 0, duration: 0 };
+      gateClosure = 1;
+      gateArrival = incomingGate;
+      gateStatus('closed');
+    }
     canvas.dataset.skyArrival = 'continuous';
   }
   const transfer = takeTransfer();
@@ -98,6 +127,8 @@
     uniform float uPulse;
     uniform vec2 uPar;
     uniform float uHorizon;
+    uniform float uGate;
+    uniform vec3 uGateGeometry;
     float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
     float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);float a=hash(i),b=hash(i+vec2(1.,0.)),c=hash(i+vec2(0.,1.)),d=hash(i+vec2(1.,1.));return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
     float fbm(vec2 p){float v=0.,a=.5;mat2 m=mat2(1.6,1.2,-1.2,1.6);for(int i=0;i<5;i++){v+=a*noise(p);p=m*p;a*=.5;}return v;}
@@ -135,6 +166,20 @@
       n+=vec3(.012,.05,.042)*exp(-max(uv.y-uHorizon,0.)/.11);
       return n;
     }
+    // Two temporary polar light fronts follow the interface's narrowing window.
+    // No contribution at rest: the approved ordinary sky stays exactly the same.
+    vec3 gateLight(vec2 uv){
+      float left=mix(uGateGeometry.y,uGateGeometry.x,uGate);
+      float right=mix(uGateGeometry.z,uGateGeometry.x,uGate);
+      float weave=(noise(vec2(uv.y*14.,uTime*.27))-.5)*.014;
+      float distance=min(abs(uv.x-left-weave),abs(uv.x-right+weave));
+      float halo=exp(-pow(distance/.047,2.));
+      float core=exp(-pow(distance/.0065,2.));
+      float strands=pow(noise(vec2(uv.x*115.,uv.y*11.-uTime*.32)),2.);
+      float height=smoothstep(uHorizon-.035,uHorizon+.1,uv.y);
+      vec3 colour=mix(vec3(.45,1.,.74),vec3(.52,.34,1.),smoothstep(.36,.97,uv.y));
+      return colour*(halo*(.28+.72*strands)+core*.72)*height*smoothstep(0.,.16,uGate);
+    }
     void main(){
       vec2 uv=gl_FragCoord.xy/uRes;
       vec3 col;
@@ -147,6 +192,7 @@
         col=(1.-exp(-(skyCol(m)+aurora(m+uPar,uTime))*1.7))*.5;
         col*=.85+.15*smoothstep(0.,.02,wy);
       }
+      if(uGate>0.)col=1.-(1.-col)*exp(-gateLight(uv)*1.05);
       gl_FragColor=vec4(col,1.);
     }
   `;
@@ -339,7 +385,7 @@
       gl.enableVertexAttribArray(position);
       gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
       uniforms = {};
-      ['uRes','uTime','uEnergy','uPulse','uPar','uHorizon'].forEach((name) => { uniforms[name] = gl.getUniformLocation(program, name); });
+      ['uRes','uTime','uEnergy','uPulse','uPar','uHorizon','uGate','uGateGeometry'].forEach((name) => { uniforms[name] = gl.getUniformLocation(program, name); });
       setFallback(false);
       return true;
     } catch (_) {
@@ -361,6 +407,17 @@
       gl.viewport(0, 0, renderWidth, renderHeight);
     }
     const moving = enabled && !reduced.matches;
+    if (gate && (gate.state === 'closing' || gate.state === 'opening')) {
+      const progress = clamp((now - gate.startedAt) / gate.duration, 0, 1);
+      gateClosure = gate.from + (gate.to - gate.from) * introEase(progress);
+      if (progress >= 1) {
+        if (gate.to === 1) {
+          gateClosure = 1;
+          gate.state = 'closed';
+        } else resetGate();
+      }
+      gateStatus(gate?.state || 'idle');
+    }
     if (introStart) {
       const elapsed = now - introStart;
       canvas.style.opacity = String(introEase(elapsed / 1400));
@@ -376,6 +433,8 @@
     gl.uniform1f(uniforms.uPulse, pulse);
     gl.uniform2f(uniforms.uPar, moving ? parallax[0] : 0, moving ? parallax[1] : 0);
     gl.uniform1f(uniforms.uHorizon, 1 - HORIZON);
+    gl.uniform1f(uniforms.uGate, gateClosure);
+    gl.uniform3f(uniforms.uGateGeometry, gate?.origin ?? .5, gate?.bounds.left ?? 0, gate?.bounds.right ?? 1);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
@@ -408,6 +467,7 @@
     stop();
     if (!enabled || reduced.matches || !gl || contextLost || document.visibilityState !== 'visible') {
       finishIntro();
+      resetGate();
       if (!enabled || reduced.matches) { energy = .35; focused = false; pulseStart = 0; }
     }
     if (document.visibilityState !== 'visible') return;
@@ -428,6 +488,7 @@
     contextLost = true;
     stop();
     finishIntro();
+    resetGate();
     setFallback(true);
   });
   canvas.addEventListener('webglcontextrestored', () => {
@@ -462,6 +523,7 @@
         time,
         energy,
         pulseElapsed: elapsed >= 0 && elapsed <= 1300 ? elapsed : -1,
+        gate: gate && gate.state !== 'opening' ? { origin: gate.origin, bounds: gate.bounds } : null,
         writtenAt: Date.now()
       }));
     } catch (_) { /* Navigation remains available without storage. */ }
@@ -483,6 +545,8 @@
     if (event.persisted) {
       const incoming = takeTransfer();
       if (incoming) restoreTransfer(incoming);
+      // History restoration exposes the already-loaded view immediately.
+      resetGate();
     }
     synchronize();
   });
@@ -499,4 +563,31 @@
     canvas.dataset.skyIntro = 'playing';
   }
   resize();
+  // Navigation borrows the actual sky renderer; it does not add another canvas
+  // or animation clock. The compositor mask uses the same source-app ease.
+  window.auroraPassage = {
+    get ready() { return !!shouldAnimate(); },
+    get arrival() { return gateArrival; },
+    close(value) {
+      const config = gateConfig(value);
+      if (!config || !shouldAnimate()) return false;
+      finishIntro();
+      gateArrival = null;
+      gate = { ...config, state: 'closing', from: gateClosure, to: 1, startedAt: performance.now(), duration: clamp(Number(value.duration) || 400, 100, 1000) };
+      gateStatus('closing');
+      draw(gate.startedAt);
+      return true;
+    },
+    open(value) {
+      const config = gateConfig(value) || gateArrival;
+      if (!config || !shouldAnimate()) { resetGate(); draw(); return false; }
+      gateArrival = null;
+      gateClosure = 1;
+      gate = { ...config, state: 'opening', from: 1, to: 0, startedAt: performance.now(), duration: clamp(Number(value?.duration) || 520, 100, 1000) };
+      gateStatus('opening');
+      draw(gate.startedAt);
+      return true;
+    },
+    reset() { resetGate(); draw(); }
+  };
 })();

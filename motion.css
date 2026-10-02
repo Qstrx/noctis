@@ -1,4 +1,4 @@
-/* AuroraGrab interface feedback. The sky and full view now move together. */
+/* Archive feedback; the procedural sky owns the passage between views. */
 /* One underline travels between choices, as in AuroraGrab's .tabs__bar. */
 .site-nav.has-motion-marker,
 .filter-list.has-motion-marker { position: relative; }
@@ -68,8 +68,8 @@ dialog.is-closing { pointer-events: none; }
 }
 
 /* Reduced motion keeps quick color/fade confirmation and skips travel or scale. */
-body[data-motion=off] :is(.collection-door > img, .pack-cover,
-  .pack-cover img, .door-action svg, .action svg, .dialog-action svg,
+body[data-motion=off] :is(.pack-cover,
+  .pack-cover img, .action svg, .dialog-action svg,
   .back-link svg, .source-notes summary svg,
   .action, .dialog-action, .motion-toggle, .filter-button,
   .dialog-top button, .preview-close, .preview-dialog button) {
@@ -81,8 +81,8 @@ body[data-motion=off] .source-notes[open] summary svg { transform: rotate(180deg
 body[data-motion=off] :is(.nav-marker, .filter-marker) { transition: none; }
 html:has(body[data-motion=off]) { scroll-behavior: auto; }
 @media (prefers-reduced-motion: reduce) {
-  :is(.collection-door > img, .pack-cover, .pack-cover img,
-    .door-action svg, .action svg, .dialog-action svg, .back-link svg,
+  :is(.pack-cover, .pack-cover img,
+    .action svg, .dialog-action svg, .back-link svg,
     .source-notes summary svg, .action, .dialog-action, .motion-toggle,
     .filter-button, .dialog-top button, .preview-close, .preview-dialog button) {
     transform: none !important;
@@ -94,5 +94,4 @@ html:has(body[data-motion=off]) { scroll-behavior: auto; }
     transition-duration: 100ms !important;
   }
   :is(.nav-marker, .filter-marker) { transition: none; }
-
 }

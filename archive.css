@@ -1,0 +1,123 @@
+/* Chapters organize the real footage; the northern sky remains continuous. */
+.catalog-main { padding-block-end: 84px; }
+.collection-heading { margin-block-start: 20px; }
+.collection-heading h1 { font-size: clamp(42px, 4.8vw, 68px); }
+.collection-facts { margin-block-start: 20px; }
+.source-notes { margin-block-start: 16px; }
+.catalog-toolbar { margin-block-start: 24px; }
+.result-count { margin-block-start: 12px; }
+
+.pack-group { margin-block-start: 36px; }
+.chapter-heading {
+  align-items: flex-end;
+  gap: 24px;
+  margin-block-end: 28px;
+}
+.chapter-heading h2 {
+  font-size: clamp(32px, 3.2vw, 44px);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+}
+.chapter-heading p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.trilogy-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+[data-world=cod] .pack-info { margin-block-start: 16px; }
+[data-world=cod] .pack-info h3 { font-size: 18px; font-weight: 500; }
+[data-world=cod] .pack-info p { font-size: 12px; }
+[data-world=cod] .pack-spec { margin-block-start: 10px; font-size: 13px; }
+[data-world=cod] .pack-actions { margin-block-start: 20px; gap: 8px; }
+[data-world=cod] .action { min-height: 44px; font-size: 12px; }
+.price-collection-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(244px, 1fr);
+  align-items: start;
+  column-gap: 36px;
+  margin-block-start: 84px;
+}
+.price-collection-layout > .pack-group { margin-block-start: 0; min-width: 0; }
+.price-trilogy .chapter-heading { align-items: flex-start; flex-direction: column; gap: 12px; }
+.price-trilogy .chapter-heading, .full-collection .chapter-heading { min-height: 104px; }
+.full-collection { padding-inline-start: 28px; border-inline-start: 1px solid var(--line); }
+.full-collection .chapter-heading { align-items: flex-start; flex-direction: column; gap: 12px; }
+.full-collection .chapter-heading h2 { font-size: 32px; line-height: 1.15; }
+.full-collection .pack-cover { aspect-ratio: 1.25; }
+.full-collection .pack-info h3 { font-size: 17px; }
+.full-collection .action.primary { background: var(--mint); color: var(--mint-ink); }
+.full-collection .action.primary:hover { background: #a0ffd9; }
+.price-collection-layout:has(> .full-collection[hidden]) { grid-template-columns: minmax(0, 1fr); }
+.price-collection-layout:has(> .price-trilogy[hidden]) { grid-template-columns: minmax(0, 380px); }
+.price-collection-layout:has(> .price-trilogy[hidden]) > .full-collection { padding-inline-start: 0; border-inline-start: 0; }
+.price-collection-layout:has(> .price-trilogy[hidden]):has(> .full-collection[hidden]) { display: none; }
+.campaign-chapter[hidden] + .price-collection-layout { margin-block-start: 36px; }
+
+.season-chapter + .season-chapter { margin-block-start: 84px; }
+.season-heading { align-items: center; gap: 36px; margin-block-end: 32px; }
+.season-heading h2 { font-size: clamp(42px, 4.5vw, 62px); }
+.season-heading-copy { min-width: 0; }
+.season-heading-copy p { margin-block-start: 14px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.season-still { width: 288px; height: 132px; flex: 0 0 288px; overflow: hidden; border-radius: 12px; }
+.season-still img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.season-chapter .pack-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px 24px; }
+.season-chapter .pack-info h3 { font-size: 16px; font-weight: 500; }
+.season-chapter .pack-info p { font-size: 12px; }
+.season-chapter .pack-actions { gap: 8px; margin-block-start: 16px; }
+.season-chapter .action { min-height: 44px; font-size: 12px; }
+
+@media (max-width: 1100px) {
+  .price-collection-layout { grid-template-columns: minmax(0, 1fr); row-gap: 48px; }
+  .price-trilogy .chapter-heading { align-items: flex-end; flex-direction: row; gap: 24px; }
+  .price-trilogy .chapter-heading, .full-collection .chapter-heading { min-height: 0; }
+  .full-collection { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; padding-inline-start: 0; border-inline-start: 0; }
+  .full-collection .chapter-heading { margin-block-end: 0; justify-content: center; }
+  .full-collection .chapter-heading h2 { font-size: 40px; line-height: 1.15; }
+  .full-collection .pack-cover { aspect-ratio: 16/9; }
+  .price-collection-layout:has(> .price-trilogy[hidden]) { grid-template-columns: minmax(0, 1fr); }
+  .season-chapter .pack-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .catalog-main { padding-block-end: 56px; }
+  .collection-heading { margin-block-start: 16px; }
+  .collection-heading h1 { font-size: 43px; }
+  .collection-heading .collection-sub { margin-block-start: 12px; }
+  .collection-heading .collection-facts { margin-block-start: 16px; }
+  .catalog-toolbar { margin-block-start: 20px; }
+  .pack-group { margin-block-start: 32px; }
+  .chapter-heading { align-items: flex-start; flex-direction: column; gap: 12px; margin-block-end: 24px; }
+  .chapter-heading h2 { font-size: 34px; }
+  .chapter-heading p { font-size: 12px; }
+  .trilogy-grid { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  [data-world=cod] .pack-info h3 { font-size: 20px; }
+  [data-world=cod] .pack-actions { flex-direction: row; margin-block-start: 16px; }
+  [data-world=cod] .pack-actions .secondary { min-width: 112px; }
+  [data-world=cod] .pack-cover { border-radius: 12px; }
+  .price-collection-layout { margin-block-start: 64px; row-gap: 64px; }
+  .price-trilogy .chapter-heading { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .full-collection { display: block; }
+  .full-collection .chapter-heading { margin-block-end: 24px; }
+  .full-collection .chapter-heading h2 { font-size: 34px; }
+  .full-collection .pack-cover { aspect-ratio: 16/9; }
+  .season-chapter + .season-chapter { margin-block-start: 64px; }
+  .season-heading { flex-direction: row; align-items: center; gap: 20px; margin-block-end: 28px; }
+  .season-heading h2 { font-size: 36px; }
+  .season-heading-copy p { margin-block-start: 12px; font-size: 12px; max-width: 20ch; }
+  .season-still { width: 112px; height: 112px; flex-basis: 112px; }
+  .season-chapter .pack-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 16px; }
+  .season-chapter .pack-info h3 { font-size: 15px; }
+  .season-chapter .pack-info p { font-size: 12px; }
+  .season-chapter .pack-actions { flex-direction: column; gap: 8px; margin-block-start: 14px; }
+  .season-chapter .pack-spec { font-size: 12px; }
+}
+
+@media (max-width: 400px) {
+  .collection-heading h1 { font-size: 35px; }
+  .chapter-heading h2, .full-collection .chapter-heading h2 { font-size: 30px; }
+  .season-heading h2 { font-size: 32px; }
+  .season-still { width: 96px; height: 104px; flex-basis: 96px; }
+  .season-chapter .pack-grid { column-gap: 14px; }
+}
