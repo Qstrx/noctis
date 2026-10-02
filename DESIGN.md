@@ -189,7 +189,7 @@ The palette places a luminous mint accent against a deep blue-black field. The f
 
 ## Typography
 
-**Display Font:** Segoe UI Variable Display, Segoe UI, system-ui, sans-serif.  
+**Display Font:** Segoe UI Variable Display, Segoe UI, system-ui, sans-serif.
 **Body Font:** Segoe UI Variable Text, Segoe UI, system-ui, sans-serif.
 
 **Character:** Light display lettering reflects the AuroraGrab 3.0 reference. The browser uses installed Segoe when available and the declared system fallback otherwise; this build does not embed a Segoe font file. Controls and archive facts use a compact, readable text stack. The inherited Anton font asset is not used by the new stylesheet.
@@ -300,4 +300,3 @@ The WebGL renderer requests low-power operation, falls back to medium shader pre
 - **Don't** crop the video playback frame or merge distinct source-quality specifications into one generic claim.
 - **Don't** increase ambient rendering frequency or add motion that bypasses the motion preference.
 - **Don't** turn the unboxed catalog cards into a separate shadowed panel for every archive item.
-
