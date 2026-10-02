@@ -300,11 +300,13 @@
   function enterPage() {
     if (entered) return;
     entered = true;
-    if (!enabled() || navigation || dialogs.some(dialog => dialog.open)) return;
+    if (navigation) return;
+    // Release the primed mask even if the sky or motion state changed meanwhile.
+    cancel(main);
+    if (!enabled() || dialogs.some(dialog => dialog.open)) return;
     const arrival = window.auroraPassage?.arrival;
     if (!arrival || !window.auroraPassage.ready || !main) return;
     const gate = gateGeometry(arrival.origin);
-    cancel(main);
     window.auroraPassage.open({ ...gate, duration: 520 });
     animate(main, [{ clipPath: gate.mask }, { clipPath: 'inset(0px 0px 0px 0px)' }], 520);
   }
