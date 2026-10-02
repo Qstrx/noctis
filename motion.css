@@ -1,51 +1,4 @@
-/* AuroraGrab 3.0 motion: the scene leads, controls respond, the sky stays calm.
-   Native view transitions are a progressive enhancement; content starts visible. */
-@view-transition { navigation: auto; }
-
-.sky { view-transition-name: archive-sky; }
-.site-header { view-transition-name: archive-header; }
-.door-price > img,
-body[data-world=cod] .collection-portrait img { view-transition-name: price-footage; }
-.door-six > img,
-body[data-world=six] .collection-portrait img { view-transition-name: graves-footage; }
-.collection-door > img,
-.collection-portrait img { border-radius: inherit; }
-
-::view-transition-old(root) { animation: archive-fade-out 200ms ease both; }
-::view-transition-new(root) { animation: archive-fade-in 200ms ease both; }
-::view-transition-group(price-footage),
-::view-transition-group(graves-footage) {
-  z-index: 1;
-  animation-duration: 600ms;
-  animation-timing-function: var(--ease);
-  overflow: clip;
-}
-::view-transition-old(price-footage),
-::view-transition-new(price-footage),
-::view-transition-old(graves-footage),
-::view-transition-new(graves-footage) {
-  animation-duration: 600ms;
-  animation-timing-function: var(--ease);
-}
-
-/* The background and navigation keep their place while the collection changes. */
-::view-transition-group(archive-sky) { z-index: -1; }
-::view-transition-group(archive-header) { z-index: 2; }
-::view-transition-group(archive-sky),
-::view-transition-group(archive-header),
-::view-transition-image-pair(archive-sky),
-::view-transition-image-pair(archive-header) { animation: none; }
-::view-transition-old(archive-sky),
-::view-transition-old(archive-header) { display: none; }
-::view-transition-new(archive-sky),
-::view-transition-new(archive-header) {
-  animation: none;
-  opacity: 1;
-  mix-blend-mode: normal;
-}
-@keyframes archive-fade-out { from { opacity: 1; } to { opacity: 0; } }
-@keyframes archive-fade-in { from { opacity: 0; } to { opacity: 1; } }
-
+/* AuroraGrab interface feedback. The sky and full view now move together. */
 /* One underline travels between choices, as in AuroraGrab's .tabs__bar. */
 .site-nav.has-motion-marker,
 .filter-list.has-motion-marker { position: relative; }
@@ -127,12 +80,6 @@ body[data-motion=off] :is(.collection-door > img, .pack-cover,
 body[data-motion=off] .source-notes[open] summary svg { transform: rotate(180deg) !important; }
 body[data-motion=off] :is(.nav-marker, .filter-marker) { transition: none; }
 html:has(body[data-motion=off]) { scroll-behavior: auto; }
-html:has(body[data-motion=off])::view-transition-group(*),
-html:has(body[data-motion=off])::view-transition-old(*),
-html:has(body[data-motion=off])::view-transition-new(*) {
-  animation-duration: .01ms !important;
-  animation-delay: 0s !important;
-}
 @media (prefers-reduced-motion: reduce) {
   :is(.collection-door > img, .pack-cover, .pack-cover img,
     .door-action svg, .action svg, .dialog-action svg, .back-link svg,
@@ -147,10 +94,5 @@ html:has(body[data-motion=off])::view-transition-new(*) {
     transition-duration: 100ms !important;
   }
   :is(.nav-marker, .filter-marker) { transition: none; }
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation-duration: .01ms !important;
-    animation-delay: 0s !important;
-  }
+
 }

@@ -17,18 +17,18 @@ OWN-WORLD: The user-pinned AuroraGrab Night world: navy-black sky, green aurora 
 
 STORY: Choose John Price or Joe Graves, find the right game or episode, preview original footage, download the exact file. Preserve all source notes and split-file choices.
 
-FIRST VIEWPORT: A restrained navigation bar above a left-aligned light headline. Home presents two large photographic collection doors with character names, source facts and explicit links. Collection pages place a character still beside the title and source specifications, then tabs and search immediately above a responsive thumbnail library.
+FIRST VIEWPORT: Home is a full-window decision: a small Ocean’s wordmark, an accessible motion icon, and two equal photographic links labeled only Call of Duty and SIX. No introduction, facts, duplicate navigation, promotional closing copy or footer. Both choices fit on a phone's first screen. Collection pages keep their accepted character heading, source information, filters and library.
 
 FORM: User-pinned app reference overrides concept selection. Code-led translation of the supplied app implementation, not a generated image comp. Signature interaction: the AuroraGrab ribbon drifts continuously behind the library and freezes instantly with the motion control; panel imagery gently resolves on hover.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
-## Interface motion follow-up
+## Aurora world choreography
 
-The approved Aurora background remains unchanged. The focal moment is the actual John Price or Joe Graves photograph moving from its home collection door into the archive portrait during native navigation. Direct entry uses one bounded composition reveal; archives reveal only the first visible packs, without repeated scroll choreography.
+The user rejected generic interface movement and the verbose home. The source of truth is AuroraGrab 3.0's sky intro and full-window decision: the aurora resolves, stars appear, ridges rise in three staggered planes, and reflected light follows. The original shader, palette, stars and landscape remain the visual world.
 
-Continuity: shared photograph transitions, one sliding filter underline, and a short FLIP rearrangement when search or filters change. Visibility and result counts update synchronously, even when a prior animation is interrupted.
+Focal moment: focusing a collection gently raises the real sky's energy. Selecting it sends the application's 1300ms light pulse through the world while the complete chooser steps back, then the archive enters as one view with AuroraGrab's 8px / 550ms arrival. Sky time, energy and pulse phase carry into the destination. Retire the rejected shared-photo flight and scattered page/card entrances.
 
-Feedback: a 350ms player entrance, a faster 220ms dismissal, a brief scene-change confirmation, and source-sized image/action hover and press responses. Preview-to-download remains an immediate transaction. Focus restoration and video cleanup remain attached to native dialog closure.
+Continuity and feedback: filter selection combines the sky's pulse with the existing sliding line and synchronous pack rearrangement. Keep native dialog focus/video cleanup and immediate preview-to-download. Mouse, keyboard, touch and ordinary anchor fallback remain complete.
 
-Budget: retain AuroraGrab's cubic-bezier(.2,.8,.2,1), 150/350ms control timings and capped 30ms pack stagger. No dependencies, additional loops, scroll observers, or background effects. Content is visible without JavaScript. Manual pause and reduced motion cancel pending spatial animations and preserve immediate state changes and quick color feedback.
+Budget: retain source easing and the existing 30/20fps shader cap. Composite cached detail layers only during the bounded home intro; no perpetual added loops. No new dependencies or imagery. Disabled motion exposes the final world immediately and uses native navigation. All content starts visible when scripts or animation support fail.

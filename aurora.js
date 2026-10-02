@@ -39,10 +39,55 @@
   let time = 40;
   let pulseStart = 0;
   let energy = 0.35;
+  let focused = false;
+  let introStart = 0;
+  let detailLayers = null;
+  let detailDpr = 1;
   let parallax = [0, 0];
   let targetParallax = [0, 0];
   let resizeTimer = 0;
   let contextLost = false;
+
+  // A collection is another view of the same sky, as in AuroraGrab's shell.
+  // A one-use transfer carries the curtain's clock and light wave across pages.
+  function takeTransfer() {
+    try {
+      const saved = sessionStorage.getItem('oceans-sky-transfer');
+      sessionStorage.removeItem('oceans-sky-transfer');
+      if (saved) {
+        const value = JSON.parse(saved);
+        const age = Date.now() - value.writtenAt;
+        if (Number.isFinite(value.time) && value.time >= 0 && value.time < 100000
+          && Number.isFinite(value.energy) && Number.isFinite(value.pulseElapsed)
+          && age >= 0 && age <= 5000) return { ...value, age };
+      }
+    } catch (_) { /* Storage may be unavailable; each page still has a sky. */ }
+    return null;
+  }
+  function restoreTransfer(value) {
+    time = value.time + value.age / 1000 * .735;
+    energy = clamp(value.energy, 0, 1.5);
+    const elapsed = value.pulseElapsed + value.age;
+    pulseStart = value.pulseElapsed >= 0 && elapsed < 1300 ? performance.now() - elapsed : 0;
+    canvas.dataset.skyArrival = 'continuous';
+  }
+  const transfer = takeTransfer();
+  if (transfer) restoreTransfer(transfer);
+  canvas.dataset.skyArrival = transfer ? 'continuous' : 'initial';
+  canvas.dataset.skyIntro = 'skipped';
+
+  // The source intro uses cubic-bezier(.2,.8,.2,1) for each layer. Solve its
+  // x coordinate so the cached canvas layers follow that same authored ease.
+  function introEase(progress) {
+    const x = clamp(progress, 0, 1);
+    let t = x;
+    for (let i = 0; i < 5; i++) {
+      const error = t * t * t - .6 * t * t + .6 * t - x;
+      const slope = 3 * t * t - 1.2 * t + .6;
+      t = clamp(t - error / slope, 0, 1);
+    }
+    return .4 * t * t * t - 1.8 * t * t + 2.4 * t;
+  }
 
   const vertex = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
   const fragment = `
@@ -134,25 +179,41 @@
     { points: ridge(37, .64, 50, [[.07,.05,.035,26],[.5,.035,.055,30],[.8,.05,.045,22]]), top: '#02080c', bottom: '#010508' }
   ];
 
-  function traceRidge(points, reflected = false) {
+  function traceRidge(context, points, reflected = false) {
     const horizon = height * HORIZON;
-    ctx.beginPath();
-    ctx.moveTo(-width * .03, horizon);
+    context.beginPath();
+    context.moveTo(-width * .03, horizon);
     for (let i = 0; i < points.length; i++) {
-      ctx.lineTo(width * (i / 512 * 1.06 - .03), horizon + points[i] * height / 700 * (reflected ? 1 : -1));
+      context.lineTo(width * (i / 512 * 1.06 - .03), horizon + points[i] * height / 700 * (reflected ? 1 : -1));
     }
-    ctx.lineTo(width * 1.03, reflected ? height : horizon);
-    ctx.lineTo(-width * .03, reflected ? height : horizon);
-    ctx.closePath();
+    context.lineTo(width * 1.03, reflected ? height : horizon);
+    context.lineTo(-width * .03, reflected ? height : horizon);
+    context.closePath();
   }
 
-  function drawDetails() {
+  function makeDetailLayer() {
+    const buffer = document.createElement('canvas');
+    buffer.width = details.width;
+    buffer.height = details.height;
+    const context = buffer.getContext('2d');
+    if (context) context.setTransform(detailDpr, 0, 0, detailDpr, 0, 0);
+    return { buffer, context };
+  }
+
+  function buildDetailLayers() {
     if (!ctx || !width || !height) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, compact.matches ? 1 : 1.5);
-    details.width = Math.round(width * dpr);
-    details.height = Math.round(height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, width, height);
+    detailDpr = Math.min(window.devicePixelRatio || 1, compact.matches ? 1 : 1.5);
+    details.width = Math.round(width * detailDpr);
+    details.height = Math.round(height * detailDpr);
+    ctx.setTransform(detailDpr, 0, 0, detailDpr, 0, 0);
+    // Cache the seeded artwork once per resize. The intro only composites these
+    // buffers; it neither redraws hundreds of stars nor creates extra DOM layers.
+    detailLayers = { stars: makeDetailLayer(), ridges: ridges.map(makeDetailLayer), reflection: makeDetailLayer() };
+    const stars = detailLayers.stars.context;
+    if (!stars || detailLayers.ridges.some((layer) => !layer.context) || !detailLayers.reflection.context) {
+      detailLayers = null;
+      return;
+    }
     const random = rng(42);
     const count = Math.round(clamp(340 * width * height / (1120 * 700), compact.matches ? 120 : 220, compact.matches ? 240 : 650));
     for (let i = 0; i < count; i++) {
@@ -164,48 +225,79 @@
       const tint = random();
       const color = tint < .7 ? '255,255,255' : tint < .87 ? '200,220,255' : '255,232,205';
       if (radius > 1.1) {
-        const glow = ctx.createRadialGradient(x, y, 0, x, y, radius * 5);
+        const glow = stars.createRadialGradient(x, y, 0, x, y, radius * 5);
         glow.addColorStop(0, `rgba(${color},${alpha * .35})`);
         glow.addColorStop(1, `rgba(${color},0)`);
-        ctx.fillStyle = glow;
-        ctx.fillRect(x-radius*5, y-radius*5, radius*10, radius*10);
+        stars.fillStyle = glow;
+        stars.fillRect(x-radius*5, y-radius*5, radius*10, radius*10);
       }
-      ctx.fillStyle = `rgba(${color},${alpha})`;
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, Math.PI * 2);
-      ctx.fill();
+      stars.fillStyle = `rgba(${color},${alpha})`;
+      stars.beginPath();
+      stars.arc(x, y, radius, 0, Math.PI * 2);
+      stars.fill();
     }
     const horizon = height * HORIZON;
     ridges.forEach((ridge, index) => {
-      const gradient = ctx.createLinearGradient(0, horizon - height * .23, 0, horizon);
+      const context = detailLayers.ridges[index].context;
+      const gradient = context.createLinearGradient(0, horizon - height * .23, 0, horizon);
       gradient.addColorStop(0, ridge.top);
       gradient.addColorStop(1, ridge.bottom);
-      traceRidge(ridge.points);
-      ctx.fillStyle = gradient;
-      ctx.fill();
+      traceRidge(context, ridge.points);
+      context.fillStyle = gradient;
+      context.fill();
       if (index === 0) {
-        ctx.beginPath();
+        context.beginPath();
         ridge.points.forEach((point, i) => {
           const x = width * (i / 512 * 1.06 - .03);
           const y = horizon - point * height / 700;
-          if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+          if (i) context.lineTo(x, y); else context.moveTo(x, y);
         });
-        ctx.strokeStyle = 'rgba(120,255,200,.22)';
-        ctx.lineWidth = .6;
-        ctx.stroke();
+        context.strokeStyle = 'rgba(120,255,200,.22)';
+        context.lineWidth = .6;
+        context.stroke();
       }
     });
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(0, horizon, width, height - horizon);
-    ctx.clip();
-    ctx.globalAlpha = .5;
+    const reflection = detailLayers.reflection.context;
+    reflection.save();
+    reflection.beginPath();
+    reflection.rect(0, horizon, width, height - horizon);
+    reflection.clip();
+    reflection.globalAlpha = .5;
     for (const ridge of ridges) {
-      traceRidge(ridge.points, true);
-      ctx.fillStyle = ridge.bottom;
-      ctx.fill();
+      traceRidge(reflection, ridge.points, true);
+      reflection.fillStyle = ridge.bottom;
+      reflection.fill();
     }
-    ctx.restore();
+    reflection.restore();
+  }
+
+  function drawDetails(now = performance.now()) {
+    if (!ctx || !detailLayers) return;
+    const elapsed = introStart ? now - introStart : 2000;
+    const phase = (duration, delay) => introEase((elapsed - delay) / duration);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, details.width, details.height);
+    const composite = (layer, alpha, y = 0) => {
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(layer.buffer, 0, y * detailDpr);
+    };
+    composite(detailLayers.stars, phase(1500, 150));
+    [34, 46, 58].forEach((rise, i) => {
+      const progress = phase(1100, [250, 380, 510][i]);
+      composite(detailLayers.ridges[i], progress, rise * (1 - progress));
+    });
+    composite(detailLayers.reflection, phase(1000, 650));
+    ctx.globalAlpha = 1;
+    ctx.setTransform(detailDpr, 0, 0, detailDpr, 0, 0);
+    if (!introStart) detailLayers = null;
+  }
+
+  function finishIntro() {
+    if (!introStart) return;
+    introStart = 0;
+    canvas.style.opacity = '';
+    canvas.dataset.skyIntro = 'complete';
+    drawDetails();
   }
 
   function setFallback(on) {
@@ -269,6 +361,12 @@
       gl.viewport(0, 0, renderWidth, renderHeight);
     }
     const moving = enabled && !reduced.matches;
+    if (introStart) {
+      const elapsed = now - introStart;
+      canvas.style.opacity = String(introEase(elapsed / 1400));
+      drawDetails(now);
+      if (elapsed >= 1650) finishIntro();
+    }
     const progress = pulseStart && moving ? (now - pulseStart) / 1300 : 2;
     const pulse = progress <= 1 ? -.1 + progress * 1.2 : -1;
     if (progress > 1) pulseStart = 0;
@@ -295,7 +393,8 @@
     const dt = last ? Math.min(100, now - last) / 1000 : 0;
     last = now;
     time += dt * .735;
-    energy += (.35 - energy) * Math.min(1, dt * 1.8);
+    const targetEnergy = introStart && now - introStart < 1500 ? 1.25 : focused ? .6 : .35;
+    energy += (targetEnergy - energy) * Math.min(1, dt * 1.8);
     parallax = parallax.map((value, i) => value + (targetParallax[i] - value) * Math.min(1, dt * 3));
     draw(now);
     // A timer avoids waking every display refresh only to skip most frames.
@@ -307,7 +406,12 @@
   }
   function synchronize() {
     stop();
+    if (!enabled || reduced.matches || !gl || contextLost || document.visibilityState !== 'visible') {
+      finishIntro();
+      if (!enabled || reduced.matches) { energy = .35; focused = false; pulseStart = 0; }
+    }
     if (document.visibilityState !== 'visible') return;
+    drawDetails();
     draw();
     if (shouldAnimate()) raf = window.requestAnimationFrame(tick);
   }
@@ -315,7 +419,7 @@
     const bounds = scene.getBoundingClientRect();
     width = Math.max(1, bounds.width || window.innerWidth);
     height = Math.max(1, bounds.height || window.innerHeight);
-    drawDetails();
+    buildDetailLayers();
     synchronize();
   }
 
@@ -323,6 +427,7 @@
     event.preventDefault();
     contextLost = true;
     stop();
+    finishIntro();
     setFallback(true);
   });
   canvas.addEventListener('webglcontextrestored', () => {
@@ -338,11 +443,28 @@
   };
   window.addEventListener('oceans:motion', motionChanged);
   document.addEventListener('oceans:motion', motionChanged);
-  // Collection changes may give the sky the same brief wave as a pasted link.
+  // AuroraGrab's restrained hover energy prepares a choice; a confirmed choice
+  // uses its stronger flare and 1300ms left-to-right light wave.
+  window.addEventListener('oceans:aurora-focus', (event) => {
+    if (typeof event.detail?.active !== 'boolean' || !shouldAnimate()) return;
+    focused = event.detail.active;
+  });
   window.addEventListener('oceans:aurora-pulse', () => {
     if (!shouldAnimate()) return;
     pulseStart = performance.now();
-    energy = .75;
+    energy = Math.max(energy, 1.35);
+  });
+  window.addEventListener('oceans:aurora-remember', () => {
+    try {
+      const now = performance.now();
+      const elapsed = pulseStart ? now - pulseStart : -1;
+      sessionStorage.setItem('oceans-sky-transfer', JSON.stringify({
+        time,
+        energy,
+        pulseElapsed: elapsed >= 0 && elapsed <= 1300 ? elapsed : -1,
+        writtenAt: Date.now()
+      }));
+    } catch (_) { /* Navigation remains available without storage. */ }
   });
   window.addEventListener('pointermove', (event) => {
     if (!shouldAnimate() || compact.matches) return;
@@ -356,13 +478,25 @@
   }, { passive: true });
   reduced.addEventListener('change', synchronize);
   compact.addEventListener('change', resize);
-  window.addEventListener('pagehide', stop);
-  window.addEventListener('pageshow', synchronize);
+  window.addEventListener('pagehide', () => { stop(); finishIntro(); });
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      const incoming = takeTransfer();
+      if (incoming) restoreTransfer(incoming);
+    }
+    synchronize();
+  });
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
     window.clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(resize, 120);
   }).observe(scene);
 
   initializeGL();
+  if (gl && enabled && !reduced.matches && !transfer && document.body.dataset.world === 'home'
+    && document.visibilityState === 'visible') {
+    introStart = performance.now();
+    energy = 0;
+    canvas.dataset.skyIntro = 'playing';
+  }
   resize();
 })();

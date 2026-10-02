@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  // AuroraGrab's short view/card transitions, with visible native HTML as fallback.
+  // AuroraGrab's whole-view choreography; the sky carries the choice into the archive.
   const ease = 'cubic-bezier(.2,.8,.2,1)';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const enabled = () => document.body.dataset.motion !== 'off' && !reduced.matches;
@@ -10,8 +10,12 @@
   const scenes = new WeakMap();
   const cards = [...document.querySelectorAll('.pack-card')];
   const dialogs = [...document.querySelectorAll('dialog')];
-  let incomingTransition = false;
   let entered = false;
+  let navigation = null;
+  let navigationTimer = 0;
+  const main = document.querySelector('main');
+  const choices = [...document.querySelectorAll('[data-world-choice]')];
+  let hoveredChoice = null;
 
   function cancel(element) {
     const running = animations.get(element);
@@ -19,7 +23,7 @@
     running.forEach(animation => animation.cancel());
     animations.delete(element);
   }
-  function animate(element, frames, duration = 350, delay = 0) {
+  function animate(element, frames, duration = 350, delay = 0, hold = false) {
     if (!element || !enabled() || !element.animate) return null;
     const animation = element.animate(frames, { duration, delay, easing: ease, fill: 'both' });
     let running = animations.get(element);
@@ -29,7 +33,13 @@
       running.delete(animation);
       if (!running.size && animations.get(element) === running) animations.delete(element);
     };
-    animation.finished.then(() => { animation.cancel(); release(); }, release);
+    animation.finished.then(() => {
+      // Departure stays withdrawn while the destination document loads.
+      // Held effects remain tracked for Escape, pagehide and BFCache restoration.
+      if (hold) return;
+      animation.cancel();
+      release();
+    }, release);
     return animation;
   }
   function reveal(element, delay = 0, duration = 450) {
@@ -184,47 +194,108 @@
   }
   window.archiveMotion = { captureLayout, animateLayout, sceneChange };
 
+  function setChoice() {
+    const focused = document.activeElement?.closest('[data-world-choice]');
+    const selected = hoveredChoice || focused;
+    const world = selected?.dataset.worldChoice || '';
+    if (document.body.dataset.choice === world) return;
+    document.body.dataset.choice = world;
+    choices.forEach(choice => choice.classList.toggle('is-selected', choice === selected));
+    dispatchEvent(new CustomEvent('oceans:aurora-focus', { detail: { active: !!selected } }));
+  }
+  choices.forEach(choice => {
+    choice.addEventListener('pointerenter', event => {
+      if (event.pointerType === 'touch') return;
+      hoveredChoice = choice;
+      setChoice();
+    });
+    choice.addEventListener('pointerleave', () => { hoveredChoice = null; setChoice(); });
+    choice.addEventListener('focus', () => { hoveredChoice = null; setChoice(); });
+    choice.addEventListener('blur', () => queueMicrotask(setChoice));
+  });
+  let lastFilter = document.querySelector('.filter-button[aria-pressed="true"]')?.dataset.filter;
+  document.querySelectorAll('.filter-button').forEach(button => button.addEventListener('click', () => {
+    if (button.dataset.filter === lastFilter || !enabled()) return;
+    lastFilter = button.dataset.filter;
+    dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
+  }));
+
+  function rememberSky() { dispatchEvent(new CustomEvent('oceans:aurora-remember')); }
+  function finishNavigation() {
+    if (!navigation) return;
+    const destination = navigation.href;
+    clearTimeout(navigationTimer);
+    navigationTimer = 0;
+    rememberSky();
+    location.assign(destination);
+  }
+  function restoreView() {
+    clearTimeout(navigationTimer);
+    navigationTimer = 0;
+    const opener = navigation?.opener;
+    navigation = null;
+    cancel(main);
+    if (main) main.inert = false;
+    document.body.classList.remove('is-navigating');
+    if (opener?.isConnected) opener.focus({ preventScroll: true });
+  }
+  document.addEventListener('click', event => {
+    const link = event.target.closest('.world-choice, .site-nav a, .back-link, .brand, .footer-brand');
+    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || link.target === '_blank') return;
+    const destination = new URL(link.href, location.href);
+    if (destination.origin !== location.origin || !/\/(index|cod|six)\.html$/.test(destination.pathname) || destination.hash) return;
+    if (destination.pathname === location.pathname && !destination.search) return;
+    if (!enabled() || !main?.animate) { rememberSky(); return; }
+    event.preventDefault();
+    if (navigation) return;
+    navigation = { href: destination.href, opener: link };
+    document.body.classList.add('is-navigating');
+    cancel(main);
+    dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
+    // The app withdraws a complete view rather than sending individual cards away.
+    animate(main, [{ opacity: getComputedStyle(main).opacity }, { opacity: 0 }], 300, 0, true);
+    animate(main, [{ transform: getComputedStyle(main).transform }, { transform: 'scale(.985)' }], 450, 0, true);
+    main.inert = true;
+    navigationTimer = setTimeout(finishNavigation, 300);
+  });
+  document.addEventListener('keydown', event => {
+    if (!navigation || event.key !== 'Escape') return;
+    event.preventDefault();
+    restoreView();
+    dispatchEvent(new CustomEvent('oceans:aurora-focus', { detail: { active: false } }));
+  });
+  addEventListener('pageshow', event => {
+    if (!event.persisted) return;
+    restoreView();
+    updateMarkers();
+    setChoice();
+  });
+  addEventListener('pagehide', () => {
+    rememberSky();
+    [...animations.keys()].forEach(cancel);
+  });
+
   function syncMotion() {
-    if (enabled()) return;
-    document.activeViewTransition?.skipTransition();
+    if (enabled()) {
+      dispatchEvent(new CustomEvent('oceans:aurora-focus', { detail: { active: !!document.body.dataset.choice } }));
+      return;
+    }
     [...animations.keys()].forEach(cancel);
     [...closing].forEach(dialog => { if (dialog.open) dialog.close(); });
+    if (navigation) finishNavigation();
     updateMarkers();
   }
   addEventListener('oceans:motion', syncMotion);
   reduced.addEventListener('change', syncMotion);
-  addEventListener('pageswap', event => {
-    if (!enabled()) event.viewTransition?.skipTransition();
-  });
-  addEventListener('pagereveal', event => {
-    updateMarkers();
-    if (!event.viewTransition) return;
-    incomingTransition = true;
-    if (!enabled()) event.viewTransition.skipTransition();
-  });
-
   function enterPage() {
     if (entered) return;
     entered = true;
-    if (!enabled() || incomingTransition || document.activeViewTransition || dialogs.some(dialog => dialog.open)) return;
-    if (document.body.dataset.world === 'home') {
-      reveal(document.querySelector('.home-intro h1'), 0, 550);
-      reveal(document.querySelector('.home-intro-note'), 60, 450);
-      document.querySelectorAll('.collection-door').forEach((door, index) => {
-        if (!inViewport(door.getBoundingClientRect())) return;
-        animate(door, [
-          { opacity: 0, clipPath: 'inset(0 0 8% 0 round 16px)', transform: 'translateY(10px)' },
-          { opacity: 1, clipPath: 'inset(0 0 0 0 round 16px)', transform: 'translateY(0)' }
-        ], 600, 110 + index * 70);
-      });
-    } else {
-      reveal(document.querySelector('.collection-heading'), 0, 450);
-      reveal(document.querySelector('.catalog-toolbar'), 60, 350);
-      cards.filter(card => !card.hidden && inViewport(card.getBoundingClientRect())).slice(0, 8)
-        .forEach((card, index) => reveal(card, 90 + Math.min(index, 5) * 30, 500));
-    }
+    if (!enabled() || navigation || dialogs.some(dialog => dialog.open)) return;
+    const delay = document.body.dataset.world === 'home' ? 180 : 0;
+    animate(main, [{ opacity: 0 }, { opacity: 1 }], 450, delay);
+    animate(main, [{ transform: 'translateY(8px)' }, { transform: 'translateY(0)' }], 550, delay);
   }
-  // Two frames leave native cross-document snapshots free of entry transforms.
+  // Start after the sky renderer has initialized, with the same app view arrival.
   const scheduleEntry = () => requestAnimationFrame(() => requestAnimationFrame(enterPage));
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scheduleEntry, { once: true });
   else scheduleEntry();

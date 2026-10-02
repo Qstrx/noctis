@@ -1,0 +1,236 @@
+/* Two destinations inside AuroraGrab's night window. The sky owns the space. */
+body[data-world=home] {
+  min-height: 100svh;
+}
+body[data-world=home] .site-header {
+  min-height: 88px;
+  padding: 0;
+  border-bottom: 0;
+  flex-wrap: nowrap;
+}
+body[data-world=home] .motion-toggle {
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  margin: 0;
+  flex: 0 0 44px;
+  background: transparent;
+}
+body[data-world=home] .motion-toggle svg {
+  width: 18px;
+  height: 18px;
+  flex-basis: 18px;
+}
+body[data-world=home] .motion-toggle:hover {
+  background: rgba(111, 245, 191, .08);
+}
+body[data-world=home] .home-main {
+  display: grid;
+  place-items: center;
+  width: min(1120px, calc(100% - 96px));
+  min-height: 0;
+  height: calc(100svh - 88px);
+  padding: 24px 0 100px;
+  transform-origin: center center;
+}
+body[data-world=home] .collections {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+body[data-world=home] .world-choice {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: clamp(320px, 43svh, 440px);
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: var(--panel-strong);
+  box-shadow: none;
+  transition: opacity .35s var(--ease);
+}
+body[data-world=home] .world-choice > img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(.88) saturate(.9);
+  transform: none;
+  transition: transform .55s var(--ease), filter .35s var(--ease);
+}
+body[data-world=home] .door-price > img {
+  object-position: 52% 44%;
+}
+body[data-world=home] .door-six > img {
+  object-position: 50% 36%;
+}
+body[data-world=home] .door-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg,
+    rgba(2, 8, 12, .08),
+    rgba(2, 8, 12, .04) 38%,
+    rgba(2, 8, 12, .62) 72%,
+    rgba(2, 8, 12, .94));
+}
+body[data-world=home] .choice-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  padding: 32px;
+}
+body[data-world=home] .choice-label h2 {
+  font: 300 clamp(40px, 4.2vw, 60px)/1.05 var(--display);
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+body[data-world=home] .choice-label svg {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  opacity: .65;
+  color: var(--ink);
+  transition: transform .35s var(--ease), opacity .35s ease, color .35s ease;
+}
+/* The same thin mint selection line as AuroraGrab's format choices. */
+body[data-world=home] .world-choice::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--mint);
+  opacity: 0;
+  transform: scaleX(.82);
+  transform-origin: center center;
+  transition: transform .35s var(--ease), opacity .35s ease;
+}
+body[data-world=home] .world-choice:is(:focus-visible, .is-selected)::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+body[data-world=home] .world-choice:is(:focus-visible, .is-selected) .choice-label svg {
+  color: var(--mint);
+  opacity: 1;
+  transform: translateX(4px);
+}
+body[data-world=home] .world-choice:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 6px;
+}
+@media (hover: hover) and (pointer: fine) {
+  body[data-world=home] .world-choice:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  body[data-world=home] .world-choice:hover .choice-label svg {
+    color: var(--mint);
+    opacity: 1;
+    transform: translateX(4px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  body[data-world=home][data-motion=on] .world-choice:is(:focus-visible, .is-selected) > img {
+    transform: scale(1.025);
+    filter: brightness(1) saturate(1);
+  }
+  body[data-world=home][data-motion=on][data-choice=cod] .door-six,
+  body[data-world=home][data-motion=on][data-choice=six] .door-price {
+    opacity: .62;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body[data-world=home][data-motion=on] .world-choice:hover > img {
+    transform: scale(1.025);
+    filter: brightness(1) saturate(1);
+  }
+}
+@media (max-width: 1100px) {
+  body[data-world=home] .home-main {
+    width: calc(100% - 64px);
+  }
+  body[data-world=home] .collections { gap: 24px; }
+  body[data-world=home] .choice-label { padding: 28px; }
+}
+@media (max-width: 760px) {
+  body[data-world=home] .site-header { min-height: 84px; }
+  body[data-world=home] .home-main {
+    width: calc(100% - 40px);
+    height: calc(100svh - 84px);
+    padding: 18px 0 64px;
+  }
+  body[data-world=home] .collections {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+  body[data-world=home] .world-choice {
+    height: clamp(190px, 28svh, 236px);
+  }
+  body[data-world=home] .choice-label { padding: 24px; }
+  body[data-world=home] .choice-label h2 { font-size: 40px; }
+  body[data-world=home] .choice-label svg {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+  }
+}
+@media (max-width: 400px) {
+  body[data-world=home] .choice-label { padding: 22px; gap: 16px; }
+  body[data-world=home] .choice-label h2 { font-size: 36px; }
+}
+@media (max-height: 640px) and (max-width: 760px) {
+  body[data-world=home] .site-header { min-height: 72px; }
+  body[data-world=home] .home-main {
+    height: calc(100svh - 72px);
+    padding: 12px 0 32px;
+  }
+  body[data-world=home] .collections { gap: 16px; }
+  body[data-world=home] .world-choice { height: clamp(148px, 27svh, 190px); }
+  body[data-world=home] .choice-label { padding: 20px; }
+}
+@media (max-height: 540px) and (min-width: 560px) {
+  body[data-world=home] .site-header { min-height: 72px; }
+  body[data-world=home] .home-main {
+    height: calc(100svh - 72px);
+    padding: 12px 0 32px;
+  }
+  body[data-world=home] .collections { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body[data-world=home] .world-choice { height: max(150px, calc(100svh - 140px)); }
+  body[data-world=home] .choice-label { padding: 20px; gap: 16px; }
+  body[data-world=home] .choice-label h2 { font-size: 32px; }
+}
+body[data-world=home][data-motion=off] .world-choice > img,
+body[data-world=home][data-motion=off] .choice-label svg,
+body[data-world=home][data-motion=off] .world-choice::after {
+  transform: none !important;
+  transition-property: color, filter, opacity !important;
+  transition-duration: 100ms !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-world=home] .world-choice > img,
+  body[data-world=home] .choice-label svg,
+  body[data-world=home] .world-choice::after {
+    transform: none !important;
+  }
+  body[data-world=home] .world-choice,
+  body[data-world=home] .world-choice > img,
+  body[data-world=home] .choice-label svg,
+  body[data-world=home] .world-choice::after {
+    transition-property: color, filter, opacity !important;
+    transition-duration: 100ms !important;
+  }
+}

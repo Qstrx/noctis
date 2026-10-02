@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-02T14:50:54.344546+00:00",
+  "generatedAt": "2026-10-02T18:08:00.4888800Z",
   "title": "Design System: Ocean’s Scenepacks",
   "extensions": {
     "colorMeta": {
@@ -232,7 +232,7 @@
     "typographyMeta": {
       "display": {
         "displayName": "AuroraGrab light display",
-        "purpose": "User-pinned Segoe display hierarchy; headlines and collection titles."
+        "purpose": "The two photographed home destination labels, in the pinned Segoe light display stack."
       },
       "body": {
         "displayName": "Segoe text",
@@ -240,11 +240,6 @@
       }
     },
     "shadows": [
-      {
-        "name": "collection-depth",
-        "value": "0 18px 60px rgba(0,0,0,.24)",
-        "purpose": "Collection photographs."
-      },
       {
         "name": "modal-depth",
         "value": "0 30px 100px #0009",
@@ -260,17 +255,47 @@
       {
         "name": "ease",
         "value": "cubic-bezier(.2,.8,.2,1)",
-        "purpose": "AuroraGrab transition curve."
+        "purpose": "AuroraGrab view, layer, and selection curve."
       },
       {
         "name": "control",
         "value": "150ms",
-        "purpose": "Control color feedback; press resolves in 100–120ms."
+        "purpose": "Archive control color feedback; press resolves in 100–120ms."
       },
       {
         "name": "selection-layout",
         "value": "350ms",
-        "purpose": "Sliding underline and interruptible pack layout."
+        "purpose": "Sliding archive underline and interruptible filter-layout travel."
+      },
+      {
+        "name": "filter-reveal",
+        "value": "400ms",
+        "purpose": "Newly visible filtered packs; 30ms local stagger capped at 150ms."
+      },
+      {
+        "name": "view-entry-opacity",
+        "value": "450ms",
+        "purpose": "The complete main region fades in together."
+      },
+      {
+        "name": "view-entry-travel",
+        "value": "550ms",
+        "purpose": "The complete main region arrives from translateY(8px)."
+      },
+      {
+        "name": "home-entry-delay",
+        "value": "180ms",
+        "purpose": "Home whole-main arrival waits briefly for the sky; archives have no delay."
+      },
+      {
+        "name": "view-exit-opacity",
+        "value": "300ms",
+        "purpose": "The complete main fades out; navigation starts at 300ms and opacity 0 holds until document replacement."
+      },
+      {
+        "name": "view-exit-scale",
+        "value": "450ms",
+        "purpose": "The departing main reaches scale(.985); the finished effect holds until document replacement and clears on cancellation or page restoration."
       },
       {
         "name": "dialog-entry",
@@ -280,47 +305,72 @@
       {
         "name": "dialog-exit",
         "value": "220ms",
-        "purpose": "User dismissal; backdrop 180ms. Transactions remain immediate."
+        "purpose": "User dismissal; backdrop 180ms. Preview-to-download remains immediate."
       },
       {
         "name": "scene",
         "value": "300ms",
-        "purpose": "Episode or part heading/screen feedback."
+        "purpose": "Episode or part heading and screen feedback."
       },
       {
-        "name": "shared-photo",
-        "value": "600ms",
-        "purpose": "Home character photograph to collection portrait; page fade 200ms."
-      },
-      {
-        "name": "pack-entry",
-        "value": "500ms",
-        "purpose": "Initially visible cards; 30ms stagger capped at 150ms."
-      },
-      {
-        "name": "door-entry",
-        "value": "600ms",
-        "purpose": "Bounded crop and arrival of home collection doors; 70ms separation."
-      },
-      {
-        "name": "image",
+        "name": "archive-image",
         "value": "700ms",
-        "purpose": "Pack image resolve; cover lift 250ms."
+        "purpose": "Archive image resolve; cover lift 250ms."
       },
       {
-        "name": "door",
-        "value": "1100ms",
-        "purpose": "Collection image resolve."
+        "name": "home-image",
+        "value": "550ms",
+        "purpose": "Home source still scales to 1.025; filter feedback is 350ms."
+      },
+      {
+        "name": "home-selection",
+        "value": "350ms",
+        "purpose": "Mint edge, arrow, and choice opacity feedback."
       },
       {
         "name": "reduced-feedback",
         "value": "100ms",
-        "purpose": "Color feedback without travel when paused or reduced."
+        "purpose": "Color, filter, or opacity confirmation without spatial travel when paused or reduced."
+      },
+      {
+        "name": "sky-curtain-entry",
+        "value": "1400ms",
+        "purpose": "Initial home WebGL curtain opacity; transferred and archive arrivals skip the intro."
+      },
+      {
+        "name": "sky-stars-entry",
+        "value": "1500ms",
+        "purpose": "Cached stars resolve after a 150ms delay."
+      },
+      {
+        "name": "sky-ridges-entry",
+        "value": "1100ms",
+        "purpose": "Cached ridges rise from 34/46/58px after delays of 250/380/510ms."
+      },
+      {
+        "name": "sky-reflection-entry",
+        "value": "1000ms",
+        "purpose": "Cached reflected ridges resolve after a 650ms delay."
+      },
+      {
+        "name": "sky-intro-complete",
+        "value": "1650ms",
+        "purpose": "Initial home sky finishes; pause, reduced motion, hiding, or fallback settles it immediately."
+      },
+      {
+        "name": "sky-intro-energy",
+        "value": "1500ms",
+        "purpose": "Initial target energy is 1.25 during the first 1500ms; rest is .35 and focused home choice is .6."
       },
       {
         "name": "aurora-pulse",
         "value": "1300ms",
-        "purpose": "Existing optional northern-light sweep."
+        "purpose": "Navigation or changed archive filter raises energy to at least 1.35 and sweeps a light wave left to right."
+      },
+      {
+        "name": "sky-transfer-window",
+        "value": "5000ms",
+        "purpose": "One-use session transfer carries shader clock, energy, and pulse progress to the next page."
       }
     ],
     "breakpoints": [
@@ -337,12 +387,16 @@
         "value": "1100px"
       },
       {
-        "name": "wide",
-        "value": "1600px"
-      },
-      {
         "name": "shader-compact",
         "value": "700px"
+      },
+      {
+        "name": "home-short",
+        "value": "(max-height: 640px) and (max-width: 760px)"
+      },
+      {
+        "name": "home-landscape",
+        "value": "(max-height: 540px) and (min-width: 560px)"
       }
     ]
   },
@@ -383,7 +437,7 @@
       "name": "Collection navigation",
       "kind": "nav",
       "refersTo": "navigation",
-      "description": "A mint underline marks the current collection.",
+      "description": "Archive-page navigation; a mint underline marks the current collection.",
       "html": "<nav class=\"ds-site-nav\"><a href=\"#\">Collections</a><a href=\"#\" aria-current=\"page\">Call of Duty</a><a href=\"#\">SIX</a></nav>",
       "css": ":host{font-family:var(--font,\"Segoe UI\",system-ui,sans-serif);color:var(--ink,#eef4f5)}\n.ds-site-nav{display: flex; align-self: stretch; gap: 36px; align-items: center;}\n.ds-site-nav a{display: flex; align-items: center; height: 100%; position: relative; font-size: 14px; color: var(--muted, #adbfc3); transition: color .15s;}\n.ds-site-nav a::after{content: \"\"; position: absolute; height: 2px; background: var(--mint, #6ff5bf); bottom: 24px; left: 0; right: 0; transform: scaleX(0); transition: transform .35s var(--ease, cubic-bezier(.2, .8, .2, 1));}\n.ds-site-nav a[aria-current], .ds-site-nav a:hover{color: var(--ink, #eef4f5);}\n.ds-site-nav a[aria-current]::after{transform: scaleX(1);}\nbutton:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--mint,#6ff5bf);outline-offset:3px}"
     },
@@ -406,38 +460,41 @@
   ],
   "narrative": {
     "northStar": "AuroraGrab Night",
-    "overview": "Ocean’s Scenepacks carries the user-pinned AuroraGrab 3.0 reference into a browser archive: a navy-black sky, green aurora curtains with violet upper light, sharp stars, dark mountain ridges, and reflected water. Light Segoe headings and mint actions sit above this atmosphere. The sky is decorative; supplied character and episode stills remain the visual evidence for the footage.\n\nThe world is quiet, spacious, and precise. Translucent blue-black controls preserve the night beneath them, while photographic surfaces and modal players provide stronger local contrast. The reference explicitly determines the Segoe families, light display weights, palette, and aurora grammar; this is the pinned-reference exemption to a generic instruction to replace familiar system typography.",
+    "overview": "Ocean’s Scenepacks carries the user-pinned AuroraGrab 3.0 reference into a browser archive: a navy-black sky, green aurora curtains with violet upper light, sharp stars, dark mountain ridges, and reflected water. Light Segoe headings and mint actions sit above this atmosphere. The sky is decorative; supplied character and episode stills remain the visual evidence for the footage.\n\nThe world is quiet, spacious, and precise. Translucent blue-black controls preserve the night beneath them, while photographic surfaces and modal players provide stronger local contrast. Complete views arrive and withdraw together, following the app’s choreography; the aurora’s clock and light wave carry between pages. The reference explicitly determines the Segoe families, light display weights, palette, and aurora grammar; this is the pinned-reference exemption to a generic instruction to replace familiar system typography.",
     "keyCharacteristics": [
       "A procedural northern sky behind real source stills.",
       "Light Segoe display lettering with compact Segoe text controls.",
       "Mint actions, pale text, and restrained translucent borders.",
       "Rounded media surfaces and pill-shaped global or final actions.",
+      "Complete-view arrival and departure with a continuous northern sky.",
       "Ambient motion that stops for accessibility preferences, manual pause, and preview playback."
     ],
     "rules": [
       {
         "name": "Mint State",
         "body": "Use mint to identify an action, selected state, or focus target; keep descriptive copy in the pale neutral text colors.",
-        "section": "components"
+        "section": "colors"
       },
       {
         "name": "Reference Type",
         "body": "Preserve the declared Segoe stacks and light display hierarchy when extending this world; the user-pinned app reference is the visual authority.",
-        "section": "components"
+        "section": "typography"
       },
       {
         "name": "Local Contrast",
         "body": "Place dark local backing and gradients behind readable content; the aurora never supplies the contrast required by a label or control.",
-        "section": "components"
+        "section": "elevation"
       }
     ],
     "dos": [
       "**Do** preserve the AuroraGrab 3.0 reference’s night palette, light Segoe hierarchy, and procedural northern sky.",
       "**Do** use supplied source stills and preserve focal-point crops, image dimensions, and loading priorities.",
+      "**Do** keep the home limited to its brand, motion icon, and two labeled photographed destinations.",
       "**Do** keep mint for action, selection, and focus while source facts use neutral text.",
       "**Do** preserve the documented mobile grid, full-width search, stacked actions, and preview episode strip.",
       "**Do** retain native semantics, labeled controls, visible focus, live result feedback, and dialog focus return.",
-      "**Do** honor manual pause, device reduced-motion, hidden-document suspension, and the shader frame-rate limits."
+      "**Do** honor manual pause, device reduced-motion, hidden-document suspension, and the shader frame-rate limits.",
+      "**Do** animate a complete main view on arrival and departure, carrying the sky’s clock and pulse between pages."
     ],
     "donts": [
       "**Don't** replace the pinned Segoe hierarchy with a new display font.",
@@ -445,7 +502,8 @@
       "**Don't** replace source footage imagery with generated character art.",
       "**Don't** crop the video playback frame or merge distinct source-quality specifications into one generic claim.",
       "**Don't** increase ambient rendering frequency or add motion that bypasses the motion preference.",
-      "**Don't** turn the unboxed catalog cards into a separate shadowed panel for every archive item."
+      "**Don't** turn the unboxed catalog cards into a separate shadowed panel for every archive item.",
+      "**Don't** reintroduce home descriptions, counts, duplicate links, a footer, per-card page-entry choreography, or a photograph flying into the collection portrait."
     ]
   }
 }
