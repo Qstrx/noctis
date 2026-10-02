@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  // AuroraGrab's whole-view choreography; the sky carries the choice into the archive.
+  // A passage in the real aurora opens the chosen collection.
   const ease = 'cubic-bezier(.2,.8,.2,1)';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const enabled = () => document.body.dataset.motion !== 'off' && !reduced.matches;
@@ -221,6 +221,14 @@
   }));
 
   function rememberSky() { dispatchEvent(new CustomEvent('oceans:aurora-remember')); }
+  function gateGeometry(origin = .5) {
+    const rect = main.getBoundingClientRect();
+    const left = Math.max(0, rect.left / innerWidth);
+    const right = Math.min(1, rect.right / innerWidth);
+    origin = Math.max(left + .01, Math.min(right - .01, origin));
+    const split = Math.max(0, Math.min(rect.width, origin * innerWidth - rect.left));
+    return { origin, bounds: { left, right }, mask: `inset(0px ${rect.width - split}px 0px ${split}px)` };
+  }
   function finishNavigation() {
     if (!navigation) return;
     const destination = navigation.href;
@@ -235,6 +243,7 @@
     const opener = navigation?.opener;
     navigation = null;
     cancel(main);
+    window.auroraPassage?.reset();
     if (main) main.inert = false;
     document.body.classList.remove('is-navigating');
     if (opener?.isConnected) opener.focus({ preventScroll: true });
@@ -245,18 +254,18 @@
     const destination = new URL(link.href, location.href);
     if (destination.origin !== location.origin || !/\/(index|cod|six)\.html$/.test(destination.pathname) || destination.hash) return;
     if (destination.pathname === location.pathname && !destination.search) return;
-    if (!enabled() || !main?.animate) { rememberSky(); return; }
+    if (!enabled() || !main?.animate || !window.auroraPassage?.ready) { rememberSky(); return; }
     event.preventDefault();
     if (navigation) return;
     navigation = { href: destination.href, opener: link };
     document.body.classList.add('is-navigating');
     cancel(main);
-    dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
-    // The app withdraws a complete view rather than sending individual cards away.
-    animate(main, [{ opacity: getComputedStyle(main).opacity }, { opacity: 0 }], 300, 0, true);
-    animate(main, [{ transform: getComputedStyle(main).transform }, { transform: 'scale(.985)' }], 450, 0, true);
+    const selected = link.getBoundingClientRect();
+    const gate = gateGeometry((selected.left + selected.width / 2) / innerWidth);
+    window.auroraPassage.close({ ...gate, duration: 400 });
+    animate(main, [{ clipPath: getComputedStyle(main).clipPath === 'none' ? 'inset(0px 0px 0px 0px)' : getComputedStyle(main).clipPath }, { clipPath: gate.mask }], 400, 0, true);
     main.inert = true;
-    navigationTimer = setTimeout(finishNavigation, 300);
+    navigationTimer = setTimeout(finishNavigation, 400);
   });
   document.addEventListener('keydown', event => {
     if (!navigation || event.key !== 'Escape') return;
@@ -281,6 +290,7 @@
       return;
     }
     [...animations.keys()].forEach(cancel);
+    window.auroraPassage?.reset();
     [...closing].forEach(dialog => { if (dialog.open) dialog.close(); });
     if (navigation) finishNavigation();
     updateMarkers();
@@ -291,12 +301,24 @@
     if (entered) return;
     entered = true;
     if (!enabled() || navigation || dialogs.some(dialog => dialog.open)) return;
-    const delay = document.body.dataset.world === 'home' ? 180 : 0;
-    animate(main, [{ opacity: 0 }, { opacity: 1 }], 450, delay);
-    animate(main, [{ transform: 'translateY(8px)' }, { transform: 'translateY(0)' }], 550, delay);
+    const arrival = window.auroraPassage?.arrival;
+    if (!arrival || !window.auroraPassage.ready || !main) return;
+    const gate = gateGeometry(arrival.origin);
+    cancel(main);
+    window.auroraPassage.open({ ...gate, duration: 520 });
+    animate(main, [{ clipPath: gate.mask }, { clipPath: 'inset(0px 0px 0px 0px)' }], 520);
   }
-  // Start after the sky renderer has initialized, with the same app view arrival.
-  const scheduleEntry = () => requestAnimationFrame(() => requestAnimationFrame(enterPage));
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scheduleEntry, { once: true });
+  // Direct page loads stay visible. Only a chosen passage opens a new view.
+  const scheduleEntry = () => {
+    const arrival = window.auroraPassage?.arrival;
+    if (enabled() && arrival && window.auroraPassage.ready && main && !dialogs.some(dialog => dialog.open)) {
+      // Deferred scripts have restored the sky before the first document paint.
+      // Hold its closed passage now, avoiding a visible archive flash at arrival.
+      const { mask } = gateGeometry(arrival.origin);
+      animate(main, [{ clipPath: mask }, { clipPath: mask }], 1, 0, true);
+    }
+    requestAnimationFrame(() => requestAnimationFrame(enterPage));
+  };
+  if (document.readyState !== 'complete') document.addEventListener('DOMContentLoaded', scheduleEntry, { once: true });
   else scheduleEntry();
 })();
