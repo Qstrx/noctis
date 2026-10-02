@@ -236,7 +236,6 @@
   function createFrame(chosen, rect) {
     const holder = document.createElement('div'); holder.className = 'passage-frame'; holder.setAttribute('aria-hidden','true');
     const img = document.createElement('img'); img.src = imageFor(chosen); img.alt = ''; holder.append(img);
-    const title = document.createElement('span'); title.className = 'passage-title'; title.textContent = chosen === 'cod' ? 'Call of Duty' : 'SIX'; holder.append(title);
     Object.assign(holder.style,rectangle(rect)); document.body.append(holder); frame = holder; return holder;
   }
   function go() {
@@ -264,11 +263,12 @@
     if (!['cod','six'].includes(chosen)) { rememberSky(); location.assign(destination.href); return; }
     pending = {href:destination.href,world:chosen,opener:link};
     const source = world === 'home' ? link.querySelector('.choice-photo') : document.querySelector('.collection-portrait');
-    const rect = source.getBoundingClientRect();
+    const rect = source?.getBoundingClientRect();
+    if (!rect?.width || !rect.height) { pending=null; rememberSky(); location.assign(destination.href); return; }
     const holder = createFrame(chosen,rect); main.inert = true;
     dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
-    passageAnimation = holder.animate([rectangle(rect),rectangle(viewport())],{duration:420,easing:'cubic-bezier(.32,0,.16,1)',fill:'forwards'});
-    passageTimer = setTimeout(go,420);
+    passageAnimation = holder.animate([rectangle(rect),rectangle(viewport())],{duration:300,easing:'cubic-bezier(.32,0,.16,1)',fill:'forwards'});
+    passageTimer = setTimeout(go,300);
   });
   function takePassage() {
     try {
@@ -288,16 +288,9 @@
     if (!frame || pending) return;
     if (!enabled()) { clearPassage(); return; }
     const target = world === 'home' ? choices.find(choice=>choice.dataset.worldChoice === incoming.world)?.querySelector('.choice-photo') : document.querySelector('.collection-portrait');
-    if (!target) { clearPassage(); return; }
-    const destination=rectangle(target.getBoundingClientRect()); destination.borderRadius=world==='home'?'0px':'16px';
-    const heading=world==='home'?target.closest('.world-choice').querySelector('h2'):document.querySelector('.collection-heading h1');
-    const label=frame.querySelector('.passage-title');
-    const titleRect=heading.getBoundingClientRect(), targetRect=target.getBoundingClientRect();
-    if(world==='home')label.innerHTML=heading.innerHTML;
-    const headingStyle=getComputedStyle(heading);
-    label.style.lineHeight=String(parseFloat(headingStyle.lineHeight)/parseFloat(headingStyle.fontSize));
-    label.animate([{left:'48px',bottom:'64px',fontSize:getComputedStyle(label).fontSize},{left:`${titleRect.left-targetRect.left}px`,bottom:`${targetRect.bottom-titleRect.bottom}px`,fontSize:headingStyle.fontSize}],{duration:560,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'});
-    passageAnimation=frame.animate([rectangle(viewport()),destination],{duration:560,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'});
+    if (!target || !target.getBoundingClientRect().width) { clearPassage(); return; }
+    const destination=rectangle(target.getBoundingClientRect()); destination.borderRadius=getComputedStyle(target).borderRadius;
+    passageAnimation=frame.animate([rectangle(viewport()),destination],{duration:400,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'});
     passageAnimation.finished.then(()=>{if (!pending) clearPassage();},()=>{});
   }
   if (document.readyState !== 'complete') document.addEventListener('DOMContentLoaded',arrive,{once:true}); else arrive();
