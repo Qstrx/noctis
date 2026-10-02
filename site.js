@@ -36,9 +36,9 @@
     document.querySelectorAll('.motion-toggle').forEach(button => {
       button.setAttribute('aria-pressed', String(enabled));
       button.disabled = reducedMotion.matches;
-      button.title = reducedMotion.matches ? 'Motion is off because of your device accessibility setting.' : '';
+      button.title = reducedMotion.matches ? 'Motion is off because of your device accessibility setting.' : 'Pause or resume animations';
       const label = button.querySelector('.motion-label');
-      if (label) label.textContent = enabled ? 'Aurora on' : 'Aurora paused';
+      if (label) label.textContent = enabled ? 'Motion on' : 'Motion paused';
     });
     window.dispatchEvent(new CustomEvent('oceans:motion', { detail: { enabled: enabled && !previewOpen } }));
   }
@@ -66,6 +66,7 @@
   const searchableCards = cards.map(card => ({ card, text: normalize(card.dataset.search || card.textContent) }));
   let activeFilter = 'all';
   function filterPacks() {
+    const before = window.archiveMotion?.captureLayout();
     const words = normalize(search?.value).split(/\s+/).filter(Boolean);
     let visible = 0;
     searchableCards.forEach(({ card, text }) => {
@@ -79,6 +80,7 @@
       ? `${visible} scene ${visible === 1 ? 'pack' : 'packs'}`
       : `${visible} of ${cards.length} scene packs`;
     if (emptyResults) emptyResults.hidden = visible !== 0;
+    window.archiveMotion?.animateLayout(before);
   }
   if (cards.length) {
     if (resultCount) {
@@ -277,6 +279,7 @@
       $('codPreviewParts').append(button);
     });
     if (restorePartFocus) $('codPreviewParts').querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
+    window.archiveMotion?.sceneChange(dialog);
     if (!safeFile(pack.files[part]) || pack.files[part].direct === false) { codFailed(id); return; }
     codStatus('Loading preview…');
     const source = create('source');
