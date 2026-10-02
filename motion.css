@@ -1,4 +1,11 @@
-/* Archive feedback; the procedural sky owns the passage between views. */
+/* The photograph is the one traveling element; page content remains stable. */
+.passage-frame { position:fixed; z-index:30; overflow:hidden; pointer-events:none; contain:layout paint; background:var(--sky-bg); }
+.passage-frame img { width:100%; height:100%; display:block; object-fit:cover; object-position:50% 39%; }
+.passage-frame::after { content:''; position:absolute; inset:0; background:linear-gradient(0deg,rgba(2,6,11,.88),rgba(2,6,11,.06) 80%); }
+.passage-title { position:absolute; z-index:1; left:48px; right:24px; bottom:64px; color:var(--ink); font:400 clamp(56px,6.6vw,96px)/1.06 Cinema,sans-serif; text-transform:uppercase; letter-spacing:-.02em; }
+.passage-title > span { display:block; }
+@media(max-width:760px){ .passage-title { left:24px; bottom:32px; font-size:52px; } }
+@media(prefers-reduced-motion:reduce){ .passage-frame { display:none; } }
 /* One underline travels between choices, as in AuroraGrab's .tabs__bar. */
 .site-nav.has-motion-marker,
 .filter-list.has-motion-marker { position: relative; }
