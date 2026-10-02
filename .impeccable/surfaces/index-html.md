@@ -22,3 +22,13 @@ FIRST VIEWPORT: A restrained navigation bar above a left-aligned light headline.
 FORM: User-pinned app reference overrides concept selection. Code-led translation of the supplied app implementation, not a generated image comp. Signature interaction: the AuroraGrab ribbon drifts continuously behind the library and freezes instantly with the motion control; panel imagery gently resolves on hover.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+## Interface motion follow-up
+
+The approved Aurora background remains unchanged. The focal moment is the actual John Price or Joe Graves photograph moving from its home collection door into the archive portrait during native navigation. Direct entry uses one bounded composition reveal; archives reveal only the first visible packs, without repeated scroll choreography.
+
+Continuity: shared photograph transitions, one sliding filter underline, and a short FLIP rearrangement when search or filters change. Visibility and result counts update synchronously, even when a prior animation is interrupted.
+
+Feedback: a 350ms player entrance, a faster 220ms dismissal, a brief scene-change confirmation, and source-sized image/action hover and press responses. Preview-to-download remains an immediate transaction. Focus restoration and video cleanup remain attached to native dialog closure.
+
+Budget: retain AuroraGrab's cubic-bezier(.2,.8,.2,1), 150/350ms control timings and capped 30ms pack stagger. No dependencies, additional loops, scroll observers, or background effects. Content is visible without JavaScript. Manual pause and reduced motion cancel pending spatial animations and preserve immediate state changes and quick color feedback.

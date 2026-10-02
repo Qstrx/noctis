@@ -1,0 +1,156 @@
+/* AuroraGrab 3.0 motion: the scene leads, controls respond, the sky stays calm.
+   Native view transitions are a progressive enhancement; content starts visible. */
+@view-transition { navigation: auto; }
+
+.sky { view-transition-name: archive-sky; }
+.site-header { view-transition-name: archive-header; }
+.door-price > img,
+body[data-world=cod] .collection-portrait img { view-transition-name: price-footage; }
+.door-six > img,
+body[data-world=six] .collection-portrait img { view-transition-name: graves-footage; }
+.collection-door > img,
+.collection-portrait img { border-radius: inherit; }
+
+::view-transition-old(root) { animation: archive-fade-out 200ms ease both; }
+::view-transition-new(root) { animation: archive-fade-in 200ms ease both; }
+::view-transition-group(price-footage),
+::view-transition-group(graves-footage) {
+  z-index: 1;
+  animation-duration: 600ms;
+  animation-timing-function: var(--ease);
+  overflow: clip;
+}
+::view-transition-old(price-footage),
+::view-transition-new(price-footage),
+::view-transition-old(graves-footage),
+::view-transition-new(graves-footage) {
+  animation-duration: 600ms;
+  animation-timing-function: var(--ease);
+}
+
+/* The background and navigation keep their place while the collection changes. */
+::view-transition-group(archive-sky) { z-index: -1; }
+::view-transition-group(archive-header) { z-index: 2; }
+::view-transition-group(archive-sky),
+::view-transition-group(archive-header),
+::view-transition-image-pair(archive-sky),
+::view-transition-image-pair(archive-header) { animation: none; }
+::view-transition-old(archive-sky),
+::view-transition-old(archive-header) { display: none; }
+::view-transition-new(archive-sky),
+::view-transition-new(archive-header) {
+  animation: none;
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+@keyframes archive-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes archive-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* One underline travels between choices, as in AuroraGrab's .tabs__bar. */
+.site-nav.has-motion-marker,
+.filter-list.has-motion-marker { position: relative; }
+.has-motion-marker > a::after,
+.has-motion-marker > .filter-button::after { display: none; }
+.nav-marker,
+.filter-marker {
+  position: absolute;
+  left: 0;
+  height: 2px;
+  width: 1px;
+  background: var(--mint);
+  pointer-events: none;
+  transform-origin: left center;
+  transform: translateX(var(--marker-x, 0px)) scaleX(var(--marker-width, 0));
+  transition: transform .35s var(--ease);
+}
+.nav-marker { bottom: 24px; }
+.filter-marker { bottom: 3px; }
+@media (max-width: 760px) { .nav-marker { bottom: 8px; } }
+
+/* Keep the controls' existing color feedback; add source-sized physical feedback. */
+.pack-cover { transition: transform .25s var(--ease), box-shadow .25s ease; }
+.action,
+.dialog-action,
+.dialog-top button,
+.preview-close,
+.motion-toggle,
+.filter-button,
+.preview-dialog button {
+  transition: transform .12s ease, background-color .15s ease,
+    color .15s ease, border-color .15s ease;
+}
+.action svg,
+.dialog-action svg,
+.back-link svg { transition: transform .25s var(--ease); }
+dialog.is-closing { pointer-events: none; }
+@keyframes archive-veil-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes archive-veil-out { from { opacity: 1; } to { opacity: 0; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-motion=on] dialog[open]::backdrop { animation: archive-veil-in 300ms ease both; }
+  body[data-motion=on] dialog.is-closing::backdrop { animation: archive-veil-out 180ms ease both; }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body:not([data-motion=off]) .pack-card:hover .pack-cover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 26px rgba(0, 0, 0, .45);
+  }
+  body:not([data-motion=off]) .action.primary:hover svg,
+  body:not([data-motion=off]) .dialog-action:hover svg { transform: translateY(2px); }
+  body:not([data-motion=off]) .action[data-preview]:hover svg,
+  body:not([data-motion=off]) .action[data-cod-preview]:hover svg { transform: scale(1.08); }
+  body:not([data-motion=off]) .back-link:hover svg { transform: translateX(-3px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  body:not([data-motion=off]) .pack-card:focus-within .pack-cover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 26px rgba(0, 0, 0, .45);
+  }
+  body:not([data-motion=off]) :is(.action, .dialog-action, .motion-toggle,
+    .filter-button, .dialog-top button, .preview-close, .preview-dialog button):active:not(:disabled):not([aria-disabled=true]) {
+    transform: scale(.97);
+    transition-duration: .1s;
+  }
+}
+
+/* Reduced motion keeps quick color/fade confirmation and skips travel or scale. */
+body[data-motion=off] :is(.collection-door > img, .pack-cover,
+  .pack-cover img, .door-action svg, .action svg, .dialog-action svg,
+  .back-link svg, .source-notes summary svg,
+  .action, .dialog-action, .motion-toggle, .filter-button,
+  .dialog-top button, .preview-close, .preview-dialog button) {
+  transform: none !important;
+  transition-property: color, background-color, border-color, opacity !important;
+  transition-duration: 100ms !important;
+}
+body[data-motion=off] .source-notes[open] summary svg { transform: rotate(180deg) !important; }
+body[data-motion=off] :is(.nav-marker, .filter-marker) { transition: none; }
+html:has(body[data-motion=off]) { scroll-behavior: auto; }
+html:has(body[data-motion=off])::view-transition-group(*),
+html:has(body[data-motion=off])::view-transition-old(*),
+html:has(body[data-motion=off])::view-transition-new(*) {
+  animation-duration: .01ms !important;
+  animation-delay: 0s !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.collection-door > img, .pack-cover, .pack-cover img,
+    .door-action svg, .action svg, .dialog-action svg, .back-link svg,
+    .source-notes summary svg, .action, .dialog-action, .motion-toggle,
+    .filter-button, .dialog-top button, .preview-close, .preview-dialog button) {
+    transform: none !important;
+  }
+  .source-notes[open] summary svg { transform: rotate(180deg) !important; }
+  :is(.site-nav a, .filter-button, .motion-toggle, .action, .dialog-action,
+    .dialog-top button, .preview-close, .preview-dialog button) {
+    transition-property: color, background-color, border-color, opacity !important;
+    transition-duration: 100ms !important;
+  }
+  :is(.nav-marker, .filter-marker) { transition: none; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: .01ms !important;
+    animation-delay: 0s !important;
+  }
+}

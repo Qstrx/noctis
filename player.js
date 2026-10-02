@@ -106,6 +106,7 @@ function loadPreview(index, time){
     var selectedPart = previewParts.querySelector('[aria-pressed="true"]');
     if (selectedPart) selectedPart.focus({preventScroll:true});
   }
+  if (window.archiveMotion) window.archiveMotion.sceneChange(preview);
   previewStatus("Loading preview…");
   previewVideo.preload = "metadata";
   var source = document.createElement("source");

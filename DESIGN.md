@@ -229,6 +229,7 @@ Depth comes from the sky, photographic overlays, translucent surfaces, and spars
 
 - **Collection surface** (`0 18px 60px rgba(0,0,0,.24)`): separates the large photographic doors from the sky.
 - **Modal surface** (`0 30px 100px #0009`): lifts preview and download dialogs over the page.
+- **Thumbnail feedback** (`0 8px 26px rgba(0,0,0,.45)`): appears only on hover or keyboard focus while the cover lifts.
 - **Modal backdrop:** `rgba(1,4,9,.72)` with a (10px) backdrop blur.
 
 **The Local Contrast Rule.** Place dark local backing and gradients behind readable content; the aurora never supplies the contrast required by a label or control.
@@ -249,7 +250,7 @@ Final download and multipart-choice actions use solid mint, pill corners, a (48p
 
 ### Navigation and Filters
 
-Navigation uses muted (14px) text, a pale current state, and a mint underline. Mobile navigation uses (13px). Filters are native buttons with a (44px) minimum height; selection reveals the same thin mint line. The filter group remains keyboard reachable and conveys state with `aria-pressed`.
+Navigation uses muted (14px) text, a pale current state, and a mint underline. Mobile navigation uses (13px). Filters are native buttons with a (44px) minimum height; one mint marker travels between selections in (350ms). The filter group remains keyboard reachable and conveys state with `aria-pressed`. Without JavaScript the original per-control underline identifies selection.
 
 ### Search Fields
 
@@ -265,9 +266,15 @@ Use the supplied stills in `img/cod`, `img/six`, `img/price.jpg`, and `img/joe.j
 
 Archive cards show title, source facts, duration, file size, and independent preview/download actions. The photographic collection door is an actual page link with a dark vertical gradient beneath its text. Its image scales to (1.035) and gains slight saturation on hover or keyboard focus. Archive thumbnails use the same scale with a slight brightness increase.
 
+The signature interface transition carries the real John Price or Joe Graves photograph from its home door into the collection portrait in (600ms), using native same-origin view transitions. The remaining page changes with a (200ms) fade; the sky and header keep steady snapshots, with the sky explicitly beneath page content. Browsers without this feature keep ordinary navigation. Direct home entry reveals the two doors with a bounded crop and a (70ms) separation. Archive entry reveals only the first visible packs in (500ms), with a (30ms) stagger capped at (150ms); it never replays on scroll or competes with a native page transition.
+
+Filtering reads each card's current visual position, updates visibility and counts synchronously, then bridges visible cards to their new layout in (350ms). Newly included visible packs enter in (400ms). Rapid changes cancel the preceding motion before taking over. Fine-pointer hover and keyboard focus lift the thumbnail by (3px) with a soft offset shadow; control press uses scale (.97). None of these states delay an action.
+
 ### Preview and Download Dialogs
 
 Native modal dialogs use Player Night, panel corners, and a blurred backdrop. Preview chrome keeps a visible close button and retains the native video controls. The SIX player also exposes episode, season, part, playback-speed, timestamp, and share-link controls. Download dialogs surface the selected file or separate multipart choices. Closing returns focus to the connected opener.
+
+Dialog entry resolves opacity, (10px) vertical travel and scale (.985) in (350ms), with a (300ms) backdrop fade. User dismissal takes (220ms), with a faster (180ms) veil fade; Esc, the close control and backdrop all use the same path. Video pauses at dismissal start, and native closure releases sources and restores focus. Preview-to-download closes immediately and opens the selected file action without an exit delay. Episode or part changes briefly resolve the heading and screen in (300ms).
 
 Loading, buffering, unavailable-preview, and download-error messages remain legible on a dark local surface. A failed preview preserves access to the original download. Keep the preview’s (16:9) frame and contain the video rather than crop its contents.
 
@@ -277,7 +284,7 @@ The sky uses the procedural curtain and seeded Lofoten ridges adapted from the A
 
 The shader is timer-paced to at most (30 fps) on desktop and (20 fps) at widths up to (700px). Render targets use half the CSS resolution on desktop and (.35) of the capped width on mobile, with CSS width capped at (2400px) for this calculation. The detail canvas caps pixel ratio at (1.5) on desktop and (1) on mobile. Desktop pointer movement supplies slight parallax; mobile omits it. A pulse is available through the implemented aurora event, with a (1300ms) sweep.
 
-The motion button exposes its pressed state and labels itself “Aurora on” or “Aurora paused”. Manual choice is stored as `oceans-motion` when local storage is available. Device reduced-motion takes precedence and disables the button with an explanatory title. Manual pause freezes the sky and removes image transforms and transitions; reduced-motion also turns smooth scrolling off and reduces CSS transition and animation durations to (.01ms). The sky stops while a preview is open, while the document is hidden, and on page exit. Its retained frame remains visible when animation is disabled.
+The motion button exposes its pressed state and labels itself “Motion on” or “Motion paused”. Manual choice is stored as `oceans-motion` when local storage is available. Device reduced-motion takes precedence and disables the button with an explanatory title. Manual pause freezes the sky, cancels pending Web Animations, skips shared-photo transitions, and completes an in-progress dismissal immediately. Both paused and reduced-motion paths remove spatial travel and smooth scrolling while keeping (100ms) control color feedback. Default HTML content stays visible without JavaScript or animation support. The sky stops while a preview is open, while the document is hidden, and on page exit. Its retained frame remains visible when animation is disabled.
 
 The WebGL renderer requests low-power operation, falls back to medium shader precision if needed, and exposes the static CSS sky when WebGL is unavailable or its context is lost. Restoration reinitializes the renderer. The static gradient and detail layers remain the fallback atmosphere.
 
