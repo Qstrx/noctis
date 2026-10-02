@@ -39,6 +39,9 @@
       button.title = reducedMotion.matches ? 'Motion is off because of your device accessibility setting.' : 'Pause or resume animations';
       const label = button.querySelector('.motion-label');
       if (label) label.textContent = enabled ? 'Motion on' : 'Motion paused';
+      button.setAttribute('aria-label', enabled ? 'Pause animations' : 'Resume animations');
+      const icon = button.querySelector('svg path');
+      if (icon) icon.setAttribute('d', enabled ? 'M9 5v14M15 5v14' : 'M8 5l10 7-10 7Z');
     });
     window.dispatchEvent(new CustomEvent('oceans:motion', { detail: { enabled: enabled && !previewOpen } }));
   }
