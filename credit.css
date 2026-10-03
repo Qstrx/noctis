@@ -21,10 +21,9 @@ dialog.credit-screen {
 dialog.credit-screen[open] { display: grid; place-items: center; }
 dialog.credit-screen::backdrop { background: transparent; backdrop-filter: none; }
 body[data-motion] dialog.credit-screen[open]::backdrop { animation: none; }
-body:has(.credit-screen) > :is(main,.site-header,.site-footer) { transition: opacity 300ms ease; }
+body:has(.credit-screen) > :is(main,.site-header) { transition: opacity 300ms ease; }
 body[data-credit=open] > main,
-body[data-credit=open] > .site-header,
-body[data-credit=open] > .site-footer { opacity: 0; }
+body[data-credit=open] > .site-header { opacity: 0; }
 .credit-lights { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
 .credit-light {
   position: absolute;
@@ -84,6 +83,6 @@ body[data-credit=open] > .site-footer { opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .credit-close, .credit-continue, .credit-account span { transition-duration: 100ms; }
-  body:has(.credit-screen) > :is(main,.site-header,.site-footer) { transition-duration: 100ms; }
+  body:has(.credit-screen) > :is(main,.site-header) { transition-duration: 100ms; }
 }
-body[data-motion=off]:has(.credit-screen) > :is(main,.site-header,.site-footer) { transition-duration: 100ms; }
+body[data-motion=off]:has(.credit-screen) > :is(main,.site-header) { transition-duration: 100ms; }

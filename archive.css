@@ -1,9 +1,7 @@
 /* Two collections, quiet AuroraGrab controls, source footage at a useful scale. */
-.site-header,.catalog-main,.site-footer{width:min(1240px,calc(100% - 80px))}
+.site-header,.catalog-main{width:min(1240px,calc(100% - 80px))}
 .site-header{min-height:84px;border-bottom:1px solid var(--line)}
-.motion-toggle{width:44px;height:44px;min-height:44px;padding:0}
-.motion-toggle .motion-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-.brand-caption,.site-footer>span{font-size:12px}
+.brand-caption{font-size:12px}
 .catalog-main{padding-bottom:48px}
 .archive-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:28px}
 .archive-location{display:flex;align-items:center;gap:16px;min-width:0}
@@ -60,7 +58,7 @@ body[data-world="six"] .archive-quality{white-space:normal;text-wrap:pretty}
 .episode-list .pack-actions .primary{flex:0 0 44px}
 .preview-episode small{font-size:12px}
 @media(max-width:1100px){
-.site-header,.catalog-main,.site-footer{width:calc(100% - 48px)}
+.site-header,.catalog-main{width:calc(100% - 48px)}
 .collection-shelf{padding:24px}
 .game-shelf{gap:18px}
 .game-shelf .pack-actions{flex-direction:column;gap:6px}
@@ -81,7 +79,7 @@ body[data-world="six"] .archive-quality{white-space:normal;text-wrap:pretty}
 .group-heading{align-items:flex-start;flex-direction:column;gap:8px}
 }
 @media(max-width:760px){
-.site-header,.catalog-main,.site-footer{width:calc(100% - 40px)}
+.site-header,.catalog-main{width:calc(100% - 40px)}
 .site-header{min-height:110px}
 .archive-heading{margin-top:20px;gap:4px;align-items:flex-start;flex-direction:column}
 .archive-location{gap:12px}

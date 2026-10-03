@@ -60,7 +60,6 @@
 .dialog-action,
 .dialog-top button,
 .preview-close,
-.motion-toggle,
 .preview-dialog button {
   transition: transform .12s ease, background-color .15s ease,
     color .15s ease, border-color .15s ease;
@@ -93,7 +92,7 @@ dialog.is-closing { pointer-events: none; }
     transform: translateY(-3px);
     box-shadow: 0 8px 26px rgba(0, 0, 0, .45);
   }
-  body:not([data-motion=off]) :is(.action, .dialog-action, .motion-toggle,
+  body:not([data-motion=off]) :is(.action, .dialog-action,
     .dialog-top button, .preview-close, .preview-dialog button):active:not(:disabled):not([aria-disabled=true]) {
     transform: scale(.97);
     transition-duration: .1s;
@@ -104,7 +103,7 @@ dialog.is-closing { pointer-events: none; }
 body[data-motion=off] :is(.pack-cover,
   .pack-cover img, .action svg, .dialog-action svg,
   .back-link svg, .source-notes summary svg,
-  .action, .dialog-action, .motion-toggle,
+  .action, .dialog-action,
   .dialog-top button, .preview-close, .preview-dialog button) {
   transform: none !important;
   transition-property: color, background-color, border-color, opacity !important;
@@ -116,12 +115,12 @@ html:has(body[data-motion=off]) { scroll-behavior: auto; }
 @media (prefers-reduced-motion: reduce) {
   :is(.pack-cover, .pack-cover img,
     .action svg, .dialog-action svg, .back-link svg,
-    .source-notes summary svg, .action, .dialog-action, .motion-toggle,
+    .source-notes summary svg, .action, .dialog-action,
     .dialog-top button, .preview-close, .preview-dialog button) {
     transform: none !important;
   }
   .source-notes[open] summary svg { transform: rotate(180deg) !important; }
-  :is(.site-nav a, .motion-toggle, .action, .dialog-action,
+  :is(.site-nav a, .action, .dialog-action,
     .dialog-top button, .preview-close, .preview-dialog button) {
     transition-property: color, background-color, border-color, opacity !important;
     transition-duration: 100ms !important;
