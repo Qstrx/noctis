@@ -174,5 +174,50 @@ var COD_PACKS = [
     "fps": "60 FPS",
     "resolution": "2560 × 1440",
     "count": "01 file"
+  },
+  {
+    "id": "mw4-trailer-1",
+    "collection": "cod",
+    "group": "trailers",
+    "title": "Modern Warfare 4",
+    "chapter": "Trailer 1 — Reveal Trailer",
+    "poster": "img/cod/mw4-trailer-1.jpg",
+    "meta": "2:49 · 448.3 MB · one file",
+    "files": [{ "url": "https://github.com/Qstrx/noctis/releases/download/mw4-trailers/mw4-trailer-1.mp4", "name": "Trailer 1", "run": "2:49", "size": "448.3 MB", "direct": true }],
+    "fps": "~60 FPS",
+    "resolution": "3840 × 1634",
+    "releaseDate": "2026-05-28",
+    "source": "https://www.callofduty.com/uk/en/blog/2026/05/modernwarfare4-fob",
+    "count": "01 file"
+  },
+  {
+    "id": "mw4-trailer-2",
+    "collection": "cod",
+    "group": "trailers",
+    "title": "Modern Warfare 4",
+    "chapter": "Trailer 2 — Campaign First Look: Traffic",
+    "poster": "img/cod/mw4-trailer-2.jpg",
+    "meta": "0:30 · 128.4 MB · one file",
+    "files": [{ "url": "https://github.com/Qstrx/noctis/releases/download/mw4-trailers/mw4-trailer-2.mp4", "name": "Trailer 2", "run": "0:30", "size": "128.4 MB", "direct": true }],
+    "fps": "~60 FPS",
+    "resolution": "3840 × 2160",
+    "releaseDate": "2026-08-11",
+    "source": "https://www.youtube.com/watch?v=BrNglFVnMMw",
+    "count": "01 file"
+  },
+  {
+    "id": "mw4-trailer-3",
+    "collection": "cod",
+    "group": "trailers",
+    "title": "Modern Warfare 4",
+    "chapter": "Trailer 3 — Campaign Trailer",
+    "poster": "img/cod/mw4-trailer-3.jpg",
+    "meta": "2:32 · 307.4 MB · one file",
+    "files": [{ "url": "https://github.com/Qstrx/noctis/releases/download/mw4-trailers/mw4-trailer-3.mp4", "name": "Trailer 3", "run": "2:32", "size": "307.4 MB", "direct": true }],
+    "fps": "~60 FPS",
+    "resolution": "3840 × 1606",
+    "releaseDate": "2026-09-17",
+    "source": "https://www.callofduty.com/blog/2026/09/call-of-duty-modern-warfare-4-tokyo-games-show-campaign-trailer",
+    "count": "01 file"
   }
 ];

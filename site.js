@@ -336,9 +336,10 @@
     video.preload = 'metadata';
     $('codPreviewError').hidden = true;
     $('codPreviewTitle').textContent = pack.chapter;
+    $('codPreviewLabel').textContent = pack.group === 'trailers' ? 'Call of Duty / Trailer preview' : 'Call of Duty / Scene preview';
     $('codPreviewMeta').textContent = pack.meta + (pack.files.length > 1 ? ` · Part ${part + 1}` : '');
     video.poster = pack.poster;
-    video.setAttribute('aria-label', `${pack.title}, ${pack.chapter}${pack.files.length > 1 ? ', part ' + (part + 1) : ''} scene pack`);
+    video.setAttribute('aria-label', `${pack.title}, ${pack.chapter}${pack.files.length > 1 ? ', part ' + (part + 1) : ''}${pack.group === 'trailers' ? '' : ' scene pack'}`);
     $('codPreviewParts').hidden = pack.files.length === 1;
     $('codPreviewParts').replaceChildren();
     pack.files.forEach((file, fileIndex) => {

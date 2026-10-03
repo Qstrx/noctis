@@ -17,7 +17,7 @@ body[data-world="six"] .archive-quality{white-space:normal;text-wrap:pretty}
 .group-heading h2{font:500 28px/1.2 var(--display);letter-spacing:-.02em}
 .group-heading p{font-size:12px;line-height:1.5}
 .game-shelf{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
-.campaign-shelf .game-shelf{grid-template-columns:repeat(3,minmax(0,1fr))}
+.campaign-shelf .game-shelf,.trailer-shelf .game-shelf{grid-template-columns:repeat(3,minmax(0,1fr))}
 .game-shelf .pack-card{display:flex;flex-direction:column;padding:0;min-width:0}
 .game-shelf .pack-cover{aspect-ratio:16/10;border-radius:8px}
 .game-shelf .pack-info{margin-top:16px}
@@ -74,7 +74,7 @@ body[data-world="six"] .archive-quality{white-space:normal;text-wrap:pretty}
 .season-cover{margin:-24px -24px 24px;height:190px}
 .episode-list .pack-card{grid-template-columns:100px minmax(0,1fr) 94px;column-gap:20px}
 .episode-list .pack-cover{aspect-ratio:1.65}
-.game-shelf,.campaign-shelf .game-shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.game-shelf,.campaign-shelf .game-shelf,.trailer-shelf .game-shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 .game-shelf .pack-actions{flex-direction:row}
 .group-heading{align-items:flex-start;flex-direction:column;gap:8px}
 }
