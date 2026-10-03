@@ -254,7 +254,7 @@ document.getElementById("previewDownload").addEventListener("click", function(){
   var current = previewFiles[previewIndex];
   if (!current) return;
   closePreview();
-  window.archive.askFile(current.file, 'Joe Graves / Season ' + current.season + ' / From episode ' + padEpisode(current.ep) + ' — ' + current.entry.title + (current.entry.parts ? ' / Part ' + current.part : ''));
+  window.archive.askFile(current.file, 'Joe Graves / Season ' + current.season + ' / From episode ' + padEpisode(current.ep) + ' — ' + current.entry.title + (current.entry.parts ? ' / Part ' + current.part : ''), previewOpener);
 });
 function readPreviewLink(){
   var params = new URLSearchParams(location.hash.slice(1));

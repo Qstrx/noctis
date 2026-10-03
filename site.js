@@ -42,6 +42,81 @@
   const downloadGo = $('hitGo');
   let pendingFile = null;
   let downloadOpener = null;
+  let browserNotice = null;
+  let browserNoticeOpener = null;
+  function mobileInAppBrowser() {
+    const ua = navigator.userAgent || '';
+    const mobile = /Android|iPhone|iPad|iPod/i.test(ua) ||
+      (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1) || navigator.userAgentData?.mobile === true;
+    if (!mobile) return false;
+    // A TikTok referrer alone is not evidence: a visitor may already have
+    // opened this page in Safari or Chrome. Use the current browser's signals.
+    const app = /FBAN|FBAV|FB_IAB|Instagram|Snapchat|Twitter|LinkedInApp|Line\/|MicroMessenger|Pinterest|Bytedance|ByteLocale|musical_ly|TikTok|\btrill\b|\bGSA\//i.test(ua);
+    const androidWebView = /Android/i.test(ua) && /;\s*wv\b|Version\/4\.0.*Chrome\//i.test(ua);
+    const iosWebView = /iPhone|iPad|iPod/i.test(ua) && /AppleWebKit/i.test(ua) &&
+      /Mobile\//i.test(ua) && !/Safari\/|CriOS\/|FxiOS\/|EdgiOS\/|OPiOS\/|DuckDuckGo\//i.test(ua);
+    return app || androidWebView || iosWebView;
+  }
+  function warnInAppBrowser(opener) {
+    if (!mobileInAppBrowser()) return false;
+    pendingFile = null;
+    if (downloadDialog?.open) closeDownload();
+    if (!browserNotice) {
+      browserNotice = create('dialog', '', 'transfer-dialog browser-notice');
+      browserNotice.id = 'browserNotice';
+      browserNotice.setAttribute('aria-labelledby', 'browserNoticeTitle');
+      browserNotice.setAttribute('aria-describedby', 'browserNoticeReason browserNoticeSteps');
+      const close = create('button', 'Close', 'browser-notice-close');
+      close.type = 'button';
+      close.addEventListener('click', () => browserNotice.close());
+      const title = create('h2', 'Open in your browser');
+      title.id = 'browserNoticeTitle';
+      const reason = create('p', 'You’re using an in-app browser. Downloads can open as full-screen videos instead of saving to your phone.');
+      reason.id = 'browserNoticeReason';
+      const steps = create('p', '', 'browser-notice-steps');
+      steps.id = 'browserNoticeSteps';
+      steps.append('To download, use the app’s menu and choose ', create('strong', 'Open in browser'), ', or copy this link and open it in Safari or Chrome.');
+      const label = create('label', 'Website link', 'browser-notice-label');
+      label.htmlFor = 'browserNoticeUrl';
+      const url = create('input', '', 'browser-notice-url');
+      url.id = 'browserNoticeUrl';
+      url.type = 'text';
+      url.readOnly = true;
+      url.addEventListener('click', () => url.select());
+      const copy = create('button', 'Copy website link', 'transfer-action');
+      copy.id = 'browserNoticeCopy';
+      copy.type = 'button';
+      const status = create('p', '', 'browser-notice-status');
+      status.id = 'browserNoticeStatus';
+      status.setAttribute('role', 'status');
+      copy.addEventListener('click', async () => {
+        copy.disabled = true;
+        try {
+          if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+          await navigator.clipboard.writeText(url.value);
+          status.textContent = 'Link copied. Paste it into Safari or Chrome to download.';
+        } catch {
+          // Some in-app browsers deny clipboard access. Keep the real URL
+          // visible and selected, with no false success message.
+          status.textContent = 'Touch and hold the link above, choose Copy, then paste it into your browser.';
+          if (browserNotice.open) { url.focus({ preventScroll: true }); url.select(); }
+        } finally { copy.disabled = false; }
+      });
+      browserNotice.append(close, title, reason, steps, label, url, copy, status);
+      browserNotice.addEventListener('click', closeFromBackdrop);
+      browserNotice.addEventListener('close', () => restoreFocus(browserNoticeOpener));
+      document.body.append(browserNotice);
+    }
+    if (!browserNotice.open) browserNoticeOpener = opener || document.activeElement;
+    // Open the collection, rather than immediately reopening a shared preview.
+    const url = new URL(location.href);
+    if (url.hash.startsWith('#preview=')) url.hash = '';
+    $('browserNoticeUrl').value = url.href;
+    $('browserNoticeStatus').textContent = '';
+    if (!browserNotice.open) browserNotice.showModal();
+    $('browserNoticeCopy').focus({ preventScroll: true });
+    return true;
+  }
   function showActionError(message) {
     let error = $('archiveActionError');
     if (!error) {
@@ -117,6 +192,7 @@
   }
   function startDownload() {
     if (!safeFile(pendingFile)) return;
+    if (warnInAppBrowser(downloadOpener)) return;
     const file = pendingFile;
     const opener = downloadOpener;
     const title = $('hitT')?.textContent || file.name || 'Scene pack';
@@ -151,6 +227,7 @@
   }
   function askFile(file, label, opener) {
     if (!safeFile(file)) { showActionError('This file is unavailable. Choose another pack or try again later.'); return; }
+    if (warnInAppBrowser(opener)) return;
     if (!prepareDownload([file], label, opener)) {
       pendingFile = file;
       startDownload();
@@ -163,6 +240,7 @@
   }
   function askFiles(files, label, opener) {
     if (!Array.isArray(files) || !files.length) { showActionError('This pack is unavailable. Choose another pack or try again later.'); return; }
+    if (warnInAppBrowser(opener)) return;
     if (files.length === 1) { askFile(files[0], label, opener); return; }
     if (!files.some(safeFile)) { showActionError('These files are unavailable. Choose another pack or try again later.'); return; }
     if (!prepareDownload(files, label, opener)) { showActionError('The file selector is unavailable. Reload this page and try again.'); return; }
@@ -226,16 +304,6 @@
     }
     window.archive.openPreview(Number(button.dataset.season), Number(button.dataset.episode), 1, button);
   }));
-
-  if (/FBAN|FBAV|FB_IAB|Instagram|Snapchat|Twitter|LinkedInApp|Line\/|MicroMessenger|Pinterest|Bytedance|musical_ly|TikTok|trill/i.test(navigator.userAgent || '') && $('iab')) {
-    $('iab').hidden = false;
-    $('iabClose')?.addEventListener('click', () => { $('iab').hidden = true; });
-    $('iabCopy')?.addEventListener('click', () => {
-      const reveal = () => { $('iabUrl').textContent = location.href; $('iabUrl').hidden = false; };
-      if (navigator.clipboard?.writeText) navigator.clipboard.writeText(location.href).then(reveal, reveal);
-      else reveal();
-    });
-  }
 
   const dialog = $('codPreview');
   const video = $('codVideo');
