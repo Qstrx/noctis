@@ -220,7 +220,7 @@
   function rememberSky() { dispatchEvent(new CustomEvent('oceans:aurora-remember')); }
 
 
-  // A selected photograph fills the view, then settles into its archive header.
+  // The home photograph opens the collection; the archive is revealed in place.
   const world = document.body.dataset.world;
   const passageKey = 'oceans-cinema-transfer';
   let frame = null, passageAnimation = null, pending = null, passageTimer = 0;
@@ -255,14 +255,14 @@
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || link.target === '_blank') return;
     const destination = new URL(link.href,location.href);
     if (destination.origin !== location.origin || !/\/(index|cod|six)\.html$/.test(destination.pathname) || destination.hash || destination.pathname === location.pathname) return;
-    if (world !== 'home' && !destination.pathname.endsWith('/index.html')) { rememberSky(); return; }
+    if (world !== 'home') { rememberSky(); return; }
     if (!enabled() || !main?.animate) { rememberSky(); return; }
     event.preventDefault(); if (pending) return;
     document.body.classList.remove('cinema-intro'); clearPassage();
     const chosen = world === 'home' ? link.dataset.worldChoice : world;
     if (!['cod','six'].includes(chosen)) { rememberSky(); location.assign(destination.href); return; }
     pending = {href:destination.href,world:chosen,opener:link};
-    const source = world === 'home' ? link.querySelector('.choice-photo') : document.querySelector('.collection-portrait');
+    const source = link.querySelector('.choice-photo');
     const rect = source?.getBoundingClientRect();
     if (!rect?.width || !rect.height) { pending=null; rememberSky(); location.assign(destination.href); return; }
     const holder = createFrame(chosen,rect); main.inert = true;
@@ -287,10 +287,7 @@
   function arrive() {
     if (!frame || pending) return;
     if (!enabled()) { clearPassage(); return; }
-    const target = world === 'home' ? choices.find(choice=>choice.dataset.worldChoice === incoming.world)?.querySelector('.choice-photo') : document.querySelector('.collection-portrait');
-    if (!target || !target.getBoundingClientRect().width) { clearPassage(); return; }
-    const destination=rectangle(target.getBoundingClientRect()); destination.borderRadius=getComputedStyle(target).borderRadius;
-    passageAnimation=frame.animate([rectangle(viewport()),destination],{duration:400,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'});
+    passageAnimation=frame.animate([{opacity:1},{opacity:0}],{duration:400,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'});
     passageAnimation.finished.then(()=>{if (!pending) clearPassage();},()=>{});
   }
   if (document.readyState !== 'complete') document.addEventListener('DOMContentLoaded',arrive,{once:true}); else arrive();
