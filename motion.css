@@ -1,0 +1,129 @@
+/* The selected aurora hue gently exposes the next document.
+   A stationary atmosphere becomes opaque for a slow load and dissolves on
+   arrival. One continuous opacity effect keeps every point moving together. */
+.passage-veil {
+  --passage-surface: #07100f;
+  --passage-light: 111, 245, 191;
+  --passage-companion: 96, 181, 190;
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout paint;
+}
+.passage-veil[data-world=cod] {
+  --passage-surface: #100e08;
+  --passage-light: 232, 190, 112;
+  --passage-companion: 141, 166, 91;
+}
+.passage-veil[data-world=six] {
+  --passage-surface: #061019;
+  --passage-light: 127, 202, 244;
+  --passage-companion: 128, 149, 226;
+}
+.passage-curtain {
+  position: absolute;
+  inset: 0;
+  will-change: opacity;
+  background: var(--passage-surface);
+}
+.passage-curtain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 110% 120% at var(--passage-origin, 50%) 110%, rgba(var(--passage-light), .2), transparent 72%),
+    radial-gradient(ellipse 95% 110% at calc(100% - var(--passage-origin, 50%)) -10%, rgba(var(--passage-companion), .13), transparent 75%);
+}
+@media(prefers-reduced-motion:reduce){ .passage-veil { display:none; } }
+/* One underline travels between choices, as in AuroraGrab's .tabs__bar. */
+.site-nav.has-motion-marker { position: relative; }
+.has-motion-marker > a::after { display: none; }
+.nav-marker {
+  position: absolute;
+  left: 0;
+  height: 2px;
+  width: 1px;
+  background: var(--mint);
+  pointer-events: none;
+  transform-origin: left center;
+  transform: translateX(var(--marker-x, 0px)) scaleX(var(--marker-width, 0));
+  transition: transform .35s var(--ease);
+}
+.nav-marker { bottom: 24px; }
+@media (max-width: 760px) { .nav-marker { bottom: 8px; } }
+
+/* Keep the controls' existing color feedback; add source-sized physical feedback. */
+.pack-cover { transition: transform .25s var(--ease), box-shadow .25s ease; }
+.action,
+.dialog-action,
+.dialog-top button,
+.preview-close,
+.preview-dialog button {
+  transition: transform .12s ease, background-color .15s ease,
+    color .15s ease, border-color .15s ease;
+}
+.action svg,
+.dialog-action svg,
+.back-link svg { transition: transform .25s var(--ease); }
+dialog.is-closing { pointer-events: none; }
+@keyframes archive-veil-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes archive-veil-out { from { opacity: 1; } to { opacity: 0; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  body[data-motion=on] dialog[open]::backdrop { animation: archive-veil-in 300ms ease both; }
+  body[data-motion=on] dialog.is-closing::backdrop { animation: archive-veil-out 180ms ease both; }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body:not([data-motion=off]) .pack-card:hover .pack-cover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 26px rgba(0, 0, 0, .45);
+  }
+  body:not([data-motion=off]) .action.primary:hover svg,
+  body:not([data-motion=off]) .dialog-action:hover svg { transform: translateY(2px); }
+  body:not([data-motion=off]) .action[data-preview]:hover svg,
+  body:not([data-motion=off]) .action[data-cod-preview]:hover svg { transform: scale(1.08); }
+  body:not([data-motion=off]) .back-link:hover svg { transform: translateX(-3px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  body:not([data-motion=off]) .pack-card:focus-within .pack-cover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 26px rgba(0, 0, 0, .45);
+  }
+  body:not([data-motion=off]) :is(.action, .dialog-action,
+    .dialog-top button, .preview-close, .preview-dialog button):active:not(:disabled):not([aria-disabled=true]) {
+    transform: scale(.97);
+    transition-duration: .1s;
+  }
+}
+
+/* Reduced motion keeps quick color/fade confirmation and skips travel or scale. */
+body[data-motion=off] :is(.pack-cover,
+  .pack-cover img, .action svg, .dialog-action svg,
+  .back-link svg, .source-notes summary svg,
+  .action, .dialog-action,
+  .dialog-top button, .preview-close, .preview-dialog button) {
+  transform: none !important;
+  transition-property: color, background-color, border-color, opacity !important;
+  transition-duration: 100ms !important;
+}
+body[data-motion=off] .source-notes[open] summary svg { transform: rotate(180deg) !important; }
+body[data-motion=off] .nav-marker { transition: none; }
+html:has(body[data-motion=off]) { scroll-behavior: auto; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.pack-cover, .pack-cover img,
+    .action svg, .dialog-action svg, .back-link svg,
+    .source-notes summary svg, .action, .dialog-action,
+    .dialog-top button, .preview-close, .preview-dialog button) {
+    transform: none !important;
+  }
+  .source-notes[open] summary svg { transform: rotate(180deg) !important; }
+  :is(.site-nav a, .action, .dialog-action,
+    .dialog-top button, .preview-close, .preview-dialog button) {
+    transition-property: color, background-color, border-color, opacity !important;
+    transition-duration: 100ms !important;
+  }
+  .nav-marker { transition: none; }
+}
