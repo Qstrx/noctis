@@ -4,17 +4,14 @@
 .motion-toggle{width:44px;height:44px;min-height:44px;padding:0}
 .motion-toggle .motion-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .brand-caption,.site-footer>span{font-size:12px}
-.back-link{margin:16px 0 14px;min-height:36px}
 .catalog-main{padding-bottom:48px}
-.collection-heading{margin:0;min-height:142px;gap:32px;align-items:center}
-.collection-heading>div:first-child{min-width:0}
-.collection-heading h1{font:300 48px/1.1 var(--display);letter-spacing:-.035em}
-.collection-sub{margin-top:12px;font-size:14px;color:var(--muted)}
-.collection-facts{margin-top:16px;font-size:12px;gap:16px}
-.collection-portrait{position:relative;inset:auto;width:168px;height:118px;flex:0 0 168px;border-radius:12px}
-.collection-portrait img{object-position:50% 39%}
-.collection-portrait::after,.collection-portrait span{display:none}
-.catalog-toolbar{margin-top:24px;padding-bottom:14px}
+.archive-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:28px}
+.archive-location{display:flex;align-items:center;gap:16px;min-width:0}
+.archive-location h1{font:400 24px/1.25 var(--display);letter-spacing:-.025em;white-space:nowrap}
+.archive-location .back-link{margin:0;min-height:44px;font-size:12px}
+.location-divider{color:var(--faint);font-size:14px}
+.archive-quality{color:var(--muted);font-size:12px;line-height:1.5;white-space:nowrap}
+.catalog-toolbar{margin-top:16px;padding-bottom:14px}
 .filter-list{gap:24px}
 .result-count{font-size:12px;margin-top:12px}
 .archive-shelves{display:grid;gap:28px;margin-top:24px}
@@ -24,6 +21,7 @@
 .group-heading h2{font:350 30px/1.15 var(--display);letter-spacing:-.025em}
 .group-heading p{font-size:12px;line-height:1.5}
 .game-shelf{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.campaign-shelf .game-shelf{grid-template-columns:repeat(3,minmax(0,1fr))}
 .game-shelf .pack-card{display:flex;flex-direction:column;padding:0;min-width:0}
 .game-shelf .pack-cover{aspect-ratio:16/10;border-radius:8px}
 .game-shelf .pack-info{margin-top:16px}
@@ -42,19 +40,17 @@
 .game-shelf #full .pack-actions .primary{background:var(--mint);color:var(--mint-ink);border-color:var(--mint)}
 .cover-type{display:none}
 .pack-card:is(:hover,:focus-within) .pack-cover,.pack-card:is(:hover,:focus-within) .pack-cover img{transform:none!important;box-shadow:none!important}
-.campaign-collection{display:flex;flex-direction:column;justify-content:center;gap:28px;border-left:1px solid var(--line);padding-left:24px;min-width:0}
-.campaign-collection h3{font:350 25px/1.2 var(--display);letter-spacing:-.02em}
-.campaign-collection p{font-size:13px;color:var(--muted);line-height:1.65;margin-top:8px}
-.campaign-collection .collection-file-note{margin:0;font-size:12px}
-.campaign-collection .action{width:100%}
 .source-notes{margin-top:24px;max-width:780px}
 .season-collections{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;margin-top:24px}
+.season-collections:has(>.season-collection[hidden]){grid-template-columns:1fr;max-width:840px}
 .season-collection{padding:24px}
-.season-collection .group-heading{display:block;margin-bottom:20px}
-.season-collection .group-heading p{margin-top:10px}
+.season-cover{height:190px;margin:-24px -24px 24px;overflow:hidden;border-radius:15px 15px 0 0;background:var(--panel-strong)}
+.season-cover img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 43%}
+.season-collection .group-heading{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 20px;margin-bottom:20px}
+.season-collection .group-heading p{margin:0;font-variant-numeric:tabular-nums}
 .episode-list{display:grid;grid-template-columns:1fr;gap:0}
-.episode-list .pack-card{display:grid;grid-template-columns:88px minmax(0,1fr) 94px;gap:5px 16px;align-items:center;padding:16px 0;border-top:1px solid var(--line)}
-.episode-list .pack-cover{grid-row:1 / span 2;aspect-ratio:1.4;border-radius:6px}
+.episode-list .pack-card{display:grid;grid-template-columns:96px minmax(0,1fr) 94px;gap:5px 16px;align-items:center;padding:16px 0;border-top:1px solid var(--line)}
+.episode-list .pack-cover{grid-row:1 / span 2;aspect-ratio:1.6;border-radius:6px}
 .episode-list .pack-info{margin:0;align-self:end}
 .episode-list .pack-info h3{font-size:16px}
 .episode-list .pack-info p{display:none}
@@ -69,34 +65,33 @@
 .site-header,.catalog-main,.site-footer{width:calc(100% - 48px)}
 .collection-shelf{padding:24px}
 .game-shelf{gap:18px}
-.game-shelf #full,.campaign-collection{padding-left:18px}
+.game-shelf #full{padding-left:18px}
 .game-shelf .pack-actions{flex-direction:column;gap:6px}
 .season-collections{gap:18px}
 .season-collection{padding:20px}
+.season-cover{margin:-20px -20px 20px;height:170px}
 .episode-list .pack-card{grid-template-columns:64px minmax(0,1fr) 94px;column-gap:12px}
 .episode-list .pack-cover{aspect-ratio:1.1}
 }
 @media(max-width:800px){
 .season-collections{grid-template-columns:1fr}
 .season-collection{padding:24px}
+.season-cover{margin:-24px -24px 24px;height:190px}
 .episode-list .pack-card{grid-template-columns:100px minmax(0,1fr) 94px;column-gap:20px}
 .episode-list .pack-cover{aspect-ratio:1.65}
-.game-shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.game-shelf,.campaign-shelf .game-shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 .game-shelf .pack-actions{flex-direction:row}
-.game-shelf #full,.campaign-collection{border:0;padding-left:0}
-.campaign-collection{padding:20px;gap:18px;background:rgba(111,245,191,.04);border-radius:8px}
+.game-shelf #full{border:0;padding-left:0}
 .group-heading{align-items:flex-start;flex-direction:column;gap:8px}
-.collection-heading h1{font-size:42px}
 }
 @media(max-width:760px){
 .site-header,.catalog-main,.site-footer{width:calc(100% - 40px)}
 .site-header{min-height:110px}
-.collection-heading{min-height:122px;gap:20px}
-.collection-heading h1{font-size:36px}
-.collection-sub{font-size:13px;max-width:26ch;line-height:1.5}
-.collection-facts{gap:8px 14px;margin-top:12px;flex-wrap:wrap}
-.collection-portrait{width:88px;height:110px;flex-basis:88px}
-.catalog-toolbar{margin-top:26px;gap:12px}
+.archive-heading{margin-top:20px;gap:4px;align-items:flex-start;flex-direction:column}
+.archive-location{gap:12px}
+.archive-location h1{font-size:22px}
+.archive-quality{padding-left:0}
+.catalog-toolbar{margin-top:16px;gap:12px}
 .filter-list{gap:22px}
 .search-field{width:100%}
 .collection-shelf,.season-collection{padding:20px}
@@ -107,8 +102,7 @@
 .game-shelf .pack-info p{font-size:12px}
 .game-shelf .pack-actions{flex-direction:column}
 .pack-spec{gap:12px}
-.campaign-collection{padding:16px;gap:16px}
-.campaign-collection h3{font-size:22px}
+.season-cover{margin:-20px -20px 20px;height:150px}
 .season-collection .group-heading{margin-bottom:16px}
 .episode-list .pack-card{grid-template-columns:64px minmax(0,1fr) 94px;column-gap:12px;padding:14px 0}
 .episode-list .pack-cover{aspect-ratio:1.15}
@@ -116,9 +110,8 @@
 .episode-list .pack-spec{gap:12px;font-size:12px}
 }
 @media(max-width:380px){
-.collection-portrait{display:none}
-.collection-heading{min-height:132px}
 .collection-shelf,.season-collection{padding:16px}
+.season-cover{margin:-16px -16px 20px;height:140px}
 .game-shelf{column-gap:12px}
 .pack-info h3{font-size:15px}
 .episode-list .pack-card{grid-template-columns:48px minmax(0,1fr) 94px;column-gap:10px}

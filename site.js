@@ -213,11 +213,6 @@
     if (!pack) { showActionError('This pack is unavailable. Reload this page and try again.'); return; }
     askFiles(pack.files, pack.title + ' / ' + pack.chapter, button);
   }));
-  document.querySelectorAll('[data-download-collection="cutscenes"]').forEach(button => button.addEventListener('click', () => {
-    const packs = typeof COD_PACKS !== 'undefined' ? COD_PACKS.filter(pack => ['cuts1', 'cuts2', 'cuts3'].includes(pack.id)) : [];
-    const files = packs.flatMap(pack => pack.files.map(file => ({ ...file, name: pack.chapter })));
-    askFiles(files, 'All cutscenes / 3 original files', button);
-  }));
   document.querySelectorAll('[data-download-episode]').forEach(button => button.addEventListener('click', event => {
     event.preventDefault();
     const season = Number(button.dataset.season);

@@ -31,22 +31,16 @@ typography:
     letterSpacing: "-.035em"
   headline:
     fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
-    fontSize: "48px"
-    fontWeight: 300
-    lineHeight: 1.1
-    letterSpacing: "-.035em"
+    fontSize: "24px"
+    fontWeight: 400
+    lineHeight: 1.25
+    letterSpacing: "-.025em"
   title:
     fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
     fontSize: "30px"
     fontWeight: 350
     lineHeight: 1.15
     letterSpacing: "-.025em"
-  collection-aside:
-    fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
-    fontSize: "25px"
-    fontWeight: 350
-    lineHeight: 1.2
-    letterSpacing: "-.02em"
   pack-title:
     fontFamily: '"Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif'
     fontSize: "18px"
@@ -62,11 +56,6 @@ typography:
   body:
     fontFamily: '"Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif'
     fontSize: "15px"
-    fontWeight: 400
-    lineHeight: 1.5
-  collection-sub:
-    fontFamily: '"Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif'
-    fontSize: "14px"
     fontWeight: 400
     lineHeight: 1.5
   label:
@@ -184,6 +173,10 @@ components:
     width: "260px"
   navigation:
     textColor: "{colors.muted}"
+  archive-heading:
+    textColor: "{colors.ink}"
+    typography: "{typography.headline}"
+    padding: "0"
   filter:
     textColor: "{colors.muted}"
     padding: "12px 0"
@@ -222,15 +215,15 @@ components:
 
 **Creative North Star: "AuroraGrab Night"**
 
-The pinned AuroraGrab 3.0 reference supplies the real northern sky, Night palette, light Segoe headings and quiet controls. Contained source photographs leave the sky visible; collection shelves and compact season lists make original footage easy to find. This is the user-directed v6 composition within that established world, retaining surface seed provenance `9b05bce6`; it does not imply a new seed selection or aesthetic approval.
+The pinned AuroraGrab 3.0 reference supplies the real northern sky, Night palette, light Segoe headings and quiet controls. Contained home photographs leave the sky visible; compact archive breadcrumbs, collection shelves and illustrated season panels make original footage easy to find. This is the user-directed v7 composition within that established world, retaining surface seed provenance `9b05bce6`; it does not imply a new seed selection or aesthetic approval.
 
 **Key Characteristics:**
 
 - Home contains the brand, a motion icon and two photographed collection links.
-- Call of Duty has two shelves: John Price with the adjacent All in one file, and Cutscenes with a three-file chooser.
-- SIX pairs Season 1 and Season 2 panels containing eight and ten episode rows.
+- Call of Duty has two shelves: John Price with the adjacent All in one file, and Cutscenes with only three campaign files.
+- SIX pairs Season 1 and Season 2 panels, each led by a full-width source still above its heading, containing eight and ten episode rows.
 - Segoe headings stay light; source facts and 44px archive actions remain clear.
-- One photograph travels between home and archive; the main stays visible and the real sky retains its clock and pulse.
+- A home photograph expands and fades to reveal its archive in place; the main stays visible and the real sky retains its clock and pulse.
 
 ## Colors
 
@@ -262,14 +255,13 @@ The exact source-app family stacks are intentional reference fidelity. Light dis
 ### Hierarchy
 
 - **Display:** weight 300, `clamp(40px, 4.3vw, 56px)` / 1.1, tracking `-.035em`; both complete home destination names. Phones and short landscape use 40px.
-- **Headline:** weight 300, 48px / 1.1, tracking `-.035em`; archive collection names. At 800px they become 42px, then 36px at 760px.
+- **Headline:** weight 400, 24px / 1.25, tracking `-.025em`; the collection name beside the archive breadcrumb. Phones use 22px.
 - **Title:** weight 350, 30px / 1.15, tracking `-.025em`; both COD shelf headings and both season headings. Phones use 28px.
-- **Collection aside:** weight 350, 25px / 1.2; All cutscenes. Phones use 22px.
 - **Pack / episode titles:** weight 500, 18px / 1.35 and 16px / 1.35, tracking `-.015em`; COD titles become 16px on phones and 15px at 380px, while episode titles use 15px on phones.
-- **Body / collection subtitle:** 15px / 1.5 and 14px / 1.5; phone subtitles use 13px. Labels, source facts and archive action text use 12px; numbers use tabular figures.
+- **Body / navigation:** body uses 15px / 1.5; main navigation uses 14px. Labels, source facts, breadcrumb links and archive action text use 12px; numbers use tabular figures. Archive introductions and their subtitle role are removed.
 - **Brand / dialogs:** home brand 22px and archive brand 24px, both weight 600. Dialog titles use light 30px text; preview titles use `clamp(24px, 3vw, 36px)`.
 
-The observed 12, 13, 14, 15, 16, 18, 22, 24, 25, 28, 30, 36, 40, 42, 48 and 56px steps reflect these distinct roles and responsive overrides.
+The observed 12, 13, 14, 15, 16, 18, 22, 24, 28, 30, 36, 40 and 56px steps reflect these distinct roles and responsive overrides.
 
 **The Source Voice Rule.** Use the app’s Segoe text and display stacks, with light collection headings and stronger file labels.
 
@@ -277,11 +269,11 @@ The observed 12, 13, 14, 15, 16, 18, 22, 24, 25, 28, 30, 36, 40, 42, 48 and 56px
 
 Home has a 1120px header cap with 48px gutters and an 88px minimum height. Its centered content caps at 784px: two equal columns separated by 56px, each with a `clamp(190px, 25svh, 240px)` photograph and a label below. The main uses 48px top and 120px bottom padding. At 900px the gap is 36px. At 700px, the header has 24px gutters and a 76px height; content caps at 400px and becomes one column with a 28px gap and `clamp(128px, 22svh, 190px)` images. Short phones tighten vertical spacing. Landscape at minimum width 560px and maximum height 540px restores two columns, a 32px gap and 120–170px photographs.
 
-Archives cap at 1240px with 40px gutters. The header is 84px high; the collection introduction is at least 142px high with a 168×118px portrait. The search/filter toolbar precedes the result count and collection panels. At 1100px gutters become 24px; at 760px they become 20px, the archive header is 110px, the portrait is 88×110px, and search spans the available width. Portraits hide at 380px.
+Archives cap at 1240px with 40px gutters. The site header is 84px high. A compact archive heading follows with 28px top spacing: the All collections link, a slash and the collection name share one row, with small source quality facts on the right. The search/filter toolbar follows after 16px, before the result count and collection panels. At 1100px gutters become 24px; at 760px they become 20px, the site header is 110px, heading top spacing becomes 20px, quality facts move below the breadcrumb and search spans the available width. The former description-and-portrait introduction is absent.
 
-Call of Duty has two 28px-padded shelves separated by 28px. Each shelf has four equal positions and a 24px gap: John Price holds MW I, II, III and All in one; Cutscenes holds three campaign files and an All cutscenes chooser. The fourth position has a left divider. At 1100px shelves use 24px padding and 18px gaps. At 800px each shelf becomes two columns and loses its fourth-position divider. At 760px panels use 20px padding, 24×16px gaps and vertically stacked file actions; at 380px padding is 16px and horizontal gaps are 12px.
+Call of Duty has two 28px-padded shelves separated by 28px. John Price has four equal positions with a 24px gap for MW I, II, III and All in one; only the All in one position has a left divider. Cutscenes uses three equal columns for the original campaign files, with no collective chooser. At 1100px shelves use 24px padding and 18px gaps. At 800px both shelves become two columns and the All in one divider disappears. At 760px panels use 20px padding, 24×16px gaps and vertically stacked file actions; at 380px padding is 16px and horizontal gaps are 12px.
 
-SIX uses two season panels side by side with a 24px gap and padding. Each episode row has an 88px still, a flexible title/facts column and a 94px action column, with 16px horizontal gaps and 16px vertical padding. At 1100px stills are 64px and gaps 12px. At 800px panels stack and stills become 100px; at 760px stills return to 64px with 14px row padding, and at 380px they are 48px. Preview and Download remain adjacent 44×44px controls at every width. Panel margins do not compound the grid gaps.
+SIX uses two season panels side by side with a 24px gap and padding. Each opens with a full-width 190px-high source photograph (Season 1: s1-e07; Season 2: s2-e10), followed by a separate heading and the season’s episode count, duration and size. The photographs extend to the inner panel edges; their upper corners are 15px, concentric with the 16px panel corner minus its one-pixel border. Each episode row has a 96px still, a flexible title/facts column and a 94px action column, with 16px horizontal gaps and 16px vertical padding. At 1100px panel padding becomes 20px, cover height 170px, stills 64px and gaps 12px. At 800px panels stack, padding and cover height return to 24px/190px and stills become 100px. At 760px padding is 20px, covers 150px, stills 64px and row padding 14px; at 380px padding is 16px, covers 140px and stills 48px. Preview and Download remain adjacent 44×44px controls at every width. Panel margins do not compound the grid gaps.
 
 ## Elevation & Depth
 
@@ -291,17 +283,17 @@ Dark tonal panels, one-pixel borders and source photographs establish depth over
 
 ## Shapes
 
-Home photographs and collection portraits have 12px corners. COD stills use 8px corners and a 16:10 crop; SIX stills use 6px corners with the responsive ratios in `archive.css`. Archive controls use 8px corners, shelves and season panels 16px, and motion/final-download controls use pill shapes. Source badges remain in the archive markup but are visually suppressed. Photographs are contained rectangles rather than edge-dissolved or masked compositions.
+Home photographs have 12px corners. Season cover photographs have 15px upper corners within the one-pixel border of a 16px panel; archive headings contain no portraits. COD stills use 8px corners and a 16:10 crop; SIX stills use 6px corners with the responsive ratios in `archive.css`. Archive controls use 8px corners, shelves and season panels 16px, and motion/final-download controls use pill shapes. Source badges remain in the archive markup but are visually suppressed. Photographs are contained rectangles rather than edge-dissolved or masked compositions.
 
 ## Components
 
 ### Actions and navigation
 
-Ordinary archive Download controls use mint text, a translucent mint background and a mint border; All in one alone has a solid mint action at rest. Preview, Drive and Choose a file are transparent outlined controls. Buttons are at least 44px high; SIX uses 44×44px icon buttons with inline SVGs, native button semantics, explicit episode-specific accessible names and visually hidden text. The final download dialog action is a solid mint 48px pill. Motion is a 44×44px accessible toggle; its home background is transparent. Native anchors preserve modified-click navigation. Archive navigation and filters retain their selected state and a moving 2px mint underline.
+Ordinary archive Download controls use mint text, a translucent mint background and a mint border; All in one alone has a solid mint action at rest. Preview and Drive are transparent outlined controls. Buttons are at least 44px high; SIX uses 44×44px icon buttons with inline SVGs, native button semantics, explicit episode-specific accessible names and visually hidden text. The final download dialog action is a solid mint 48px pill. Motion is a 44×44px accessible toggle; its home background is transparent. Native anchors preserve modified-click navigation. Archive navigation and filters retain their selected state and a moving 2px mint underline.
 
 ### Collections and source facts
 
-All seven COD packs and 18 SIX episode articles retain original IDs, search data, source facts and file actions. John Price contains three character packs plus the existing combined All in one file. All cutscenes opens a chooser for the three existing Google Drive campaign files; it does not describe or create a combined campaign file. SIX retains duration/size beside every episode; the Season 1 Episode 5 multipart explanation remains visible. Search and filters update hidden and ARIA state immediately, hide empty groups and preserve the result count and empty state.
+All seven COD packs and 18 SIX episode articles retain original IDs, search data, source facts and file actions. John Price contains three character packs plus the existing combined All in one file. Cutscenes exposes the three existing Google Drive campaign files independently. Only John Price has an All in one action; no campaign-wide chooser is present. SIX season covers use the existing source stills without text overlays; their headings and aggregate facts sit below. SIX retains duration/size beside every episode; the Season 1 Episode 5 multipart explanation remains visible. Search and filters update hidden and ARIA state immediately, hide empty groups and preserve the result count and empty state.
 
 ### Fields and dialogs
 
@@ -309,11 +301,11 @@ Search is a 260px-wide, 42px-high outlined field with an 8px radius and a mint f
 
 ### Photographic passage and sky
 
-Only the chosen photograph travels. A fixed decorative frame expands from the current photo rectangle to the viewport in 300ms with `cubic-bezier(.32,0,.16,1)` and holds until document replacement. The destination creates its full-viewport frame before first paint, then settles it into the actual archive portrait or home photograph in 400ms with `cubic-bezier(.16,1,.3,1)`. A one-use six-second session record connects the documents. The main remains at opacity 1 with no page transform or clipping; direct loads show their content immediately without a photographic entrance or blur. Archive-to-archive links navigate immediately.
+Only the chosen photograph travels. A fixed decorative frame expands from the current photo rectangle to the viewport in 300ms with `cubic-bezier(.32,0,.16,1)` and holds until document replacement. The destination creates its full-viewport frame before first paint, then fades that frame away over 400ms with `cubic-bezier(.16,1,.3,1)` to reveal the archive in place. A one-use six-second session record connects the documents. The main remains at opacity 1 with no page transform or clipping; direct loads show their content immediately without a photographic entrance or blur. Archive-to-home and archive-to-archive links navigate immediately; no destination portrait or reverse photographic morph is required.
 
 Pause commits pending navigation immediately and removes the frame; reduced motion uses normal anchors. Escape before departure commits cancels travel and restores the link focus. Back restoration clears the frame and inert state. Storage failure leaves destination content visible. Filter movement uses 350ms; newly visible articles reveal over 400ms with at most five 30ms offsets, without an initial page stagger. Home image/color feedback uses 350ms; arrow color uses 180ms and shifts 4px. Action feedback uses 150ms colors and 120ms transforms, with a 100ms active press; reduced/manual motion disables travel/physical feedback and keeps brief color confirmation.
 
-The actual shader keeps the established resting artwork. Hover/focus raises its target energy from .35 to .6; selection/filter changes can trigger a 1300ms pulse and energy 1.35. A separate one-use five-second record transfers actual shader time, energy and pulse progress; time advances by .735 units per second. Ambient work is capped at 30fps, or 20fps at 700px and below, and suspends for hidden documents, paused/reduced motion, open previews and context loss. Context restoration rebuilds the WebGL resources; unavailable WebGL exposes the static CSS sky. No shader entrance is run in v6.
+The actual shader keeps the established resting artwork. Hover/focus raises its target energy from .35 to .6; selection/filter changes can trigger a 1300ms pulse and energy 1.35. A separate one-use five-second record transfers actual shader time, energy and pulse progress; time advances by .735 units per second. Ambient work is capped at 30fps, or 20fps at 700px and below, and suspends for hidden documents, paused/reduced motion, open previews and context loss. Context restoration rebuilds the WebGL resources; unavailable WebGL exposes the static CSS sky. No shader entrance is run in v7.
 
 ## Do's and Don'ts
 
@@ -329,7 +321,7 @@ The actual shader keeps the established resting artwork. Hover/focus raises its 
 ### Don't:
 
 - **Don't** restore oversized cinema lettering, full-window home photographs, intro blur, a clipped sky gate or whole-page fade/scale.
-- **Don't** describe the campaign chooser as a combined file or add an eighth COD pack.
+- **Don't** add a campaign-wide chooser, campaign All in one or an eighth COD pack.
 - **Don't** reintroduce cover lift/scale, visible source badges or stacked margins between collection panels.
 - **Don't** turn direct loading or browsing into an animation prerequisite.
 - **Don't** present superseded ship verdicts or the retained seed as fresh aesthetic approval.
