@@ -1,4 +1,4 @@
-/* A single credited name, carried by the same world-colored AuroraGrab sky. */
+/* The source scene and the creator share one quiet, world-colored stage. */
 dialog.credit-screen {
   position: fixed;
   inset: 0;
@@ -8,50 +8,51 @@ dialog.credit-screen {
   max-width: none;
   max-height: none;
   margin: 0;
-  padding: 80px 24px;
+  padding: 80px 40px 56px;
   border: 0;
   border-radius: 0;
   box-shadow: none;
   overflow: auto;
   overscroll-behavior: contain;
   color: var(--ink);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--sky-bg) 74%, transparent), color-mix(in srgb, var(--sky-bg) 34%, transparent) 55%, color-mix(in srgb, var(--sky-bg) 76%, transparent));
+  background: color-mix(in srgb, var(--sky-bg) 82%, transparent);
   isolation: isolate;
 }
 dialog.credit-screen[open] { display: grid; place-items: center; }
 dialog.credit-screen::backdrop { background: transparent; backdrop-filter: none; }
-body:has(.credit-screen) > :is(main,.site-header,.site-footer) { transition: opacity 320ms ease; }
+body[data-motion] dialog.credit-screen[open]::backdrop { animation: none; }
+body:has(.credit-screen) > :is(main,.site-header,.site-footer) { transition: opacity 300ms ease; }
 body[data-credit=open] > main,
 body[data-credit=open] > .site-header,
 body[data-credit=open] > .site-footer { opacity: 0; }
 .credit-lights { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
 .credit-light {
   position: absolute;
-  left: 50%;
-  width: min(1600px, 180vw);
-  height: clamp(220px, 36vw, 500px);
-  margin-left: max(-800px, -90vw);
-  filter: blur(16px);
-  background: linear-gradient(180deg, transparent 18%, color-mix(in srgb, var(--accent) 8%, transparent) 37%, color-mix(in srgb, var(--accent) 28%, transparent) 51%, color-mix(in srgb, var(--accent) 7%, transparent) 64%, transparent 82%);
+  top: -40%;
+  left: -45vw;
+  width: clamp(380px, 50vw, 760px);
+  height: 180%;
+  opacity: 0;
+  transform: translateX(155vw) rotate(-20deg);
+  filter: blur(36px);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 20%, transparent) 47%, color-mix(in srgb, var(--accent) 10%, transparent) 60%, transparent);
 }
-.credit-light-one { top: 18%; opacity: .28; transform: translate(7%, -5%) rotate(-18deg); }
-.credit-light-two { top: 46%; opacity: .18; transform: translate(-6%, -4%) rotate(16deg); }
-.credit-composition { width: min(640px, 100%); text-align: center; position: relative; }
-.credit-heading { font-family: var(--display); margin: 0; font-weight: 400; }
-.credit-prelude { display: block; color: var(--muted); font-family: var(--font); font-size: 19px; line-height: 1.5; font-weight: 400; letter-spacing: 0; }
-.credit-name { display: block; margin-top: 12px; font-size: clamp(64px, 10vw, 96px); font-weight: 400; line-height: 1.05; letter-spacing: -.04em; }
-.credit-platform { display: block; margin-top: 16px; font-family: var(--font); font-size: 20px; line-height: 1.4; font-weight: 400; letter-spacing: -.01em; }
-.credit-account { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 8px; padding: 4px 8px; font-family: var(--font); font-size: 16px; line-height: 1.5; color: var(--accent); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 4px; transition: text-decoration-color 150ms ease; }
-.credit-account:hover { text-decoration-color: currentColor; }
-.credit-account:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 8px; }
-.credit-wave { display: block; width: min(360px, 85%); height: 32px; margin: 22px auto 0; overflow: visible; color: var(--accent); }
-.credit-wave path { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 1; }
-.credit-wave-flow { opacity: 0; stroke-dashoffset: 0; }
-.credit-wave-line { opacity: 1; stroke-dashoffset: 0; }
+.credit-composition { width: min(1040px, 100%); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: center; position: relative; }
+.credit-source { margin: 0; min-width: 0; }
+.credit-source[hidden] { display: none; }
+.credit-poster { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 4px; }
+.credit-source-title { margin-top: 16px; max-width: 38ch; font-family: var(--font); font-size: 15px; font-weight: 400; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
+.credit-copy { min-width: 0; }
+.credit-heading { max-width: 22ch; margin: 0; font-family: var(--display); font-size: clamp(28px, 2.8vw, 36px); font-weight: 400; line-height: 1.25; letter-spacing: -.025em; text-wrap: balance; }
+.credit-account { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; margin-top: 20px; font-family: var(--display); font-size: clamp(32px, 4.1vw, 56px); font-weight: 400; line-height: 1.2; letter-spacing: -.025em; color: var(--accent); text-decoration: none; }
+.credit-account span { text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 30%, transparent); text-decoration-thickness: 1px; text-underline-offset: 8px; transition: text-decoration-color 150ms ease; }
+.credit-account svg { width: 24px; height: 24px; flex: 0 0 24px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.credit-account:hover span { text-decoration-color: currentColor; }
+.credit-account:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 4px; }
 .credit-close,
 .credit-continue { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line-strong); border-radius: 8px; color: var(--ink); background: color-mix(in srgb, var(--sky-bg) 58%, transparent); transition: background 150ms ease, border-color 150ms ease; }
 .credit-close { position: absolute; top: 24px; right: 24px; width: 44px; height: 44px; padding: 0; }
-.credit-continue { min-height: 48px; gap: 16px; margin-top: 40px; padding: 12px 22px; font-size: 14px; font-weight: 500; line-height: 1.5; }
+.credit-continue { min-height: 48px; gap: 16px; margin-top: 36px; padding: 12px 20px; font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.5; }
 .credit-close svg,
 .credit-continue svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .credit-close:hover,
@@ -60,24 +61,29 @@ body[data-credit=open] > .site-footer { opacity: 0; }
 .credit-continue:active { background: color-mix(in srgb, var(--accent) 16%, var(--sky-bg)); }
 .credit-close:focus-visible,
 .credit-continue:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-@media (max-width: 600px) {
-  dialog.credit-screen { padding: 80px 24px; }
+.credit-without-source { grid-template-columns: 1fr; max-width: 560px; }
+@media (max-width: 640px) {
+  dialog.credit-screen { padding: 80px 24px 36px; }
   .credit-close { top: 20px; right: 20px; }
-  .credit-prelude { font-size: 17px; }
-  .credit-name { font-size: clamp(64px, 18vw, 88px); }
-  .credit-platform { font-size: 18px; }
-  .credit-light { filter: blur(12px); }
+  .credit-composition { grid-template-columns: 1fr; gap: 28px; max-width: 420px; }
+  .credit-poster { max-height: 150px; }
+  .credit-source-title { margin-top: 12px; font-size: 14px; }
+  .credit-heading { font-size: 28px; }
+  .credit-account { font-size: clamp(32px, 8vw, 40px); margin-top: 18px; gap: 12px; }
+  .credit-account svg { width: 20px; height: 20px; flex-basis: 20px; }
+  .credit-continue { margin-top: 28px; }
 }
-@media (max-height: 560px) {
-  dialog.credit-screen { padding: 64px 24px 24px; }
-  .credit-prelude { font-size: 16px; }
-  .credit-name { margin-top: 6px; font-size: 64px; }
-  .credit-platform { margin-top: 8px; font-size: 16px; }
-  .credit-wave { margin-top: 10px; height: 24px; }
-  .credit-continue { margin-top: 20px; }
+@media (max-height: 560px) and (min-width: 641px) {
+  dialog.credit-screen { padding: 72px 32px 24px; }
+  .credit-composition { max-width: 920px; grid-template-columns: 1fr 1.1fr; gap: 40px; }
+  .credit-poster { max-height: 180px; }
+  .credit-source-title { margin-top: 10px; font-size: 14px; }
+  .credit-heading { font-size: 28px; }
+  .credit-account { margin-top: 14px; font-size: 36px; }
+  .credit-continue { margin-top: 22px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .credit-close, .credit-continue { transition-duration: 100ms; }
+  .credit-close, .credit-continue, .credit-account span { transition-duration: 100ms; }
   body:has(.credit-screen) > :is(main,.site-header,.site-footer) { transition-duration: 100ms; }
 }
 body[data-motion=off]:has(.credit-screen) > :is(main,.site-header,.site-footer) { transition-duration: 100ms; }

@@ -119,7 +119,7 @@
         const onePart = files.length === 1 && episode.parts;
         return {
           title: episode.title,
-          context: `SIX · Season ${String(season).padStart(2, '0')} · Episode ${String(episode.ep).padStart(2, '0')}` + (onePart ? ` · Part ${firstFile.part}` : ''),
+          context: `Joe Graves scenes · SIX · S${String(season).padStart(2, '0')} E${String(episode.ep).padStart(2, '0')}` + (onePart ? ` · Part ${firstFile.part}` : ''),
           facts: [onePart ? firstFile.run : episode.run, onePart ? firstFile.size : episode.size, '1080p · 24 fps'].filter(Boolean).join(' · '),
           poster: cover?.getAttribute('src') || `img/six/s${season}-e${String(episode.ep).padStart(2, '0')}.jpg`
         };
@@ -142,6 +142,7 @@
     const file = pendingFile;
     const opener = downloadOpener;
     const title = $('hitT')?.textContent || file.name || 'Scene pack';
+    const poster = $('hitCover')?.getAttribute('src') || '';
     pendingFile = null;
     const link = document.createElement('a');
     link.href = file.url;
@@ -152,7 +153,7 @@
     link.click();
     link.remove();
     closeDownload();
-    window.archiveCredit?.show({ opener, title, provider: new URL(file.url).hostname });
+    window.archiveCredit?.show({ opener, title, poster, provider: new URL(file.url).hostname });
   }
   function prepareDownload(files, label, opener) {
     if (!downloadDialog || !choices || !downloadGo) return false;
@@ -237,8 +238,8 @@
     event.preventDefault();
     const season = Number(button.dataset.season);
     const episode = typeof EPISODES !== 'undefined' && EPISODES[season]?.find(item => item.ep === Number(button.dataset.downloadEpisode));
-    if (!episode) { showActionError('This episode is unavailable. Reload this page and try again.'); return; }
-    askFiles(episode.parts || [episode], `Six / Season ${String(season).padStart(2, '0')} / Episode ${String(episode.ep).padStart(2, '0')} / ${episode.title}`, button);
+    if (!episode) { showActionError('This scene pack is unavailable. Reload this page and try again.'); return; }
+    askFiles(episode.parts || [episode], `Joe Graves scenes / SIX / Season ${String(season).padStart(2, '0')} / Episode ${String(episode.ep).padStart(2, '0')} / ${episode.title}`, button);
   }));
   document.querySelectorAll('[data-preview]').forEach(button => button.addEventListener('click', () => {
     if (typeof window.archive.openPreview !== 'function') {
