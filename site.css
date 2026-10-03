@@ -71,7 +71,7 @@ button svg, a svg, summary svg { width: 20px; height: 20px; flex: 0 0 20px; }
 .sky { position: fixed; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; background: linear-gradient(180deg, var(--sky-top), var(--sky-mid) 55%, var(--sky-horizon) 88%, var(--sky-bg)); }
 #auroraCanvas, .aurora-details { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 .sky-veil { position: absolute; z-index: 2; inset: 0; background: linear-gradient(180deg, rgba(2,6,11,.15), transparent 45%, rgba(2,6,11,.22)); }
-.site-header, main, .site-footer { position: relative; z-index: 1; }
+.site-header, main { position: relative; z-index: 1; }
 .site-header { display: flex; align-items: center; justify-content: space-between; gap: 28px; width: min(1280px, calc(100% - 96px)); margin: 0 auto; min-height: 100px; border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 24px; letter-spacing: -.035em; line-height: 1; }
 .brand .brand-mark { width: 31px; height: 31px; color: var(--mint); flex: 0 0 31px; }
@@ -81,17 +81,10 @@ button svg, a svg, summary svg { width: 20px; height: 20px; flex: 0 0 20px; }
 .site-nav a::after { content: ""; position: absolute; height: 2px; background: var(--mint); bottom: 24px; left: 0; right: 0; transform: scaleX(0); transition: transform .35s var(--ease); }
 .site-nav a[aria-current], .site-nav a:hover { color: var(--ink); }
 .site-nav a[aria-current]::after { transform: scaleX(1); }
-.motion-toggle { display: flex; align-items: center; justify-content: center; gap: 9px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; min-height: 38px; padding: 8px 14px; color: var(--muted); font-size: 12px; transition: background .15s, color .15s; }
-.motion-toggle svg { width: 15px; height: 15px; flex-basis: 15px; }
-.motion-toggle[aria-pressed=true] { color: var(--mint); }
-.motion-toggle:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--ink); }
 .home-main, .catalog-main { width: min(1280px, calc(100% - 96px)); margin: 0 auto; }
 h1, h2, h3, p { margin: 0; }
 h1, h2 { font-family: var(--display); }
 .mint-dot { color: var(--mint); }
-.site-footer { width: min(1280px, calc(100% - 96px)); margin: 0 auto; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 32px; padding: 24px 0 32px; font-size: 12px; color: var(--muted); }
-.footer-brand { color: var(--ink); font-size: 18px; font-weight: 600; letter-spacing: -.035em; }
-.site-footer > span { margin-left: auto; font-size: 11px; }
 .back-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 30px; color: var(--muted); font-size: 12px; min-height: 36px; }
 .back-link:hover { color: var(--mint); }
 .back-link svg { width: 16px; height: 16px; flex-basis: 16px; }
@@ -187,22 +180,19 @@ body:has(dialog[open]) { overflow: hidden; }
 .no-script { position: relative; z-index: 1; padding: 24px; text-align: center; background: var(--panel-strong); color: var(--muted); }
 @media (min-width: 1600px) { .home-intro { padding-top: 80px; } .collection-door { min-height: 430px; } }
 @media (max-width: 1100px) {
-  .site-header, .home-main, .catalog-main, .site-footer { width: calc(100% - 64px); }
+  .site-header, .home-main, .catalog-main { width: calc(100% - 64px); }
   .site-nav { gap: 24px; }
   .pack-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
   .preview-jump { margin-left: 0; }
 }
 @media (max-width: 760px) {
-  .site-header, .home-main, .catalog-main, .site-footer { width: calc(100% - 40px); }
+  .site-header, .home-main, .catalog-main { width: calc(100% - 40px); }
   .site-header { min-height: 116px; flex-wrap: wrap; gap: 0; padding-top: 20px; }
   .brand { font-size: 22px; }
   .brand-caption { font-size: 11px; }
-  .motion-toggle { margin-left: auto; min-height: 36px; }
   .site-nav { order: 3; width: 100%; height: 56px; gap: 28px; }
   .site-nav a { font-size: 13px; }
   .site-nav a::after { bottom: 8px; }
-  .site-footer { padding: 22px 0 30px; gap: 10px 20px; flex-wrap: wrap; }
-  .site-footer > span { margin-left: 0; flex-basis: 100%; }
   .source-notes { margin-top: 14px; }
   .group-heading { align-items: flex-start; flex-direction: column; gap: 5px; margin-bottom: 16px; }
   .group-heading h2 { font-size: 22px; }

@@ -22,36 +22,14 @@
   }
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  let motionPreference = 'on';
-  try {
-    const saved = localStorage.getItem('oceans-motion');
-    if (saved === 'on' || saved === 'off') motionPreference = saved;
-  } catch { /* Private browsing may make storage unavailable. */ }
   const previewDialogs = [...document.querySelectorAll('#preview, #codPreview')];
   function syncMotion() {
-    const enabled = motionPreference !== 'off' && !reducedMotion.matches;
+    const enabled = !reducedMotion.matches;
     const previewOpen = previewDialogs.some(dialog => dialog.open);
     document.body.dataset.motion = enabled ? 'on' : 'off';
     document.body.classList.toggle('preview-open', previewOpen);
-    document.querySelectorAll('.motion-toggle').forEach(button => {
-      button.setAttribute('aria-pressed', String(enabled));
-      button.disabled = reducedMotion.matches;
-      button.title = reducedMotion.matches ? 'Motion is off because of your device accessibility setting.' : 'Pause or resume animations';
-      const label = button.querySelector('.motion-label');
-      if (label) label.textContent = enabled ? 'Motion on' : 'Motion paused';
-      button.setAttribute('aria-label', enabled ? 'Pause animations' : 'Resume animations');
-      const icon = button.querySelector('svg path');
-      if (icon) icon.setAttribute('d', enabled ? 'M9 5v14M15 5v14' : 'M8 5l10 7-10 7Z');
-    });
     window.dispatchEvent(new CustomEvent('oceans:motion', { detail: { enabled: enabled && !previewOpen } }));
   }
-  document.querySelectorAll('.motion-toggle').forEach(button => {
-    button.addEventListener('click', () => {
-      motionPreference = motionPreference === 'off' ? 'on' : 'off';
-      try { localStorage.setItem('oceans-motion', motionPreference); } catch {}
-      syncMotion();
-    });
-  });
   reducedMotion.addEventListener('change', syncMotion);
   previewDialogs.forEach(dialog => {
     new MutationObserver(syncMotion).observe(dialog, { attributes: true, attributeFilter: ['open'] });

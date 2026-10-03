@@ -49,7 +49,7 @@ colors:
 typography:
   display:
     fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
-    fontSize: "clamp(40px, 4.3vw, 56px)"
+    fontSize: "clamp(40px, 4.3vw, 50px)"
     fontWeight: 300
     lineHeight: 1.1
     letterSpacing: "-.035em"
@@ -139,7 +139,6 @@ rounded:
   control: "8px"
   media: "12px"
   panel: "16px"
-  pill: "999px"
 spacing:
   compact: "6px"
   small: "8px"
@@ -202,20 +201,6 @@ components:
     rounded: "{rounded.control}"
     padding: "12px 20px"
     height: "48px"
-  button-motion:
-    backgroundColor: "{colors.panel}"
-    textColor: "{colors.muted}"
-    rounded: "{rounded.pill}"
-    padding: "0"
-    height: "44px"
-    width: "44px"
-  button-home-motion:
-    backgroundColor: "transparent"
-    textColor: "{colors.muted}"
-    rounded: "{rounded.pill}"
-    padding: "0"
-    height: "44px"
-    width: "44px"
   navigation:
     textColor: "{colors.muted}"
   archive-heading:
@@ -278,7 +263,7 @@ The pinned AuroraGrab 3.0 reference supplies the real northern sky, mint home fo
 
 **Key Characteristics:**
 
-- Home contains the brand, a motion icon and two photographed collection links.
+- Home contains the brand and two photographed collection links with 40–50px names; home arrows, manual animation controls and site footers are absent.
 - Call of Duty has two shelves: John Price with the adjacent All in one file, and Cutscenes with only three campaign files.
 - SIX identifies Joe Graves and pairs Season 1 and Season 2 panels, each led by a full-width source still above its heading, containing eight and ten character scene packs with original source episode names and “From episode NN” provenance.
 - Archive titles use a consistent 500 weight, facts use 400 and the brand uses 600; light home names and 44px archive actions remain clear.
@@ -317,7 +302,7 @@ The exact source-app family stacks are intentional reference fidelity. Light dis
 
 ### Hierarchy
 
-- **Display:** weight 300, `clamp(40px, 4.3vw, 56px)` / 1.1, tracking `-.035em`; both complete home destination names. Phones and short landscape use 40px.
+- **Display:** weight 300, `clamp(40px, 4.3vw, 50px)` / 1.1, tracking `-.035em`; both complete home destination names. Phones and short landscape use 40px.
 - **Headline:** weight 500, 22px / 1.25, tracking `-.02em`; the collection name beside the archive breadcrumb at every width.
 - **Title:** weight 500, 28px / 1.2, tracking `-.02em`; both COD shelf headings and both season headings at every width.
 - **Pack titles:** weight 500, 18px / 1.4, tracking `-.01em`; COD titles become 16px on phones and 15px at 380px.
@@ -333,7 +318,7 @@ The observed steps serve these distinct source, navigation, heading and credit r
 
 ## Layout
 
-Home has a 1120px header cap with 48px gutters and an 88px minimum height. Its centered content caps at 784px: two equal columns separated by 56px, each with a `clamp(190px, 25svh, 240px)` photograph and a label below. The main uses 48px top and 120px bottom padding. At 900px the gap is 36px. At 700px, the header has 24px gutters and a 76px height; content caps at 400px and becomes one column with a 28px gap and `clamp(128px, 22svh, 190px)` images. Short phones tighten vertical spacing. Landscape at minimum width 560px and maximum height 540px restores two columns, a 32px gap and 120–170px photographs.
+Home has a 1120px header cap with 48px gutters and an 88px minimum height. Its centered content caps at 784px: two equal columns separated by 56px, each with a `clamp(190px, 25svh, 240px)` photograph and a label 18px below, with 8px bottom padding and no arrow. The main uses 48px top and 120px bottom padding. At 900px the gap is 36px. At 700px, the header has 24px gutters and a 76px height; content caps at 400px and becomes one column with a 28px gap and `clamp(128px, 22svh, 190px)` images; label top padding is 14px. Short phones tighten vertical spacing. Landscape at minimum width 560px and maximum height 540px restores two columns, a 32px gap, 120–170px photographs and 14px label top padding. All three pages omit the animation toggle and site footer.
 
 Archives cap at 1240px with 40px gutters. The site header is 84px high. A compact archive heading follows with 28px top spacing: the All collections link, a slash and the collection name share one row, with small source quality facts on the right. Collection panels begin 28px below the heading, with no catalog toolbar or count in between. At 1100px gutters become 24px; at 760px they become 20px, the site header is 110px, heading top spacing becomes 20px and quality facts move below the breadcrumb. The former description-and-portrait introduction is absent.
 
@@ -351,13 +336,13 @@ Scoped dark tonal panels, one-pixel borders and source photographs establish dep
 
 ## Shapes
 
-Home photographs have 12px corners. Season cover photographs have 15px upper corners within the one-pixel border of a 16px panel; archive headings contain no portraits. COD stills use 8px corners and a 16:10 crop; SIX stills use 6px corners with the responsive ratios in `archive.css`. The selected credit still uses 4px corners and a 16:10 crop. Archive and file-panel controls use 8px corners; shelves, season panels and dialogs use 16px. Only the motion toggle uses a pill shape. Source badges remain in the archive markup but are visually suppressed. Photographs settle as contained rectangles; the credit still’s bounded entrance reveals its right edge without changing the resting crop.
+Home photographs have 12px corners. Season cover photographs have 15px upper corners within the one-pixel border of a 16px panel; archive headings contain no portraits. COD stills use 8px corners and a 16:10 crop; SIX stills use 6px corners with the responsive ratios in `archive.css`. The selected credit still uses 4px corners and a 16:10 crop. Archive and file-panel controls use 8px corners; shelves, season panels and dialogs use 16px. Source badges remain in the archive markup but are visually suppressed. Photographs settle as contained rectangles; the credit still’s bounded entrance reveals its right edge without changing the resting crop.
 
 ## Components
 
 ### Actions and navigation
 
-Ordinary archive Download controls use the collection accent, a 10% translucent accent background and 30% accent border; All in one alone has a solid accent action at rest. Preview is a transparent outlined control. Cutscene cards have only Download; their redundant Drive control is removed. Buttons are at least 44px high; SIX uses adjacent 44×44px icon buttons with inline SVGs, native button semantics, explicit episode-specific accessible names and visually hidden text. The final file-panel action is 48px high with 8px corners and solid collection accent. Motion is a 44×44px accessible toggle; its home background is transparent. Native anchors preserve modified-click navigation. Main navigation keeps its selected state and a moving 2px collection-accent underline; there is no catalog filter navigation.
+Ordinary archive Download controls use the collection accent, a 10% translucent accent background and 30% accent border; All in one alone has a solid accent action at rest. Preview is a transparent outlined control. Cutscene cards have only Download; their redundant Drive control is removed. Buttons are at least 44px high; SIX uses adjacent 44×44px icon buttons with inline SVGs, native button semantics, explicit episode-specific accessible names and visually hidden text. The final file-panel action is 48px high with 8px corners and solid collection accent. Native anchors preserve modified-click navigation. Main navigation keeps its selected state and a moving 2px collection-accent underline; there is no catalog filter navigation. Motion follows the device’s reduced-motion preference; no manual control or stored pause setting remains.
 
 ### Collections and source facts
 
@@ -375,22 +360,22 @@ Hover or keyboard focus samples the chosen photograph’s normalized horizontal 
 
 A fixed `.passage-veil` contains one `.passage-curtain`, colored for the chosen collection. It stays fixed to the viewport and fades from opacity 0 to 1 over 700ms, with `cubic-bezier(.45,0,.2,1)` and two broad collection-colored light fields. Its opaque final frame covers slow document loading. A one-use six-second record carries the world, origin and destination; the destination creates the same atmosphere before first paint and fades from opacity 1 to 0 over 800ms with the same easing. No translation or intermediate opacity knee remains. There is no traveling photograph. Main stays at opacity 1 without transform or clipping, becoming inert only during departure. Direct loads, archive-to-home and archive-to-archive navigation are immediate.
 
-Pause commits pending navigation immediately and removes the curtain; reduced motion uses normal anchors and settled collection colors. Escape before departure commits cancels the passage and restores link focus. Back restoration clears the curtain and inert state. Storage failure leaves destination content visible. Home image feedback uses 350ms; arrow color uses 180ms and shifts 4px. Action feedback uses 150ms colors and 120ms transforms, with a 100ms active press. Reduced/manual motion disables travel and physical feedback, retaining brief color confirmation.
+Reduced motion uses normal anchors and settled collection colors; device preference changes update motion immediately. Escape before departure commits cancels the passage and restores link focus. Back restoration clears the curtain and inert state. Storage failure leaves destination content visible. Home image feedback uses 350ms. Action feedback uses 150ms colors and 120ms transforms, with a 100ms active press. Reduced motion disables travel and physical feedback, retaining brief color confirmation. Opening a preview suspends ambient motion, and hidden documents settle active work.
 
-The actual shader keeps the established artwork. Hover/focus raises its target energy from .35 to .6; selection and the credit entrance can trigger a broad 1300ms pulse. Its light wave uses a .18 width and .55 peak contribution; a .45 sine-squared energy breath rises and falls smoothly through the existing energy interpolation, without an immediate energy jump. A separate one-use five-second record transfers shader time, energy, pulse progress and the palette’s from/to arrays, progress, duration, world and origin; time advances by .735 units per second. Ambient work is capped at 30fps, or 20fps at 700px and below, and suspends for hidden documents, paused/reduced motion, open previews and context loss. Context restoration rebuilds WebGL resources; unavailable WebGL exposes the scoped static CSS sky. No initial shader entrance runs.
+The actual shader keeps the established artwork. Hover/focus raises its target energy from .35 to .6; selection and the credit entrance can trigger a broad 1300ms pulse. Its light wave uses a .18 width and .55 peak contribution; a .45 sine-squared energy breath rises and falls smoothly through the existing energy interpolation, without an immediate energy jump. A separate one-use five-second record transfers shader time, energy, pulse progress and the palette’s from/to arrays, progress, duration, world and origin; time advances by .735 units per second. Ambient work is capped at 30fps, or 20fps at 700px and below, and suspends for hidden documents, device reduced motion, open previews and context loss. Context restoration rebuilds WebGL resources; unavailable WebGL exposes the scoped static CSS sky. No initial shader entrance runs.
 
 ### Full-screen credit reminder
 
 After the original file action, a reused native dialog covers the viewport. Its left region shows the actual selected local source still and title; its right region reads the complete sentence “Remember to credit Ocean on TikTok.”, followed by the prominent supplied @oceanxaep profile link and Continue browsing. Page furniture fades away over 300ms while the real collection sky remains visible through a field made from 82% collection sky color and transparency. The photo uses a 16:10 crop and 4px corners; the sentence and handle use the roles in Typography, and the responsive composition follows Layout. The close control is 44px, Continue browsing is at least 48px high, and both have outlined 8px corners. The dialog waits for Continue browsing, close or Escape and restores the original archive control. The profile opens https://www.tiktok.com/@oceanxaep in a new tab, with no timer or completed-download claim.
 
-Its single bounded entrance uses 300ms dialog opacity, an 800ms photo reveal from a 24% right inset with contrast .9 to the resting image, a 680ms copy reveal after 80ms from 10px vertical movement, and one 1000ms collection-colored light sweep. These effects and the 160ms dismissal use cubic-bezier(.16,1,.3,1); no decorative loop or SVG wave runs. Reduced or paused motion exposes the settled sentence, source and controls from the first frame, with a 100ms opacity confirmation. Hidden tabs and preference changes cancel active decoration and settle to CSS; repeated requests reuse one native dialog. Only same-origin image paths containing `/img/` become source requests, and the selected title is assigned with textContent.
+Its single bounded entrance uses 300ms dialog opacity, an 800ms photo reveal from a 24% right inset with contrast .9 to the resting image, a 680ms copy reveal after 80ms from 10px vertical movement, and one 1000ms collection-colored light sweep. These effects and the 160ms dismissal use cubic-bezier(.16,1,.3,1); no decorative loop or SVG wave runs. Device reduced motion exposes the settled sentence, source and controls from the first frame, with a 100ms opacity confirmation. Hidden tabs and preference changes cancel active decoration and settle to CSS; repeated requests reuse one native dialog. Only same-origin image paths containing `/img/` become source requests, and the selected title is assigned with textContent.
 
 ## Do's and Don'ts
 
 ### Do:
 
 - **Do** preserve the pinned AuroraGrab Night artwork and exact Segoe family stacks, using the approved mint home, amber/olive COD and ice-blue/navy SIX variants.
-- **Do** keep both home choices equally clear with contained photographs and 40–56px names.
+- **Do** keep both home choices equally clear with contained photographs, 40–50px names and 18px label spacing, becoming 14px on phones and short landscape.
 - **Do** keep John Price and Cutscenes as two shelves, with the existing All in one file beside the Price trilogy.
 - **Do** keep the eight- and ten-scene-pack season panels, Joe Graves identity, original source episode names, secondary “From episode NN” provenance and adjacent 44×44px actions accessible.
 - **Do** preserve all original media, metadata, download destinations and native interaction behavior.

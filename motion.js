@@ -216,7 +216,7 @@
     palette('home', 500, originOf(opener));
   }
   document.addEventListener('click', event => {
-    const link=event.target.closest('.world-choice, .site-nav a, .back-link, .brand, .footer-brand');
+    const link=event.target.closest('.world-choice, .site-nav a, .back-link, .brand');
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || link.target === '_blank') return;
     const destination = new URL(link.href,location.href);
     if (destination.origin !== location.origin || !/\/(index|cod|six)\.html$/.test(destination.pathname) || destination.hash || destination.pathname === location.pathname) return;
