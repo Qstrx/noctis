@@ -59,39 +59,6 @@
   });
   syncMotion();
 
-  const cards = [...document.querySelectorAll('.pack-card')];
-  const groups = [...document.querySelectorAll('.pack-group')];
-  const filterButtons = [...document.querySelectorAll('.filter-button[data-filter]')];
-  const resultCount = $('resultCount');
-  let activeFilter = 'all';
-  function filterPacks() {
-    const before = window.archiveMotion?.captureLayout();
-    let visible = 0;
-    cards.forEach(card => {
-      const matches = activeFilter === 'all' || card.dataset.kind === activeFilter;
-      card.hidden = !matches;
-      if (matches) visible++;
-    });
-    groups.forEach(group => { group.hidden = ![...group.querySelectorAll('.pack-card')].some(card => !card.hidden); });
-    filterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === activeFilter)));
-    if (resultCount) resultCount.textContent = visible === cards.length
-      ? `${visible} scene ${visible === 1 ? 'pack' : 'packs'}`
-      : `${visible} of ${cards.length} scene packs`;
-    window.archiveMotion?.animateLayout(before);
-  }
-  if (cards.length) {
-    if (resultCount) {
-      resultCount.setAttribute('role', 'status');
-      resultCount.setAttribute('aria-live', 'polite');
-      resultCount.setAttribute('aria-atomic', 'true');
-    }
-    filterButtons.forEach(button => button.addEventListener('click', () => {
-      activeFilter = button.dataset.filter;
-      filterPacks();
-    }));
-    filterPacks();
-  }
-
   const downloadDialog = $('hit');
   const choices = $('downloadChoices');
   const downloadGo = $('hitGo');
@@ -110,11 +77,60 @@
   }
   function safeFile(file) {
     if (!file?.url) return false;
-    try { return new URL(file.url).protocol === 'https:'; } catch { return false; }
+    try {
+      const url = new URL(file.url);
+      return url.protocol === 'https:' && ['github.com', 'release-assets.githubusercontent.com', 'drive.google.com', 'mega.nz'].includes(url.hostname);
+    } catch { return false; }
   }
-  function externalLabel(file) {
-    if (file.direct !== false) return 'Start download';
-    return file.url.includes('mega.nz') ? 'Open Mega' : 'Open Google Drive';
+  function downloadIcon() {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 20 20');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('aria-hidden', 'true');
+    const path = document.createElementNS(svg.namespaceURI, 'path');
+    path.setAttribute('d', 'M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3');
+    path.setAttribute('stroke', 'currentColor');
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    svg.append(path);
+    return svg;
+  }
+  function downloadDetails(files, label, opener) {
+    const firstFile = files.find(safeFile) || files[0];
+    const card = opener?.closest?.('.pack-card');
+    const cover = card?.querySelector('.pack-cover img');
+    const codPack = typeof COD_PACKS !== 'undefined' && COD_PACKS.find(item => item.files.some(file => file.url === firstFile.url));
+    if (codPack) {
+      const index = codPack.files.findIndex(file => file.url === firstFile.url);
+      const onePart = files.length === 1 && codPack.files.length > 1;
+      return {
+        title: codPack.id === 'full' ? 'All in one' : codPack.chapter,
+        context: codPack.title + (onePart ? ` · Part ${index + 1}` : ''),
+        facts: onePart ? [firstFile.run, firstFile.size, codPack.fps].filter(Boolean).join(' · ') : codPack.meta.split(' · ').slice(0, 2).concat(codPack.fps).join(' · '),
+        poster: cover?.getAttribute('src') || codPack.poster
+      };
+    }
+    if (typeof EPISODES !== 'undefined') {
+      for (const [season, episodes] of Object.entries(EPISODES)) {
+        const episode = episodes.find(item => (item.parts || [item]).some(file => file.url === firstFile.url));
+        if (!episode) continue;
+        const onePart = files.length === 1 && episode.parts;
+        return {
+          title: episode.title,
+          context: `SIX · Season ${String(season).padStart(2, '0')} · Episode ${String(episode.ep).padStart(2, '0')}` + (onePart ? ` · Part ${firstFile.part}` : ''),
+          facts: [onePart ? firstFile.run : episode.run, onePart ? firstFile.size : episode.size, '1080p · 24 fps'].filter(Boolean).join(' · '),
+          poster: cover?.getAttribute('src') || `img/six/s${season}-e${String(episode.ep).padStart(2, '0')}.jpg`
+        };
+      }
+    }
+    return { title: label || firstFile.name || 'Scene pack', context: '', facts: [firstFile.run, firstFile.size].filter(Boolean).join(' · '), poster: cover?.getAttribute('src') };
+  }
+  function downloadNote(files) {
+    const url = new URL((files.find(safeFile) || files[0]).url);
+    if (url.hostname === 'drive.google.com') return 'Google Drive · use the download arrow on the file page.';
+    if (url.hostname === 'mega.nz') return 'Mega · download from the file page.';
+    return files.length > 1 ? 'GitHub · choose a part to download.' : 'GitHub · original video file.';
   }
   function closeDownload() {
     pendingFile = null;
@@ -134,42 +150,52 @@
     link.remove();
     closeDownload();
   }
-  function prepareDownload(label, opener) {
+  function prepareDownload(files, label, opener) {
     if (!downloadDialog || !choices || !downloadGo) return false;
     if (!downloadDialog.open) downloadOpener = opener || document.activeElement;
-    $('hitS').textContent = label;
+    const details = downloadDetails(files, label, opener);
+    $('hitT').textContent = details.title;
+    $('hitS').textContent = details.context;
+    $('hitMeta').textContent = details.facts;
+    $('hitMeta').hidden = !details.facts;
+    $('hitNote').textContent = downloadNote(files);
+    $('hitCover').hidden = !details.poster;
+    if (details.poster) $('hitCover').src = details.poster;
+    else $('hitCover').removeAttribute('src');
+    downloadGo.setAttribute('aria-label', 'Download ' + details.title);
     choices.replaceChildren();
     return true;
   }
   function askFile(file, label, opener) {
     if (!safeFile(file)) { showActionError('This file is unavailable. Choose another pack or try again later.'); return; }
-    if (!prepareDownload(label, opener)) {
+    if (!prepareDownload([file], label, opener)) {
       pendingFile = file;
       startDownload();
       return;
     }
     pendingFile = file;
     downloadGo.hidden = false;
-    // Keep the authored download icon when changing the action label.
-    const labelElement = downloadGo.querySelector('[data-download-label]');
-    if (labelElement) labelElement.textContent = externalLabel(file);
-    else {
-      const textNode = [...downloadGo.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
-      if (textNode) textNode.textContent = externalLabel(file) + ' ';
-    }
     if (!downloadDialog.open) downloadDialog.showModal();
     downloadGo.focus({ preventScroll: true });
   }
   function askFiles(files, label, opener) {
     if (!Array.isArray(files) || !files.length) { showActionError('This pack is unavailable. Choose another pack or try again later.'); return; }
     if (files.length === 1) { askFile(files[0], label, opener); return; }
-    if (!prepareDownload(label, opener)) { showActionError('The file selector is unavailable. Reload this page and try again.'); return; }
+    if (!files.some(safeFile)) { showActionError('These files are unavailable. Choose another pack or try again later.'); return; }
+    if (!prepareDownload(files, label, opener)) { showActionError('The file selector is unavailable. Reload this page and try again.'); return; }
     pendingFile = null;
     downloadGo.hidden = true;
     files.forEach((file, index) => {
-      const button = create('button', file.name || `Part ${index + 1}${file.run ? ' · ' + file.run : ''}${file.size ? ' · ' + file.size : ''}`, 'dialog-action');
+      const name = file.name || `Part ${index + 1}`;
+      const button = create('button', '', 'transfer-part');
       button.type = 'button';
       button.disabled = !safeFile(file);
+      button.setAttribute('aria-label', `Download ${name}`);
+      const info = create('span', '', 'transfer-part-info');
+      info.append(create('strong', name));
+      const facts = [file.run, file.size].filter(Boolean).join(' · ');
+      if (facts) info.append(create('small', facts));
+      button.append(info, downloadIcon());
       button.addEventListener('click', () => {
         if (!downloadDialog.open) return;
         pendingFile = file;

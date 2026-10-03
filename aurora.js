@@ -47,6 +47,43 @@
   let targetParallax = [0, 0];
   let resizeTimer = 0;
   let contextLost = false;
+  const world = ['cod', 'six'].includes(document.body.dataset.world) ? document.body.dataset.world : 'home';
+  // The same seeded curtains carry three collection lights. No replacement sky.
+  const palettes = {
+    home: [[.2,.96,.58],[.52,.34,1],[.45,1,.74],[.03,.1,.11],[.01,.045,.075],[.003,.01,.03],[.012,.05,.042]],
+    cod: [[.63,.78,.28],[1,.55,.18],[.94,.85,.46],[.085,.11,.035],[.035,.06,.018],[.01,.014,.006],[.055,.06,.018]],
+    six: [[.22,.58,1],[.49,.42,.95],[.61,.87,1],[.02,.08,.16],[.015,.04,.095],[.003,.008,.035],[.01,.045,.095]]
+  };
+  const clonePalette = value => value.map(color => [...color]);
+  let paletteFrom = clonePalette(palettes[world]);
+  let paletteTo = clonePalette(palettes[world]);
+  let paletteWorld = world;
+  let paletteStart = 0, paletteDuration = 0, paletteOrigin = .5;
+  const validPalette = value => Array.isArray(value) && value.length === 7 && value.every(color => Array.isArray(color) && color.length === 3 && color.every(n => Number.isFinite(n) && n >= 0 && n <= 1));
+  function paletteProgress(now = performance.now()) {
+    return paletteDuration ? clamp((now - paletteStart) / paletteDuration, 0, 1) : 1;
+  }
+  function sampledPalette(now = performance.now()) {
+    const p = paletteProgress(now), mix = p * p * (3 - 2 * p);
+    return paletteFrom.map((color, i) => color.map((n, j) => n + (paletteTo[i][j] - n) * mix));
+  }
+  function paletteState(now = performance.now()) {
+    return { from: paletteFrom, to: paletteTo, world: paletteWorld, progress: paletteProgress(now), duration: paletteDuration, origin: paletteOrigin };
+  }
+  function setPalette(chosen, duration = 700, origin = .5) {
+    if (!palettes[chosen]) return;
+    document.body.dataset.palette = chosen;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', {home:'#02060b',cod:'#090c08',six:'#030a13'}[chosen]);
+    if (paletteWorld === chosen) return;
+    paletteFrom = sampledPalette();
+    paletteTo = clonePalette(palettes[chosen]);
+    paletteWorld = chosen;
+    paletteOrigin = clamp(origin, 0, 1);
+    paletteStart = performance.now();
+    paletteDuration = enabled && !reduced.matches ? clamp(duration, 100, 1500) : 0;
+    canvas.dataset.skyPalette = chosen;
+    if (!paletteDuration) { paletteFrom = clonePalette(paletteTo); draw(); }
+  }
 
   // A collection is another view of the same sky, as in AuroraGrab's shell.
   // A one-use transfer carries the curtain's clock and light wave across pages.
@@ -70,11 +107,27 @@
     const elapsed = value.pulseElapsed + value.age;
     pulseStart = value.pulseElapsed >= 0 && elapsed < 1300 ? performance.now() - elapsed : 0;
     canvas.dataset.skyArrival = 'continuous';
+    const saved = value.palette;
+    if (saved && validPalette(saved.from) && validPalette(saved.to)
+      && palettes[saved.world] && Number.isFinite(saved.progress) && Number.isFinite(saved.duration) && Number.isFinite(saved.origin)) {
+      const progress = clamp(saved.progress + value.age / Math.max(1, saved.duration), 0, 1);
+      if (saved.world === world) {
+        paletteFrom = clonePalette(saved.from); paletteTo = clonePalette(saved.to);
+        paletteDuration = clamp(saved.duration, 0, 1500); paletteStart = performance.now() - progress * paletteDuration;
+        paletteOrigin = clamp(saved.origin, 0, 1); paletteWorld = world;
+      } else {
+        const mix = progress * progress * (3 - 2 * progress);
+        paletteFrom = saved.from.map((color, i) => color.map((n, j) => n + (saved.to[i][j] - n) * mix));
+        paletteTo = clonePalette(palettes[world]); paletteWorld = world;
+        paletteDuration = enabled && !reduced.matches ? 700 : 0; paletteStart = performance.now(); paletteOrigin = .5;
+      }
+    }
   }
   const transfer = takeTransfer();
   if (transfer) restoreTransfer(transfer);
   canvas.dataset.skyArrival = transfer ? 'continuous' : 'initial';
   canvas.dataset.skyIntro = 'skipped';
+  canvas.dataset.skyPalette = paletteWorld;
 
   // The source intro uses cubic-bezier(.2,.8,.2,1) for each layer. Solve its
   // x coordinate so the cached canvas layers follow that same authored ease.
@@ -98,6 +151,16 @@
     uniform float uPulse;
     uniform vec2 uPar;
     uniform float uHorizon;
+    uniform vec3 uFrom[7];
+    uniform vec3 uTo[7];
+    uniform float uColorProgress;
+    uniform float uColorOrigin;
+    float paletteMix(vec2 uv){
+      if(uColorProgress>=.999)return 1.;
+      if(uColorProgress<=.001)return 0.;
+      float distance=abs(uv.x-uColorOrigin)+.12*abs(uv.y-.55);
+      return smoothstep(distance-.12,distance+.12,uColorProgress*1.5-.14);
+    }
     float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
     float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);float a=hash(i),b=hash(i+vec2(1.,0.)),c=hash(i+vec2(0.,1.)),d=hash(i+vec2(1.,1.));return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
     float fbm(vec2 p){float v=0.,a=.5;mat2 m=mat2(1.6,1.2,-1.2,1.6);for(int i=0;i<5;i++){v+=a*noise(p);p=m*p;a*=.5;}return v;}
@@ -117,8 +180,9 @@
       float lower=smoothstep(-.038-.03*rays,.014,d)*(.5+.5*smoothstep(.2,.8,noise(vec2(x*9.+seed,t*.2))));
       float I=lower*up*(.12+1.75*rays)*along*env*bright;
       float k=clamp(d/h,0.,1.);
-      vec3 col=mix(vec3(.2,.96,.58),vec3(.52,.34,1.),smoothstep(.22,.95,k));
-      col=mix(vec3(.45,1.,.74),col,smoothstep(0.,.07,k));
+      float pal=paletteMix(uv);
+      vec3 col=mix(mix(uFrom[0],uTo[0],pal),mix(uFrom[1],uTo[1],pal),smoothstep(.22,.95,k));
+      col=mix(mix(uFrom[2],uTo[2],pal),col,smoothstep(0.,.07,k));
       return col*I;
     }
     vec3 aurora(vec2 uv,float t){
@@ -127,12 +191,13 @@
       return a*(.28+1.1*uEnergy);
     }
     vec3 skyCol(vec2 uv){
-      vec3 n=mix(vec3(.03,.1,.11),vec3(.01,.045,.075),smoothstep(.08,.5,uv.y));
-      n=mix(n,vec3(.003,.01,.03),smoothstep(.5,1.,uv.y));
+      float pal=paletteMix(uv);
+      vec3 n=mix(mix(uFrom[3],uTo[3],pal),mix(uFrom[4],uTo[4],pal),smoothstep(.08,.5,uv.y));
+      n=mix(n,mix(uFrom[5],uTo[5],pal),smoothstep(.5,1.,uv.y));
       float band=exp(-pow((uv.y-.78+(uv.x-.5)*.32)/.1,2.));
       float mw=fbm(vec2(uv.x*4.+uv.y*2.,uv.y*3.));
       n+=vec3(.045,.05,.075)*band*smoothstep(.42,.85,mw);
-      n+=vec3(.012,.05,.042)*exp(-max(uv.y-uHorizon,0.)/.11);
+      n+=mix(uFrom[6],uTo[6],pal)*exp(-max(uv.y-uHorizon,0.)/.11);
       return n;
     }
     void main(){
@@ -252,7 +317,7 @@
           const y = horizon - point * height / 700;
           if (i) context.lineTo(x, y); else context.moveTo(x, y);
         });
-        context.strokeStyle = 'rgba(120,255,200,.22)';
+        context.strokeStyle = `rgba(${palettes[world][2].map(n => Math.round(n * 255)).join(',')},.22)`;
         context.lineWidth = .6;
         context.stroke();
       }
@@ -340,6 +405,7 @@
       gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
       uniforms = {};
       ['uRes','uTime','uEnergy','uPulse','uPar','uHorizon'].forEach((name) => { uniforms[name] = gl.getUniformLocation(program, name); });
+      ['uFrom[0]', 'uTo[0]', 'uColorProgress', 'uColorOrigin'].forEach(name => { uniforms[name] = gl.getUniformLocation(program, name); });
       setFallback(false);
       return true;
     } catch (_) {
@@ -376,6 +442,12 @@
     gl.uniform1f(uniforms.uPulse, pulse);
     gl.uniform2f(uniforms.uPar, moving ? parallax[0] : 0, moving ? parallax[1] : 0);
     gl.uniform1f(uniforms.uHorizon, 1 - HORIZON);
+    const paletteP = moving ? paletteProgress(now) : 1;
+    gl.uniform3fv(uniforms['uFrom[0]'], new Float32Array(paletteFrom.flat()));
+    gl.uniform3fv(uniforms['uTo[0]'], new Float32Array(paletteTo.flat()));
+    gl.uniform1f(uniforms.uColorProgress, paletteP * paletteP * (3 - 2 * paletteP));
+    gl.uniform1f(uniforms.uColorOrigin, paletteOrigin);
+    canvas.dataset.skyPaletteProgress = paletteP.toFixed(3);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
@@ -409,6 +481,7 @@
     if (!enabled || reduced.matches || !gl || contextLost || document.visibilityState !== 'visible') {
       finishIntro();
       if (!enabled || reduced.matches) { energy = .35; focused = false; pulseStart = 0; }
+      if (!enabled || reduced.matches) { paletteDuration = 0; paletteFrom = clonePalette(paletteTo); }
     }
     if (document.visibilityState !== 'visible') return;
     drawDetails();
@@ -454,6 +527,13 @@
     pulseStart = performance.now();
     energy = Math.max(energy, 1.35);
   });
+  window.addEventListener('oceans:palette', event => {
+    const chosen = event.detail?.world;
+    if (!palettes[chosen]) return;
+    const duration = Number.isFinite(event.detail.duration) ? event.detail.duration : 700;
+    const origin = Number.isFinite(event.detail.origin) ? event.detail.origin : .5;
+    setPalette(chosen, duration, origin);
+  });
   window.addEventListener('oceans:aurora-remember', () => {
     try {
       const now = performance.now();
@@ -462,6 +542,7 @@
         time,
         energy,
         pulseElapsed: elapsed >= 0 && elapsed <= 1300 ? elapsed : -1,
+        palette: paletteState(now),
         writtenAt: Date.now()
       }));
     } catch (_) { /* Navigation remains available without storage. */ }

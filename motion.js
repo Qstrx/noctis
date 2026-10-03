@@ -1,14 +1,13 @@
 (() => {
   'use strict';
 
-  // A passage in the real aurora opens the chosen collection.
+  // The selected world's light moves through the sky and opens its archive.
   const ease = 'cubic-bezier(.2,.8,.2,1)';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const enabled = () => document.body.dataset.motion !== 'off' && !reduced.matches;
   const animations = new Map();
   const closing = new Set();
   const scenes = new WeakMap();
-  const cards = [...document.querySelectorAll('.pack-card')];
   const dialogs = [...document.querySelectorAll('dialog')];
   const main = document.querySelector('main');
   const choices = [...document.querySelectorAll('[data-world-choice]')];
@@ -20,7 +19,7 @@
     running.forEach(animation => animation.cancel());
     animations.delete(element);
   }
-  function animate(element, frames, duration = 350, delay = 0, hold = false) {
+  function animate(element, frames, duration = 350, delay = 0) {
     if (!element || !enabled() || !element.animate) return null;
     const animation = element.animate(frames, { duration, delay, easing: ease, fill: 'both' });
     let running = animations.get(element);
@@ -31,66 +30,21 @@
       if (!running.size && animations.get(element) === running) animations.delete(element);
     };
     animation.finished.then(() => {
-      // Departure stays withdrawn while the destination document loads.
-      // Held effects remain tracked for Escape, pagehide and BFCache restoration.
-      if (hold) return;
       animation.cancel();
       release();
     }, release);
     return animation;
   }
-  function reveal(element, delay = 0, duration = 450) {
-    return animate(element, [
-      { opacity: 0, transform: 'translateY(10px)' },
-      { opacity: 1, transform: 'translateY(0)' }
-    ], duration, delay);
-  }
-  const inViewport = rect => rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth;
-
-  // Read the current visual positions before cancelling an interrupted layout.
-  // The caller changes hidden/aria state immediately, then we bridge to its layout.
-  function captureLayout() {
-    if (!enabled()) return null;
-    const positions = new Map();
-    cards.forEach(card => {
-      if (!card.hidden && card.getClientRects().length) positions.set(card, card.getBoundingClientRect());
-    });
-    cards.forEach(cancel);
-    return positions;
-  }
-  function animateLayout(before) {
-    updateMarkers();
-    if (!before || !enabled()) return;
-    let newIndex = 0;
-    cards.forEach(card => {
-      if (card.hidden || !card.getClientRects().length) return;
-      const next = card.getBoundingClientRect();
-      const previous = before.get(card);
-      if (!inViewport(next) && (!previous || !inViewport(previous))) return;
-      if (previous) {
-        const x = previous.left - next.left;
-        const y = previous.top - next.top;
-        if (Math.abs(x) + Math.abs(y) < 1) return;
-        animate(card, [
-          { transform: `translate(${x}px, ${y}px)` },
-          { transform: 'translate(0, 0)' }
-        ]);
-      } else {
-        reveal(card, Math.min(newIndex++, 5) * 30, 400);
-      }
-    });
-  }
-
-  const markers = [...document.querySelectorAll('.site-nav, .filter-list')].map(container => {
+  const markers = [...document.querySelectorAll('.site-nav')].map(container => {
     const marker = document.createElement('span');
-    marker.className = container.matches('.site-nav') ? 'nav-marker' : 'filter-marker';
+    marker.className = 'nav-marker';
     marker.setAttribute('aria-hidden', 'true');
     container.append(marker);
     return { container, marker };
   });
   function updateMarkers() {
     markers.forEach(({ container, marker }) => {
-      const selected = container.querySelector('[aria-current="page"], [aria-pressed="true"]');
+      const selected = container.querySelector('[aria-current="page"]');
       if (!selected) return;
       const parent = container.getBoundingClientRect();
       const target = selected.getBoundingClientRect();
@@ -189,16 +143,30 @@
     animate(heading, [{ opacity: .5, transform: 'translateY(5px)' }, { opacity: 1, transform: 'translateY(0)' }], 300);
     animate(screen, [{ opacity: .65 }, { opacity: 1 }], 300);
   }
-  window.archiveMotion = { captureLayout, animateLayout, sceneChange };
+  window.archiveMotion = { sceneChange };
 
-  function setChoice() {
+  const world = document.body.dataset.world;
+  const passageKey = 'oceans-spectral-transfer';
+  let veil = null, curtain = null, passageAnimation = null, pending = null, passageTimer = 0;
+  const originOf = choice => {
+    const rect = choice?.querySelector('.choice-photo')?.getBoundingClientRect();
+    return rect?.width ? Math.max(0, Math.min(1, (rect.left + rect.width / 2) / innerWidth)) : .5;
+  };
+  const sideOf = (chosen, origin) => Math.abs(origin - .5) < .04 ? (chosen === 'cod' ? -1 : 1) : (origin < .5 ? -1 : 1);
+  function palette(selectedWorld, duration, origin = .5, commit = false) {
+    dispatchEvent(new CustomEvent('oceans:palette', { detail: { world: selectedWorld, duration, origin, commit } }));
+  }
+
+  function setChoice(force = false) {
+    if (pending || world !== 'home') return;
     const focused = document.activeElement?.closest('[data-world-choice]');
     const selected = hoveredChoice || focused;
-    const world = selected?.dataset.worldChoice || '';
-    if (document.body.dataset.choice === world) return;
-    document.body.dataset.choice = world;
+    const targetWorld = selected?.dataset.worldChoice || '';
+    if (!force && document.body.dataset.choice === targetWorld) return;
+    document.body.dataset.choice = targetWorld;
     choices.forEach(choice => choice.classList.toggle('is-selected', choice === selected));
     dispatchEvent(new CustomEvent('oceans:aurora-focus', { detail: { active: !!selected } }));
+    palette(targetWorld || 'home', 700, originOf(selected));
   }
   choices.forEach(choice => {
     choice.addEventListener('pointerenter', event => {
@@ -210,45 +178,44 @@
     choice.addEventListener('focus', () => { hoveredChoice = null; setChoice(); });
     choice.addEventListener('blur', () => queueMicrotask(setChoice));
   });
-  let lastFilter = document.querySelector('.filter-button[aria-pressed="true"]')?.dataset.filter;
-  document.querySelectorAll('.filter-button').forEach(button => button.addEventListener('click', () => {
-    if (button.dataset.filter === lastFilter || !enabled()) return;
-    lastFilter = button.dataset.filter;
-    dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
-  }));
-
   function rememberSky() { dispatchEvent(new CustomEvent('oceans:aurora-remember')); }
 
-
-  // The home photograph opens the collection; the archive is revealed in place.
-  const world = document.body.dataset.world;
-  const passageKey = 'oceans-cinema-transfer';
-  let frame = null, passageAnimation = null, pending = null, passageTimer = 0;
-  const imageFor = chosen => chosen === 'cod' ? 'img/price.jpg' : 'img/joe.jpg';
+  // A light curtain enters from the selected door's side. Its opaque tail holds
+  // while the real document loads, then the same curtain continues outwards.
+  // Content stays in place and visible by default; there is no traveling photo.
   function clearPassage() {
     clearTimeout(passageTimer);
     passageAnimation?.cancel(); passageAnimation = null;
-    frame?.remove(); frame = null;
+    veil?.remove(); veil = null; curtain = null;
     if (main) main.inert = false;
+    delete document.body.dataset.passage;
   }
-  function rectangle(rect) { return { left: `${rect.left}px`, top: `${rect.top}px`, width: `${rect.width}px`, height: `${rect.height}px`, borderRadius: '0px' }; }
-  const viewport = () => ({left:0,top:0,width:innerWidth,height:innerHeight});
-  function createFrame(chosen, rect) {
-    const holder = document.createElement('div'); holder.className = 'passage-frame'; holder.setAttribute('aria-hidden','true');
-    const img = document.createElement('img'); img.src = imageFor(chosen); img.alt = ''; holder.append(img);
-    Object.assign(holder.style,rectangle(rect)); document.body.append(holder); frame = holder; return holder;
+  function createVeil(chosen, origin) {
+    veil = document.createElement('div');
+    veil.className = 'passage-veil';
+    veil.dataset.world = chosen;
+    veil.dataset.side = sideOf(chosen,origin) < 0 ? 'left' : 'right';
+    veil.setAttribute('aria-hidden', 'true');
+    veil.style.setProperty('--passage-origin', `${origin * 100}%`);
+    curtain = document.createElement('div');
+    curtain.className = 'passage-curtain';
+    veil.append(curtain);
+    document.body.append(veil);
+    return curtain;
   }
   function go() {
     if (!pending || pending.committed) return;
     const href = pending.href;
-    try { sessionStorage.setItem(passageKey,JSON.stringify({world:pending.world,to:new URL(href).pathname,at:Date.now()})); } catch (_) {}
+    try { sessionStorage.setItem(passageKey,JSON.stringify({world:pending.world,origin:pending.origin,to:new URL(href).pathname,at:Date.now()})); } catch (_) {}
     pending.committed = true;
+    document.body.dataset.passage = 'holding';
     rememberSky(); location.assign(href);
   }
   function cancelPassage() {
     const opener = pending?.opener; pending = null; clearPassage();
     try { sessionStorage.removeItem(passageKey); } catch (_) {}
     opener?.focus({preventScroll:true});
+    palette('home', 500, originOf(opener));
   }
   document.addEventListener('click', event => {
     const link=event.target.closest('.world-choice, .site-nav a, .back-link, .brand, .footer-brand');
@@ -256,49 +223,61 @@
     const destination = new URL(link.href,location.href);
     if (destination.origin !== location.origin || !/\/(index|cod|six)\.html$/.test(destination.pathname) || destination.hash || destination.pathname === location.pathname) return;
     if (world !== 'home') { rememberSky(); return; }
-    if (!enabled() || !main?.animate) { rememberSky(); return; }
+    if (!enabled() || !main?.animate) {
+      if (link.dataset.worldChoice) palette(link.dataset.worldChoice, 0, originOf(link), true);
+      rememberSky(); return;
+    }
     event.preventDefault(); if (pending) return;
-    document.body.classList.remove('cinema-intro'); clearPassage();
-    const chosen = world === 'home' ? link.dataset.worldChoice : world;
+    clearPassage();
+    const chosen = link.dataset.worldChoice;
     if (!['cod','six'].includes(chosen)) { rememberSky(); location.assign(destination.href); return; }
-    pending = {href:destination.href,world:chosen,opener:link};
-    const source = link.querySelector('.choice-photo');
-    const rect = source?.getBoundingClientRect();
-    if (!rect?.width || !rect.height) { pending=null; rememberSky(); location.assign(destination.href); return; }
-    const holder = createFrame(chosen,rect); main.inert = true;
+    const origin = originOf(link);
+    const side = sideOf(chosen,origin);
+    pending = {href:destination.href,world:chosen,origin,opener:link};
+    const light = createVeil(chosen,origin); main.inert = true;
+    document.body.dataset.passage = 'departing';
+    palette(chosen, 1100, origin, true);
     dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
-    passageAnimation = holder.animate([rectangle(rect),rectangle(viewport())],{duration:300,easing:'cubic-bezier(.32,0,.16,1)',fill:'forwards'});
-    passageTimer = setTimeout(go,300);
+    passageAnimation = light.animate([
+      {transform:`translateX(${side * 100}%)`,opacity:0},
+      {transform:`translateX(${side * 14}%)`,opacity:.12,offset:.58},
+      {transform:'translateX(0%)',opacity:1}
+    ],{duration:600,easing:'cubic-bezier(.32,0,.16,1)',fill:'forwards'});
+    passageTimer = setTimeout(go,600);
   });
   function takePassage() {
     try {
       const raw=sessionStorage.getItem(passageKey); sessionStorage.removeItem(passageKey);
       const value=raw && JSON.parse(raw);
-      if (value && Date.now()-value.at >= 0 && Date.now()-value.at < 6000 && value.to === location.pathname && ['cod','six'].includes(value.world)) return value;
+      if (value && Date.now()-value.at >= 0 && Date.now()-value.at < 6000 && value.to === location.pathname && ['cod','six'].includes(value.world) && Number.isFinite(value.origin) && value.origin >= 0 && value.origin <= 1) return value;
     } catch (_) {}
     return null;
   }
   const incoming=takePassage();
-  if (incoming && enabled()) createFrame(incoming.world,viewport());
-  else if (world === 'home' && enabled()) {
-    document.body.classList.add('cinema-intro');
-    setTimeout(()=>document.body.classList.remove('cinema-intro'),1250);
+  if (incoming && enabled()) {
+    createVeil(incoming.world,incoming.origin);
+    document.body.dataset.passage = 'arriving';
   }
   function arrive() {
-    if (!frame || pending) return;
+    if (!curtain || pending) return;
     if (!enabled()) { clearPassage(); return; }
-    passageAnimation=frame.animate([{opacity:1},{opacity:0}],{duration:400,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'});
+    const side = sideOf(incoming.world,incoming.origin);
+    passageAnimation=curtain.animate([
+      {transform:'translateX(0%)',opacity:1},
+      {transform:`translateX(${-side * 18}%)`,opacity:.5,offset:.32},
+      {transform:`translateX(${-side * 100}%)`,opacity:0}
+    ],{duration:500,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'});
     passageAnimation.finished.then(()=>{if (!pending) clearPassage();},()=>{});
   }
   if (document.readyState !== 'complete') document.addEventListener('DOMContentLoaded',arrive,{once:true}); else arrive();
   document.addEventListener('keydown',event=>{if (pending && !pending.committed && event.key==='Escape') {event.preventDefault();cancelPassage();}});
-  addEventListener('pageshow',event=>{if(event.persisted){pending=null;clearPassage();document.body.classList.remove('cinema-intro');updateMarkers();setChoice();}});
+  addEventListener('pageshow',event=>{if(event.persisted){pending=null;hoveredChoice=null;clearPassage();updateMarkers();setChoice(true);}});
   addEventListener('pagehide',()=>{rememberSky();passageAnimation?.cancel();[...animations.keys()].forEach(cancel);});
   function syncMotion(){
     if(enabled())return;
-    document.body.classList.remove('cinema-intro');clearPassage();
+    clearPassage();
     [...animations.keys()].forEach(cancel);[...closing].forEach(dialog=>{if(dialog.open)dialog.close();});
-    if(pending)go();updateMarkers();
+    if(pending) { palette(pending.world,0,pending.origin,true);go(); } updateMarkers();
   }
   addEventListener('oceans:motion',syncMotion);reduced.addEventListener('change',syncMotion);
 })();
