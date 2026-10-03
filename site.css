@@ -78,12 +78,6 @@ h1, h2 { font-family: var(--display); }
 .filter-button[aria-pressed=true] { color: var(--ink); }
 .filter-button[aria-pressed=true]::after { transform: scaleX(1); }
 .filter-button:hover { color: var(--mint); }
-.search-field { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line-strong); border-radius: 8px; padding: 0 14px; width: 260px; min-height: 42px; background: rgba(2,9,13,.62); color: var(--muted); }
-.search-field:focus-within { border-color: var(--mint); }
-.search-field svg { width: 16px; height: 16px; flex-shrink: 0; }
-.search-field input { padding: 8px 0; min-width: 0; width: 100%; border: 0; background: none; font-size: 13px; }
-.search-field input:focus-visible { outline: 0; }
-.result-count { color: var(--faint); font-size: 12px; margin-top: 12px; min-height: 18px; }
 .pack-group { margin-top: 24px; }
 .pack-group + .pack-group { margin-top: 46px; }
 .group-heading { display: flex; gap: 20px; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
@@ -111,9 +105,6 @@ h1, h2 { font-family: var(--display); }
 .action.primary:hover { background: var(--mint); color: var(--mint-ink); border-color: var(--mint); }
 .action.secondary:hover { border-color: var(--line-strong); background: rgba(225,248,243,.1); }
 .pack-actions .primary { flex: 1; }
-.empty-results { padding: 72px 20px; text-align: center; }
-.empty-results h2 { font-size: 30px; font-weight: 300; }
-.empty-results p { margin: 12px 0 24px; color: var(--muted); }
 .catalog-main { padding-bottom: 70px; }
 dialog { color: var(--ink); background: #071016; border: 1px solid var(--line-strong); border-radius: 16px; padding: 0; max-height: calc(100svh - 40px); box-shadow: 0 30px 100px #0009; }
 dialog::backdrop { background: rgba(1,4,9,.72); backdrop-filter: blur(10px); }
@@ -190,7 +181,6 @@ body:has(dialog[open]) { overflow: hidden; }
   .source-notes { margin-top: 14px; }
   .catalog-toolbar { flex-wrap: wrap; gap: 12px; margin-top: 18px; }
   .filter-list { gap: 22px; }
-  .search-field { width: 100%; }
   .group-heading { align-items: flex-start; flex-direction: column; gap: 5px; margin-bottom: 16px; }
   .group-heading h2 { font-size: 22px; }
   .group-heading p { font-size: 11px; }

@@ -9,29 +9,29 @@ var EPISODES = {
 
 
   1: [
-    { ep:1,  run:"14:01", size:"1.82 GB", url:REL1+"Six-S1-E01.mp4" },
-    { ep:2,  run:"14:05", size:"1.83 GB", url:REL1+"Six-S1-E02.mp4" },
-    { ep:3,  run:"10:57", size:"1.83 GB", url:REL1+"Six-S1-E03.mp4" },
-    { ep:4,  run:"11:19", size:"1.83 GB", url:REL1+"Six-S1-E04.mp4" },
-    { ep:5,  run:"19:19", size:"3.65 GB", parts:[
+    { ep:1, title:"Pilot",  run:"14:01", size:"1.82 GB", url:REL1+"Six-S1-E01.mp4" },
+    { ep:2, title:"Her Name is Esther",  run:"14:05", size:"1.83 GB", url:REL1+"Six-S1-E02.mp4" },
+    { ep:3, title:"Tour of Duty",  run:"10:57", size:"1.83 GB", url:REL1+"Six-S1-E03.mp4" },
+    { ep:4, title:"Man Down",  run:"11:19", size:"1.83 GB", url:REL1+"Six-S1-E04.mp4" },
+    { ep:5, title:"Collateral",  run:"19:19", size:"3.65 GB", parts:[
       { part:1, run:"9:06",  size:"1.83 GB", url:REL1+"Six-S1-E05-Part1.mp4" },
       { part:2, run:"10:13", size:"1.82 GB", url:REL1+"Six-S1-E05-Part2.mp4" }
     ] },
-    { ep:6,  run:"9:58",  size:"1.83 GB", url:REL1+"Six-S1-E06.mp4" },
-    { ep:7,  run:"7:19",  size:"1.36 GB", url:REL1+"Six-S1-E07.mp4" },
-    { ep:8,  run:"7:15",  size:"1.39 GB", url:REL1+"Six-S1-E08.mp4" }
+    { ep:6, title:"Confession",  run:"9:58",  size:"1.83 GB", url:REL1+"Six-S1-E06.mp4" },
+    { ep:7, title:"Blood Brothers",  run:"7:19",  size:"1.36 GB", url:REL1+"Six-S1-E07.mp4" },
+    { ep:8, title:"End Game",  run:"7:15",  size:"1.39 GB", url:REL1+"Six-S1-E08.mp4" }
   ],
   2: [
-    { ep:1,  run:"9:25",  size:"1.50 GB", url:REL2+"Six-S2-E01.mp4" },
-    { ep:2,  run:"11:35", size:"1.82 GB", url:REL2+"Six-S2-E02.mp4" },
-    { ep:3,  run:"7:48",  size:"1.30 GB", url:REL2+"Six-S2-E03.mp4" },
-    { ep:4,  run:"6:47",  size:"1.12 GB", url:REL2+"Six-S2-E04.mp4" },
-    { ep:5,  run:"5:13",  size:"0.87 GB", url:REL2+"Six-S2-E05.mp4" },
-    { ep:6,  run:"8:33",  size:"1.26 GB", url:REL2+"Six-S2-E06.mp4" },
-    { ep:7,  run:"8:06",  size:"1.24 GB", url:REL2+"Six-S2-E07.mp4" },
-    { ep:8,  run:"6:57",  size:"1.24 GB", url:REL2+"Six-S2-E08.mp4" },
-    { ep:9,  run:"8:05",  size:"1.35 GB", url:REL2+"Six-S2-E09.mp4" },
-    { ep:10, run:"14:51", size:"1.83 GB", url:REL2+"Six-S2-E10.mp4" }
+    { ep:1, title:"Critical",  run:"9:25",  size:"1.50 GB", url:REL2+"Six-S2-E01.mp4" },
+    { ep:2, title:"Ghosts",  run:"11:35", size:"1.82 GB", url:REL2+"Six-S2-E02.mp4" },
+    { ep:3, title:"Dua",  run:"7:48",  size:"1.30 GB", url:REL2+"Six-S2-E03.mp4" },
+    { ep:4, title:"Seesaw",  run:"6:47",  size:"1.12 GB", url:REL2+"Six-S2-E04.mp4" },
+    { ep:5, title:"Masks",  run:"5:13",  size:"0.87 GB", url:REL2+"Six-S2-E05.mp4" },
+    { ep:6, title:"Indian Country",  run:"8:33",  size:"1.26 GB", url:REL2+"Six-S2-E06.mp4" },
+    { ep:7, title:"FUBAR",  run:"8:06",  size:"1.24 GB", url:REL2+"Six-S2-E07.mp4" },
+    { ep:8, title:"Scorpions in a Bottle",  run:"6:57",  size:"1.24 GB", url:REL2+"Six-S2-E08.mp4" },
+    { ep:9, title:"The Reckoning",  run:"8:05",  size:"1.35 GB", url:REL2+"Six-S2-E09.mp4" },
+    { ep:10, title:"Danger Close", run:"14:51", size:"1.83 GB", url:REL2+"Six-S2-E10.mp4" }
   ]
 };
 
