@@ -41,4 +41,4 @@ The pinned AuroraGrab 3.0 reference remains the authority for the real northern 
 - A stationary collection atmosphere fades in over 700ms and dissolves over 800ms to reveal the archive in place, preserving immediate direct access, archive navigation, pause, reduced motion, Escape and back restoration.
 - The real sky retains its artwork, continuous time/energy/pulse and palette-wave transfer, with 30/20fps caps.
 
-The v10 request accepts the collection palettes and asks for smoother transitions and a full-screen TikTok credit reminder only after Start download. The softened sky pulse and stationary dissolve preserve the accepted layouts and original file destinations.
+The v10 request accepts the collection palettes and asks for smoother transitions and a full-screen TikTok credit reminder only after Start download. The softened sky pulse and stationary dissolve preserve the accepted layouts and original file destinations. The user's supplied TikTok username is @oceanxaep; the credit reminder displays it as a link to https://www.tiktok.com/@oceanxaep.

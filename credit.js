@@ -56,6 +56,7 @@
       </button>
       <div class="credit-composition">
         <h2 id="creditMessage" class="credit-heading"><span class="credit-prelude">Remember to credit</span> <span class="credit-name">Ocean</span> <span class="credit-platform">on TikTok</span></h2>
+        <a class="credit-account" href="https://www.tiktok.com/@oceanxaep" target="_blank" rel="noopener noreferrer" aria-label="Ocean on TikTok: @oceanxaep (opens in a new tab)">@oceanxaep</a>
         <svg class="credit-wave" viewBox="0 0 360 32" aria-hidden="true">
           <path class="credit-wave-flow" pathLength="1" d="M8 19C53 19 63 4 97 7S145 27 180 22 226 2 267 8 306 21 352 14"/>
           <path class="credit-wave-line" pathLength="1" d="M118 17h124"/>

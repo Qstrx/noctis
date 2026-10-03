@@ -30,7 +30,7 @@ Selection sends a 700ms palette target and a broad, softened 1300ms energy breat
 
 Pause and reduced motion use ordinary immediate links and settled palette colors. Escape cancels departure before navigation starts; browser-back restoration removes the curtain and clears inert state. Storage or animation support failure leaves native navigation and visible destination content. Home has no lens-blur introduction or traveling photograph.
 
-After Start download initiates the original file or provider page, a native full-screen reminder displays “Remember to credit Ocean on TikTok” in the current collection palette. One bounded sequence reveals the text, crosses two soft light fields and draws an SVG wave. Continue browsing, close and Escape dismiss it and restore focus; pause, reduced motion and hidden tabs settle the decoration. It does not claim the remote download has completed.
+After Start download initiates the original file or provider page, a native full-screen reminder displays “Remember to credit Ocean on TikTok” in the current collection palette, followed by the supplied @oceanxaep link to https://www.tiktok.com/@oceanxaep. One bounded sequence reveals the text, crosses two soft light fields and draws an SVG wave. Continue browsing, close and Escape dismiss it and restore focus; pause, reduced motion and hidden tabs settle the decoration. It does not claim the remote download has completed.
 
 ## Verification
 
