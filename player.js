@@ -16,6 +16,9 @@ var previewReadyControls = ["previewBack", "previewForward", "previewTime", "pre
 var previewFiles = [], previewIndex = -1, previewOpener = null, previewLoad = 0;
 var previewTarget = 0, previewTimer = null, previewPendingLink = null;
 function padEpisode(n){ return String(n).padStart(2, "0"); }
+function episodeText(value){
+  return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
 Object.keys(EPISODES).forEach(function(s){
   EPISODES[s].forEach(function(ep){
     (ep.parts || [ep]).forEach(function(file){
@@ -62,9 +65,9 @@ function drawPreviewList(season){
     var selected = current && current.season === season && current.ep === ep.ep;
     return '<li><button type="button" class="preview-episode" data-preview-ep="' + ep.ep +
       '" data-season="' + season + '"' + (selected ? ' aria-current="true"' : '') +
-      ' aria-label="Preview season ' + season + ', episode ' + ep.ep + '">' +
+      ' aria-label="Preview season ' + season + ', episode ' + ep.ep + ', ' + episodeText(ep.title) + '">' +
       '<img src="' + SHOTS[season] + padEpisode(ep.ep) + '.jpg" width="140" height="79" alt="" loading="lazy">' +
-      '<span><strong>Episode ' + padEpisode(ep.ep) + '</strong><small>' + ep.run +
+      '<span><strong>Episode ' + padEpisode(ep.ep) + ' · ' + episodeText(ep.title) + '</strong><small>' + ep.run +
       (ep.parts ? ' · 2 parts' : ' · scene pack') + '</small></span></button></li>';
   }).join("");
   alignPreviewSelection();
@@ -86,12 +89,12 @@ function loadPreview(index, time){
   previewFeedback.textContent = "";
   previewLink.hidden = true;
   previewError.hidden = true;
-  document.getElementById("previewTitle").textContent = "Season " + padEpisode(current.season) + " / Episode " + padEpisode(current.ep);
+  document.getElementById("previewTitle").textContent = "Season " + padEpisode(current.season) + " / Episode " + padEpisode(current.ep) + " — " + current.entry.title;
   document.getElementById("previewMeta").textContent = current.file.run + " · 1080p · Scene pack" +
     (current.entry.parts ? " · Part " + current.part + " of " + current.entry.parts.length : "");
   document.getElementById("previewDownload").innerHTML = "<span>Download ↓</span><small>" + current.file.size + "</small>";
   previewVideo.poster = SHOTS[current.season] + padEpisode(current.ep) + ".jpg";
-  previewVideo.setAttribute("aria-label", "Joe Graves, season " + current.season + ", episode " + current.ep +
+  previewVideo.setAttribute("aria-label", "Joe Graves, season " + current.season + ", episode " + current.ep + ", " + current.entry.title +
     (current.entry.parts ? ", part " + current.part : "") + " scene pack");
   previewParts.hidden = !current.entry.parts;
   previewParts.innerHTML = (current.entry.parts || []).map(function(part){
@@ -249,7 +252,7 @@ document.getElementById("previewDownload").addEventListener("click", function(){
   var current = previewFiles[previewIndex];
   if (!current) return;
   closePreview();
-  window.archive.askFile(current.file, 'Six / Season ' + current.season + ' / Episode ' + current.ep + (current.entry.parts ? ' / Part ' + current.part : ''));
+  window.archive.askFile(current.file, 'Six / Season ' + current.season + ' / Episode ' + current.ep + ' — ' + current.entry.title + (current.entry.parts ? ' / Part ' + current.part : ''));
 });
 function readPreviewLink(){
   var params = new URLSearchParams(location.hash.slice(1));

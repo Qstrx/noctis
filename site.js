@@ -61,19 +61,14 @@
 
   const cards = [...document.querySelectorAll('.pack-card')];
   const groups = [...document.querySelectorAll('.pack-group')];
-  const search = $('packSearch');
   const filterButtons = [...document.querySelectorAll('.filter-button[data-filter]')];
   const resultCount = $('resultCount');
-  const emptyResults = $('emptyResults');
-  const normalize = text => String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
-  const searchableCards = cards.map(card => ({ card, text: normalize(card.dataset.search || card.textContent) }));
   let activeFilter = 'all';
   function filterPacks() {
     const before = window.archiveMotion?.captureLayout();
-    const words = normalize(search?.value).split(/\s+/).filter(Boolean);
     let visible = 0;
-    searchableCards.forEach(({ card, text }) => {
-      const matches = (activeFilter === 'all' || card.dataset.kind === activeFilter) && words.every(word => text.includes(word));
+    cards.forEach(card => {
+      const matches = activeFilter === 'all' || card.dataset.kind === activeFilter;
       card.hidden = !matches;
       if (matches) visible++;
     });
@@ -82,7 +77,6 @@
     if (resultCount) resultCount.textContent = visible === cards.length
       ? `${visible} scene ${visible === 1 ? 'pack' : 'packs'}`
       : `${visible} of ${cards.length} scene packs`;
-    if (emptyResults) emptyResults.hidden = visible !== 0;
     window.archiveMotion?.animateLayout(before);
   }
   if (cards.length) {
@@ -91,17 +85,10 @@
       resultCount.setAttribute('aria-live', 'polite');
       resultCount.setAttribute('aria-atomic', 'true');
     }
-    search?.addEventListener('input', filterPacks);
     filterButtons.forEach(button => button.addEventListener('click', () => {
       activeFilter = button.dataset.filter;
       filterPacks();
     }));
-    $('resetFilters')?.addEventListener('click', () => {
-      activeFilter = 'all';
-      if (search) search.value = '';
-      filterPacks();
-      search?.focus({ preventScroll: true });
-    });
     filterPacks();
   }
 
@@ -218,7 +205,7 @@
     const season = Number(button.dataset.season);
     const episode = typeof EPISODES !== 'undefined' && EPISODES[season]?.find(item => item.ep === Number(button.dataset.downloadEpisode));
     if (!episode) { showActionError('This episode is unavailable. Reload this page and try again.'); return; }
-    askFiles(episode.parts || [episode], `Six / Season ${String(season).padStart(2, '0')} / Episode ${String(episode.ep).padStart(2, '0')}`, button);
+    askFiles(episode.parts || [episode], `Six / Season ${String(season).padStart(2, '0')} / Episode ${String(episode.ep).padStart(2, '0')} / ${episode.title}`, button);
   }));
   document.querySelectorAll('[data-preview]').forEach(button => button.addEventListener('click', () => {
     if (typeof window.archive.openPreview !== 'function') {
