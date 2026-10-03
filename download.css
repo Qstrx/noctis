@@ -12,6 +12,10 @@
 .transfer-parts:not(:empty){margin-top:24px;border-top:1px solid var(--line)}
 .transfer-part{display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;min-height:64px;padding:16px 4px;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--ink)}
 .transfer-part:hover:not(:disabled){color:var(--mint)}
+.transfer-part[aria-pressed=true]{color:var(--mint)}
+.transfer-part svg{width:20px;height:20px;flex:0 0 20px}
+.transfer-part svg path{opacity:0}
+.transfer-part[aria-pressed=true] svg path{opacity:1}
 .transfer-part-info{min-width:0}
 .transfer-part strong{display:block;font-size:14px;line-height:1.5;font-weight:500;overflow-wrap:anywhere}
 .transfer-part small{display:block;margin-top:3px;color:var(--muted);font-size:12px;line-height:1.5;font-variant-numeric:tabular-nums}

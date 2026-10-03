@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  // The selected world's light moves through the sky and opens its archive.
+  // The selected world's light softly exposes its archive through the same sky.
   const ease = 'cubic-bezier(.2,.8,.2,1)';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const enabled = () => document.body.dataset.motion !== 'off' && !reduced.matches;
@@ -152,7 +152,6 @@
     const rect = choice?.querySelector('.choice-photo')?.getBoundingClientRect();
     return rect?.width ? Math.max(0, Math.min(1, (rect.left + rect.width / 2) / innerWidth)) : .5;
   };
-  const sideOf = (chosen, origin) => Math.abs(origin - .5) < .04 ? (chosen === 'cod' ? -1 : 1) : (origin < .5 ? -1 : 1);
   function palette(selectedWorld, duration, origin = .5, commit = false) {
     dispatchEvent(new CustomEvent('oceans:palette', { detail: { world: selectedWorld, duration, origin, commit } }));
   }
@@ -180,9 +179,9 @@
   });
   function rememberSky() { dispatchEvent(new CustomEvent('oceans:aurora-remember')); }
 
-  // A light curtain enters from the selected door's side. Its opaque tail holds
-  // while the real document loads, then the same curtain continues outwards.
-  // Content stays in place and visible by default; there is no traveling photo.
+  // The sky's selected hue accumulates as one continuous atmospheric exposure.
+  // Its fully opaque final frame holds for a real load, then dissolves on arrival.
+  // Content stays in place and visible by default; the veil never travels.
   function clearPassage() {
     clearTimeout(passageTimer);
     passageAnimation?.cancel(); passageAnimation = null;
@@ -194,7 +193,6 @@
     veil = document.createElement('div');
     veil.className = 'passage-veil';
     veil.dataset.world = chosen;
-    veil.dataset.side = sideOf(chosen,origin) < 0 ? 'left' : 'right';
     veil.setAttribute('aria-hidden', 'true');
     veil.style.setProperty('--passage-origin', `${origin * 100}%`);
     curtain = document.createElement('div');
@@ -232,18 +230,16 @@
     const chosen = link.dataset.worldChoice;
     if (!['cod','six'].includes(chosen)) { rememberSky(); location.assign(destination.href); return; }
     const origin = originOf(link);
-    const side = sideOf(chosen,origin);
     pending = {href:destination.href,world:chosen,origin,opener:link};
     const light = createVeil(chosen,origin); main.inert = true;
     document.body.dataset.passage = 'departing';
-    palette(chosen, 1100, origin, true);
+    palette(chosen, 700, origin, true);
     dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
     passageAnimation = light.animate([
-      {transform:`translateX(${side * 100}%)`,opacity:0},
-      {transform:`translateX(${side * 14}%)`,opacity:.12,offset:.58},
-      {transform:'translateX(0%)',opacity:1}
-    ],{duration:600,easing:'cubic-bezier(.32,0,.16,1)',fill:'forwards'});
-    passageTimer = setTimeout(go,600);
+      {opacity:0},
+      {opacity:1}
+    ],{duration:700,easing:'cubic-bezier(.45,0,.2,1)',fill:'forwards'});
+    passageTimer = setTimeout(go,700);
   });
   function takePassage() {
     try {
@@ -261,12 +257,10 @@
   function arrive() {
     if (!curtain || pending) return;
     if (!enabled()) { clearPassage(); return; }
-    const side = sideOf(incoming.world,incoming.origin);
     passageAnimation=curtain.animate([
-      {transform:'translateX(0%)',opacity:1},
-      {transform:`translateX(${-side * 18}%)`,opacity:.5,offset:.32},
-      {transform:`translateX(${-side * 100}%)`,opacity:0}
-    ],{duration:500,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'});
+      {opacity:1},
+      {opacity:0}
+    ],{duration:800,easing:'cubic-bezier(.45,0,.2,1)',fill:'forwards'});
     passageAnimation.finished.then(()=>{if (!pending) clearPassage();},()=>{});
   }
   if (document.readyState !== 'complete') document.addEventListener('DOMContentLoaded',arrive,{once:true}); else arrive();

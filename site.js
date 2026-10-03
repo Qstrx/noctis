@@ -82,18 +82,19 @@
       return url.protocol === 'https:' && ['github.com', 'release-assets.githubusercontent.com', 'drive.google.com', 'mega.nz'].includes(url.hostname);
     } catch { return false; }
   }
-  function downloadIcon() {
+  function partChoiceIcon() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 20 20');
     svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '1.5');
     svg.setAttribute('aria-hidden', 'true');
-    const path = document.createElementNS(svg.namespaceURI, 'path');
-    path.setAttribute('d', 'M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3');
-    path.setAttribute('stroke', 'currentColor');
-    path.setAttribute('stroke-width', '1.5');
-    path.setAttribute('stroke-linecap', 'round');
-    path.setAttribute('stroke-linejoin', 'round');
-    svg.append(path);
+    const circle = document.createElementNS(svg.namespaceURI, 'circle');
+    circle.setAttribute('cx', '10'); circle.setAttribute('cy', '10'); circle.setAttribute('r', '7.5');
+    const check = document.createElementNS(svg.namespaceURI, 'path');
+    check.setAttribute('d', 'm6.5 10 2.3 2.3 4.8-4.8');
+    check.setAttribute('stroke-linecap', 'round'); check.setAttribute('stroke-linejoin', 'round');
+    svg.append(circle, check);
     return svg;
   }
   function downloadDetails(files, label, opener) {
@@ -139,6 +140,8 @@
   function startDownload() {
     if (!safeFile(pendingFile)) return;
     const file = pendingFile;
+    const opener = downloadOpener;
+    const title = $('hitT')?.textContent || file.name || 'Scene pack';
     pendingFile = null;
     const link = document.createElement('a');
     link.href = file.url;
@@ -149,6 +152,7 @@
     link.click();
     link.remove();
     closeDownload();
+    window.archiveCredit?.show({ opener, title, provider: new URL(file.url).hostname });
   }
   function prepareDownload(files, label, opener) {
     if (!downloadDialog || !choices || !downloadGo) return false;
@@ -162,7 +166,7 @@
     $('hitCover').hidden = !details.poster;
     if (details.poster) $('hitCover').src = details.poster;
     else $('hitCover').removeAttribute('src');
-    downloadGo.setAttribute('aria-label', 'Download ' + details.title);
+    downloadGo.setAttribute('aria-label', 'Start download: ' + details.title);
     choices.replaceChildren();
     return true;
   }
@@ -183,23 +187,26 @@
     if (files.length === 1) { askFile(files[0], label, opener); return; }
     if (!files.some(safeFile)) { showActionError('These files are unavailable. Choose another pack or try again later.'); return; }
     if (!prepareDownload(files, label, opener)) { showActionError('The file selector is unavailable. Reload this page and try again.'); return; }
-    pendingFile = null;
-    downloadGo.hidden = true;
+    const firstPart = files.findIndex(safeFile);
+    pendingFile = files[firstPart];
+    downloadGo.hidden = false;
     files.forEach((file, index) => {
       const name = file.name || `Part ${index + 1}`;
       const button = create('button', '', 'transfer-part');
       button.type = 'button';
       button.disabled = !safeFile(file);
-      button.setAttribute('aria-label', `Download ${name}`);
+      button.setAttribute('aria-label', `Select ${name}`);
+      button.setAttribute('aria-pressed', String(index === firstPart));
       const info = create('span', '', 'transfer-part-info');
       info.append(create('strong', name));
       const facts = [file.run, file.size].filter(Boolean).join(' · ');
       if (facts) info.append(create('small', facts));
-      button.append(info, downloadIcon());
+      button.append(info, partChoiceIcon());
       button.addEventListener('click', () => {
         if (!downloadDialog.open) return;
         pendingFile = file;
-        startDownload();
+        choices.querySelectorAll('button').forEach(option => option.setAttribute('aria-pressed', String(option === button)));
+        downloadGo.setAttribute('aria-label', `Start download: ${$('hitT').textContent}, ${name}`);
       });
       choices.append(button);
     });
