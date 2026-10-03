@@ -19,6 +19,7 @@ colors:
   action-mint-line: "color-mix(in srgb, #6ff5bf 30%, transparent)"
   action-hover: "rgba(225,248,243,.1)"
   player-bg: "#000"
+  preview-field-bg: "#03090d"
   cod-sky-bg: "#090c08"
   cod-ink: "#f3f1e9"
   cod-muted: "#c0c2b3"
@@ -120,6 +121,12 @@ typography:
     fontWeight: 300
     lineHeight: 1.2
     letterSpacing: "-.025em"
+  credit-name:
+    fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
+    fontSize: "clamp(64px, 10vw, 96px)"
+    fontWeight: 400
+    lineHeight: 1.05
+    letterSpacing: "-.04em"
 rounded:
   episode: "6px"
   control: "8px"
@@ -240,6 +247,18 @@ components:
     rounded: "{rounded.panel}"
     padding: "{spacing.shelf}"
     width: "480px"
+  timestamp-field:
+    backgroundColor: "{colors.preview-field-bg}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body}"
+    rounded: "{rounded.control}"
+    padding: "8px"
+    height: "42px"
+    width: "88px"
+  credit-screen:
+    textColor: "{colors.ink}"
+    typography: "{typography.credit-name}"
+    padding: "80px 24px"
 ---
 
 # Design System: Ocean’s Scenepacks — AuroraGrab Night
@@ -248,7 +267,7 @@ components:
 
 **Creative North Star: "AuroraGrab Night"**
 
-The pinned AuroraGrab 3.0 reference supplies the real northern sky, mint home foundation, Segoe family stacks and quiet controls. The user-directed v9 expansion gives COD amber light over olive surfaces and SIX ice-blue light over navy surfaces. The same sky previews the collection on hover or keyboard focus and carries its color wave into the archive. Contained home photographs, compact breadcrumbs, collection shelves and illustrated season panels keep the footage legible. Search, main filters, result counts and redundant Drive card buttons are removed; the download panel now identifies the actual file. This preserves surface seed provenance `9b05bce6` without implying a new seed selection or aesthetic approval.
+The pinned AuroraGrab 3.0 reference supplies the real northern sky, mint home foundation, Segoe family stacks and quiet controls. The user-directed v9 expansion gives COD amber light over olive surfaces and SIX ice-blue light over navy surfaces. The same sky previews the collection on hover or keyboard focus and carries its color wave into the archive through a stationary light dissolve. The v10 credit reminder reuses the same sky after the final Start download action. Contained home photographs, compact breadcrumbs, collection shelves and illustrated season panels keep the footage legible. Search, main filters, result counts and redundant Drive card buttons are removed; the download panel now identifies the actual file. This preserves surface seed provenance `9b05bce6` without implying a new seed selection or aesthetic approval.
 
 **Key Characteristics:**
 
@@ -258,8 +277,10 @@ The pinned AuroraGrab 3.0 reference supplies the real northern sky, mint home fo
 - Archive titles use a consistent 500 weight, facts use 400 and the brand uses 600; light home names and 44px archive actions remain clear.
 - Every collection remains visible without catalog search, filter bars or result counts; preview season selection remains available.
 - Mint home, amber/olive COD and ice-blue/navy SIX share the same actual sky and Segoe system.
-- A directional light curtain reveals the archive in place while the sky retains time, energy, pulse and palette-wave continuity.
-- The download panel leads with a real still, actual file title, facts, provider guidance and a clear action or part rows.
+- A stationary collection-colored atmosphere dissolves into the archive while the sky retains time, energy, pulse and palette-wave continuity.
+- The download panel leads with a real still, actual file title, facts, provider guidance and a clear Start download action, with selectable rows for multipart files.
+
+- After Start download, the full-screen reminder reads “Remember to credit Ocean on TikTok” over the current collection sky, then waits for dismissal.
 
 ## Colors
 
@@ -298,7 +319,9 @@ The exact source-app family stacks are intentional reference fidelity. Light dis
 - **Body / navigation:** body uses 15px / 1.5; main navigation uses 14px. Labels, source facts, breadcrumb links and archive action text use 12px; numbers use tabular figures. Archive introductions and their subtitle role are removed.
 - **Brand / dialogs:** home brand 22px and archive brand 24px, both weight 600. Download-panel titles use 22px/500 with line-height 1.3 and `-.02em` tracking, becoming 20px at 480px. Preview titles retain light `clamp(24px, 3vw, 36px)` text.
 
-The observed 12, 13, 14, 15, 16, 18, 20, 22, 24, 28, 36, 40 and 56px steps reflect these distinct roles and responsive overrides.
+- **Credit sentence:** Ocean uses weight 400, `clamp(64px, 10vw, 96px)` / 1.05 and `-.04em` tracking; its sentence leads with 19px/400 “Remember to credit” and ends with 20px/400 “on TikTok”. At 600px the supporting text uses 17px/18px and Ocean uses `clamp(64px, 18vw, 88px)`; short landscape uses 16px supporting text and 64px Ocean. Continue browsing uses 14px/500.
+
+The observed steps serve these distinct source, navigation, heading and credit roles.
 
 **The Source Voice Rule.** Use the app’s Segoe text and display stacks, with light home names, consistent 500-weight archive titles and 400-weight source facts.
 
@@ -314,7 +337,7 @@ SIX uses two season panels side by side with a 24px gap and padding. Each opens 
 
 ## Elevation & Depth
 
-Scoped dark tonal panels, one-pixel borders and source photographs establish depth over the full sky. Home images use `0 12px 36px rgba(0,0,0,.22)`; previews use `0 30px 100px #0009`. The borderless file panel uses `0 24px 80px rgba(0,0,0,.48)`. Native dialogs share a dimmed, 10px-blurred backdrop. Archive covers do not lift, scale or cast hover shadows; their image brightness can still respond to hover and focus.
+Scoped dark tonal panels, one-pixel borders and source photographs establish depth over the full sky. Home images use `0 12px 36px rgba(0,0,0,.22)`; previews use `0 30px 100px #0009`. The borderless file panel uses `0 24px 80px rgba(0,0,0,.48)`. Preview and file dialogs share a dimmed, 10px-blurred backdrop. The full-screen credit dialog has no border, shadow or backdrop blur; a transparent collection-tinted field keeps the actual sky visible. Archive covers do not lift, scale or cast hover shadows; their image brightness can still respond to hover and focus.
 
 **The Quiet Depth Rule.** Keep collection panels still and let tonal backing, borders and the actual sky carry depth.
 
@@ -334,19 +357,25 @@ All seven COD packs and 18 SIX episode articles retain original IDs, source fact
 
 ### Fields and dialogs
 
-The preview timestamp field, season selector and playback controls remain. The new download panel has a 480px width cap, 28px padding, a source still, actual title, context and file facts. The still is 80×80px; at 480px the panel uses 24px padding, a 64×72px still and a 20px title. One-file panels place credit beside a 48px Download action, stacking the full-width action above credit on phones. Multipart panels replace that action with 64px-minimum part rows containing the part name and actual duration/size. Google Drive and Mega retain their original file-page destinations with specific guidance; GitHub files retain direct-download behavior. No full-file payload is loaded to render the panel.
+The preview timestamp field, season selector and playback controls remain. The new download panel has a 480px width cap, 28px padding, a source still, actual title, context and file facts. The still is 80×80px; at 480px the panel uses 24px padding, a 64×72px still and a 20px title. One-file panels place credit beside a 48px Start download action, stacking the full-width action above credit on phones. Multipart panels keep the same final action below 64px-minimum part rows containing the part name and actual duration/size. The first safe part is selected by default; rows use aria-pressed and an authored circle/check icon. Selecting a row only changes the pending file; Start download alone starts it and opens the credit reminder. Google Drive and Mega retain their original file-page destinations with specific guidance; GitHub files retain direct-download behavior. No full-file payload is loaded to render the panel.
 
 Native dialogs retain immediate preview-to-download handoff, media cleanup, error/retry states, scene timestamp sharing and focus return. Ordinary dialog entry is 350ms; dismissal is 220ms. A new scene during dismissal cancels the stale close. Changed scene heading and screen feedback lasts 300ms. A transactional preview-to-download handoff closes the player before opening the file dialog.
 
 ### Collection light passage and sky
 
-Hover or keyboard focus samples the chosen photograph’s normalized horizontal center and previews the collection colors in the actual shader over 700ms. On home, registered color properties also transition over 700ms. The shader changes seven color roles with an origin-based horizontal wave, retaining the source artwork. Selection sends a 1100ms palette target and a source-inspired energy pulse.
+Hover or keyboard focus samples the chosen photograph’s normalized horizontal center and previews the collection colors in the actual shader over 700ms. On home, registered color properties also transition over 700ms. The shader changes seven color roles with an origin-based horizontal wave, retaining the source artwork. Selection sends a 700ms palette target and a softened source-inspired energy pulse.
 
-A fixed `.passage-veil` contains one `.passage-curtain`, colored for the chosen collection. It enters from the chosen side in 600ms with `cubic-bezier(.32,0,.16,1)`, using only transform and opacity. Its opaque central region covers slow document loading. A one-use six-second record carries the world, origin and destination; the destination creates the curtain before first paint and continues it outward over 500ms with `cubic-bezier(.16,1,.3,1)`. There is no traveling photograph. Main stays at opacity 1 without transform or clipping, becoming inert only during departure. Direct loads, archive-to-home and archive-to-archive navigation are immediate.
+A fixed `.passage-veil` contains one `.passage-curtain`, colored for the chosen collection. It stays fixed to the viewport and fades from opacity 0 to 1 over 700ms, with `cubic-bezier(.45,0,.2,1)` and two broad collection-colored light fields. Its opaque final frame covers slow document loading. A one-use six-second record carries the world, origin and destination; the destination creates the same atmosphere before first paint and fades from opacity 1 to 0 over 800ms with the same easing. No translation or intermediate opacity knee remains. There is no traveling photograph. Main stays at opacity 1 without transform or clipping, becoming inert only during departure. Direct loads, archive-to-home and archive-to-archive navigation are immediate.
 
 Pause commits pending navigation immediately and removes the curtain; reduced motion uses normal anchors and settled collection colors. Escape before departure commits cancels the passage and restores link focus. Back restoration clears the curtain and inert state. Storage failure leaves destination content visible. Home image feedback uses 350ms; arrow color uses 180ms and shifts 4px. Action feedback uses 150ms colors and 120ms transforms, with a 100ms active press. Reduced/manual motion disables travel and physical feedback, retaining brief color confirmation.
 
-The actual shader keeps the established artwork. Hover/focus raises its target energy from .35 to .6; selection can trigger a 1300ms pulse and energy 1.35. A separate one-use five-second record transfers shader time, energy, pulse progress and the palette’s from/to arrays, progress, duration, world and origin; time advances by .735 units per second. Ambient work is capped at 30fps, or 20fps at 700px and below, and suspends for hidden documents, paused/reduced motion, open previews and context loss. Context restoration rebuilds WebGL resources; unavailable WebGL exposes the scoped static CSS sky. No initial shader entrance runs.
+The actual shader keeps the established artwork. Hover/focus raises its target energy from .35 to .6; selection and the credit entrance can trigger a broad 1300ms pulse. Its light wave uses a .18 width and .55 peak contribution; a .45 sine-squared energy breath rises and falls smoothly through the existing energy interpolation, without an immediate energy jump. A separate one-use five-second record transfers shader time, energy, pulse progress and the palette’s from/to arrays, progress, duration, world and origin; time advances by .735 units per second. Ambient work is capped at 30fps, or 20fps at 700px and below, and suspends for hidden documents, paused/reduced motion, open previews and context loss. Context restoration rebuilds WebGL resources; unavailable WebGL exposes the scoped static CSS sky. No initial shader entrance runs.
+
+### Full-screen credit reminder
+
+After the original file action, a reused native dialog covers the viewport and reads the exact sentence “Remember to credit Ocean on TikTok”. The page furniture fades away over 320ms while the real collection sky remains visible through the tinted field. Ocean is the focal word; the other two lines are parts of the same sentence. The dialog has 80px/24px padding and a 640px composition cap, a 44px close control and a 48px Continue browsing control, both outlined with 8px corners. It remains open until Continue browsing, the close button or Escape; no handle, link, timer or completed-download claim is added.
+
+Its one entrance uses 320ms opacity, a 720ms heading reveal with 5px-to-zero blur and 12px-to-zero vertical movement, two 1400ms light crossings and an authored SVG wave that draws over 1250ms after 100ms, settling into a short line over 550ms after 800ms. These bounded effects use cubic-bezier(.16,1,.3,1); no decorative loop runs. Dismissal takes 160ms and restores the original archive control. Reduced or paused motion shows the settled composition with a 100ms opacity confirmation. Hidden tabs and preference changes settle all active decoration; repeated requests reuse one dialog. Below 560px height, padding becomes 64px/24px/24px and spacing tightens so the action fits short landscape.
 
 ## Do's and Don'ts
 
@@ -359,6 +388,7 @@ The actual shader keeps the established artwork. Hover/focus raises its target e
 - **Do** preserve all original media, metadata, download destinations and native interaction behavior.
 - **Do** keep the light passage cancellable, preserve capped sky and palette continuity, and retain immediate native access.
 - **Do** identify the selected file with its source still, actual title, facts and provider guidance before downloading.
+- **Do** show the requested TikTok credit sentence only after Start download, retaining immediate dismissal, focus return and reduced motion.
 
 ### Don't:
 

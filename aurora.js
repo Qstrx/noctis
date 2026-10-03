@@ -187,7 +187,7 @@
     }
     vec3 aurora(vec2 uv,float t){
       vec3 a=curtain(uv,t,1.7,.56,.36,.22,1.15,-.25,1.25)+curtain(uv,t*.86,5.3,.68,.22,.14,.6,.35,1.3)+curtain(uv,t*1.12,9.1,.5,.18,.12,.4,-.3,.62);
-      if(uPulse>-.5)a*=1.+1.7*exp(-pow((uv.x-uPulse)/.065,2.));
+      if(uPulse>-.5)a*=1.+.55*exp(-pow((uv.x-uPulse)/.18,2.));
       return a*(.28+1.1*uEnergy);
     }
     vec3 skyCol(vec2 uv){
@@ -465,7 +465,9 @@
     const dt = last ? Math.min(100, now - last) / 1000 : 0;
     last = now;
     time += dt * .735;
-    const targetEnergy = introStart && now - introStart < 1500 ? 1.25 : focused ? .6 : .35;
+    const pulsePhase = pulseStart ? clamp((now - pulseStart) / 1300, 0, 1) : 1;
+    const lightBreath = pulseStart ? .45 * Math.pow(Math.sin(Math.PI * pulsePhase), 2) : 0;
+    const targetEnergy = (focused ? .6 : .35) + lightBreath;
     energy += (targetEnergy - energy) * Math.min(1, dt * 1.8);
     parallax = parallax.map((value, i) => value + (targetParallax[i] - value) * Math.min(1, dt * 3));
     draw(now);
@@ -517,7 +519,7 @@
   window.addEventListener('oceans:motion', motionChanged);
   document.addEventListener('oceans:motion', motionChanged);
   // AuroraGrab's restrained hover energy prepares a choice; a confirmed choice
-  // uses its stronger flare and 1300ms left-to-right light wave.
+  // uses a broad 1300ms light wave with a smooth rise and fall in energy.
   window.addEventListener('oceans:aurora-focus', (event) => {
     if (typeof event.detail?.active !== 'boolean' || !shouldAnimate()) return;
     focused = event.detail.active;
@@ -525,7 +527,6 @@
   window.addEventListener('oceans:aurora-pulse', () => {
     if (!shouldAnimate()) return;
     pulseStart = performance.now();
-    energy = Math.max(energy, 1.35);
   });
   window.addEventListener('oceans:palette', event => {
     const chosen = event.detail?.world;

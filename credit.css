@@ -1,0 +1,80 @@
+/* A single credited name, carried by the same world-colored AuroraGrab sky. */
+dialog.credit-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 80px 24px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: auto;
+  overscroll-behavior: contain;
+  color: var(--ink);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--sky-bg) 74%, transparent), color-mix(in srgb, var(--sky-bg) 34%, transparent) 55%, color-mix(in srgb, var(--sky-bg) 76%, transparent));
+  isolation: isolate;
+}
+dialog.credit-screen[open] { display: grid; place-items: center; }
+dialog.credit-screen::backdrop { background: transparent; backdrop-filter: none; }
+body:has(.credit-screen) > :is(main,.site-header,.site-footer) { transition: opacity 320ms ease; }
+body[data-credit=open] > main,
+body[data-credit=open] > .site-header,
+body[data-credit=open] > .site-footer { opacity: 0; }
+.credit-lights { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+.credit-light {
+  position: absolute;
+  left: 50%;
+  width: min(1600px, 180vw);
+  height: clamp(220px, 36vw, 500px);
+  margin-left: max(-800px, -90vw);
+  filter: blur(16px);
+  background: linear-gradient(180deg, transparent 18%, color-mix(in srgb, var(--accent) 8%, transparent) 37%, color-mix(in srgb, var(--accent) 28%, transparent) 51%, color-mix(in srgb, var(--accent) 7%, transparent) 64%, transparent 82%);
+}
+.credit-light-one { top: 18%; opacity: .28; transform: translate(7%, -5%) rotate(-18deg); }
+.credit-light-two { top: 46%; opacity: .18; transform: translate(-6%, -4%) rotate(16deg); }
+.credit-composition { width: min(640px, 100%); text-align: center; position: relative; }
+.credit-heading { font-family: var(--display); margin: 0; font-weight: 400; }
+.credit-prelude { display: block; color: var(--muted); font-family: var(--font); font-size: 19px; line-height: 1.5; font-weight: 400; letter-spacing: 0; }
+.credit-name { display: block; margin-top: 12px; font-size: clamp(64px, 10vw, 96px); font-weight: 400; line-height: 1.05; letter-spacing: -.04em; }
+.credit-platform { display: block; margin-top: 16px; font-family: var(--font); font-size: 20px; line-height: 1.4; font-weight: 400; letter-spacing: -.01em; }
+.credit-wave { display: block; width: min(360px, 85%); height: 32px; margin: 22px auto 0; overflow: visible; color: var(--accent); }
+.credit-wave path { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-dasharray: 1; }
+.credit-wave-flow { opacity: 0; stroke-dashoffset: 0; }
+.credit-wave-line { opacity: 1; stroke-dashoffset: 0; }
+.credit-close,
+.credit-continue { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line-strong); border-radius: 8px; color: var(--ink); background: color-mix(in srgb, var(--sky-bg) 58%, transparent); transition: background 150ms ease, border-color 150ms ease; }
+.credit-close { position: absolute; top: 24px; right: 24px; width: 44px; height: 44px; padding: 0; }
+.credit-continue { min-height: 48px; gap: 16px; margin-top: 40px; padding: 12px 22px; font-size: 14px; font-weight: 500; line-height: 1.5; }
+.credit-close svg,
+.credit-continue svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.credit-close:hover,
+.credit-continue:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, var(--sky-bg)); }
+.credit-close:active,
+.credit-continue:active { background: color-mix(in srgb, var(--accent) 16%, var(--sky-bg)); }
+.credit-close:focus-visible,
+.credit-continue:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 600px) {
+  dialog.credit-screen { padding: 80px 24px; }
+  .credit-close { top: 20px; right: 20px; }
+  .credit-prelude { font-size: 17px; }
+  .credit-name { font-size: clamp(64px, 18vw, 88px); }
+  .credit-platform { font-size: 18px; }
+  .credit-light { filter: blur(12px); }
+}
+@media (max-height: 560px) {
+  dialog.credit-screen { padding: 64px 24px 24px; }
+  .credit-prelude { font-size: 16px; }
+  .credit-name { margin-top: 6px; font-size: 64px; }
+  .credit-platform { margin-top: 8px; font-size: 16px; }
+  .credit-wave { margin-top: 10px; height: 24px; }
+  .credit-continue { margin-top: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .credit-close, .credit-continue { transition-duration: 100ms; }
+  body:has(.credit-screen) > :is(main,.site-header,.site-footer) { transition-duration: 100ms; }
+}
+body[data-motion=off]:has(.credit-screen) > :is(main,.site-header,.site-footer) { transition-duration: 100ms; }

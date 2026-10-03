@@ -22,7 +22,7 @@ Home contains the Ocean’s brand, an accessible motion icon and two equally cle
 
 Call of Duty has two sections: John Price with MW I, II, III and the adjacent existing All in one pack; Cutscenes with only the three original campaign files. The combined All in one file belongs only to John Price. Cutscene cards expose a single Download button; the redundant Drive button is removed while the original Google Drive files remain the destinations. SIX uses two season panels with distinct source photographs above their headings, containing eight and ten episode rows. Each row leads with the official episode name, then its number, duration/size and adjacent accessible Preview/Download icons. Both archives begin with a compact breadcrumb, collection name and source quality facts. Main catalog search, kind/season filter bars and result counts are removed; all actual collections stay visible. The preview player retains its season selector for moving between episodes.
 
-Downloads open a compact file panel with the source still, actual pack or episode title, context, file facts and provider guidance. One-file panels have a 48px Download action; multipart panels present separate part rows. Preserve original download destinations and distinguish direct files from provider file pages.
+Downloads open a compact file panel with the source still, actual pack or episode title, context, file facts and provider guidance. Every panel has a 48px Start download action; multipart panels first select a part using pressed-state rows. Only the final action starts the original file and opens the full-screen native credit reminder. The exact sentence “Remember to credit Ocean on TikTok” stays visible until Continue browsing, the close button or Escape. The dialog inherits the collection sky and palette, restores focus and respects pause/reduced motion. Preserve original download destinations and distinguish direct files from provider file pages.
 
 ## Brand Commitments
 
@@ -30,7 +30,7 @@ The pinned AuroraGrab 3.0 reference remains the authority for the real northern 
 
 ## Evidence on Hand
 
-`archive-data.js` contains original download metadata and the 18 SIX episode names verified against HISTORY’s official [Season 1](https://www.history.com/shows/six/season-1) and [Season 2](https://www.history.com/shows/six/season-2) listings. `img/cod`, `img/six`, `img/price.jpg` and `img/joe.jpg` contain supplied scene stills. The AuroraGrab 3.0 reference source and verified screenshots establish the Night world. `site.css` defines its three approved palette variants; `home.css`, `archive.css`, `download.css`, `motion.js`, `motion.css` and `aurora.js` implement the current surfaces and motion. DESIGN.md documents those actual values.
+`archive-data.js` contains original download metadata and the 18 SIX episode names verified against HISTORY’s official [Season 1](https://www.history.com/shows/six/season-1) and [Season 2](https://www.history.com/shows/six/season-2) listings. `img/cod`, `img/six`, `img/price.jpg` and `img/joe.jpg` contain supplied scene stills. The AuroraGrab 3.0 reference source and verified screenshots establish the Night world. `site.css` defines its three approved palette variants; `home.css`, `archive.css`, `download.css`, `credit.js`, `credit.css`, `motion.js`, `motion.css` and `aurora.js` implement the current surfaces and motion. DESIGN.md documents those actual values.
 
 ## Product Principles
 
@@ -38,5 +38,7 @@ The pinned AuroraGrab 3.0 reference remains the authority for the real northern 
 - Home presents one clear choice between the two collections.
 - Source quality and file facts are visible before downloading.
 - Browsing works on phones and with a keyboard.
-- A 600ms departing light curtain and 500ms continuation reveal the archive in place, preserving immediate direct access, archive navigation, pause, reduced motion, Escape and back restoration.
+- A stationary collection atmosphere fades in over 700ms and dissolves over 800ms to reveal the archive in place, preserving immediate direct access, archive navigation, pause, reduced motion, Escape and back restoration.
 - The real sky retains its artwork, continuous time/energy/pulse and palette-wave transfer, with 30/20fps caps.
+
+The v10 request accepts the collection palettes and asks for smoother transitions and a full-screen TikTok credit reminder only after Start download. The softened sky pulse and stationary dissolve preserve the accepted layouts and original file destinations.
