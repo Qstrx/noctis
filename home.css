@@ -30,7 +30,7 @@ body[data-world=home] .motion-toggle svg {
   flex-basis: 16px;
 }
 body[data-world=home] .motion-toggle:hover {
-  background: rgba(111, 245, 191, .08);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 body[data-world=home] .home-main {
   display: grid;

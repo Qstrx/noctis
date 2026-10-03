@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'none'; media-src https://github.com https://release-assets.githubusercontent.com; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#02060b">
+<meta name="theme-color" content="#030a13">
 <title>SIX — Ocean’s Scenepacks</title>
 <meta name="description" content="Joe Graves scene packs. Original quality, no watermark, no sign-in.">
 <meta property="og:title" content="SIX — Ocean’s Scenepacks">
@@ -16,14 +16,15 @@
 <link rel="icon" href="img/icon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="site.css?v=aurora-8">
-<link rel="stylesheet" href="motion.css?v=aurora-6">
-<link rel="stylesheet" href="archive.css?v=aurora-8">
+<link rel="stylesheet" href="site.css?v=aurora-9">
+<link rel="stylesheet" href="motion.css?v=aurora-9">
+<link rel="stylesheet" href="archive.css?v=aurora-9">
+<link rel="stylesheet" href="download.css?v=aurora-9">
 <script src="archive-data.js?v=aurora-8" defer></script>
-<script src="site.js?v=aurora-8" defer></script>
-<script src="motion.js?v=aurora-7" defer></script>
+<script src="site.js?v=aurora-9" defer></script>
+<script src="motion.js?v=aurora-9" defer></script>
 <script src="player.js?v=aurora-8" defer></script>
-<script src="aurora.js?v=aurora-6" defer></script>
+<script src="aurora.js?v=aurora-9" defer></script>
 </head>
 <body data-world="six" data-theme="night" data-motion="on">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -35,7 +36,7 @@
 </header><main class="catalog-main" id="main">
 <header class="archive-heading"><div class="archive-location"><a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6 6-6-6 6-6"/></svg><span>All collections</span></a><span class="location-divider" aria-hidden="true">/</span><h1>SIX</h1></div><p class="archive-quality">1080p · 24 fps · No watermark</p></header>
 
-<div class="catalog-toolbar"><div class="filter-list" role="group" aria-label="Filter seasons"><button type="button" class="filter-button" data-filter="all" aria-pressed="true">All episodes</button><button type="button" class="filter-button" data-filter="1" aria-pressed="false">Season 1</button><button type="button" class="filter-button" data-filter="2" aria-pressed="false">Season 2</button></div></div><p class="sr-only" id="resultCount" role="status" aria-live="polite">18 episodes</p>
+
 <div class="season-collections"><section class="pack-group season-collection" data-group="1" aria-labelledby="group-1">
 <div class="season-cover"><img src="img/six/s1-e07.jpg" alt="" width="480" height="270" decoding="async" fetchpriority="high"></div>
 <div class="group-heading"><h2 id="group-1">Season 1</h2><p>8 episodes · 1:34:13 · 15.5 GB</p></div>
@@ -152,7 +153,14 @@
 </article></div></section></div>
 <details class="source-notes"><summary>About the source <svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg></summary><div><p>Joe Graves scene packs, cut directly from the Blu-ray.</p><p>1920 × 1080 · 24 fps · H.264 / AAC.</p><p>The first or last frame may occasionally belong to the adjacent scene.</p></div></details>
 </main>
-<footer class="site-footer"><a class="footer-brand" href="index.html">ocean’s</a><p>Original scenes. Yours to edit.</p><span>Remember to credit Ocean’s Scenepacks.</span></footer><dialog class="download-dialog" id="hit" aria-labelledby="hitT" aria-describedby="hitS"><div class="dialog-top"><span>Download pack</span><button type="button" id="hitNo" aria-label="Cancel download"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div class="dialog-body"><h2 id="hitT">Ready for your edit.</h2><p id="hitS"></p><p class="credit-line">Remember to credit Ocean’s Scenepacks.</p><div id="downloadChoices"></div><button class="dialog-action" id="hitGo" type="button">Start download <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></dialog>
+<footer class="site-footer"><a class="footer-brand" href="index.html">ocean’s</a><p>Original scenes. Yours to edit.</p><span>Remember to credit Ocean’s Scenepacks.</span></footer><dialog class="download-dialog transfer-dialog" id="hit" aria-labelledby="hitT" aria-describedby="hitS hitNote">
+  <button class="transfer-close" type="button" id="hitNo" aria-label="Cancel download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  <div class="transfer-file"><img class="transfer-cover" id="hitCover" alt="" width="80" height="80" hidden><div class="transfer-heading"><h2 id="hitT">Scene pack</h2><p id="hitS"></p></div></div>
+  <p class="transfer-facts" id="hitMeta" hidden></p>
+  <p class="transfer-note" id="hitNote"></p>
+  <div class="transfer-parts" id="downloadChoices" role="group" aria-label="File parts"></div>
+  <footer class="transfer-footer"><p class="transfer-credit">Please credit Ocean’s Scenepacks.</p><button class="transfer-action" id="hitGo" type="button"><span>Download</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></footer>
+</dialog>
 <dialog class="preview-dialog" id="preview" aria-labelledby="previewTitle" aria-describedby="previewDescription">
   <header class="preview-top">
     <span class="preview-label">Six / Scene preview</span>

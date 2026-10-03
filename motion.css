@@ -1,14 +1,51 @@
-/* The photograph is the one traveling element; page content remains stable. */
-.passage-frame { position:fixed; z-index:30; overflow:hidden; pointer-events:none; contain:layout paint; background:var(--sky-bg); }
-.passage-frame img { width:100%; height:100%; display:block; object-fit:cover; object-position:50% 39%; }
-@media(prefers-reduced-motion:reduce){ .passage-frame { display:none; } }
+/* One bounded curtain carries the selected world's light across documents.
+   Its opaque middle covers a slow load; soft wings stay outside the viewport
+   when held. Only transform and opacity animate, with no fullscreen blur. */
+.passage-veil {
+  --passage-surface: #07100f;
+  --passage-light: 111, 245, 191;
+  --passage-companion: 96, 181, 190;
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout paint;
+}
+.passage-veil[data-world=cod] {
+  --passage-surface: #100e08;
+  --passage-light: 232, 190, 112;
+  --passage-companion: 141, 166, 91;
+}
+.passage-veil[data-world=six] {
+  --passage-surface: #061019;
+  --passage-light: 127, 202, 244;
+  --passage-companion: 128, 149, 226;
+}
+.passage-curtain {
+  position: absolute;
+  inset: 0 -50%;
+  will-change: transform, opacity;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--passage-surface) 24%,
+    var(--passage-surface) 76%,
+    transparent);
+}
+.passage-curtain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 21% 100% at var(--passage-origin, 36%) 100%, rgba(var(--passage-light), .27), transparent 75%),
+    radial-gradient(ellipse 16% 90% at calc(100% - var(--passage-origin, 36%)) 0%, rgba(var(--passage-companion), .2), transparent 75%),
+    linear-gradient(104deg, transparent 31%, rgba(var(--passage-light), .08) 40%, transparent 49%, rgba(var(--passage-companion), .1) 58%, transparent 67%);
+}
+@media(prefers-reduced-motion:reduce){ .passage-veil { display:none; } }
 /* One underline travels between choices, as in AuroraGrab's .tabs__bar. */
-.site-nav.has-motion-marker,
-.filter-list.has-motion-marker { position: relative; }
-.has-motion-marker > a::after,
-.has-motion-marker > .filter-button::after { display: none; }
-.nav-marker,
-.filter-marker {
+.site-nav.has-motion-marker { position: relative; }
+.has-motion-marker > a::after { display: none; }
+.nav-marker {
   position: absolute;
   left: 0;
   height: 2px;
@@ -20,7 +57,6 @@
   transition: transform .35s var(--ease);
 }
 .nav-marker { bottom: 24px; }
-.filter-marker { bottom: 3px; }
 @media (max-width: 760px) { .nav-marker { bottom: 8px; } }
 
 /* Keep the controls' existing color feedback; add source-sized physical feedback. */
@@ -30,7 +66,6 @@
 .dialog-top button,
 .preview-close,
 .motion-toggle,
-.filter-button,
 .preview-dialog button {
   transition: transform .12s ease, background-color .15s ease,
     color .15s ease, border-color .15s ease;
@@ -64,7 +99,7 @@ dialog.is-closing { pointer-events: none; }
     box-shadow: 0 8px 26px rgba(0, 0, 0, .45);
   }
   body:not([data-motion=off]) :is(.action, .dialog-action, .motion-toggle,
-    .filter-button, .dialog-top button, .preview-close, .preview-dialog button):active:not(:disabled):not([aria-disabled=true]) {
+    .dialog-top button, .preview-close, .preview-dialog button):active:not(:disabled):not([aria-disabled=true]) {
     transform: scale(.97);
     transition-duration: .1s;
   }
@@ -74,27 +109,27 @@ dialog.is-closing { pointer-events: none; }
 body[data-motion=off] :is(.pack-cover,
   .pack-cover img, .action svg, .dialog-action svg,
   .back-link svg, .source-notes summary svg,
-  .action, .dialog-action, .motion-toggle, .filter-button,
+  .action, .dialog-action, .motion-toggle,
   .dialog-top button, .preview-close, .preview-dialog button) {
   transform: none !important;
   transition-property: color, background-color, border-color, opacity !important;
   transition-duration: 100ms !important;
 }
 body[data-motion=off] .source-notes[open] summary svg { transform: rotate(180deg) !important; }
-body[data-motion=off] :is(.nav-marker, .filter-marker) { transition: none; }
+body[data-motion=off] .nav-marker { transition: none; }
 html:has(body[data-motion=off]) { scroll-behavior: auto; }
 @media (prefers-reduced-motion: reduce) {
   :is(.pack-cover, .pack-cover img,
     .action svg, .dialog-action svg, .back-link svg,
     .source-notes summary svg, .action, .dialog-action, .motion-toggle,
-    .filter-button, .dialog-top button, .preview-close, .preview-dialog button) {
+    .dialog-top button, .preview-close, .preview-dialog button) {
     transform: none !important;
   }
   .source-notes[open] summary svg { transform: rotate(180deg) !important; }
-  :is(.site-nav a, .filter-button, .motion-toggle, .action, .dialog-action,
+  :is(.site-nav a, .motion-toggle, .action, .dialog-action,
     .dialog-top button, .preview-close, .preview-dialog button) {
     transition-property: color, background-color, border-color, opacity !important;
     transition-duration: 100ms !important;
   }
-  :is(.nav-marker, .filter-marker) { transition: none; }
+  .nav-marker { transition: none; }
 }
