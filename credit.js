@@ -47,21 +47,22 @@
     screen.className = 'credit-screen';
     screen.setAttribute('aria-labelledby', 'creditMessage');
     screen.innerHTML = `
-      <div class="credit-lights" aria-hidden="true">
-        <span class="credit-light credit-light-one"></span>
-        <span class="credit-light credit-light-two"></span>
-      </div>
+      <div class="credit-lights" aria-hidden="true"><span class="credit-light"></span></div>
       <button type="button" class="credit-close" data-credit-close aria-label="Close credit reminder">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
       </button>
       <div class="credit-composition">
-        <h2 id="creditMessage" class="credit-heading"><span class="credit-prelude">Remember to credit</span> <span class="credit-name">Ocean</span> <span class="credit-platform">on TikTok</span></h2>
-        <a class="credit-account" href="https://www.tiktok.com/@oceanxaep" target="_blank" rel="noopener noreferrer" aria-label="Ocean on TikTok: @oceanxaep (opens in a new tab)">@oceanxaep</a>
-        <svg class="credit-wave" viewBox="0 0 360 32" aria-hidden="true">
-          <path class="credit-wave-flow" pathLength="1" d="M8 19C53 19 63 4 97 7S145 27 180 22 226 2 267 8 306 21 352 14"/>
-          <path class="credit-wave-line" pathLength="1" d="M118 17h124"/>
-        </svg>
-        <button type="button" class="credit-continue" data-credit-close autofocus>Continue browsing<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+        <figure class="credit-source">
+          <img class="credit-poster" alt="" decoding="async">
+          <figcaption class="credit-source-title"></figcaption>
+        </figure>
+        <div class="credit-copy">
+          <h2 id="creditMessage" class="credit-heading">Remember to credit Ocean on TikTok.</h2>
+          <a class="credit-account" href="https://www.tiktok.com/@oceanxaep" target="_blank" rel="noopener noreferrer" aria-label="Ocean on TikTok: @oceanxaep (opens in a new tab)">
+            <span>@oceanxaep</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M7 6h11v11"/></svg>
+          </a>
+          <button type="button" class="credit-continue" data-credit-close autofocus>Continue browsing<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+        </div>
       </div>`;
     screen.addEventListener('cancel', event => {
       event.preventDefault();
@@ -73,6 +74,27 @@
     return screen;
   }
 
+  function setSource(dialog, options) {
+    const poster = dialog.querySelector('.credit-poster');
+    const source = dialog.querySelector('.credit-source');
+    const caption = dialog.querySelector('.credit-source-title');
+    const title = typeof options.title === 'string' ? options.title.trim() : '';
+    let url = null;
+    if (typeof options.poster === 'string') {
+      try {
+        const candidate = new URL(options.poster, location.href);
+        if (candidate.origin === location.origin && /\/img\//.test(candidate.pathname)) url = candidate;
+      } catch (_) { /* An invalid source never becomes a request. */ }
+    }
+    source.hidden = !url;
+    dialog.querySelector('.credit-composition').classList.toggle('credit-without-source', !url);
+    caption.textContent = title;
+    caption.hidden = !title;
+    poster.alt = title ? `Scene pack preview: ${title}` : 'Scene pack preview';
+    if (url) poster.src = url.href;
+    else poster.removeAttribute('src');
+  }
+
   function show(options = {}) {
     const dialog = create();
     // Keep one modal and one sequence even if a multipart action is double-clicked.
@@ -80,35 +102,28 @@
     stopMotion();
     generation += 1;
     opener = options.opener instanceof HTMLElement ? options.opener : document.activeElement;
+    setSource(dialog, options);
     try { dialog.showModal(); } catch (_) { opener = null; return false; }
     document.body.dataset.credit = 'open';
 
     if (moving()) {
       dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
-      animate(dialog, [{ opacity: 0 }, { opacity: 1 }], 320);
-      animate(dialog.querySelector('.credit-heading'), [
-        { opacity: .35, filter: 'blur(5px)', transform: 'translateY(12px)' },
-        { opacity: 1, filter: 'blur(0px)', transform: 'translateY(0px)' }
-      ], 720);
-      animate(dialog.querySelector('.credit-light-one'), [
-        { opacity: 0, transform: 'translate(-9%,12%) rotate(-18deg)' },
-        { opacity: .78, transform: 'translate(0%,0%) rotate(-18deg)', offset: .48 },
-        { opacity: .28, transform: 'translate(7%,-5%) rotate(-18deg)' }
-      ], 1400);
-      animate(dialog.querySelector('.credit-light-two'), [
-        { opacity: 0, transform: 'translate(10%,7%) rotate(16deg)' },
-        { opacity: .48, transform: 'translate(0%,0%) rotate(16deg)', offset: .5 },
-        { opacity: .18, transform: 'translate(-6%,-4%) rotate(16deg)' }
-      ], 1400);
-      animate(dialog.querySelector('.credit-wave-flow'), [
-        { opacity: .8, strokeDashoffset: 1, offset: 0 },
-        { opacity: .8, strokeDashoffset: 0, offset: .7 },
-        { opacity: 0, strokeDashoffset: 0 }
-      ], 1250, 100);
-      animate(dialog.querySelector('.credit-wave-line'), [
-        { opacity: 0, strokeDashoffset: 1 },
-        { opacity: 1, strokeDashoffset: 0 }
-      ], 550, 800);
+      animate(dialog, [{ opacity: .45 }, { opacity: 1 }], 300);
+      if (!dialog.querySelector('.credit-source').hidden) {
+        animate(dialog.querySelector('.credit-poster'), [
+          { opacity: .55, clipPath: 'inset(0 24% 0 0)', filter: 'contrast(.9)' },
+          { opacity: 1, clipPath: 'inset(0 0% 0 0)', filter: 'contrast(1)' }
+        ], 800);
+      }
+      animate(dialog.querySelector('.credit-copy'), [
+        { opacity: .6, transform: 'translateY(10px)' },
+        { opacity: 1, transform: 'translateY(0px)' }
+      ], 680, 80);
+      animate(dialog.querySelector('.credit-light'), [
+        { opacity: 0, transform: 'translateX(-10vw) rotate(-20deg)', offset: 0 },
+        { opacity: .46, transform: 'translateX(48vw) rotate(-20deg)', offset: .45 },
+        { opacity: 0, transform: 'translateX(155vw) rotate(-20deg)' }
+      ], 1000);
     } else if (!document.hidden) {
       // The sentence and controls are legible from the first reduced-motion frame.
       animate(dialog, [{ opacity: .9 }, { opacity: 1 }], 100);

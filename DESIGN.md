@@ -121,13 +121,20 @@ typography:
     fontWeight: 300
     lineHeight: 1.2
     letterSpacing: "-.025em"
-  credit-name:
+  credit-heading:
     fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
-    fontSize: "clamp(64px, 10vw, 96px)"
+    fontSize: "clamp(28px, 2.8vw, 36px)"
     fontWeight: 400
-    lineHeight: 1.05
-    letterSpacing: "-.04em"
+    lineHeight: 1.25
+    letterSpacing: "-.025em"
+  credit-account:
+    fontFamily: '"Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif'
+    fontSize: "clamp(32px, 4.1vw, 56px)"
+    fontWeight: 400
+    lineHeight: 1.2
+    letterSpacing: "-.025em"
 rounded:
+  credit-source: "4px"
   episode: "6px"
   control: "8px"
   media: "12px"
@@ -257,8 +264,8 @@ components:
     width: "88px"
   credit-screen:
     textColor: "{colors.ink}"
-    typography: "{typography.credit-name}"
-    padding: "80px 24px"
+    typography: "{typography.credit-heading}"
+    padding: "80px 40px 56px"
 ---
 
 # Design System: Ocean’s Scenepacks — AuroraGrab Night
@@ -267,20 +274,19 @@ components:
 
 **Creative North Star: "AuroraGrab Night"**
 
-The pinned AuroraGrab 3.0 reference supplies the real northern sky, mint home foundation, Segoe family stacks and quiet controls. The user-directed v9 expansion gives COD amber light over olive surfaces and SIX ice-blue light over navy surfaces. The same sky previews the collection on hover or keyboard focus and carries its color wave into the archive through a stationary light dissolve. The v10 credit reminder reuses the same sky after the final Start download action. Contained home photographs, compact breadcrumbs, collection shelves and illustrated season panels keep the footage legible. Search, main filters, result counts and redundant Drive card buttons are removed; the download panel now identifies the actual file. This preserves surface seed provenance `9b05bce6` without implying a new seed selection or aesthetic approval.
+The pinned AuroraGrab 3.0 reference supplies the real northern sky, mint home foundation, Segoe family stacks and quiet controls. The user-directed v9 expansion gives COD amber light over olive surfaces and SIX ice-blue light over navy surfaces. The same sky previews the collection on hover or keyboard focus and carries its color wave into the archive through a stationary light dissolve. The v12 credit reminder reuses the same sky after the final Start download action, pairing the selected source still and title with one complete credit sentence and the prominent supplied TikTok handle. Contained home photographs, compact breadcrumbs, collection shelves and illustrated season panels keep the footage legible. Search, main filters, result counts and redundant Drive card buttons are removed; the download panel now identifies the actual file. This source/code-led component replacement preserves surface seed provenance `9b05bce6` without implying a new world, seed selection, approved comp or aesthetic approval.
 
 **Key Characteristics:**
 
 - Home contains the brand, a motion icon and two photographed collection links.
 - Call of Duty has two shelves: John Price with the adjacent All in one file, and Cutscenes with only three campaign files.
-- SIX pairs Season 1 and Season 2 panels, each led by a full-width source still above its heading, containing eight and ten named episode rows.
+- SIX identifies Joe Graves and pairs Season 1 and Season 2 panels, each led by a full-width source still above its heading, containing eight and ten character scene packs with original source episode names and “From episode NN” provenance.
 - Archive titles use a consistent 500 weight, facts use 400 and the brand uses 600; light home names and 44px archive actions remain clear.
 - Every collection remains visible without catalog search, filter bars or result counts; preview season selection remains available.
 - Mint home, amber/olive COD and ice-blue/navy SIX share the same actual sky and Segoe system.
 - A stationary collection-colored atmosphere dissolves into the archive while the sky retains time, energy, pulse and palette-wave continuity.
 - The download panel leads with a real still, actual file title, facts, provider guidance and a clear Start download action, with selectable rows for multipart files.
-
-- After Start download, the full-screen reminder reads “Remember to credit Ocean on TikTok” over the current collection sky, then waits for dismissal.
+- After Start download, the full-screen reminder pairs the selected source still/title with “Remember to credit Ocean on TikTok.” and the prominent @oceanxaep link over the current collection sky, then waits for dismissal.
 
 ## Colors
 
@@ -315,11 +321,11 @@ The exact source-app family stacks are intentional reference fidelity. Light dis
 - **Headline:** weight 500, 22px / 1.25, tracking `-.02em`; the collection name beside the archive breadcrumb at every width.
 - **Title:** weight 500, 28px / 1.2, tracking `-.02em`; both COD shelf headings and both season headings at every width.
 - **Pack titles:** weight 500, 18px / 1.4, tracking `-.01em`; COD titles become 16px on phones and 15px at 380px.
-- **Episode names / numbers:** names use weight 500, 16px / 1.4 with zero tracking; the secondary episode number uses weight 400, 12px / 1.5 and tabular figures on a separate line, with a 4px top gap. Names retain 16px on phones and wrap as needed.
+- **Source episode names / provenance:** original names use weight 500, 16px / 1.4 with zero tracking; the secondary “From episode NN” line uses weight 400, 12px / 1.5 and tabular figures on a separate line, with a 4px top gap. Names identify Joe Graves scene-pack sources, retain 16px on phones and wrap as needed.
 - **Body / navigation:** body uses 15px / 1.5; main navigation uses 14px. Labels, source facts, breadcrumb links and archive action text use 12px; numbers use tabular figures. Archive introductions and their subtitle role are removed.
 - **Brand / dialogs:** home brand 22px and archive brand 24px, both weight 600. Download-panel titles use 22px/500 with line-height 1.3 and `-.02em` tracking, becoming 20px at 480px. Preview titles retain light `clamp(24px, 3vw, 36px)` text.
 
-- **Credit sentence:** Ocean uses weight 400, `clamp(64px, 10vw, 96px)` / 1.05 and `-.04em` tracking; its sentence leads with 19px/400 “Remember to credit” and ends with 20px/400 “on TikTok”. At 600px the supporting text uses 17px/18px and Ocean uses `clamp(64px, 18vw, 88px)`; short landscape uses 16px supporting text and 64px Ocean. Continue browsing uses 14px/500. The supplied TikTok username uses a 16px link with a minimum 44px hit area and visible focus.
+- **Credit sentence / profile:** the complete sentence uses weight 400, `clamp(28px, 2.8vw, 36px)` / 1.25 and `-.025em` tracking; the prominent supplied @oceanxaep link uses weight 400, `clamp(32px, 4.1vw, 56px)` / 1.2 with the same tracking and a minimum 44px hit area. At 640px and below the sentence is 28px and the handle is `clamp(32px, 8vw, 40px)`; short landscape uses 28px/36px. Source captions use 15px/400, becoming 14px on phones and short landscape. Continue browsing uses 14px/500.
 
 The observed steps serve these distinct source, navigation, heading and credit roles.
 
@@ -333,7 +339,9 @@ Archives cap at 1240px with 40px gutters. The site header is 84px high. A compac
 
 Call of Duty has two 28px-padded shelves separated by 32px. John Price has four equal positions with a 24px gap for MW I, II, III and All in one; their covers and titles align without an extra divider or inset for the combined file. Cutscenes uses three equal columns for the original campaign files, with no collective chooser. At 1100px shelves use 24px padding and 18px gaps. At 800px both shelves become two columns. At 760px panels use 20px padding, 24×16px gaps and vertically stacked file actions; at 380px padding is 16px and horizontal gaps are 12px.
 
-SIX uses two season panels side by side with a 24px gap and padding. Each opens with a full-width 190px-high source photograph (Season 1: s1-e07; Season 2: s2-e10), followed by a separate heading and the season’s episode count, duration and size. The photographs extend to the inner panel edges; their upper corners are 15px, concentric with the 16px panel corner minus its one-pixel border. Each episode row has a 96px still, a flexible name/number/facts column and a 94px action column, with 16px horizontal gaps and 16px vertical padding. At 1100px panel padding becomes 20px, cover height 170px, stills 64px and gaps 12px. At 800px panels stack, padding and cover height return to 24px/190px and stills become 100px. At 760px padding is 20px, covers 150px, stills 64px and row padding 14px; at 380px padding is 16px, covers 140px and the small row still is hidden so the episode name has room to wrap. Season cover photographs remain visible. Preview and Download remain adjacent 44×44px controls at every width. Panel margins do not compound the grid gaps.
+SIX uses two season panels side by side with a 24px gap and padding. Each opens with a full-width 190px-high source photograph (Season 1: s1-e07; Season 2: s2-e10), followed by a separate heading and the season’s scene-pack count, duration and size. The photographs extend to the inner panel edges; their upper corners are 15px, concentric with the 16px panel corner minus its one-pixel border. Each scene-pack row has a 96px still, a flexible name/number/facts column and a 94px action column, with 16px horizontal gaps and 16px vertical padding. At 1100px panel padding becomes 20px, cover height 170px, stills 64px and gaps 12px. At 800px panels stack, padding and cover height return to 24px/190px and stills become 100px. At 760px padding is 20px, covers 150px, stills 64px and row padding 14px; at 380px padding is 16px, covers 140px and the small row still is hidden so the source episode name has room to wrap. Season cover photographs remain visible. Preview and Download remain adjacent 44×44px controls at every width. Panel margins do not compound the grid gaps.
+
+The full-screen credit stage uses 80px/40px/56px viewport padding and a 1040px-max two-column composition, with a `clamp(40px, 6vw, 96px)` gap. The selected still and title occupy the left column; the complete credit sentence, profile link and Continue browsing occupy the right. At 640px and below it stacks in source-first order with a 420px cap, 28px gap, 80px/24px/36px padding and a 150px photo-height cap. At heights of 560px or less and widths of 641px or more it stays in two columns (1fr/1.1fr), with a 920px cap, 40px gap, 72px/32px/24px padding and a 180px photo-height cap.
 
 ## Elevation & Depth
 
@@ -343,7 +351,7 @@ Scoped dark tonal panels, one-pixel borders and source photographs establish dep
 
 ## Shapes
 
-Home photographs have 12px corners. Season cover photographs have 15px upper corners within the one-pixel border of a 16px panel; archive headings contain no portraits. COD stills use 8px corners and a 16:10 crop; SIX stills use 6px corners with the responsive ratios in `archive.css`. Archive and file-panel controls use 8px corners; shelves, season panels and dialogs use 16px. Only the motion toggle uses a pill shape. Source badges remain in the archive markup but are visually suppressed. Photographs are contained rectangles rather than edge-dissolved or masked compositions.
+Home photographs have 12px corners. Season cover photographs have 15px upper corners within the one-pixel border of a 16px panel; archive headings contain no portraits. COD stills use 8px corners and a 16:10 crop; SIX stills use 6px corners with the responsive ratios in `archive.css`. The selected credit still uses 4px corners and a 16:10 crop. Archive and file-panel controls use 8px corners; shelves, season panels and dialogs use 16px. Only the motion toggle uses a pill shape. Source badges remain in the archive markup but are visually suppressed. Photographs settle as contained rectangles; the credit still’s bounded entrance reveals its right edge without changing the resting crop.
 
 ## Components
 
@@ -353,7 +361,7 @@ Ordinary archive Download controls use the collection accent, a 10% translucent 
 
 ### Collections and source facts
 
-All seven COD packs and 18 SIX episode articles retain original IDs, source facts and file actions. John Price contains three character packs plus the existing combined All in one file. Cutscenes exposes the three existing Google Drive campaign files independently through Download. Only John Price has an All in one action; no campaign-wide chooser is present. SIX season covers use the existing source stills without text overlays; their headings and aggregate facts sit below. Official episode names lead the rows, with episode numbers below; names also identify the preview heading, episode picker, video, download context and accessible action names. SIX retains duration/size beside every episode; Season 1 Episode 5 has the concise visible “2 parts” note. Both COD shelves and both SIX season panels remain visible. Search data/input/listeners, empty/reset UI, main kind/season filters and their result counts are removed.
+All seven COD packs and 18 Joe Graves scene-pack articles retain original IDs, source facts and file actions. The SIX files contain selected character scenes from the source episodes, not complete episodes. John Price contains three character packs plus the existing combined All in one file. Cutscenes exposes the three existing Google Drive campaign files independently through Download. Only John Price has an All in one action; no campaign-wide chooser is present. SIX season covers use the existing source stills without text overlays; their headings and aggregate facts sit below. Original source episode names lead the rows, with “From episode NN” below; preview headings, the scene-pack picker, video, download context and accessible action names also identify Joe Graves scenes. SIX retains duration/size beside every scene pack; Season 1 Episode 5 has the concise visible “2 parts” note. Both COD shelves and both SIX season panels remain visible. Search data/input/listeners, empty/reset UI, main kind/season filters and their result counts are removed.
 
 ### Fields and dialogs
 
@@ -373,9 +381,9 @@ The actual shader keeps the established artwork. Hover/focus raises its target e
 
 ### Full-screen credit reminder
 
-After the original file action, a reused native dialog covers the viewport and reads the exact sentence “Remember to credit Ocean on TikTok”. The page furniture fades away over 320ms while the real collection sky remains visible through the tinted field. Ocean is the focal word; the other two lines are parts of the same sentence. The dialog has 80px/24px padding and a 640px composition cap, a 44px close control and a 48px Continue browsing control, both outlined with 8px corners. It remains open until Continue browsing, the close button or Escape; the supplied @oceanxaep link opens the TikTok profile in a new tab, with no timer or completed-download claim.
+After the original file action, a reused native dialog covers the viewport. Its left region shows the actual selected local source still and title; its right region reads the complete sentence “Remember to credit Ocean on TikTok.”, followed by the prominent supplied @oceanxaep profile link and Continue browsing. Page furniture fades away over 300ms while the real collection sky remains visible through a field made from 82% collection sky color and transparency. The photo uses a 16:10 crop and 4px corners; the sentence and handle use the roles in Typography, and the responsive composition follows Layout. The close control is 44px, Continue browsing is at least 48px high, and both have outlined 8px corners. The dialog waits for Continue browsing, close or Escape and restores the original archive control. The profile opens https://www.tiktok.com/@oceanxaep in a new tab, with no timer or completed-download claim.
 
-Its one entrance uses 320ms opacity, a 720ms heading reveal with 5px-to-zero blur and 12px-to-zero vertical movement, two 1400ms light crossings and an authored SVG wave that draws over 1250ms after 100ms, settling into a short line over 550ms after 800ms. These bounded effects use cubic-bezier(.16,1,.3,1); no decorative loop runs. Dismissal takes 160ms and restores the original archive control. Reduced or paused motion shows the settled composition with a 100ms opacity confirmation. Hidden tabs and preference changes settle all active decoration; repeated requests reuse one dialog. Below 560px height, padding becomes 64px/24px/24px and spacing tightens so the action fits short landscape.
+Its single bounded entrance uses 300ms dialog opacity, an 800ms photo reveal from a 24% right inset with contrast .9 to the resting image, a 680ms copy reveal after 80ms from 10px vertical movement, and one 1000ms collection-colored light sweep. These effects and the 160ms dismissal use cubic-bezier(.16,1,.3,1); no decorative loop or SVG wave runs. Reduced or paused motion exposes the settled sentence, source and controls from the first frame, with a 100ms opacity confirmation. Hidden tabs and preference changes cancel active decoration and settle to CSS; repeated requests reuse one native dialog. Only same-origin image paths containing `/img/` become source requests, and the selected title is assigned with textContent.
 
 ## Do's and Don'ts
 
@@ -384,16 +392,17 @@ Its one entrance uses 320ms opacity, a 720ms heading reveal with 5px-to-zero blu
 - **Do** preserve the pinned AuroraGrab Night artwork and exact Segoe family stacks, using the approved mint home, amber/olive COD and ice-blue/navy SIX variants.
 - **Do** keep both home choices equally clear with contained photographs and 40–56px names.
 - **Do** keep John Price and Cutscenes as two shelves, with the existing All in one file beside the Price trilogy.
-- **Do** keep the eight- and ten-episode season panels, official episode names, secondary episode numbers and adjacent 44×44px actions accessible.
+- **Do** keep the eight- and ten-scene-pack season panels, Joe Graves identity, original source episode names, secondary “From episode NN” provenance and adjacent 44×44px actions accessible.
 - **Do** preserve all original media, metadata, download destinations and native interaction behavior.
 - **Do** keep the light passage cancellable, preserve capped sky and palette continuity, and retain immediate native access.
 - **Do** identify the selected file with its source still, actual title, facts and provider guidance before downloading.
-- **Do** show the requested TikTok credit sentence only after Start download, retaining immediate dismissal, focus return and reduced motion.
+- **Do** show the selected local still/title, complete TikTok credit sentence and prominent @oceanxaep link only after Start download, retaining native dismissal, focus return and reduced motion.
 
 ### Don't:
 
 - **Don't** restore oversized cinema lettering, full-window home photographs, intro blur, a clipped sky gate or whole-page fade/scale.
 - **Don't** add a campaign-wide chooser, campaign All in one or an eighth COD pack.
 - **Don't** reintroduce archive search, main filter bars, result counts, redundant Drive card controls, cover lift/scale, visible source badges or stacked margins between collection panels.
+- **Don't** label Joe Graves scene packs as full SIX episodes or restore the rejected centered Ocean credit stack.
 - **Don't** turn direct loading or browsing into an animation prerequisite.
 - **Don't** present superseded ship verdicts or the retained seed as fresh aesthetic approval.
