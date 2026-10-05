@@ -27,6 +27,8 @@ The sky renderer is adapted from AuroraGrab under the [MIT license](LICENSE-Auro
 
 The site uses local imagery, three collection palettes, keyboard-accessible dialogs and the device’s reduced-motion preference. SIX previews support links to timestamps. Original media metadata lives in `archive-data.js`.
 
+Motion lives in `motion.css` and `motion.js`. Where the browser supports cross-document View Transitions, the chosen home photo becomes the collection’s title card; elsewhere a fading veil connects the pages. Titles rise letter by letter, footage reveals as it scrolls in, and previews grow out of their card. Reduced motion turns all of it into plain fades. Titles use a Latin subset of Anton (`img/fonts/anton-latin.woff2`).
+
 ## Download checks
 
 With Chrome and `playwright-core` installed:

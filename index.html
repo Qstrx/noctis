@@ -16,29 +16,44 @@
 <link rel="icon" href="img/icon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="site.css?v=aurora-14">
-<link rel="stylesheet" href="motion.css?v=aurora-14">
-<link rel="stylesheet" href="home.css?v=aurora-13">
+<link rel="preload" href="img/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css?v=aurora-15">
+<link rel="stylesheet" href="motion.css?v=aurora-15">
+<link rel="stylesheet" href="home.css?v=aurora-14">
+<script src="arrival.js?v=aurora-2"></script>
 <script src="site.js?v=aurora-17" defer></script>
-<script src="motion.js?v=aurora-14" defer></script>
-<script src="aurora.js?v=aurora-10" defer></script>
+<script src="motion.js?v=aurora-15" defer></script>
+<script src="aurora.js?v=aurora-11" defer blocking="render"></script>
 </head>
 <body data-world="home" data-theme="night" data-motion="on">
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="sky" aria-hidden="true"><canvas id="auroraCanvas"></canvas><div class="sky-veil"></div></div>
 <header class="site-header">
-  <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s</span></a>
+  <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s</span></a>
+  <p class="home-tagline intro-fade" style="--d:520ms">Scene packs for editors · No watermark · No sign-in</p>
 </header>
 <main class="home-main" id="main">
-  <h1 class="sr-only">Choose a collection</h1>
-  <nav class="collections" aria-label="Collections">
-    <a class="collection-door door-price world-choice" href="cod.html" data-world-choice="cod" aria-labelledby="priceDoorTitle">
-      <span class="choice-photo"><img src="img/price.jpg" alt="" width="736" height="736" fetchpriority="high" decoding="async"></span>
-      <div class="choice-label"><h2 id="priceDoorTitle">Call of Duty</h2></div>
+  <h1 class="home-kicker intro-fade" style="--d:200ms">Choose a collection</h1>
+  <nav class="doors" aria-label="Collections">
+    <a class="door door-cod world-choice intro-unveil" style="--d:120ms" href="cod.html" data-world-choice="cod" aria-labelledby="codDoorTitle" aria-describedby="codDoorMeta">
+      <span class="door-media"><img src="img/price.jpg" alt="" width="736" height="736" fetchpriority="high" decoding="sync" style="object-position:50% 42%"></span>
+      <span class="door-shade"></span>
+      <span class="door-count intro-fade" style="--d:940ms">9 packs · 20.1 GB</span>
+      <span class="door-copy">
+        <span class="door-title split" id="codDoorTitle" style="--d:540ms"><span class="sr-only">Call of Duty</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">C</span><span class="ch" style="--i:1">a</span><span class="ch" style="--i:2">l</span><span class="ch" style="--i:3">l</span></span> <span class="w"><span class="ch" style="--i:4">o</span><span class="ch" style="--i:5">f</span></span> <span class="w"><span class="ch" style="--i:6">D</span><span class="ch" style="--i:7">u</span><span class="ch" style="--i:8">t</span><span class="ch" style="--i:9">y</span></span></span></span>
+        <span class="door-meta intro-fade" id="codDoorMeta" style="--d:880ms">John Price · Campaign cutscenes · Modern Warfare 4 trailers</span>
+        <span class="door-enter" aria-hidden="true">Enter<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+      </span>
     </a>
-    <a class="collection-door door-six world-choice" href="six.html" data-world-choice="six" aria-labelledby="sixDoorTitle">
-      <span class="choice-photo"><img src="img/joe.jpg" alt="" width="736" height="736" decoding="async"></span>
-      <div class="choice-label"><h2 id="sixDoorTitle">SIX</h2></div>
+    <a class="door door-six world-choice intro-unveil" style="--d:240ms" href="six.html" data-world-choice="six" aria-labelledby="sixDoorTitle" aria-describedby="sixDoorMeta">
+      <span class="door-media"><img src="img/joe.jpg" alt="" width="736" height="736" decoding="sync" style="object-position:50% 34%"></span>
+      <span class="door-shade"></span>
+      <span class="door-count intro-fade" style="--d:1060ms">18 packs · 29.1 GB</span>
+      <span class="door-copy">
+        <span class="door-title split" id="sixDoorTitle" style="--d:660ms"><span class="sr-only">SIX</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">S</span><span class="ch" style="--i:1">I</span><span class="ch" style="--i:2">X</span></span></span></span>
+        <span class="door-meta intro-fade" id="sixDoorMeta" style="--d:1000ms">Joe Graves · Seasons 1 and 2 · From the Blu-ray</span>
+        <span class="door-enter" aria-hidden="true">Enter<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
+      </span>
     </a>
   </nav>
 </main>

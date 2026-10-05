@@ -1,42 +1,46 @@
-/* The selected aurora hue gently exposes the next document.
-   A stationary atmosphere becomes opaque for a slow load and dissolves on
-   arrival. One continuous opacity effect keeps every point moving together. */
+/* Motion for Ocean’s Scenepacks.
+   One large moment per page (the passage between home and a collection), title
+   cards that rise into place, and short answers to every touch. Everything
+   here only animates transform, opacity and clip-path, and all of it stands
+   down for reduced motion. */
+
+/* ---------- Between documents ---------------------------------------------
+   Where the browser supports cross-document View Transitions, the chosen
+   photo travels from the home door into the collection's title card. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+.sky { view-transition-name: sky; }
+.site-header .brand { view-transition-name: brand; }
+.door-cod .door-media, body[data-world=cod] .hero-media { view-transition-name: hero-cod; }
+.door-six .door-media, body[data-world=six] .hero-media { view-transition-name: hero-six; }
+::view-transition-group(*) { animation-duration: .85s; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
+::view-transition-group(hero-cod), ::view-transition-group(hero-six) { overflow: clip; border-radius: 20px; }
+::view-transition-old(hero-cod), ::view-transition-new(hero-cod),
+::view-transition-old(hero-six), ::view-transition-new(hero-six) { height: 100%; object-fit: cover; }
+::view-transition-old(root) { animation: vt-leave .4s ease both; }
+::view-transition-new(root) { animation: vt-enter .6s .12s ease both; }
+@keyframes vt-leave { to { opacity: 0; } }
+@keyframes vt-enter { from { opacity: 0; } }
+
+/* ---------- The fallback passage --------------------------------------------
+   Without View Transitions, the selected aurora hue gently exposes the next
+   document: a stationary atmosphere becomes opaque for a slow load and
+   dissolves on arrival. */
 .passage-veil,
 html[data-arriving]::after {
   --passage-surface: #07100f;
   --passage-light: 111, 245, 191;
   --passage-companion: 96, 181, 190;
 }
-.passage-veil {
-  position: fixed;
-  z-index: 30;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  contain: layout paint;
-}
+.passage-veil { position: fixed; z-index: 30; inset: 0; overflow: hidden; pointer-events: none; contain: layout paint; }
 .passage-veil[data-world=cod],
-html[data-arriving=cod]::after {
-  --passage-surface: #100e08;
-  --passage-light: 232, 190, 112;
-  --passage-companion: 141, 166, 91;
-}
+html[data-arriving=cod]::after { --passage-surface: #100e08; --passage-light: 232, 190, 112; --passage-companion: 141, 166, 91; }
 .passage-veil[data-world=six],
-html[data-arriving=six]::after {
-  --passage-surface: #061019;
-  --passage-light: 127, 202, 244;
-  --passage-companion: 128, 149, 226;
-}
-.passage-curtain {
-  position: absolute;
-  inset: 0;
-  will-change: opacity;
-  background: var(--passage-surface);
-}
+html[data-arriving=six]::after { --passage-surface: #061019; --passage-light: 127, 202, 244; --passage-companion: 128, 149, 226; }
+.passage-curtain { position: absolute; inset: 0; will-change: opacity; background: var(--passage-surface); }
 .passage-curtain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
+  content: ""; position: absolute; inset: 0;
   background:
     radial-gradient(ellipse 110% 120% at var(--passage-origin, 50%) 110%, rgba(var(--passage-light), .2), transparent 72%),
     radial-gradient(ellipse 95% 110% at calc(100% - var(--passage-origin, 50%)) -10%, rgba(var(--passage-companion), .13), transparent 75%);
@@ -44,11 +48,7 @@ html[data-arriving=six]::after {
 /* arrival.js paints the opaque curtain into the first frame of the next page,
    before motion.js can build the veil that dissolves it. */
 html[data-arriving]::after {
-  content: "";
-  position: fixed;
-  z-index: 30;
-  inset: 0;
-  pointer-events: none;
+  content: ""; position: fixed; z-index: 30; inset: 0; pointer-events: none;
   background:
     radial-gradient(ellipse 110% 120% at var(--passage-origin, 50%) 110%, rgba(var(--passage-light), .2), transparent 72%),
     radial-gradient(ellipse 95% 110% at calc(100% - var(--passage-origin, 50%)) -10%, rgba(var(--passage-companion), .13), transparent 75%),
@@ -57,94 +57,96 @@ html[data-arriving]::after {
   animation: passage-cover-release 300ms 3s both;
 }
 @keyframes passage-cover-release { to { opacity: 0; visibility: hidden; } }
-@media(prefers-reduced-motion:reduce){ .passage-veil, html[data-arriving]::after { display:none; } }
+@media (prefers-reduced-motion: reduce) { .passage-veil, html[data-arriving]::after { display: none; } }
+
+/* ---------- Title cards -----------------------------------------------------
+   Letters rise out of their own line, photos unveil upward, the wave mark
+   draws itself. Plain CSS, so the very first frame is already in motion. */
+.split { display: block; }
+.split > [aria-hidden] { display: block; pointer-events: none; }
+.split .w { display: inline-block; overflow: hidden; vertical-align: top; padding: .06em .015em 0; margin: -.06em -.015em 0; }
+.split .ch { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .brand-mark path { stroke-dasharray: 1; animation: mark-draw 1.8s .1s var(--ease-out) backwards; }
+  .split .ch { animation: letter-rise 1s calc(var(--d, 0ms) + var(--i) * 32ms) var(--ease-out) backwards; }
+  .intro-fade { animation: intro-fade .9s var(--d, 0ms) var(--ease-out) backwards; }
+  .intro-unveil { animation: intro-unveil 1.25s var(--d, 0ms) cubic-bezier(.7, 0, .2, 1) backwards; }
+  .intro-unveil :is(.door-media img, img) { animation: intro-settle 1.9s var(--d, 0ms) var(--ease-out) backwards; }
+  /* A shared photo is already travelling; let it land without a second entrance. */
+  html.vt-arrival :is(.intro-unveil, .intro-unveil img, .brand-mark path) { animation: none; }
+  /* Hold the entrance under the fallback veil until it starts to lift. */
+  html[data-arriving] :is(.split .ch, .intro-fade, .intro-unveil, .intro-unveil img) { animation-play-state: paused; }
+}
+@keyframes mark-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes letter-rise { from { transform: translateY(110%) rotate(4deg); } }
+@keyframes intro-fade { from { opacity: 0; transform: translateY(16px); } }
+@keyframes intro-unveil { from { clip-path: inset(100% 0 0 0 round 20px); } to { clip-path: inset(0 0 0 0 round 20px); } }
+@keyframes intro-settle { from { transform: scale(1.28); } }
+
+/* ---------- Revealed while scrolling ------------------------------------------
+   arrival.js marks the document before its first paint; motion.js reveals
+   each element as it enters. If motion.js never runs, everything appears. */
+html.reveal-ready .reveal { transition: opacity .9s var(--ease-out) var(--rd, 0ms), transform 1s var(--ease-out) var(--rd, 0ms); }
+html.reveal-ready .reveal:not(.is-in) { opacity: 0; transform: translateY(36px); }
+html.reveal-ready:not(.reveal-live) .reveal:not(.is-in) { animation: reveal-fallback 1ms 2.5s forwards; }
+@keyframes reveal-fallback { to { opacity: 1; transform: none; } }
+/* Chapter logos open like a title sequence, then catch one sweep of light. */
+html.reveal-ready .chapter-heading .logo-wrap { transition: clip-path 1.2s cubic-bezier(.7, 0, .2, 1) .15s; }
+html.reveal-ready .chapter-heading:not(.is-in) .logo-wrap { clip-path: inset(0 100% 0 0); }
+html.reveal-ready .chapter-heading .chapter-no { transition: opacity 1.2s ease .1s, transform 1.4s var(--ease-out) .1s; }
+html.reveal-ready .chapter-heading:not(.is-in) .chapter-no,
+html.reveal-ready .season-head:not(.is-in) .chapter-no { opacity: 0; transform: translateX(-24px); }
+html.reveal-ready .season-head .chapter-no { transition: opacity 1.2s ease .1s, transform 1.4s var(--ease-out) .1s; }
+@media (prefers-reduced-motion: no-preference) {
+  .chapter-heading.is-in .logo-wrap::after { animation: logo-sheen 1.6s 1s ease-in-out both; }
+}
+@keyframes logo-sheen { from { background-position: 100% 0; } to { background-position: 0% 0; } }
+
+/* ---------- Cards ----------------------------------------------------------- */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body:not([data-motion=off]) .pack-card:hover .pack-cover::before,
+  body:not([data-motion=off]) .pack-card:focus-within .pack-cover::before { opacity: .95; }
+  body:not([data-motion=off]) .pack-card:hover .cover-frame img { transform: scale(1.07); }
+  body:not([data-motion=off]) .pack-card:hover .cover-frame::after { transform: translateX(120%); transition: transform 1.1s var(--ease-out); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .complete-pack::after { animation: edge-run 7s linear infinite; }
+  body[data-motion=off] .complete-pack::after { animation: none; }
+  .action.is-pressed svg { animation: press-drop .5s var(--ease-out); }
+  .action[data-preview].is-pressed svg, .action[data-cod-preview].is-pressed svg { animation: press-pop .45s var(--ease-out); }
+  body:not([data-motion=off]) :is(.action, .transfer-action, .preview-close, .preview-dialog button):active:not(:disabled) { transform: scale(.96); transition: transform .1s ease; }
+}
+@keyframes edge-run { to { --edge: 360deg; } }
+@keyframes press-drop { 35% { transform: translateY(5px); } }
+@keyframes press-pop { 35% { transform: scale(1.3); } }
+
+/* ---------- Navigation markers ------------------------------------------------ */
 /* One underline travels between choices, as in AuroraGrab's .tabs__bar. */
 .site-nav.has-motion-marker { position: relative; }
 .has-motion-marker > a::after { display: none; }
-.nav-marker {
-  position: absolute;
-  left: 0;
-  height: 2px;
-  width: 1px;
-  background: var(--mint);
-  pointer-events: none;
-  transform-origin: left center;
-  transform: translateX(var(--marker-x, 0px)) scaleX(var(--marker-width, 0));
-  transition: transform .35s var(--ease);
-}
-.nav-marker { bottom: 24px; }
+.nav-marker { position: absolute; left: 0; bottom: 24px; height: 2px; width: 1px; background: var(--mint); pointer-events: none; transform-origin: left center; transform: translateX(var(--marker-x, 0px)) scaleX(var(--marker-width, 0)); transition: transform .35s var(--ease); }
 @media (max-width: 760px) { .nav-marker { bottom: 8px; } }
 
-/* Keep the controls' existing color feedback; add source-sized physical feedback. */
-.pack-cover { transition: transform .25s var(--ease), box-shadow .25s ease; }
-.action,
-.dialog-action,
-.dialog-top button,
-.preview-close,
-.preview-dialog button {
-  transition: transform .12s ease, background-color .15s ease,
-    color .15s ease, border-color .15s ease;
-}
-.action svg,
-.dialog-action svg,
-.back-link svg { transition: transform .25s var(--ease); }
+/* ---------- Dialogs ------------------------------------------------------------ */
 dialog.is-closing { pointer-events: none; }
+.preview-flight { position: fixed; z-index: 10; margin: 0; object-fit: cover; pointer-events: none; box-shadow: 0 30px 80px rgba(0, 0, 0, .5); }
 @keyframes archive-veil-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes archive-veil-out { from { opacity: 1; } to { opacity: 0; } }
-
 @media (prefers-reduced-motion: no-preference) {
   body[data-motion=on] dialog[open]::backdrop { animation: archive-veil-in 300ms ease both; }
   body[data-motion=on] dialog.is-closing::backdrop { animation: archive-veil-out 180ms ease both; }
 }
-
+.action svg, .back-link svg { transition: transform .3s var(--ease-out); }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  body:not([data-motion=off]) .pack-card:hover .pack-cover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 26px rgba(0, 0, 0, .45);
-  }
-  body:not([data-motion=off]) .action.primary:hover svg,
-  body:not([data-motion=off]) .dialog-action:hover svg { transform: translateY(2px); }
-  body:not([data-motion=off]) .action[data-preview]:hover svg,
-  body:not([data-motion=off]) .action[data-cod-preview]:hover svg { transform: scale(1.08); }
-  body:not([data-motion=off]) .back-link:hover svg { transform: translateX(-3px); }
-}
-@media (prefers-reduced-motion: no-preference) {
-  body:not([data-motion=off]) .pack-card:focus-within .pack-cover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 26px rgba(0, 0, 0, .45);
-  }
-  body:not([data-motion=off]) :is(.action, .dialog-action,
-    .dialog-top button, .preview-close, .preview-dialog button):active:not(:disabled):not([aria-disabled=true]) {
-    transform: scale(.97);
-    transition-duration: .1s;
-  }
+  body:not([data-motion=off]) .back-link:hover svg { transform: translateX(-4px); }
 }
 
-/* Reduced motion keeps quick color/fade confirmation and skips travel or scale. */
-body[data-motion=off] :is(.pack-cover,
-  .pack-cover img, .action svg, .dialog-action svg,
-  .back-link svg, .source-notes summary svg,
-  .action, .dialog-action,
-  .dialog-top button, .preview-close, .preview-dialog button) {
-  transform: none !important;
-  transition-property: color, background-color, border-color, opacity !important;
-  transition-duration: 100ms !important;
-}
-body[data-motion=off] .source-notes[open] summary svg { transform: rotate(180deg) !important; }
-body[data-motion=off] .nav-marker { transition: none; }
+/* ---------- Reduced motion ------------------------------------------------------
+   Quick color and fade confirmations stay; travel, tilt and scale do not. */
+body[data-motion=off] :is(.pack-cover, .cover-frame img, .action svg, .back-link svg, .door-media img, .hero-media img) { transform: none !important; }
+body[data-motion=off] .nav-marker, body[data-motion=off] .rail-marker { transition: none; }
 html:has(body[data-motion=off]) { scroll-behavior: auto; }
 @media (prefers-reduced-motion: reduce) {
-  :is(.pack-cover, .pack-cover img,
-    .action svg, .dialog-action svg, .back-link svg,
-    .source-notes summary svg, .action, .dialog-action,
-    .dialog-top button, .preview-close, .preview-dialog button) {
-    transform: none !important;
-  }
-  .source-notes[open] summary svg { transform: rotate(180deg) !important; }
-  :is(.site-nav a, .action, .dialog-action,
-    .dialog-top button, .preview-close, .preview-dialog button) {
-    transition-property: color, background-color, border-color, opacity !important;
-    transition-duration: 100ms !important;
-  }
-  .nav-marker { transition: none; }
+  :is(.pack-cover, .cover-frame img, .action svg, .back-link svg, .door-media img, .hero-media img) { transform: none !important; }
+  .nav-marker, .rail-marker { transition: none; }
 }

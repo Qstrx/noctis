@@ -16,110 +16,126 @@
 <link rel="icon" href="img/icon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="site.css?v=aurora-14">
-<link rel="stylesheet" href="motion.css?v=aurora-14">
-<link rel="stylesheet" href="archive.css?v=aurora-16">
-<link rel="stylesheet" href="cod.css?v=aurora-19">
+<link rel="preload" href="img/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css?v=aurora-15">
+<link rel="stylesheet" href="motion.css?v=aurora-15">
+<link rel="stylesheet" href="archive.css?v=aurora-17">
 <link rel="stylesheet" href="download.css?v=aurora-15">
 <link rel="stylesheet" href="credit.css?v=aurora-13">
-<script src="arrival.js?v=aurora-1"></script>
+<script src="arrival.js?v=aurora-2"></script>
 <script src="archive-data.js?v=aurora-16" defer></script>
 <script src="credit.js?v=aurora-12" defer></script>
 <script src="site.js?v=aurora-17" defer></script>
-<script src="motion.js?v=aurora-14" defer></script>
-<script src="aurora.js?v=aurora-10" defer></script>
+<script src="motion.js?v=aurora-15" defer></script>
+<script src="aurora.js?v=aurora-11" defer blocking="render"></script>
 </head>
 <body data-world="cod" data-theme="night" data-motion="on">
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="sky" aria-hidden="true"><canvas id="auroraCanvas"></canvas><div class="sky-veil"></div></div>
 <header class="site-header">
-  <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s<span class="brand-caption">scenepacks</span></span></a>
+  <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s<span class="brand-caption">scenepacks</span></span></a>
   <nav class="site-nav" aria-label="Main navigation"><a href="index.html">Collections</a><a href="cod.html" aria-current="page">Call of Duty</a><a href="six.html">SIX</a></nav>
-</header><main class="catalog-main" id="main">
-<header class="archive-heading"><div class="archive-location"><a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6 6-6-6 6-6"/></svg><span>All collections</span></a><span class="location-divider" aria-hidden="true">/</span><h1>Call of Duty</h1></div></header>
-
-
+</header>
+<main class="catalog-main" id="main">
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="hero-copy">
+    <a class="back-link intro-fade" style="--d:140ms" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6 6-6-6 6-6"/></svg><span>All collections</span></a>
+    <h1 class="hero-title split" id="heroTitle" style="--d:240ms"><span class="sr-only">Call of Duty</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">C</span><span class="ch" style="--i:1">a</span><span class="ch" style="--i:2">l</span><span class="ch" style="--i:3">l</span></span> <span class="w"><span class="ch" style="--i:4">o</span><span class="ch" style="--i:5">f</span></span> <span class="w"><span class="ch" style="--i:6">D</span><span class="ch" style="--i:7">u</span><span class="ch" style="--i:8">t</span><span class="ch" style="--i:9">y</span></span></span></h1>
+    <p class="hero-lede intro-fade" style="--d:620ms">John Price scene packs and campaign cutscenes from Modern Warfare I–III, and the Modern Warfare 4 trailers in 4K.</p>
+    <dl class="hero-stats"><div class="intro-fade" style="--d:720ms"><dt>Games</dt><dd><span data-count="4">4</span></dd></div><div class="intro-fade" style="--d:790ms"><dt>Packs</dt><dd><span data-count="9">9</span></dd></div><div class="intro-fade" style="--d:860ms"><dt>Runtime</dt><dd><span data-count="3">3</span><small>h</small> <span data-count="37">37</span><small>m</small></dd></div><div class="intro-fade" style="--d:930ms"><dt>Footage</dt><dd><span data-count="20.1" data-decimals="1">20.1</span><small>GB</small></dd></div></dl>
+  </div>
+  <div class="hero-media intro-unveil" style="--d:60ms"><img src="img/price.jpg" alt="" width="736" height="736" fetchpriority="high" decoding="sync" style="--fx:50%;--fy:40%"></div>
+</section>
+<nav class="rail intro-fade" style="--d:1000ms" aria-label="Chapters"><a class="rail-link" href="#modern-warfare-1">MW</a><a class="rail-link" href="#modern-warfare-2">MWII</a><a class="rail-link" href="#modern-warfare-3">MWIII</a><a class="rail-link" href="#mw4-trailers">MW4</a><a class="rail-link" href="#full">All in one</a><span class="rail-marker" aria-hidden="true"></span><span class="rail-progress" aria-hidden="true"></span></nav>
 <div class="game-chapters">
 <section class="game-chapter" id="modern-warfare-1" aria-labelledby="game-1-title">
-  <header class="chapter-heading"><h2 id="game-1-title"><span class="sr-only">Modern Warfare I</span><img class="chapter-logo" src="img/cod/logos/mw1.svg" alt="" aria-hidden="true" width="1000" height="231" decoding="async" fetchpriority="high"></h2><p>John Price &amp; campaign cutscenes</p></header>
+  <header class="chapter-heading reveal">
+    <span class="chapter-no" aria-hidden="true">01</span>
+    <h2 id="game-1-title"><span class="sr-only">Modern Warfare I</span><span class="logo-wrap" data-logo="mw1" style="--logo:url(img/cod/logos/mw1.svg)"><img class="chapter-logo" src="img/cod/logos/mw1.svg" alt="" aria-hidden="true" width="1000" height="231" loading="lazy" decoding="async"></span></h2>
+    <p>John Price &amp; campaign cutscenes · 2019</p>
+  </header>
   <div class="chapter-files">
-<article class="pack-card" id="mw1" data-kind="price" aria-labelledby="tmw1">
-  <div class="pack-info"><h3 id="tmw1">John Price</h3><p>2560 × 1088 · 60 fps · 2 parts</p></div>
-  <div class="pack-cover"><img src="img/cod/price-mw1.jpg" alt="" width="480" height="270" loading="lazy" decoding="async" style="--fx:57%;--fy:48%"><span class="cover-type">Scene pack</span></div>
-  <div class="pack-spec"><span><b>18:51</b></span><span><b>2.56 GB</b></span></div>
-  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw1" aria-label="Preview Modern Warfare John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg>Preview</button><button class="action primary" type="button" data-download-pack="mw1" aria-label="Download Modern Warfare John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Get parts</button></div>
+<article class="pack-card reveal" id="mw1" data-kind="price" aria-labelledby="tmw1">
+  <div class="pack-cover"><span class="cover-frame"><img src="img/cod/price-mw1.jpg" alt="" width="480" height="270" loading="lazy" decoding="async" style="--fx:57%;--fy:48%"></span><span class="cover-badge">Scene pack</span><span class="cover-time">18:51</span></div>
+  <div class="pack-info"><h3 id="tmw1">John Price</h3><p>2560 × 1088 · 60 fps · 2 parts · 2.56 GB</p></div>
+  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw1" aria-label="Preview Modern Warfare John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg><span class="action-label">Preview</span></button><button class="action primary" type="button" data-download-pack="mw1" aria-label="Download Modern Warfare John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="action-label">Get parts</span></button></div>
 </article>
-<article class="pack-card" id="cuts1" data-kind="cutscenes" aria-labelledby="tcuts1">
-  <div class="pack-info"><h3 id="tcuts1">Cutscenes</h3><p>Campaign · 2560 × 1440 · 60 fps</p></div>
-  <div class="pack-cover"><img src="img/cod/cuts-mw1.jpg" alt="" width="480" height="270" loading="lazy" decoding="async" style="--fx:44%;--fy:32%"><span class="cover-type">Cutscenes</span></div>
-  <div class="pack-spec"><span><b>59:15</b></span><span><b>4.51 GB</b></span></div>
-  <div class="pack-actions"><button class="action primary" type="button" data-download-pack="cuts1" aria-label="Download Modern Warfare campaign cutscenes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</button></div>
+<article class="pack-card reveal" id="cuts1" data-kind="cutscenes" aria-labelledby="tcuts1">
+  <div class="pack-cover"><span class="cover-frame"><img src="img/cod/cuts-mw1.jpg" alt="" width="480" height="270" loading="lazy" decoding="async" style="--fx:44%;--fy:32%"></span><span class="cover-badge">Cutscenes</span><span class="cover-time">59:15</span></div>
+  <div class="pack-info"><h3 id="tcuts1">Cutscenes</h3><p>Campaign · 2560 × 1440 · 60 fps · 4.51 GB</p></div>
+  <div class="pack-actions"><button class="action primary" type="button" data-download-pack="cuts1" aria-label="Download Modern Warfare campaign cutscenes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="action-label">Download</span></button></div>
 </article>
   </div>
 </section>
 <section class="game-chapter" id="modern-warfare-2" aria-labelledby="game-2-title">
-  <header class="chapter-heading"><h2 id="game-2-title"><span class="sr-only">Modern Warfare II</span><img class="chapter-logo" src="img/cod/logos/mw2.png" alt="" aria-hidden="true" width="351" height="175" decoding="async" loading="lazy"></h2><p>John Price &amp; campaign cutscenes</p></header>
+  <header class="chapter-heading reveal">
+    <span class="chapter-no" aria-hidden="true">02</span>
+    <h2 id="game-2-title"><span class="sr-only">Modern Warfare II</span><span class="logo-wrap" data-logo="mw2" style="--logo:url(img/cod/logos/mw2.png)"><img class="chapter-logo" src="img/cod/logos/mw2.png" alt="" aria-hidden="true" width="351" height="175" loading="lazy" decoding="async"></span></h2>
+    <p>John Price &amp; campaign cutscenes · 2022</p>
+  </header>
   <div class="chapter-files">
-<article class="pack-card" id="mw2" data-kind="price" aria-labelledby="tmw2">
-  <div class="pack-info"><h3 id="tmw2">John Price</h3><p>2560 × 1088 · 60 fps</p></div>
-  <div class="pack-cover"><img src="img/cod/price-mw2.jpg" alt="" width="480" height="270" loading="lazy" decoding="async" style="--fx:52%;--fy:50%"><span class="cover-type">Scene pack</span></div>
-  <div class="pack-spec"><span><b>8:06</b></span><span><b>1.16 GB</b></span></div>
-  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw2" aria-label="Preview Modern Warfare II John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg>Preview</button><button class="action primary" type="button" data-download-pack="mw2" aria-label="Download Modern Warfare II John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</button></div>
+<article class="pack-card reveal" id="mw2" data-kind="price" aria-labelledby="tmw2">
+  <div class="pack-cover"><span class="cover-frame"><img src="img/cod/price-mw2.jpg" alt="" width="480" height="270" loading="lazy" decoding="async" style="--fx:52%;--fy:50%"></span><span class="cover-badge">Scene pack</span><span class="cover-time">8:06</span></div>
+  <div class="pack-info"><h3 id="tmw2">John Price</h3><p>2560 × 1088 · 60 fps · 1.16 GB</p></div>
+  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw2" aria-label="Preview Modern Warfare II John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg><span class="action-label">Preview</span></button><button class="action primary" type="button" data-download-pack="mw2" aria-label="Download Modern Warfare II John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="action-label">Download</span></button></div>
 </article>
-<article class="pack-card" id="cuts2" data-kind="cutscenes" aria-labelledby="tcuts2">
-  <div class="pack-info"><h3 id="tcuts2">Cutscenes</h3><p>Campaign · 2560 × 1440 · 60 fps</p></div>
-  <div class="pack-cover"><img src="img/cod/cuts-mw2.jpg" alt="" width="480" height="204" loading="lazy" decoding="async" style="--fx:50%;--fy:41%"><span class="cover-type">Cutscenes</span></div>
-  <div class="pack-spec"><span><b>38:36</b></span><span><b>3.67 GB</b></span></div>
-  <div class="pack-actions"><button class="action primary" type="button" data-download-pack="cuts2" aria-label="Download Modern Warfare II campaign cutscenes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</button></div>
+<article class="pack-card reveal" id="cuts2" data-kind="cutscenes" aria-labelledby="tcuts2">
+  <div class="pack-cover"><span class="cover-frame"><img src="img/cod/cuts-mw2.jpg" alt="" width="480" height="204" loading="lazy" decoding="async" style="--fx:50%;--fy:41%"></span><span class="cover-badge">Cutscenes</span><span class="cover-time">38:36</span></div>
+  <div class="pack-info"><h3 id="tcuts2">Cutscenes</h3><p>Campaign · 2560 × 1440 · 60 fps · 3.67 GB</p></div>
+  <div class="pack-actions"><button class="action primary" type="button" data-download-pack="cuts2" aria-label="Download Modern Warfare II campaign cutscenes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="action-label">Download</span></button></div>
 </article>
   </div>
 </section>
 <section class="game-chapter" id="modern-warfare-3" aria-labelledby="game-3-title">
-  <header class="chapter-heading"><h2 id="game-3-title"><span class="sr-only">Modern Warfare III</span><img class="chapter-logo" src="img/cod/logos/mw3.png" alt="" aria-hidden="true" width="635" height="175" decoding="async" loading="lazy"></h2><p>John Price &amp; campaign cutscenes</p></header>
+  <header class="chapter-heading reveal">
+    <span class="chapter-no" aria-hidden="true">03</span>
+    <h2 id="game-3-title"><span class="sr-only">Modern Warfare III</span><span class="logo-wrap" data-logo="mw3" style="--logo:url(img/cod/logos/mw3.png)"><img class="chapter-logo" src="img/cod/logos/mw3.png" alt="" aria-hidden="true" width="635" height="175" loading="lazy" decoding="async"></span></h2>
+    <p>John Price &amp; campaign cutscenes · 2023</p>
+  </header>
   <div class="chapter-files">
-<article class="pack-card" id="mw3" data-kind="price" aria-labelledby="tmw3">
-  <div class="pack-info"><h3 id="tmw3">John Price</h3><p>2560 × 1088 · 60 fps</p></div>
-  <div class="pack-cover"><img src="img/cod/price-mw3.jpg" alt="" width="480" height="270" loading="lazy" decoding="async" style="--fx:54%;--fy:59%"><span class="cover-type">Scene pack</span></div>
-  <div class="pack-spec"><span><b>11:55</b></span><span><b>1.62 GB</b></span></div>
-  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw3" aria-label="Preview Modern Warfare III John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg>Preview</button><button class="action primary" type="button" data-download-pack="mw3" aria-label="Download Modern Warfare III John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</button></div>
+<article class="pack-card reveal" id="mw3" data-kind="price" aria-labelledby="tmw3">
+  <div class="pack-cover"><span class="cover-frame"><img src="img/cod/price-mw3.jpg" alt="" width="480" height="270" loading="lazy" decoding="async" style="--fx:54%;--fy:59%"></span><span class="cover-badge">Scene pack</span><span class="cover-time">11:55</span></div>
+  <div class="pack-info"><h3 id="tmw3">John Price</h3><p>2560 × 1088 · 60 fps · 1.62 GB</p></div>
+  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw3" aria-label="Preview Modern Warfare III John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg><span class="action-label">Preview</span></button><button class="action primary" type="button" data-download-pack="mw3" aria-label="Download Modern Warfare III John Price"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="action-label">Download</span></button></div>
 </article>
-<article class="pack-card" id="cuts3" data-kind="cutscenes" aria-labelledby="tcuts3">
-  <div class="pack-info"><h3 id="tcuts3">Cutscenes</h3><p>Campaign · 2560 × 1440 · 60 fps</p></div>
-  <div class="pack-cover"><img src="img/cod/cuts-mw3.jpg" alt="" width="480" height="204" loading="lazy" decoding="async" style="--fx:58%;--fy:47%"><span class="cover-type">Cutscenes</span></div>
-  <div class="pack-spec"><span><b>1:14:44</b></span><span><b>5.73 GB</b></span></div>
-  <div class="pack-actions"><button class="action primary" type="button" data-download-pack="cuts3" aria-label="Download Modern Warfare III campaign cutscenes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</button></div>
+<article class="pack-card reveal" id="cuts3" data-kind="cutscenes" aria-labelledby="tcuts3">
+  <div class="pack-cover"><span class="cover-frame"><img src="img/cod/cuts-mw3.jpg" alt="" width="480" height="204" loading="lazy" decoding="async" style="--fx:58%;--fy:47%"></span><span class="cover-badge">Cutscenes</span><span class="cover-time">1:14:44</span></div>
+  <div class="pack-info"><h3 id="tcuts3">Cutscenes</h3><p>Campaign · 2560 × 1440 · 60 fps · 5.73 GB</p></div>
+  <div class="pack-actions"><button class="action primary" type="button" data-download-pack="cuts3" aria-label="Download Modern Warfare III campaign cutscenes"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="action-label">Download</span></button></div>
 </article>
   </div>
 </section>
 <section class="game-chapter trailer-chapter" id="mw4-trailers" aria-labelledby="game-4-title">
-  <header class="chapter-heading"><h2 id="game-4-title"><span class="sr-only">Modern Warfare IV</span><img class="chapter-logo" src="img/cod/logos/mw4.webp" alt="" aria-hidden="true" width="1179" height="404" decoding="async" loading="lazy"></h2><p>Trailers · 4K · in release order</p></header>
-  <div class="chapter-files"><article class="pack-card" id="mw4-trailer-1" data-kind="trailers" aria-labelledby="tmw4-trailer-1">
-  <div class="pack-info"><h3 id="tmw4-trailer-1">Trailer 1</h3><p>Reveal Trailer<br><time datetime="2026-05-28">28 May 2026</time></p></div>
-  <div class="pack-cover"><img src="img/cod/mw4-trailer-1.jpg" alt="" width="960" height="408" loading="lazy" decoding="async" style="--fx:0%"><span class="cover-type">Trailer</span></div>
-  <div class="pack-spec"><span><b>2:49</b></span><span><b>448.3 MB</b></span></div>
-  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw4-trailer-1" aria-label="Preview Modern Warfare 4 Trailer 1, Reveal Trailer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg>Preview</button><button class="action primary" type="button" data-download-pack="mw4-trailer-1" aria-label="Download Modern Warfare 4 Trailer 1, Reveal Trailer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</button></div>
+  <header class="chapter-heading reveal">
+    <span class="chapter-no" aria-hidden="true">04</span>
+    <h2 id="game-4-title"><span class="sr-only">Modern Warfare IV</span><span class="logo-wrap" data-logo="mw4" style="--logo:url(img/cod/logos/mw4.webp)"><img class="chapter-logo" src="img/cod/logos/mw4.webp" alt="" aria-hidden="true" width="1179" height="404" loading="lazy" decoding="async"></span></h2>
+    <p>Trailers · 4K · in release order · 2026</p>
+  </header>
+  <div class="chapter-files">
+<article class="pack-card reveal" id="mw4-trailer-1" data-kind="trailers" aria-labelledby="tmw4-trailer-1">
+  <div class="pack-cover"><span class="cover-frame"><img src="img/cod/mw4-trailer-1.jpg" alt="" width="960" height="408" loading="lazy" decoding="async" style="--fx:0%"></span><span class="cover-badge">Trailer · 4K</span><span class="cover-time">2:49</span></div>
+  <div class="pack-info"><h3 id="tmw4-trailer-1">Trailer 1</h3><p>Reveal Trailer</p><p class="pack-date"><time datetime="2026-05-28">28 May 2026</time> · 448.3 MB</p></div>
+  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw4-trailer-1" aria-label="Preview Modern Warfare 4 Trailer 1, Reveal Trailer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg><span class="action-label">Preview</span></button><button class="action primary" type="button" data-download-pack="mw4-trailer-1" aria-label="Download Modern Warfare 4 Trailer 1, Reveal Trailer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="action-label">Download</span></button></div>
 </article>
-<article class="pack-card" id="mw4-trailer-2" data-kind="trailers" aria-labelledby="tmw4-trailer-2">
-  <div class="pack-info"><h3 id="tmw4-trailer-2">Trailer 2</h3><p>Campaign First Look: Traffic<br><time datetime="2026-08-11">11 August 2026</time></p></div>
-  <div class="pack-cover"><img src="img/cod/mw4-trailer-2.jpg" alt="" width="960" height="540" loading="lazy" decoding="async"><span class="cover-type">Trailer</span></div>
-  <div class="pack-spec"><span><b>0:30</b></span><span><b>128.4 MB</b></span></div>
-  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw4-trailer-2" aria-label="Preview Modern Warfare 4 Trailer 2, Campaign First Look Traffic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg>Preview</button><button class="action primary" type="button" data-download-pack="mw4-trailer-2" aria-label="Download Modern Warfare 4 Trailer 2, Campaign First Look Traffic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</button></div>
+<article class="pack-card reveal" id="mw4-trailer-2" data-kind="trailers" aria-labelledby="tmw4-trailer-2">
+  <div class="pack-cover"><span class="cover-frame"><img src="img/cod/mw4-trailer-2.jpg" alt="" width="960" height="540" loading="lazy" decoding="async"></span><span class="cover-badge">Trailer · 4K</span><span class="cover-time">0:30</span></div>
+  <div class="pack-info"><h3 id="tmw4-trailer-2">Trailer 2</h3><p>Campaign First Look: Traffic</p><p class="pack-date"><time datetime="2026-08-11">11 August 2026</time> · 128.4 MB</p></div>
+  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw4-trailer-2" aria-label="Preview Modern Warfare 4 Trailer 2, Campaign First Look Traffic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg><span class="action-label">Preview</span></button><button class="action primary" type="button" data-download-pack="mw4-trailer-2" aria-label="Download Modern Warfare 4 Trailer 2, Campaign First Look Traffic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="action-label">Download</span></button></div>
 </article>
-<article class="pack-card" id="mw4-trailer-3" data-kind="trailers" aria-labelledby="tmw4-trailer-3">
-  <div class="pack-info"><h3 id="tmw4-trailer-3">Trailer 3</h3><p>Campaign Trailer<br><time datetime="2026-09-17">17 September 2026</time></p></div>
-  <div class="pack-cover"><img src="img/cod/mw4-trailer-3.jpg" alt="" width="960" height="402" loading="lazy" decoding="async"><span class="cover-type">Trailer</span></div>
-  <div class="pack-spec"><span><b>2:32</b></span><span><b>307.4 MB</b></span></div>
-  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw4-trailer-3" aria-label="Preview Modern Warfare 4 Trailer 3, Campaign Trailer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg>Preview</button><button class="action primary" type="button" data-download-pack="mw4-trailer-3" aria-label="Download Modern Warfare 4 Trailer 3, Campaign Trailer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Download</button></div>
-</article></div>
+<article class="pack-card reveal" id="mw4-trailer-3" data-kind="trailers" aria-labelledby="tmw4-trailer-3">
+  <div class="pack-cover"><span class="cover-frame"><img src="img/cod/mw4-trailer-3.jpg" alt="" width="960" height="402" loading="lazy" decoding="async"></span><span class="cover-badge">Trailer · 4K</span><span class="cover-time">2:32</span></div>
+  <div class="pack-info"><h3 id="tmw4-trailer-3">Trailer 3</h3><p>Campaign Trailer</p><p class="pack-date"><time datetime="2026-09-17">17 September 2026</time> · 307.4 MB</p></div>
+  <div class="pack-actions"><button class="action secondary" type="button" data-cod-preview="mw4-trailer-3" aria-label="Preview Modern Warfare 4 Trailer 3, Campaign Trailer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg><span class="action-label">Preview</span></button><button class="action primary" type="button" data-download-pack="mw4-trailer-3" aria-label="Download Modern Warfare 4 Trailer 3, Campaign Trailer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="action-label">Download</span></button></div>
+</article>
+  </div>
 </section>
 </div>
-<article class="pack-card complete-pack" id="full" data-kind="price" aria-labelledby="tfull">
-  <div class="pack-info"><h3 id="tfull">John Price · All in one</h3><p>Modern Warfare I–III · 60 fps</p></div>
-  <div class="pack-cover"><img src="img/price.jpg" alt="" width="736" height="736" loading="lazy" decoding="async" style="--fx:50%;--fy:34%"><span class="cover-type">Scene pack</span></div>
-  <div class="pack-spec"><span><b>39:00</b></span><span><b>5.33 GB</b></span></div>
-  <div class="pack-actions"><button class="action primary" type="button" data-download-pack="full" aria-label="Download the complete John Price pack"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Get the full pack</button></div>
+<article class="pack-card complete-pack reveal" id="full" data-kind="price" aria-labelledby="tfull">
+  <div class="pack-cover"><span class="cover-frame"><img src="img/price.jpg" alt="" width="736" height="736" loading="lazy" decoding="async" style="--fx:50%;--fy:34%"></span><span class="cover-badge">Mega</span><span class="cover-time">39:00</span></div>
+  <div class="pack-info"><p class="complete-kicker">Everything in one file</p><h3 id="tfull">John Price · All in one</h3><p>Modern Warfare I–III · 60 fps · 5.33 GB</p></div>
+  <div class="pack-actions"><button class="action primary" type="button" data-download-pack="full" aria-label="Download the complete John Price pack"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="action-label">Get the full pack</span></button></div>
 </article>
-<details class="source-notes"><summary>About the source <svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg></summary><div><p>John Price scenes: 2560 × 1088 · 60 fps. The black bars in MW1 preserve the original framing of taller 4K clips. Nothing is cropped or downscaled.</p><p>The full pack on Mega contains the same footage in one file. Separate packs avoid Mega’s free transfer limit.</p><p>Campaign cutscenes: 2560 × 1440 · 60 fps. Files open on Google Drive; use the download arrow on the file page.</p></div></details>
+<details class="source-notes reveal"><summary>About the source <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg></summary><div><p>John Price scenes: 2560 × 1088 · 60 fps. The black bars in MW1 preserve the original framing of taller 4K clips. Nothing is cropped or downscaled.</p><p>The full pack on Mega contains the same footage in one file. Separate packs avoid Mega’s free transfer limit.</p><p>Campaign cutscenes: 2560 × 1440 · 60 fps. Files open on Google Drive; use the download arrow on the file page.</p></div></details>
 </main>
 <dialog class="download-dialog transfer-dialog" id="hit" aria-labelledby="hitT" aria-describedby="hitS hitNote">
   <button class="transfer-close" type="button" id="hitNo" aria-label="Cancel download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
