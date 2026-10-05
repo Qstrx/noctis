@@ -186,13 +186,13 @@
   }
   window.archiveMotion = { sceneChange };
 
-  /* ---------- Home doors ----------
-     Leaning toward a door widens it, tints the sky and lets the photo drift
-     against the pointer. */
+  /* ---------- Home choices ----------
+     Leaning toward a collection tints the sky; its poster tilts toward the
+     pointer and catches the light where the pointer is. */
   const passageKey = 'oceans-spectral-transfer';
   let veil = null, curtain = null, passageAnimation = null, pending = null, passageTimer = 0;
   const originOf = choice => {
-    const rect = choice?.querySelector('.door-media, .choice-photo')?.getBoundingClientRect();
+    const rect = choice?.querySelector('[data-choice-media]')?.getBoundingClientRect();
     return rect?.width ? Math.max(0, Math.min(1, (rect.left + rect.width / 2) / innerWidth)) : .5;
   };
   function palette(selectedWorld, duration, origin = .5, commit = false) {
@@ -225,16 +225,16 @@
         const rect = choice.getBoundingClientRect();
         const x = clamp((last.clientX - rect.left) / rect.width, 0, 1);
         const y = clamp((last.clientY - rect.top) / rect.height, 0, 1);
-        choice.style.setProperty('--px', `${((.5 - x) * 18).toFixed(1)}px`);
-        choice.style.setProperty('--py', `${((.5 - y) * 14).toFixed(1)}px`);
-        choice.style.setProperty('--lx', `${(x * 100).toFixed(1)}%`);
-        choice.style.setProperty('--ly', `${(y * 100).toFixed(1)}%`);
+        choice.style.setProperty('--rx', `${((.5 - y) * 12).toFixed(2)}deg`);
+        choice.style.setProperty('--ry', `${((x - .5) * 14).toFixed(2)}deg`);
+        choice.style.setProperty('--gx', `${(x * 100).toFixed(1)}%`);
+        choice.style.setProperty('--gy', `${(y * 100).toFixed(1)}%`);
       });
     });
     choice.addEventListener('pointerleave', () => {
       cancelAnimationFrame(frame);
       frame = 0;
-      ['--px', '--py', '--lx', '--ly'].forEach(name => choice.style.removeProperty(name));
+      ['--rx', '--ry', '--gx', '--gy'].forEach(name => choice.style.removeProperty(name));
       hoveredChoice = null;
       setChoice();
     });
@@ -360,29 +360,6 @@
       reveals.forEach(element => revealObserver.observe(element));
     }
   }
-
-  /* ---------- Numbers that count up into place ---------- */
-  function countUp() {
-    const numbers = [...document.querySelectorAll('[data-count]')];
-    if (!numbers.length || !enabled()) return;
-    const format = (element, value) => {
-      const decimals = Number(element.dataset.decimals) || 0;
-      const text = value.toFixed(decimals);
-      return element.dataset.pad ? text.padStart(Number(element.dataset.pad), '0') : text;
-    };
-    const finals = numbers.map(element => element.textContent);
-    numbers.forEach(element => { element.textContent = format(element, 0); });
-    const start = performance.now() + 700;
-    const step = now => {
-      const progress = clamp((now - start) / 1500, 0, 1);
-      const eased = 1 - Math.pow(1 - progress, 4);
-      numbers.forEach(element => { element.textContent = format(element, Number(element.dataset.count) * eased); });
-      if (progress < 1 && enabled()) requestAnimationFrame(step);
-      else numbers.forEach((element, index) => { element.textContent = finals[index]; });
-    };
-    requestAnimationFrame(step);
-  }
-  countUp();
 
   /* ---------- Cards lean toward the pointer ---------- */
   if (finePointer.matches) {

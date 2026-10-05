@@ -6,14 +6,14 @@
 
 /* ---------- Between documents ---------------------------------------------
    Where the browser supports cross-document View Transitions, the chosen
-   photo travels from the home door into the collection's title card. */
+   photo travels from the home into the collection's title card. */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
 }
 .sky { view-transition-name: sky; }
 .site-header .brand { view-transition-name: brand; }
-.door-cod .door-media, body[data-world=cod] .hero-media { view-transition-name: hero-cod; }
-.door-six .door-media, body[data-world=six] .hero-media { view-transition-name: hero-six; }
+[data-world-choice=cod] [data-choice-media], body[data-world=cod] .hero-media { view-transition-name: hero-cod; }
+[data-world-choice=six] [data-choice-media], body[data-world=six] .hero-media { view-transition-name: hero-six; }
 ::view-transition-group(*) { animation-duration: .85s; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
 ::view-transition-group(hero-cod), ::view-transition-group(hero-six) { overflow: clip; border-radius: 20px; }
 ::view-transition-old(hero-cod), ::view-transition-new(hero-cod),
@@ -71,17 +71,19 @@ html[data-arriving]::after {
   .split .ch { animation: letter-rise 1s calc(var(--d, 0ms) + var(--i) * 32ms) var(--ease-out) backwards; }
   .intro-fade { animation: intro-fade .9s var(--d, 0ms) var(--ease-out) backwards; }
   .intro-unveil { animation: intro-unveil 1.25s var(--d, 0ms) cubic-bezier(.7, 0, .2, 1) backwards; }
-  .intro-unveil :is(.door-media img, img) { animation: intro-settle 1.9s var(--d, 0ms) var(--ease-out) backwards; }
+  .intro-unveil img { animation: intro-settle 1.9s var(--d, 0ms) var(--ease-out) backwards; }
+  .intro-lift { animation: intro-lift 1.3s var(--d, 0ms) var(--ease-out) backwards; }
   /* A shared photo is already travelling; let it land without a second entrance. */
-  html.vt-arrival :is(.intro-unveil, .intro-unveil img, .brand-mark path) { animation: none; }
+  html.vt-arrival :is(.intro-unveil, .intro-unveil img, .intro-lift, .brand-mark path) { animation: none; }
   /* Hold the entrance under the fallback veil until it starts to lift. */
-  html[data-arriving] :is(.split .ch, .intro-fade, .intro-unveil, .intro-unveil img) { animation-play-state: paused; }
+  html[data-arriving] :is(.split .ch, .intro-fade, .intro-unveil, .intro-unveil img, .intro-lift) { animation-play-state: paused; }
 }
 @keyframes mark-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes letter-rise { from { transform: translateY(110%) rotate(4deg); } }
 @keyframes intro-fade { from { opacity: 0; transform: translateY(16px); } }
 @keyframes intro-unveil { from { clip-path: inset(100% 0 0 0 round 20px); } to { clip-path: inset(0 0 0 0 round 20px); } }
 @keyframes intro-settle { from { transform: scale(1.28); } }
+@keyframes intro-lift { from { opacity: 0; transform: perspective(900px) translateY(56px) rotateX(18deg); } }
 
 /* ---------- Revealed while scrolling ------------------------------------------
    arrival.js marks the document before its first paint; motion.js reveals
@@ -143,10 +145,10 @@ dialog.is-closing { pointer-events: none; }
 
 /* ---------- Reduced motion ------------------------------------------------------
    Quick color and fade confirmations stay; travel, tilt and scale do not. */
-body[data-motion=off] :is(.pack-cover, .cover-frame img, .action svg, .back-link svg, .door-media img, .hero-media img) { transform: none !important; }
+body[data-motion=off] :is(.pack-cover, .cover-frame img, .action svg, .back-link svg, [data-choice-media], [data-choice-media] img, .hero-media img) { transform: none !important; }
 body[data-motion=off] .nav-marker, body[data-motion=off] .rail-marker { transition: none; }
 html:has(body[data-motion=off]) { scroll-behavior: auto; }
 @media (prefers-reduced-motion: reduce) {
-  :is(.pack-cover, .cover-frame img, .action svg, .back-link svg, .door-media img, .hero-media img) { transform: none !important; }
+  :is(.pack-cover, .cover-frame img, .action svg, .back-link svg, [data-choice-media], [data-choice-media] img, .hero-media img) { transform: none !important; }
   .nav-marker, .rail-marker { transition: none; }
 }

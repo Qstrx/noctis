@@ -6,11 +6,6 @@
 .hero .back-link { width: fit-content; }
 .hero-title { margin-right: -16%; color: var(--ink); font: 400 clamp(68px, 10.4vw, 158px)/.9 var(--title); letter-spacing: .004em; text-transform: uppercase; text-shadow: 0 10px 50px rgba(0, 0, 0, .35); }
 .hero-lede { max-width: 46ch; color: var(--muted); font-size: 16px; line-height: 1.6; text-wrap: pretty; }
-.hero-stats { display: flex; flex-wrap: wrap; gap: 16px 44px; margin: 6px 0 0; }
-.hero-stats div { display: flex; flex-direction: column-reverse; gap: 6px; }
-.hero-stats dt { color: var(--faint); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
-.hero-stats dd { margin: 0; color: var(--ink); font: 400 clamp(30px, 3.4vw, 44px)/1 var(--title); font-variant-numeric: tabular-nums; letter-spacing: .01em; }
-.hero-stats small { margin-left: 2px; color: var(--accent); font-size: .5em; letter-spacing: .06em; }
 .hero-media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 20px; background: var(--panel-strong); box-shadow: 0 34px 90px rgba(0, 0, 0, .5), 0 0 0 1px var(--line); }
 .hero-media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: var(--fx, 50%) var(--fy, 50%); transform: translate3d(0, var(--hero-shift, 0px), 0) scale(1.1); }
 .hero-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, .45)); pointer-events: none; }
@@ -119,7 +114,6 @@
 }
 @media (max-width: 560px) {
   .hero { gap: 22px; }
-  .hero-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 16px; }
   .hero-lede { font-size: 15px; }
   .chapter-files, .trailer-chapter .chapter-files { grid-template-columns: minmax(0, 1fr); gap: 40px; }
   .chapter-heading .chapter-no, .season-head .chapter-no { font-size: 80px; }
