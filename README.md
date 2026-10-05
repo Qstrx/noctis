@@ -27,7 +27,9 @@ The sky renderer is adapted from AuroraGrab under the [MIT license](LICENSE-Auro
 
 The site uses local imagery, three collection palettes, keyboard-accessible dialogs and the device’s reduced-motion preference. SIX previews support links to timestamps. Original media metadata lives in `archive-data.js`.
 
-Motion lives in `motion.css` and `motion.js`. Where the browser supports cross-document View Transitions, the chosen home photo becomes the collection’s title card; elsewhere a fading veil connects the pages. Titles rise letter by letter, footage reveals as it scrolls in, and previews grow out of their card. Reduced motion turns all of it into plain fades. Titles use a Latin subset of Anton (`img/fonts/anton-latin.woff2`).
+The home is an open-air screen under the aurora (`home.css`, `home.js`). It alternates frames taken from the packs themselves (`img/home`, 640 and 1280 pixels wide, loaded one turn ahead), throws their colors into the sky around it, and shows each frame’s position in its pack on a running timecode. A timeline under the screen marks Call of Duty and SIX clips; any clip can be played directly.
+
+Motion lives in `motion.css` and `motion.js`. Where the browser supports cross-document View Transitions, the frame on screen becomes the collection’s title card; elsewhere a fading veil connects the pages. Titles rise letter by letter, footage reveals as it scrolls in, and previews grow out of their card. Reduced motion turns all of it into plain fades. Titles use a Latin subset of Anton (`img/fonts/anton-latin.woff2`).
 
 ## Download checks
 
