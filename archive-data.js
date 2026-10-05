@@ -57,7 +57,7 @@ var COD_PACKS = [
         "direct": true
       }
     ],
-    "fps": "60 FPS",
+    "fps": "60 fps",
     "resolution": "2560 × 1088",
     "count": "02 files"
   },
@@ -76,7 +76,7 @@ var COD_PACKS = [
         "direct": true
       }
     ],
-    "fps": "60 FPS",
+    "fps": "60 fps",
     "resolution": "2560 × 1088",
     "count": "01 file"
   },
@@ -95,7 +95,7 @@ var COD_PACKS = [
         "direct": true
       }
     ],
-    "fps": "60 FPS",
+    "fps": "60 fps",
     "resolution": "2560 × 1088",
     "count": "01 file"
   },
@@ -114,7 +114,7 @@ var COD_PACKS = [
         "direct": false
       }
     ],
-    "fps": "60 FPS",
+    "fps": "60 fps",
     "resolution": "2560 × 1088",
     "count": "01 file"
   },
@@ -133,7 +133,7 @@ var COD_PACKS = [
         "direct": false
       }
     ],
-    "fps": "60 FPS",
+    "fps": "60 fps",
     "resolution": "2560 × 1440",
     "count": "01 file"
   },
@@ -152,7 +152,7 @@ var COD_PACKS = [
         "direct": false
       }
     ],
-    "fps": "60 FPS",
+    "fps": "60 fps",
     "resolution": "2560 × 1440",
     "count": "01 file"
   },
@@ -171,7 +171,7 @@ var COD_PACKS = [
         "direct": false
       }
     ],
-    "fps": "60 FPS",
+    "fps": "60 fps",
     "resolution": "2560 × 1440",
     "count": "01 file"
   },
@@ -184,7 +184,7 @@ var COD_PACKS = [
     "poster": "img/cod/mw4-trailer-1.jpg",
     "meta": "2:49 · 448.3 MB · one file",
     "files": [{ "url": "https://github.com/Qstrx/noctis/releases/download/mw4-trailers/mw4-trailer-1.mp4", "name": "Trailer 1", "run": "2:49", "size": "448.3 MB", "direct": true }],
-    "fps": "~60 FPS",
+    "fps": "~60 fps",
     "resolution": "3840 × 1634",
     "releaseDate": "2026-05-28",
     "source": "https://www.callofduty.com/uk/en/blog/2026/05/modernwarfare4-fob",
@@ -199,7 +199,7 @@ var COD_PACKS = [
     "poster": "img/cod/mw4-trailer-2.jpg",
     "meta": "0:30 · 128.4 MB · one file",
     "files": [{ "url": "https://github.com/Qstrx/noctis/releases/download/mw4-trailers/mw4-trailer-2.mp4", "name": "Trailer 2", "run": "0:30", "size": "128.4 MB", "direct": true }],
-    "fps": "~60 FPS",
+    "fps": "~60 fps",
     "resolution": "3840 × 2160",
     "releaseDate": "2026-08-11",
     "source": "https://www.youtube.com/watch?v=BrNglFVnMMw",
@@ -214,7 +214,7 @@ var COD_PACKS = [
     "poster": "img/cod/mw4-trailer-3.jpg",
     "meta": "2:32 · 307.4 MB · one file",
     "files": [{ "url": "https://github.com/Qstrx/noctis/releases/download/mw4-trailers/mw4-trailer-3.mp4", "name": "Trailer 3", "run": "2:32", "size": "307.4 MB", "direct": true }],
-    "fps": "~60 FPS",
+    "fps": "~60 fps",
     "resolution": "3840 × 1606",
     "releaseDate": "2026-09-17",
     "source": "https://www.callofduty.com/blog/2026/09/call-of-duty-modern-warfare-4-tokyo-games-show-campaign-trailer",

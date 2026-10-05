@@ -51,6 +51,8 @@ html:has(body[data-world=six]) { scrollbar-color: #355677 #030a13; }
 @media(prefers-reduced-motion:reduce) { body[data-world=home] { transition-duration: 100ms; } }
 body[data-world=home][data-motion=off] { transition-duration: 100ms; }
 * { box-sizing: border-box; }
+/* Opening a dialog locks scrolling; a reserved gutter keeps the catalog from shifting sideways. */
+html:has(body:not([data-world=home])) { scrollbar-gutter: stable; }
 html { scroll-behavior: smooth; scroll-padding-top: 100px; scrollbar-color: #35514b var(--sky-bg); scrollbar-width: thin; }
 body { --mint: var(--accent); --mint-ink: var(--accent-ink); --paper: var(--ink); --bg: var(--sky-bg); margin: 0; min-width: 320px; background: var(--sky-bg); color: var(--ink); font: 15px/1.5 var(--font); -webkit-font-smoothing: antialiased; }
 ::selection { background: var(--accent); color: var(--accent-ink); }
@@ -68,7 +70,8 @@ button svg, a svg, summary svg { width: 20px; height: 20px; flex: 0 0 20px; }
 .sr-only, .sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; clip-path: inset(50%); overflow: hidden; white-space: nowrap; }
 .skip-link { position: fixed; top: 12px; left: 12px; z-index: 99; padding: 12px 20px; background: var(--mint); color: var(--mint-ink); border-radius: 8px; transform: translateY(-180%); }
 .skip-link:focus { transform: none; }
-.sky { position: fixed; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; background: linear-gradient(180deg, var(--sky-top), var(--sky-mid) 55%, var(--sky-horizon) 88%, var(--sky-bg)); }
+/* Sized to the large viewport so mobile toolbars never resize, and redraw, the sky while scrolling. */
+.sky { position: fixed; z-index: 0; inset: 0 0 auto; height: 100vh; height: 100lvh; overflow: hidden; pointer-events: none; background: linear-gradient(180deg, var(--sky-top), var(--sky-mid) 55%, var(--sky-horizon) 88%, var(--sky-bg)); }
 #auroraCanvas, .aurora-details { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 .sky-veil { position: absolute; z-index: 2; inset: 0; background: linear-gradient(180deg, rgba(2,6,11,.15), transparent 45%, rgba(2,6,11,.22)); }
 .site-header, main { position: relative; z-index: 1; }
@@ -177,8 +180,10 @@ body:has(dialog[open]) { overflow: hidden; }
 .preview-nav { display: flex; gap: 8px; padding-top: 16px; margin-top: auto; }
 .preview-nav button { flex: 1; padding: 8px 5px; }
 .preview-parts { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.action-error { position: fixed; z-index: 40; left: 50%; bottom: max(24px, env(safe-area-inset-bottom)); width: max-content; max-width: calc(100% - 32px); padding: 12px 16px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--panel-strong); color: var(--ink); font-size: 13px; line-height: 1.5; box-shadow: 0 12px 36px rgba(0,0,0,.4); transform: translateX(-50%); }
+@keyframes action-error-in { from { opacity: 0; transform: translate(-50%, 8px); } }
+@media (prefers-reduced-motion: no-preference) { body[data-motion=on] .action-error { animation: action-error-in .3s var(--ease); } }
 .no-script { position: relative; z-index: 1; padding: 24px; text-align: center; background: var(--panel-strong); color: var(--muted); }
-@media (min-width: 1600px) { .home-intro { padding-top: 80px; } .collection-door { min-height: 430px; } }
 @media (max-width: 1100px) {
   .site-header, .home-main, .catalog-main { width: calc(100% - 64px); }
   .site-nav { gap: 24px; }
@@ -233,5 +238,4 @@ body:has(dialog[open]) { overflow: hidden; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
-body[data-motion=off] .collection-door > img,
 body[data-motion=off] .pack-cover img { transition: none; transform: none; }
