@@ -19,10 +19,11 @@
 <link rel="preload" href="img/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="site.css?v=aurora-15">
 <link rel="stylesheet" href="motion.css?v=aurora-16">
-<link rel="stylesheet" href="home.css?v=aurora-15">
+<link rel="stylesheet" href="home.css?v=aurora-16">
 <script src="arrival.js?v=aurora-2"></script>
 <script src="site.js?v=aurora-17" defer></script>
 <script src="motion.js?v=aurora-16" defer></script>
+<script src="home.js?v=aurora-1" defer></script>
 <script src="aurora.js?v=aurora-11" defer blocking="render"></script>
 </head>
 <body data-world="home" data-theme="night" data-motion="on">
@@ -31,20 +32,21 @@
 <header class="site-header">
   <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s</span></a>
 </header>
-<main class="home-main" id="main">
+<main class="home-main sky-titles" id="main">
   <h1 class="sr-only">Choose a collection</h1>
-  <nav class="posters" aria-label="Collections">
-    <a class="poster world-choice intro-lift" style="--d:160ms" href="cod.html" data-world-choice="cod" aria-labelledby="codTitle" aria-describedby="codMeta">
-      <span class="poster-frame"><span class="poster-media" data-choice-media><img src="img/price.jpg" alt="" width="736" height="736" fetchpriority="high" decoding="sync" style="object-position:50% 42%"><span class="poster-glare"></span></span></span>
-      <span class="poster-title split" id="codTitle" style="--d:640ms"><span class="sr-only">Call of Duty</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">C</span><span class="ch" style="--i:1">a</span><span class="ch" style="--i:2">l</span><span class="ch" style="--i:3">l</span></span> <span class="w"><span class="ch" style="--i:4">o</span><span class="ch" style="--i:5">f</span></span> <span class="w"><span class="ch" style="--i:6">D</span><span class="ch" style="--i:7">u</span><span class="ch" style="--i:8">t</span><span class="ch" style="--i:9">y</span></span></span></span>
-      <span class="poster-meta intro-fade" id="codMeta" style="--d:920ms">John Price&nbsp;· Cutscenes&nbsp;· MW4 trailers</span>
+  <nav class="sky-list" aria-label="Collections">
+    <a class="sky-title world-choice" href="cod.html" data-world-choice="cod" data-image="img/price.jpg" aria-labelledby="codTitle" aria-describedby="codMeta">
+      <span class="sky-thumb" data-choice-media><img src="img/price.jpg" alt="" width="736" height="736" decoding="sync" style="object-position:50% 42%"></span>
+      <span class="sky-word split" id="codTitle" style="--d:200ms"><span class="sr-only">Call of Duty</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">C</span><span class="ch" style="--i:1">a</span><span class="ch" style="--i:2">l</span><span class="ch" style="--i:3">l</span></span> <span class="w"><span class="ch" style="--i:4">o</span><span class="ch" style="--i:5">f</span></span> <span class="w"><span class="ch" style="--i:6">D</span><span class="ch" style="--i:7">u</span><span class="ch" style="--i:8">t</span><span class="ch" style="--i:9">y</span></span></span></span>
+      <span class="sky-meta intro-fade" id="codMeta" style="--d:720ms">John Price&nbsp;· Cutscenes&nbsp;· MW4 trailers</span>
     </a>
-    <a class="poster world-choice intro-lift" style="--d:310ms" href="six.html" data-world-choice="six" aria-labelledby="sixTitle" aria-describedby="sixMeta">
-      <span class="poster-frame"><span class="poster-media" data-choice-media><img src="img/joe.jpg" alt="" width="736" height="736" decoding="sync" style="object-position:50% 34%"><span class="poster-glare"></span></span></span>
-      <span class="poster-title split" id="sixTitle" style="--d:790ms"><span class="sr-only">SIX</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">S</span><span class="ch" style="--i:1">I</span><span class="ch" style="--i:2">X</span></span></span></span>
-      <span class="poster-meta intro-fade" id="sixMeta" style="--d:1070ms">Joe Graves&nbsp;· Seasons 1 and 2</span>
+    <a class="sky-title world-choice" href="six.html" data-world-choice="six" data-image="img/joe.jpg" aria-labelledby="sixTitle" aria-describedby="sixMeta">
+      <span class="sky-thumb" data-choice-media><img src="img/joe.jpg" alt="" width="736" height="736" decoding="sync" style="object-position:50% 34%"></span>
+      <span class="sky-word split" id="sixTitle" style="--d:420ms"><span class="sr-only">SIX</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">S</span><span class="ch" style="--i:1">I</span><span class="ch" style="--i:2">X</span></span></span></span>
+      <span class="sky-meta intro-fade" id="sixMeta" style="--d:940ms">Joe Graves&nbsp;· Seasons 1 and 2</span>
     </a>
   </nav>
+  <div class="sky-float" aria-hidden="true"><img src="img/price.jpg" alt="" width="736" height="736"></div>
 </main>
 </body>
 </html>
