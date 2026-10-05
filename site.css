@@ -48,6 +48,8 @@ body[data-world=home] { transition: --accent .7s ease, --sky-bg .7s ease, --pane
 body { scrollbar-color: color-mix(in srgb, var(--accent) 35%, var(--sky-bg)) var(--sky-bg); }
 html:has(body[data-world=cod]) { scrollbar-color: #64634a #090c08; }
 html:has(body[data-world=six]) { scrollbar-color: #355677 #030a13; }
+/* A dialog locks scrolling; the catalog keeps its width instead of jumping. */
+html:has(body:is([data-world=cod], [data-world=six])) { scrollbar-gutter: stable; }
 @media(prefers-reduced-motion:reduce) { body[data-world=home] { transition-duration: 100ms; } }
 body[data-world=home][data-motion=off] { transition-duration: 100ms; }
 * { box-sizing: border-box; }
@@ -177,6 +179,7 @@ body:has(dialog[open]) { overflow: hidden; }
 .preview-nav { display: flex; gap: 8px; padding-top: 16px; margin-top: auto; }
 .preview-nav button { flex: 1; padding: 8px 5px; }
 .preview-parts { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.action-error { position: fixed; z-index: 40; left: 50%; bottom: max(24px, env(safe-area-inset-bottom)); width: max-content; max-width: calc(100% - 32px); padding: 12px 16px; transform: translateX(-50%); background: var(--panel-strong); border: 1px solid var(--line-strong); border-radius: 8px; box-shadow: 0 12px 36px rgba(0,0,0,.4); color: var(--ink); font-size: 13px; line-height: 1.5; text-wrap: pretty; }
 .no-script { position: relative; z-index: 1; padding: 24px; text-align: center; background: var(--panel-strong); color: var(--muted); }
 @media (min-width: 1600px) { .home-intro { padding-top: 80px; } .collection-door { min-height: 430px; } }
 @media (max-width: 1100px) {

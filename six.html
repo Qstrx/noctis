@@ -16,16 +16,17 @@
 <link rel="icon" href="img/icon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="stylesheet" href="site.css?v=aurora-13">
-<link rel="stylesheet" href="motion.css?v=aurora-13">
-<link rel="stylesheet" href="archive.css?v=aurora-13">
+<link rel="stylesheet" href="site.css?v=aurora-14">
+<link rel="stylesheet" href="motion.css?v=aurora-14">
+<link rel="stylesheet" href="archive.css?v=aurora-16">
 <link rel="stylesheet" href="download.css?v=aurora-15">
 <link rel="stylesheet" href="credit.css?v=aurora-13">
-<script src="archive-data.js?v=aurora-8" defer></script>
+<script src="arrival.js?v=aurora-1"></script>
+<script src="archive-data.js?v=aurora-16" defer></script>
 <script src="credit.js?v=aurora-12" defer></script>
-<script src="site.js?v=aurora-15" defer></script>
-<script src="motion.js?v=aurora-13" defer></script>
-<script src="player.js?v=aurora-15" defer></script>
+<script src="site.js?v=aurora-17" defer></script>
+<script src="motion.js?v=aurora-14" defer></script>
+<script src="player.js?v=aurora-16" defer></script>
 <script src="aurora.js?v=aurora-10" defer></script>
 </head>
 <body data-world="six" data-theme="night" data-motion="on">
@@ -160,20 +161,20 @@
   <p class="transfer-facts" id="hitMeta" hidden></p>
   <p class="transfer-note" id="hitNote"></p>
   <div class="transfer-parts" id="downloadChoices" role="group" aria-label="File parts"></div>
-  <footer class="transfer-footer"><p class="transfer-credit">Please credit Ocean’s Scenepacks.</p><button class="transfer-action" id="hitGo" type="button"><span>Start download</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></footer>
+  <div class="transfer-footer"><p class="transfer-credit">Please credit Ocean’s Scenepacks.</p><button class="transfer-action" id="hitGo" type="button"><span>Start download</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
 </dialog>
 <dialog class="preview-dialog" id="preview" aria-labelledby="previewTitle" aria-describedby="previewDescription">
-  <header class="preview-top">
+  <div class="preview-top">
     <span class="preview-label">Joe Graves / Scene pack preview</span>
     <button type="button" class="preview-close" id="previewClose" aria-label="Close preview" autofocus><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-  </header>
+  </div>
   <div class="preview-layout">
     <div class="preview-main">
       <div class="preview-heading">
 
         <h2 id="previewTitle">Joe Graves — Pilot</h2>
         <p class="preview-meta" id="previewMeta"></p>
-        <div class="preview-parts" id="previewParts" aria-label="Scene pack parts" hidden></div>
+        <div class="preview-parts" id="previewParts" role="group" aria-label="Scene pack parts" hidden></div>
       </div>
       <div class="preview-screen">
         <video id="previewVideo" controls playsinline preload="none" aria-label="Joe Graves scene pack preview"></video>
@@ -196,17 +197,17 @@
         </div>
         <p class="preview-feedback" id="previewFeedback" role="status"></p>
       </div>
-      <footer class="preview-bottom">
+      <div class="preview-bottom">
         <p id="previewDescription">Preview Joe Graves’ scenes, then save the pack you need.<br>Original quality · uses data while you watch.</p>
         <button type="button" id="previewShare" disabled>Copy scene link</button>
         <button type="button" class="preview-download" id="previewDownload">Download</button>
         <input class="preview-link" id="previewLink" type="text" readonly aria-label="Scene link — copy this URL" hidden>
-      </footer>
+      </div>
     </div>
     <aside class="preview-sidebar" aria-label="Browse Joe Graves scene packs">
       <div class="preview-sidebar-head">
         <h3>Scene packs</h3>
-        <div class="preview-seasons" aria-label="Choose a season">
+        <div class="preview-seasons" role="group" aria-label="Choose a season">
           <button type="button" data-preview-season="1" aria-pressed="true">Season 01</button>
           <button type="button" data-preview-season="2" aria-pressed="false">Season 02</button>
         </div>

@@ -254,6 +254,9 @@
     createVeil(incoming.world,incoming.origin);
     document.body.dataset.passage = 'arriving';
   }
+  // Same frame: the veil takes over the first-paint cover from arrival.js.
+  delete document.documentElement.dataset.arriving;
+  document.documentElement.style.removeProperty('--passage-origin');
   function arrive() {
     if (!curtain || pending) return;
     if (!enabled()) { clearPassage(); return; }

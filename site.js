@@ -117,16 +117,20 @@
     $('browserNoticeCopy').focus({ preventScroll: true });
     return true;
   }
+  let actionErrorTimer = 0;
   function showActionError(message) {
     let error = $('archiveActionError');
     if (!error) {
       error = create('p', '', 'action-error');
       error.id = 'archiveActionError';
       error.setAttribute('role', 'alert');
-      const tools = document.querySelector('.archive-tools, .catalog-tools');
-      (tools || document.querySelector('main') || document.body).append(error);
+      document.body.append(error);
     }
+    // Shown where the visitor is looking, not after the last collection.
     error.textContent = message;
+    error.hidden = false;
+    clearTimeout(actionErrorTimer);
+    actionErrorTimer = setTimeout(() => { error.hidden = true; }, 6000);
   }
   function safeFile(file) {
     if (!file?.url) return false;
