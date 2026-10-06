@@ -1,77 +1,130 @@
 (() => {
   'use strict';
 
-  // The screen alternates frames from both collections. Each frame loads one
-  // turn ahead, lights the sky around the screen with its own colors, and
-  // shows where it sits in its pack. Leaning toward a title keeps only that
-  // collection on screen; choosing it flies the frame into the title card.
+  // The screen plays frames taken from every pack (home-frames.js). Each time
+  // a frame comes up, its episode and the moment in it are drawn at random:
+  // every episode plays before any repeats, and every frame of an episode before
+  // its first comes back. The next frame loads one turn ahead, lights the sky
+  // around the screen with its own colors, and shows where it sits in its pack.
+  // Leaning toward a title keeps only that collection on screen; choosing it
+  // flies the frame into the title card.
   const reel = document.querySelector('[data-reel]');
-  if (!reel) return;
-  const shots = [...reel.querySelectorAll('.shot')];
+  const packs = window.HOME_FRAMES;
+  if (!reel || !packs) return;
   const clips = [...document.querySelectorAll('.timeline .clip')];
   const timeline = document.querySelector('.timeline');
   const screen = document.querySelector('.screen');
-  const ambient = [...document.querySelectorAll('.screen-ambient img')];
   const caption = document.querySelector('.caption-text');
   const timecode = document.querySelector('.timecode');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const SHOT_TIME = 4200, FOCUSED_TIME = 3000;
-  let index = 0, filter = null, timer = 0, shownAt = performance.now(), lit = 0, turn = 0;
+  const SHOT_TIME = 4200, FOCUSED_TIME = 3000, SIZES = '(max-width: 700px) 100vw, 860px';
+  let index = 0, filter = null, timer = 0, shownAt = performance.now(), lit = 0, turn = 0, current = null;
 
-  const SIZES = shots[0].sizes;
-  // Frames after the first two wait as placeholders until their turn is near.
-  function load(n) {
-    let shot = shots[n];
-    if (shot.tagName !== 'IMG') {
-      const image = new Image();
-      image.className = shot.className;
+  const random = count => Math.floor(Math.random() * count);
+  // Draws without repeats until the pile runs out, then reshuffles, never
+  // starting the new round with the item that ended the last one.
+  function bag(items) {
+    let pile = [], last = null;
+    return () => {
+      if (!pile.length) {
+        pile = items.slice();
+        for (let i = pile.length - 1; i > 0; i--) { const j = random(i + 1); [pile[i], pile[j]] = [pile[j], pile[i]]; }
+        if (pile.length > 1 && pile[pile.length - 1] === last) [pile[0], pile[pile.length - 1]] = [pile[pile.length - 1], pile[0]];
+      }
+      return last = pile.pop();
+    };
+  }
+  const episodes = {};
+  Object.entries(packs).forEach(([world, list]) => {
+    list.forEach(pack => { pack.next = bag(pack.frames); });
+    episodes[world] = bag(list);
+  });
+
+  // The order of the two collections on the timeline changes on every visit too.
+  clips.forEach((clip, n) => {
+    if (n % 2) return;
+    const pair = Math.random() < .5 ? ['cod', 'six'] : ['six', 'cod'];
+    clip.dataset.world = pair[0];
+    if (clips[n + 1]) clips[n + 1].dataset.world = pair[1];
+  });
+
+  // The ambient light is two blurred copies of the frame that crossfade.
+  const ambient = document.querySelector('.screen-ambient');
+  const glows = [0, 1].map(() => {
+    const image = new Image();
+    image.alt = '';
+    ambient.append(image);
+    return image;
+  });
+
+  // Frames waiting for their turn, by timeline position.
+  const ready = new Map();
+  function prepare(n) {
+    let image = ready.get(n);
+    if (!image) {
+      const world = clips[n].dataset.world;
+      const pack = episodes[world]();
+      const [second, x, y] = pack.next();
+      const base = `img/home/${pack.id}-${Math.floor(second)}`;
+      image = new Image();
+      image.className = 'shot';
       image.alt = '';
       image.decoding = 'async';
-      image.style.cssText = shot.style.cssText;
-      Object.assign(image.dataset, shot.dataset);
       image.sizes = SIZES;
-      image.srcset = shot.dataset.srcset;
-      image.src = shot.dataset.src;
-      delete image.dataset.srcset;
-      delete image.dataset.src;
-      shot.replaceWith(image);
-      shots[n] = shot = image;
+      image.srcset = `${base}-640.webp 640w, ${base}.webp 1280w`;
+      image.src = `${base}-640.webp`;
+      image.style.objectPosition = `${x}% ${y}%`;
+      Object.assign(image.dataset, { world, caption: pack.caption, second, fps: pack.fps, ambient: `${base}-640.webp` });
+      reel.append(image);
+      ready.set(n, image);
     }
-    return shot.decode ? shot.decode().catch(() => {}) : Promise.resolve();
+    return image;
   }
-  function following(from = index) {
-    for (let step = 1; step <= shots.length; step++) {
-      const candidate = (from + step) % shots.length;
-      if (!filter || shots[candidate].dataset.world === filter) return candidate;
+  const decoded = image => image.decode ? image.decode().catch(() => {}) : Promise.resolve();
+  function following(from = index, world = filter) {
+    for (let step = 1; step <= clips.length; step++) {
+      const candidate = (from + step) % clips.length;
+      if (!world || clips[candidate].dataset.world === world) return candidate;
     }
     return from;
   }
-  function light(shot) {
-    const next = ambient[1 - lit];
-    if (!next) return;
-    next.src = shot.dataset.ambient;
+  function light(image) {
+    const next = glows[1 - lit];
+    next.src = image.dataset.ambient;
     next.classList.add('is-lit');
-    ambient[lit].classList.remove('is-lit');
+    glows[lit].classList.remove('is-lit');
     lit = 1 - lit;
+  }
+  // Puts a prepared frame on screen and lets the previous one fade out and go.
+  function cut(next) {
+    const image = prepare(next);
+    ready.delete(next);
+    const previous = current;
+    if (previous && previous !== image) {
+      previous.classList.remove('is-active');
+      setTimeout(() => { if (previous !== current) previous.remove(); }, 1400);
+    }
+    clips.forEach((clip, n) => {
+      clip.classList.toggle('is-played', n < next);
+      clip.classList.remove('is-active');
+    });
+    index = next;
+    current = image;
+    void clips[next].offsetWidth;
+    image.classList.add('is-active');
+    clips[next].classList.add('is-active');
+    caption.textContent = image.dataset.caption;
+    shownAt = performance.now();
+    light(image);
+    // Ready the next frame, and the next of each collection for a choice made without hovering.
+    prepare(following());
+    Object.keys(packs).forEach(world => prepare(following(next, world)));
+    return image;
   }
   async function show(next) {
     const ticket = ++turn;
-    await load(next);
-    if (ticket !== turn) return;
-    const shot = shots[next];
-    shots[index].classList.remove('is-active');
-    clips[index]?.classList.remove('is-active');
-    clips.forEach((clip, n) => clip.classList.toggle('is-played', n < next));
-    index = next;
-    shot.classList.remove('is-active');
-    clips[index]?.classList.remove('is-active');
-    void shot.offsetWidth;
-    shot.classList.add('is-active');
-    clips[index]?.classList.add('is-active');
-    caption.textContent = shot.dataset.caption;
-    shownAt = performance.now();
-    light(shot);
-    load(following());
+    await decoded(prepare(next));
+    if (ticket === turn) cut(next);
   }
   function schedule(delay) {
     clearTimeout(timer);
@@ -90,7 +143,7 @@
     const world = choice.dataset.worldChoice;
     const pick = async () => {
       focus(world);
-      if (shots[index].dataset.world !== world) await show(following());
+      if (current.dataset.world !== world) await show(following());
       schedule();
     };
     const release = () => { if (filter === world) { focus(null); schedule(); } };
@@ -103,19 +156,13 @@
       // if it belongs to the other collection, cut to one of this collection's first.
       focus(world);
       clearTimeout(timer);
-      let target = index;
-      if (shots[index].dataset.world !== world) {
-        target = following();
-        turn++;
-        shots[index].classList.remove('is-active');
-        shots[target].classList.add('is-active');
-        index = target;
-      }
-      shots.forEach(shot => shot.style.removeProperty('view-transition-name'));
-      shots[target].style.viewTransitionName = `hero-${world}`;
+      turn++;
+      const image = current.dataset.world === world ? current : cut(following());
+      reel.querySelectorAll('.shot').forEach(shot => shot.style.removeProperty('view-transition-name'));
+      image.style.viewTransitionName = `hero-${world}`;
     });
   });
-  // Any clip on the timeline can be played directly.
+  // Any clip on the timeline can be played directly; it draws a new frame each time.
   clips.forEach((clip, n) => clip.addEventListener('click', async () => {
     await show(n);
     schedule();
@@ -124,25 +171,28 @@
   // The timecode reads the frame's position in its pack, advancing at the
   // pack's own frame rate while the frame is on screen.
   const pad = value => String(value).padStart(2, '0');
-  setInterval(() => {
-    if (document.hidden) return;
-    const shot = shots[index];
-    const fps = Number(shot.dataset.fps) || 24;
+  function tick() {
+    const fps = Number(current.dataset.fps) || 24;
     const elapsed = reduced.matches ? 0 : (performance.now() - shownAt) / 1000;
-    const frames = Math.floor((Number(shot.dataset.second) + elapsed) * fps);
+    const frames = Math.floor((Number(current.dataset.second) + elapsed) * fps);
     const seconds = Math.floor(frames / fps);
     timecode.textContent = `${pad(Math.floor(seconds / 3600))}:${pad(Math.floor(seconds / 60) % 60)}:${pad(seconds % 60)}:${pad(frames % fps)}`;
-  }, 1000 / 30);
+  }
+  setInterval(() => { if (!document.hidden) tick(); }, 1000 / 30);
 
   document.addEventListener('visibilitychange', () => { if (document.hidden) clearTimeout(timer); else schedule(); });
   reduced.addEventListener('change', () => schedule());
   addEventListener('pageshow', event => {
     if (!event.persisted) return;
     focus(null);
-    shots.forEach(shot => shot.style.removeProperty('view-transition-name'));
+    reel.querySelectorAll('.shot').forEach(shot => shot.style.removeProperty('view-transition-name'));
     schedule();
   });
-  ambient[0]?.classList.add('is-lit');
-  load(1);
+
+  // The first frame goes up at once; the projector's warm-up is its entrance.
+  const first = prepare(0);
+  first.fetchPriority = 'high';
+  cut(0);
+  tick();
   schedule();
 })();
