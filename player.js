@@ -156,7 +156,9 @@ function releasePreview(){
   previewVideo.load();
   previewIndex = -1;
   document.body.classList.remove("preview-open");
-
+  // A closed scene no longer belongs in the address: reloading stays closed,
+  // and opening the same shared link again fires a new hashchange.
+  if (/^#preview=/.test(location.hash)) history.replaceState(history.state, "", location.pathname + location.search);
   if (previewOpener && previewOpener.isConnected) previewOpener.focus({preventScroll:true});
 }
 function closePreview(){ if (preview.open) preview.close(); }

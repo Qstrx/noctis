@@ -47,6 +47,10 @@
   let targetParallax = [0, 0];
   let resizeTimer = 0;
   let contextLost = false;
+  // Scrolling stirs the curtains a little and lets them drift with the page.
+  let scrollBoost = 0;
+  let scrollShift = 0;
+  let lastScrollY = window.scrollY;
   const world = ['cod', 'six'].includes(document.body.dataset.world) ? document.body.dataset.world : 'home';
   // The same seeded curtains carry three collection lights. No replacement sky.
   const palettes = {
@@ -440,7 +444,7 @@
     gl.uniform1f(uniforms.uTime, time);
     gl.uniform1f(uniforms.uEnergy, energy);
     gl.uniform1f(uniforms.uPulse, pulse);
-    gl.uniform2f(uniforms.uPar, moving ? parallax[0] : 0, moving ? parallax[1] : 0);
+    gl.uniform2f(uniforms.uPar, moving ? parallax[0] : 0, moving ? parallax[1] + scrollShift : 0);
     gl.uniform1f(uniforms.uHorizon, 1 - HORIZON);
     const paletteP = moving ? paletteProgress(now) : 1;
     gl.uniform3fv(uniforms['uFrom[0]'], new Float32Array(paletteFrom.flat()));
@@ -467,8 +471,10 @@
     time += dt * .735;
     const pulsePhase = pulseStart ? clamp((now - pulseStart) / 1300, 0, 1) : 1;
     const lightBreath = pulseStart ? .45 * Math.pow(Math.sin(Math.PI * pulsePhase), 2) : 0;
-    const targetEnergy = (focused ? .6 : .35) + lightBreath;
+    const targetEnergy = (focused ? .6 : .35) + lightBreath + scrollBoost;
     energy += (targetEnergy - energy) * Math.min(1, dt * 1.8);
+    scrollBoost *= Math.max(0, 1 - dt * 2.2);
+    scrollShift += (Math.min(1, window.scrollY / 1800) * .03 - scrollShift) * Math.min(1, dt * 3);
     parallax = parallax.map((value, i) => value + (targetParallax[i] - value) * Math.min(1, dt * 3));
     draw(now);
     // A timer avoids waking every display refresh only to skip most frames.
@@ -548,6 +554,82 @@
       }));
     } catch (_) { /* Navigation remains available without storage. */ }
   });
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    const moved = Math.abs(y - lastScrollY);
+    lastScrollY = y;
+    if (shouldAnimate()) scrollBoost = Math.min(.28, scrollBoost + moved / 3000);
+  }, { passive: true });
+
+  // Now and then, while the visitor lingers on the home sky, a star falls.
+  // Three at most per visit, never over a dialog or a passage.
+  const streakCanvas = world === 'home' ? document.createElement('canvas') : null;
+  const streakContext = streakCanvas?.getContext('2d');
+  if (streakCanvas) {
+    streakCanvas.className = 'aurora-details';
+    streakCanvas.setAttribute('aria-hidden', 'true');
+    details.after(streakCanvas);
+  }
+  let streakTimer = 0;
+  let streakFrame = 0;
+  let streakCount = 0;
+  function scheduleStreak(delay) {
+    window.clearTimeout(streakTimer);
+    if (!streakContext || streakCount >= 3) return;
+    streakTimer = window.setTimeout(shootStar, delay);
+  }
+  function shootStar() {
+    if (!shouldAnimate() || document.body.dataset.passage || document.querySelector('dialog[open]') || !width) { scheduleStreak(9000); return; }
+    streakCount += 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const w = width;
+    const h = height;
+    streakCanvas.width = Math.round(w * dpr);
+    streakCanvas.height = Math.round(h * dpr);
+    const x0 = w * (.12 + Math.random() * .5);
+    const y0 = h * (.05 + Math.random() * .16);
+    const angle = (14 + Math.random() * 14) * Math.PI / 180;
+    const travel = w * (.2 + Math.random() * .12);
+    const dx = Math.cos(angle) * travel;
+    const dy = Math.sin(angle) * travel;
+    const tail = Math.min(150, travel * .45) / travel;
+    const tint = palettes[paletteWorld][2].map((n) => Math.round(150 + n * 105)).join(',');
+    const start = performance.now();
+    const frame = (now) => {
+      const progress = clamp((now - start) / 1100, 0, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      streakContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+      streakContext.clearRect(0, 0, w, h);
+      if (progress >= 1 || !shouldAnimate()) {
+        streakFrame = 0;
+        scheduleStreak(18000 + Math.random() * 22000);
+        return;
+      }
+      const x = x0 + dx * eased;
+      const y = y0 + dy * eased;
+      const fade = progress < .7 ? 1 : 1 - (progress - .7) / .3;
+      const trail = streakContext.createLinearGradient(x, y, x - dx * tail, y - dy * tail);
+      trail.addColorStop(0, `rgba(255,255,255,${.95 * fade})`);
+      trail.addColorStop(.3, `rgba(${tint},${.45 * fade})`);
+      trail.addColorStop(1, `rgba(${tint},0)`);
+      streakContext.strokeStyle = trail;
+      streakContext.lineWidth = 1.5;
+      streakContext.lineCap = 'round';
+      streakContext.beginPath();
+      streakContext.moveTo(x, y);
+      streakContext.lineTo(x - dx * tail, y - dy * tail);
+      streakContext.stroke();
+      streakContext.fillStyle = `rgba(255,255,255,${fade})`;
+      streakContext.beginPath();
+      streakContext.arc(x, y, 1.2, 0, Math.PI * 2);
+      streakContext.fill();
+      streakFrame = window.requestAnimationFrame(frame);
+    };
+    streakFrame = window.requestAnimationFrame(frame);
+  }
+  scheduleStreak(5500);
+  window.addEventListener('pagehide', () => { window.cancelAnimationFrame(streakFrame); window.clearTimeout(streakTimer); });
+
   window.addEventListener('pointermove', (event) => {
     if (!shouldAnimate() || compact.matches) return;
     targetParallax = [(event.clientX / window.innerWidth - .5) * .012, (event.clientY / window.innerHeight - .5) * .008];
@@ -565,6 +647,7 @@
     if (event.persisted) {
       const incoming = takeTransfer();
       if (incoming) restoreTransfer(incoming);
+      scheduleStreak(6000);
     }
     synchronize();
   });
