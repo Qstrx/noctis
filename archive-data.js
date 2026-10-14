@@ -43,23 +43,20 @@ var COD_PACKS = [
     "group": "price",
     "title": "John Price",
     "chapter": "Modern Warfare",
-    "poster": "img/price.jpg",
-    "meta": "18:51 · 2.56 GB · two files",
+    "poster": "img/cod/price-mw1.jpg",
+    "meta": "7:34 · 1.95 GB · one file",
     "files": [
       {
-        "url": "https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part1.mp4",
-        "name": "MW1 part 1",
-        "direct": true
-      },
-      {
-        "url": "https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW1-Part2.mp4",
-        "name": "MW1 part 2",
+        "url": "https://github.com/Qstrx/noctis/releases/download/cod-141/Price-MW1.mp4",
+        "name": "MW1",
+        "run": "7:34",
+        "size": "1.95 GB",
         "direct": true
       }
     ],
-    "fps": "60 FPS",
-    "resolution": "2560 × 1088",
-    "count": "02 files"
+    "fps": "30 FPS",
+    "resolution": "3840 × 1634",
+    "count": "01 file"
   },
   {
     "id": "mw2",
@@ -68,16 +65,18 @@ var COD_PACKS = [
     "title": "John Price",
     "chapter": "Modern Warfare II",
     "poster": "img/cod/price-mw2.jpg",
-    "meta": "8:06 · 1.16 GB · one file",
+    "meta": "9:31 · 1.94 GB · one file",
     "files": [
       {
-        "url": "https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW2.mp4",
+        "url": "https://github.com/Qstrx/noctis/releases/download/cod-141/Price-MW2.mp4",
         "name": "MW2",
+        "run": "9:31",
+        "size": "1.94 GB",
         "direct": true
       }
     ],
-    "fps": "60 FPS",
-    "resolution": "2560 × 1088",
+    "fps": "30 FPS",
+    "resolution": "3840 × 1634",
     "count": "01 file"
   },
   {
@@ -87,16 +86,18 @@ var COD_PACKS = [
     "title": "John Price",
     "chapter": "Modern Warfare III",
     "poster": "img/cod/price-mw3.jpg",
-    "meta": "11:55 · 1.62 GB · one file",
+    "meta": "15:27 · 1.94 GB · one file",
     "files": [
       {
-        "url": "https://github.com/Qstrx/noctis/releases/download/v1/John-Price-MW3.mp4",
+        "url": "https://github.com/Qstrx/noctis/releases/download/cod-141/Price-MW3.mp4",
         "name": "MW3",
+        "run": "15:27",
+        "size": "1.94 GB",
         "direct": true
       }
     ],
-    "fps": "60 FPS",
-    "resolution": "2560 × 1088",
+    "fps": "30 FPS",
+    "resolution": "3840 × 1634",
     "count": "01 file"
   },
   {
