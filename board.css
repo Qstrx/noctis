@@ -13,8 +13,6 @@
 /* Rows */
 .board-row { position: relative; padding: 26px 14px; margin: 0 -14px; border-radius: 22px; scroll-margin-top: 96px; transition: background-color .4s var(--ease); }
 .board-row + .board-row::before { content: ""; position: absolute; top: 0; left: 14px; right: 14px; height: 1px; background: var(--line); }
-.board-row:hover { background: color-mix(in srgb, var(--panel) 70%, transparent); }
-.board-row:hover::before, .board-row:hover + .board-row::before { opacity: 0; }
 .board-who { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding-right: 8px; }
 .board-who .chapter-no { font-size: 64px; line-height: .8; }
 .board-name { margin: 2px 0 0; font: 400 44px/.9 var(--title); letter-spacing: .01em; text-transform: uppercase; }
@@ -49,7 +47,6 @@
   .board-head { display: none; }
   .board-row { display: block; padding: 26px 0 30px; margin: 0; border-radius: 0; }
   .board-row + .board-row::before { left: 0; right: 0; }
-  .board-row:hover { background: none; }
   .board-who { flex-direction: row; align-items: baseline; gap: 12px; margin-bottom: 16px; padding: 0; }
   .board-who .chapter-no { font-size: 46px; line-height: .8; }
   .board-name { margin: 0; font-size: 38px; }
