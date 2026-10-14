@@ -100,25 +100,6 @@ var COD_PACKS = [
     "count": "01 file"
   },
   {
-    "id": "full",
-    "collection": "cod",
-    "group": "price",
-    "title": "John Price",
-    "chapter": "Everything, one file",
-    "poster": "img/price.jpg",
-    "meta": "39:00 · 5.33 GB · opens Mega",
-    "files": [
-      {
-        "url": "https://mega.nz/file/SS4EAQQI#_0fGCxJnfgSKcLeHu5oPYMi6CU1KAQch8r4KsW4Vr0k",
-        "name": "Full scene pack",
-        "direct": false
-      }
-    ],
-    "fps": "60 FPS",
-    "resolution": "2560 × 1088",
-    "count": "01 file"
-  },
-  {
     "id": "cuts1",
     "collection": "cod",
     "group": "cutscenes",
@@ -219,5 +200,14 @@ var COD_PACKS = [
     "releaseDate": "2026-09-17",
     "source": "https://www.callofduty.com/blog/2026/09/call-of-duty-modern-warfare-4-tokyo-games-show-campaign-trailer",
     "count": "01 file"
-  }
+  },
+  {"id":"ghost-mw2","collection":"cod","group":"ghost","title":"Ghost","chapter":"Modern Warfare II","poster":"img/cod/ghost-mw2.jpg","meta":"7:16 · 1.94 GB · one file","files":[{"url":"https://github.com/Qstrx/noctis/releases/download/cod-141/Ghost-MW2.mp4","name":"Ghost MW2","run":"7:16","size":"1.94 GB","direct":true}],"fps":"30 FPS","resolution":"3840 × 1634","count":"01 file"},
+  {"id":"ghost-mw3","collection":"cod","group":"ghost","title":"Ghost","chapter":"Modern Warfare III","poster":"img/cod/ghost-mw3.jpg","meta":"4:37 · 1.95 GB · one file","files":[{"url":"https://github.com/Qstrx/noctis/releases/download/cod-141/Ghost-MW3.mp4","name":"Ghost MW3","run":"4:37","size":"1.95 GB","direct":true}],"fps":"30 FPS","resolution":"3840 × 1634","count":"01 file"},
+  {"id":"soap-mw2","collection":"cod","group":"soap","title":"Soap","chapter":"Modern Warfare II","poster":"img/cod/soap-mw2.jpg","meta":"9:35 · 1.94 GB · one file","files":[{"url":"https://github.com/Qstrx/noctis/releases/download/cod-141/Soap-MW2.mp4","name":"Soap MW2","run":"9:35","size":"1.94 GB","direct":true}],"fps":"30 FPS","resolution":"3840 × 1634","count":"01 file"},
+  {"id":"soap-mw3","collection":"cod","group":"soap","title":"Soap","chapter":"Modern Warfare III","poster":"img/cod/soap-mw3.jpg","meta":"7:38 · 1.95 GB · one file","files":[{"url":"https://github.com/Qstrx/noctis/releases/download/cod-141/Soap-MW3.mp4","name":"Soap MW3","run":"7:38","size":"1.95 GB","direct":true}],"fps":"30 FPS","resolution":"3840 × 1634","count":"01 file"},
+  {"id":"soap-extra","collection":"cod","group":"soap","title":"Soap","chapter":"More clips","poster":"img/cod/soap-extra.jpg","meta":"1:00 · 444.7 MB · one file","files":[{"url":"https://github.com/Qstrx/noctis/releases/download/cod-141/Soap-More-Clips.mp4","name":"Soap more clips","run":"1:00","size":"444.7 MB","direct":true}],"fps":"60 FPS","resolution":"3840 × 2160","count":"01 file"},
+  {"id":"gaz-mw1","collection":"cod","group":"gaz","title":"Gaz","chapter":"Modern Warfare","poster":"img/cod/gaz-mw1.jpg","meta":"2:21 · 751.5 MB · one file","files":[{"url":"https://github.com/Qstrx/noctis/releases/download/cod-141/Gaz-MW1.mp4","name":"Gaz MW1","run":"2:21","size":"751.5 MB","direct":true}],"fps":"30 FPS","resolution":"3840 × 1634","count":"01 file"},
+  {"id":"gaz-mw2","collection":"cod","group":"gaz","title":"Gaz","chapter":"Modern Warfare II","poster":"img/cod/gaz-mw2.jpg","meta":"5:34 · 1.95 GB · one file","files":[{"url":"https://github.com/Qstrx/noctis/releases/download/cod-141/Gaz-MW2.mp4","name":"Gaz MW2","run":"5:34","size":"1.95 GB","direct":true}],"fps":"30 FPS","resolution":"3840 × 1634","count":"01 file"},
+  {"id":"gaz-mw3","collection":"cod","group":"gaz","title":"Gaz","chapter":"Modern Warfare III","poster":"img/cod/gaz-mw3.jpg","meta":"4:40 · 1.94 GB · one file","files":[{"url":"https://github.com/Qstrx/noctis/releases/download/cod-141/Gaz-MW3.mp4","name":"Gaz MW3","run":"4:40","size":"1.94 GB","direct":true}],"fps":"30 FPS","resolution":"3840 × 1634","count":"01 file"},
+  {"id":"gaz-extra","collection":"cod","group":"gaz","title":"Gaz","chapter":"More clips","poster":"img/cod/gaz-extra.jpg","meta":"3:49 · 1.94 GB · one file","files":[{"url":"https://github.com/Qstrx/noctis/releases/download/cod-141/Gaz-More-Clips.mp4","name":"Gaz more clips","run":"3:49","size":"1.94 GB","direct":true}],"fps":"60 FPS","resolution":"3840 × 2160","count":"01 file"}
 ];

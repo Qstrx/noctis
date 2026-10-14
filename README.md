@@ -4,10 +4,10 @@ Scene packs for video editors, available at [qstrx.github.io/noctis](https://qst
 
 ## Collections
 
-- **Call of Duty:** Modern Warfare I, II and III each contain John Price scenes and campaign cutscenes. Modern Warfare IV contains three trailers in release order. The John Price All in one file covers MW I–III.
+- **Call of Duty:** scene packs of John Price, Gaz, Soap and Ghost from Modern Warfare I–III (plus more clips of Gaz and Soap), the campaign cutscenes of the three games, and three Modern Warfare 4 trailers in release order.
 - **SIX:** selected Joe Graves scenes from eight Season 1 and ten Season 2 source episodes. These files are character scene packs, not full episodes.
 
-File entries show their source, duration and size. Available previews play in the browser. Downloads retain the original GitHub, Google Drive and Mega destinations, with part selection for split files. After Start download, a reminder links to [@oceanxaep on TikTok](https://www.tiktok.com/@oceanxaep).
+File entries show their duration and preview. Available previews play in the browser. Downloads retain the original GitHub and Google Drive destinations, with part selection for split files. After Start download, a reminder links to [@oceanxaep on TikTok](https://www.tiktok.com/@oceanxaep).
 
 Mobile in-app browsers receive instructions for opening the site in Safari or Chrome before downloading. Detection uses device and browser signals; a TikTok referrer alone does not block downloads in an external browser.
 
@@ -27,9 +27,11 @@ The sky renderer is adapted from AuroraGrab under the [MIT license](LICENSE-Auro
 
 The site uses local imagery, three collection palettes, keyboard-accessible dialogs and the device’s reduced-motion preference. SIX previews support links to timestamps. Original media metadata lives in `archive-data.js`.
 
-The home is an open-air screen under the aurora (`home.css`, `home.js`). Each time it cuts, it draws an episode or pack at random and one of its frames at random: 174 frames taken at random moments from every Call of Duty pack and SIX episode, then checked by eye (`home-frames.js`, `img/home`, WebP at 640 and 1280 pixels wide). Every episode plays before any repeats, the next frame loads one turn ahead, and the order of the two collections on the timeline changes on every visit. The screen throws each frame’s colors into the sky around it and shows its position in its pack on a running timecode; any clip on the timeline plays a new frame directly. Under the screen, two frosted buttons with John Price and Joe Graves lead to the collections; leaning toward one lights it from where the pointer is.
+The Call of Duty page is a board (`board.css`): a row per operator (John Price, Gaz, Soap, Ghost) and for the cutscenes, a column per game (Modern Warfare, II, III, more clips) whose logos stay pinned while the rows scroll, and the game logo printed on every cover. The Modern Warfare 4 trailers follow on a board of their own. `cod.html#ghost` opens on Ghost. Gaz, Soap and Ghost packs are GitHub release assets under the `cod-141` tag. SIX opens directly on its seasons.
 
-Motion lives in `motion.css` and `motion.js`. Where the browser supports cross-document View Transitions, the frame on screen becomes the collection’s title card; elsewhere a fading veil connects the pages. Titles rise letter by letter, footage reveals as it scrolls in, and previews grow out of their card. Reduced motion turns all of it into plain fades. Titles use a Latin subset of Anton (`img/fonts/anton-latin.woff2`).
+The home is a night sky before the aurora (`home-simple.css`, `home-sky.js`): drifting stars and a glow on the horizon that takes the colour of the collection being pointed at. Two pictures, Call of Duty and SIX, lead to the collections; choosing one opens its picture to fill the screen and dims it into that collection's night in half a second, and the page opens under its aurora.
+
+Motion lives in `motion.css` and `motion.js`. Titles rise letter by letter, footage reveals as it scrolls in, and previews grow out of their card. Reduced motion turns all of it into plain fades, and the home then opens a collection directly. Titles use a Latin subset of Anton (`img/fonts/anton-latin.woff2`).
 
 ## Download checks
 

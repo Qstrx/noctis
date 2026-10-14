@@ -19,46 +19,26 @@
 <link rel="preload" href="img/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="site.css?v=aurora-15">
 <link rel="stylesheet" href="motion.css?v=aurora-16">
-<link rel="stylesheet" href="home.css?v=aurora-18">
+<link rel="stylesheet" href="home-simple.css?v=5">
 <script src="arrival.js?v=aurora-2"></script>
 <script src="site.js?v=aurora-17" defer></script>
+<script src="home-sky.js?v=4" defer></script>
 <script src="motion.js?v=aurora-16" defer></script>
-<script src="home-frames.js?v=aurora-1" defer></script>
-<script src="home.js?v=aurora-3" defer></script>
-<script src="aurora.js?v=aurora-11" defer blocking="render"></script>
+
+
 </head>
 <body data-world="home" data-theme="night" data-motion="on">
 <a class="skip-link" href="#main">Skip to content</a>
-<div class="sky" aria-hidden="true"><canvas id="auroraCanvas"></canvas><div class="sky-veil"></div></div>
+<canvas class="home-sky" id="homeSky" aria-hidden="true"></canvas><div class="home-glow" aria-hidden="true"></div>
 <header class="site-header">
   <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s</span></a>
 </header>
-<main class="home-main cinema" id="main">
-  <h1 class="sr-only">Choose a collection</h1>
-  <figure class="screen" aria-hidden="true">
-    <div class="screen-ambient"></div>
-    <div class="screen-frame" data-reel><noscript><img class="shot is-active" src="img/home/mw2-213-640.webp" srcset="img/home/mw2-213-640.webp 640w, img/home/mw2-213.webp 1280w" sizes="(max-width: 700px) 100vw, 860px" alt="" style="object-position:50% 45%"></noscript></div>
-    <div class="timeline"><span class="clip" data-world="cod" style="--n:0"><span class="clip-fill"></span></span><span class="clip" data-world="six" style="--n:1"><span class="clip-fill"></span></span><span class="clip" data-world="cod" style="--n:2"><span class="clip-fill"></span></span><span class="clip" data-world="six" style="--n:3"><span class="clip-fill"></span></span><span class="clip" data-world="cod" style="--n:4"><span class="clip-fill"></span></span><span class="clip" data-world="six" style="--n:5"><span class="clip-fill"></span></span><span class="clip" data-world="cod" style="--n:6"><span class="clip-fill"></span></span><span class="clip" data-world="six" style="--n:7"><span class="clip-fill"></span></span><span class="clip" data-world="cod" style="--n:8"><span class="clip-fill"></span></span><span class="clip" data-world="six" style="--n:9"><span class="clip-fill"></span></span><span class="clip" data-world="cod" style="--n:10"><span class="clip-fill"></span></span><span class="clip" data-world="six" style="--n:11"><span class="clip-fill"></span></span><span class="clip" data-world="cod" style="--n:12"><span class="clip-fill"></span></span><span class="clip" data-world="six" style="--n:13"><span class="clip-fill"></span></span><span class="clip" data-world="cod" style="--n:14"><span class="clip-fill"></span></span><span class="clip" data-world="six" style="--n:15"><span class="clip-fill"></span></span></div>
-    <figcaption class="screen-caption intro-fade" style="--d:1150ms"><span class="caption-live"><span class="caption-text">Modern Warfare II · John Price</span></span><span class="timecode">00:03:33:00</span></figcaption>
-  </figure>
-  <nav class="cinema-choices" aria-label="Collections">
-    <a class="cinema-choice world-choice intro-lift" href="cod.html" data-world-choice="cod" aria-labelledby="codTitle" aria-describedby="codMeta" style="--d:750ms">
-      <span class="cinema-portrait" aria-hidden="true"><img src="img/home/price.webp" alt="" width="176" height="176" decoding="async"></span>
-      <span class="cinema-text">
-        <span class="cinema-title split" id="codTitle" style="--d:900ms"><span class="sr-only">Call of Duty</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">C</span><span class="ch" style="--i:1">a</span><span class="ch" style="--i:2">l</span><span class="ch" style="--i:3">l</span></span> <span class="w"><span class="ch" style="--i:4">o</span><span class="ch" style="--i:5">f</span></span> <span class="w"><span class="ch" style="--i:6">D</span><span class="ch" style="--i:7">u</span><span class="ch" style="--i:8">t</span><span class="ch" style="--i:9">y</span></span></span></span>
-        <span class="cinema-meta" id="codMeta">John Price&nbsp;· Cutscenes&nbsp;· MW4&nbsp;trailers</span>
-      </span>
-      <span class="cinema-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
-    </a>
-    <a class="cinema-choice world-choice intro-lift" href="six.html" data-world-choice="six" aria-labelledby="sixTitle" aria-describedby="sixMeta" style="--d:910ms">
-      <span class="cinema-portrait" aria-hidden="true"><img src="img/home/graves.webp" alt="" width="176" height="176" decoding="async"></span>
-      <span class="cinema-text">
-        <span class="cinema-title split" id="sixTitle" style="--d:1060ms"><span class="sr-only">SIX</span><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">S</span><span class="ch" style="--i:1">I</span><span class="ch" style="--i:2">X</span></span></span></span>
-        <span class="cinema-meta" id="sixMeta">Joe Graves&nbsp;· Seasons 1&nbsp;and&nbsp;2</span>
-      </span>
-      <span class="cinema-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
-    </a>
-  </nav>
+<main class="cards-main" id="main"><h1 class="sr-only">Choose a collection</h1>
+<div class="cards">
+<a class="card intro-lift" style="--d:400ms" href="cod.html" data-go="cod" aria-labelledby="t-cod"><span class="card-img"><img src="img/home/cod-ghost.jpg" alt="" style="object-position:50% 30%" decoding="async"></span><span class="card-row"><span class="card-text"><span class="card-title" id="t-cod">Call of Duty</span></span></span></a>
+<a class="card intro-lift" style="--d:560ms" href="six.html" data-go="six" aria-labelledby="t-six"><span class="card-img"><img src="img/joe.jpg" alt="" style="object-position:50% 38%" decoding="async"></span><span class="card-row"><span class="card-text"><span class="card-title" id="t-six">SIX</span></span></span></a>
+</div>
 </main>
+
 </body>
 </html>
