@@ -11,9 +11,16 @@
 .card-title { display: block; font: 400 clamp(46px, 4.8vw, 76px)/.86 var(--title); text-transform: uppercase; letter-spacing: .005em; transition: color .4s var(--ease); }
 .card:hover .card-title, .card:focus-visible .card-title { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) { .card-img, .card-img img { transition: none; } }
+/* Phone: the two pictures share the screen, each with its name on it */
 @media (max-width: 860px) {
-  .cards-main { width: calc(100% - 40px); align-content: start; padding-top: 12px; }
-  .cards { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .cards-main { width: calc(100% - 32px); min-height: 0; align-content: start; padding: 4px 0 20px; }
+  .cards { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .card { position: relative; display: block; }
+  .card-img { position: relative; aspect-ratio: auto; height: max(220px, calc((100svh - 156px) / 2)); border-radius: 22px; }
+  .card-img::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(0deg, rgba(2, 5, 3, .85), transparent 55%); pointer-events: none; }
+  .card-row { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 1; }
+  .card-title { font-size: clamp(42px, 13vw, 64px); text-shadow: 0 6px 30px rgba(0, 0, 0, .6); }
+  .card:hover .card-img, .card:focus-visible .card-img { transform: none; }
 }
 
 /* Home sky: night before the aurora */

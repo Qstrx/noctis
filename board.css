@@ -38,20 +38,40 @@
 /* Trailers: three columns of four */
 .board-trailers .board-head .board-col:nth-child(5) { display: none; }
 
+/* The cells sit straight in the row's grid on wide screens */
+.board-cells { display: contents; }
+
+/* Tablet and phone: each row is a header, then its packs in one swipeable strip,
+   in game order. The logo on every cover says which game it is. */
 @media (max-width: 1100px) {
-  .board { --who: 1fr; }
+  .board { --who: 1fr; margin-top: 8px; }
+  .board + .board { margin-top: 56px; }
   .board-head { display: none; }
-  .board-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px var(--gap); padding: 28px 0; margin: 0; border-radius: 0; }
+  .board-row { display: block; padding: 26px 0 30px; margin: 0; border-radius: 0; }
   .board-row + .board-row::before { left: 0; right: 0; }
   .board-row:hover { background: none; }
-  .board-who { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: flex-end; column-gap: 16px; }
-  .board-who p { flex-basis: 100%; }
-  .board-cell .card-game { display: flex; }
-  .board-cell .pack-card h3 { position: static; width: auto; height: auto; clip: auto; }
+  .board-who { flex-direction: row; align-items: baseline; gap: 12px; margin-bottom: 16px; padding: 0; }
+  .board-who .chapter-no { font-size: 46px; line-height: .8; }
+  .board-name { margin: 0; font-size: 38px; }
+  .board-logo img { max-width: 150px; }
+  .board-who p { margin-left: auto; padding: 3px 9px; border-radius: 999px; color: var(--ink); font-size: 11px; font-weight: 600; letter-spacing: .08em; box-shadow: inset 0 0 0 1px var(--line-strong); }
+  .board-cells { display: flex; gap: 14px; margin-inline: -24px; padding: 2px 24px 6px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 24px; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .board-cells::-webkit-scrollbar { display: none; }
+  .board-cell { flex: 0 0 min(320px, 44%); scroll-snap-align: start; }
   .board-cell.is-empty { display: none; }
+  .board-cell .card-game { display: none; }
+  .board-cell .pack-card h3 { font-size: 13px; }
+  .board-cell .action { min-height: 42px; }
+  .board-cell .action.secondary { width: 42px; }
 }
-@media (max-width: 560px) {
-  .board-row { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 700px) {
+  .board-cells { margin-inline: -20px; padding-inline: 20px; scroll-padding-inline: 20px; gap: 12px; }
+  .board-cell { flex-basis: 78%; }
+  .board-who .chapter-no { font-size: 40px; }
+  .board-name { font-size: 34px; }
+  .cover-game img { height: 20px; }
+  .board-cell .pack-actions { padding-top: 10px; }
+}
   .board-name { font-size: 40px; }
 }
 
