@@ -21,7 +21,9 @@
 <link rel="stylesheet" href="motion.css?v=aurora-16">
 <link rel="stylesheet" href="archive.css?v=aurora-18">
 <link rel="stylesheet" href="download.css?v=aurora-15">
-<link rel="stylesheet" href="board.css?v=5">
+<link rel="preload" href="img/fonts/archivo-black-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="rank.css?v=1">
+<link rel="stylesheet" href="board.css?v=6">
 <link rel="stylesheet" href="credit.css?v=aurora-13">
 <script src="arrival.js?v=aurora-2"></script>
 <script src="archive-data.js?v=aurora-17" defer></script>
@@ -42,7 +44,7 @@
 <div class="board">
 <div class="board-head" aria-hidden="true"><span class="board-corner"></span><span class="board-col"><img src="img/cod/logos/mw1.svg" alt="" width="1000" height="231"><small>2019</small></span><span class="board-col"><img src="img/cod/logos/mw2.png" alt="" width="351" height="175"><small>2022</small></span><span class="board-col"><img src="img/cod/logos/mw3.png" alt="" width="635" height="175"><small>2023</small></span><span class="board-col"><span class="board-word">More clips</span><small>4K · 60 fps</small></span></div>
 <section class="board-row" id="price" aria-labelledby="row-price">
-<header class="board-who reveal"><span class="chapter-no" aria-hidden="true">01</span><h2 class="board-name" id="row-price">John Price</h2><p>2K</p></header>
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="5" rx="1"/><rect x="4" y="14" width="16" height="5" rx="1"/></svg><h2 class="nm" id="row-price">John Price</h2><span class="rs">2K</span></div></header>
 <div class="board-cells">
 <div class="board-cell"><article class="pack-card reveal" id="mw1" data-kind="price" aria-labelledby="tmw1">
   <p class="card-game"><img src="img/cod/logos/mw1.svg" alt="" width="1000" height="231" loading="lazy" decoding="async"><span>2019</span></p>
@@ -66,7 +68,7 @@
 </div>
 </section>
 <section class="board-row" id="gaz" aria-labelledby="row-gaz">
-<header class="board-who reveal"><span class="chapter-no" aria-hidden="true">02</span><h2 class="board-name" id="row-gaz">Gaz</h2><p>4K</p></header>
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5v2.6L12 6.6l-9 5.5zM3 14 12 8.5l9 5.5v2.6l-9-5.5-9 5.5zM3 18.5 12 13l9 5.5v2.6l-9-5.5-9 5.5z"/></svg><h2 class="nm" id="row-gaz">Gaz</h2><span class="rs">4K</span></div></header>
 <div class="board-cells">
 <div class="board-cell"><article class="pack-card reveal" id="gaz-mw1" data-kind="gaz" aria-labelledby="tgaz-mw1">
   <p class="card-game"><img src="img/cod/logos/mw1.svg" alt="" width="1000" height="231" loading="lazy" decoding="async"><span>2019</span></p>
@@ -95,7 +97,7 @@
 </div>
 </section>
 <section class="board-row" id="soap" aria-labelledby="row-soap">
-<header class="board-who reveal"><span class="chapter-no" aria-hidden="true">03</span><h2 class="board-name" id="row-soap">Soap</h2><p>4K</p></header>
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5v2.6L12 6.6l-9 5.5zM3 14 12 8.5l9 5.5v2.6l-9-5.5-9 5.5zM3 18.5 12 13l9 5.5v2.6l-9-5.5-9 5.5z"/></svg><h2 class="nm" id="row-soap">Soap</h2><span class="rs">4K</span></div></header>
 <div class="board-cells">
 <div class="board-cell is-empty" aria-hidden="true"></div>
 <div class="board-cell"><article class="pack-card reveal" id="soap-mw2" data-kind="soap" aria-labelledby="tsoap-mw2">
@@ -119,7 +121,7 @@
 </div>
 </section>
 <section class="board-row" id="ghost" aria-labelledby="row-ghost">
-<header class="board-who reveal"><span class="chapter-no" aria-hidden="true">04</span><h2 class="board-name" id="row-ghost">Ghost</h2><p>4K</p></header>
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9.5" width="16" height="5" rx="1"/></svg><h2 class="nm" id="row-ghost">Ghost</h2><span class="rs">4K</span></div></header>
 <div class="board-cells">
 <div class="board-cell is-empty" aria-hidden="true"></div>
 <div class="board-cell"><article class="pack-card reveal" id="ghost-mw2" data-kind="ghost" aria-labelledby="tghost-mw2">
@@ -138,7 +140,7 @@
 </div>
 </section>
 <section class="board-row" id="cutscenes" aria-labelledby="row-cutscenes">
-<header class="board-who reveal"><span class="chapter-no" aria-hidden="true">05</span><h2 class="board-name" id="row-cutscenes">Cutscenes</h2><p>2K</p></header>
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM5 7v2h2V7zm0 4v2h2v-2zm0 4v2h2v-2zM17 7v2h2V7zm0 4v2h2v-2zm0 4v2h2v-2zM9 7v10h6V7z" fill-rule="evenodd"/></svg><h2 class="nm" id="row-cutscenes">Cutscenes</h2><span class="rs">2K</span></div></header>
 <div class="board-cells">
 <div class="board-cell"><article class="pack-card reveal" id="cuts1" data-kind="cutscenes" aria-labelledby="tcuts1">
   <p class="card-game"><img src="img/cod/logos/mw1.svg" alt="" width="1000" height="231" loading="lazy" decoding="async"><span>2019</span></p>
@@ -165,7 +167,7 @@
 <div class="board board-trailers">
 <div class="board-head" aria-hidden="true"><span class="board-corner"></span><span class="board-col"><span class="board-word">Trailer 1</span><small>28 May 2026</small></span><span class="board-col"><span class="board-word">Trailer 2</span><small>11 August 2026</small></span><span class="board-col"><span class="board-word">Trailer 3</span><small>17 September 2026</small></span></div>
 <section class="board-row" id="mw4-trailers" aria-labelledby="row-mw4">
-<header class="board-who reveal"><span class="chapter-no" aria-hidden="true">06</span><h2 class="board-name board-logo" id="row-mw4"><span class="sr-only">Modern Warfare 4 trailers</span><img src="img/cod/logos/mw4.webp" alt="" width="1179" height="404"></h2><p>4K</p></header>
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg><h2 class="nm logo" id="row-mw4"><span class="sr-only">Modern Warfare 4 trailers</span><img src="img/cod/logos/mw4.webp" alt="" width="1179" height="404"></h2><span class="rs">4K</span></div></header>
 <div class="board-cells">
 <div class="board-cell"><article class="pack-card reveal" id="mw4-trailer-1" data-kind="trailers" aria-labelledby="tmw4-trailer-1">
   <div class="pack-cover"><span class="cover-frame"><img src="img/cod/mw4-trailer-1.jpg" alt="" width="960" height="408" loading="lazy" decoding="async" style="--fx:0%"></span><span class="cover-badge">Trailer · 4K</span><span class="cover-time">2:49</span></div>

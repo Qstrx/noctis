@@ -1,0 +1,26 @@
+/* Call of Duty rows: the rank insignia, the name, the resolution. */
+@font-face { font-family: "Archivo Black"; src: url("img/fonts/archivo-black-latin.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; src: url("img/fonts/barlow-condensed-700-latin.woff2") format("woff2"); font-display: swap; }
+
+.rk { display: grid; grid-template-columns: auto auto 1fr auto; align-items: center; column-gap: 14px; width: 100%; }
+.rk .ins { display: block; width: 30px; height: 30px; color: var(--accent); filter: drop-shadow(0 4px 12px color-mix(in srgb, var(--accent) 35%, transparent)); }
+.rk .ins path, .rk .ins rect { fill: currentColor; }
+.rk .nm { margin: 0; font: 400 34px/1 "Archivo Black", Impact, sans-serif; text-transform: uppercase; letter-spacing: -.01em; overflow-wrap: anywhere; }
+.rk .nm.logo img { display: block; width: 100%; max-width: 170px; height: auto; }
+.rk::after { content: ""; grid-column: 3; height: 1px; background: linear-gradient(90deg, var(--line-strong), transparent); }
+.rk .rs { grid-column: 4; padding: 4px 11px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line-strong); color: var(--ink); font: 700 12px "Barlow Condensed", sans-serif; letter-spacing: .25em; }
+
+/* Desktop: the name runs across the row, its packs beneath in the game columns */
+@media (min-width: 1101px) {
+  .board-head, .board-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .board-corner { display: none; }
+  .board-row { row-gap: 18px; padding-top: 30px; }
+  .board-who { grid-column: 1 / -1; padding: 0; }
+}
+@media (max-width: 1100px) {
+  .rk { grid-template-columns: auto 1fr auto; column-gap: 12px; }
+  .rk::after { display: none; }
+  .rk .rs { grid-column: 3; padding: 3px 9px; font-size: 11px; }
+  .rk .ins { width: 28px; height: 28px; }
+  .rk .nm { font-size: 28px; }
+}

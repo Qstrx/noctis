@@ -23,11 +23,11 @@ Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of
 
 ## Resources
 
-The sky renderer is adapted from AuroraGrab under the [MIT license](LICENSE-AuroraGrab). Official game logo sources are listed in [img/cod/logos/README.md](img/cod/logos/README.md). Font licensing is included in [img/fonts/OFL.txt](img/fonts/OFL.txt).
+The sky renderer is adapted from AuroraGrab under the [MIT license](LICENSE-AuroraGrab). Official game logo sources are listed in [img/cod/logos/README.md](img/cod/logos/README.md). Fonts (Anton, Archivo Black, Barlow Condensed, Latin subsets) are licensed under the SIL Open Font License in [img/fonts/OFL.txt](img/fonts/OFL.txt).
 
 The site uses local imagery, three collection palettes, keyboard-accessible dialogs and the device’s reduced-motion preference. SIX previews support links to timestamps. Original media metadata lives in `archive-data.js`.
 
-The Call of Duty page is a board (`board.css`): a row per operator (John Price, Gaz, Soap, Ghost) and for the cutscenes, a column per game (Modern Warfare, II, III, more clips) whose logos stay pinned while the rows scroll, and the game logo printed on every cover. The Modern Warfare 4 trailers follow on a board of their own. `cod.html#ghost` opens on Ghost. Gaz, Soap and Ghost packs are GitHub release assets under the `cod-141` tag. SIX opens directly on its seasons.
+The Call of Duty page is a board (`board.css`, `rank.css`): a row per operator (John Price, Gaz, Soap, Ghost) and for the cutscenes, each headed by the operator's rank insignia, name and resolution, a column per game (Modern Warfare, II, III, more clips) whose logos stay pinned while the rows scroll, and the game logo printed on every cover. The Modern Warfare 4 trailers follow on a board of their own. `cod.html#ghost` opens on Ghost. Gaz, Soap and Ghost packs are GitHub release assets under the `cod-141` tag. SIX opens directly on its seasons.
 
 The home is a night sky before the aurora (`home-simple.css`, `home-sky.js`): drifting stars and a glow on the horizon that takes the colour of the collection being pointed at. Two pictures, Call of Duty and SIX, lead to the collections; choosing one opens its picture to fill the screen and dims it into that collection's night in half a second, and the page opens under its aurora.
 
