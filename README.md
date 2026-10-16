@@ -4,7 +4,7 @@ Scene packs for video editors, available at [qstrx.github.io/noctis](https://qst
 
 ## Collections
 
-- **Call of Duty:** scene packs of John Price, Gaz, Soap and Ghost from Modern Warfare I–III (plus more clips of Gaz and Soap), the campaign cutscenes of the three games, and 22 Modern Warfare 4 campaign cutscenes and three trailers.
+- **Call of Duty:** scene packs of John Price, Gaz, Soap and Ghost from Modern Warfare I–III (plus more clips of Gaz and Soap), the campaign cutscenes of the three games, and 22 Modern Warfare 4 campaign cutscenes, a separate campaign recap and three trailers.
 - **SIX:** selected Joe Graves scenes from eight Season 1 and ten Season 2 source episodes. These files are character scene packs, not full episodes.
 
 File entries show their duration and preview. Available previews play in the browser. Downloads retain the original GitHub and Google Drive destinations, with part selection for split files. After Start download, a reminder links to [@oceanxaep on TikTok](https://www.tiktok.com/@oceanxaep).
@@ -45,4 +45,4 @@ Set `PLAYWRIGHT_MODULE` to an existing module path if needed. The checks use a l
 
 ## Modern Warfare 4
 
-The MW4 collection opens the Call of Duty page. It offers only the 22 individual campaign cutscenes, using verified release assets under `mw4-scenepack`. Every video is below 2 GB; native geometry and fps are retained. The file chooser supports search, per-file metadata and audio availability. MW4 preview uses named scene selection. The older operator, trailer and SIX behavior is preserved.
+The MW4 collection opens the Call of Duty page. It offers the 22 individual campaign cutscenes and a separate campaign recap, using verified release assets under `mw4-scenepack`. Every video is below 2 GB; native geometry and fps are retained. The file chooser supports search, per-file metadata and audio availability. MW4 preview uses named scene selection. The older operator, trailer and SIX behavior is preserved.

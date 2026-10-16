@@ -1,4 +1,4 @@
-// MW4 campaign cutscenes: native measurements and verified release assets.
+// MW4 campaign cutscenes and recap: verified native media measurements.
 COD_PACKS.push(...[
   {
     "id": "mw4-campaign-individual",
@@ -233,6 +233,32 @@ COD_PACKS.push(...[
     "fps": "30/60 fps · native rates",
     "resolution": "4K · native aspect ratios",
     "count": "22 files",
+    "namedFiles": true,
+    "quality": "4K H.264 · uses data while you watch."
+  },
+  {
+    "id": "mw4-recap",
+    "collection": "cod",
+    "group": "mw4",
+    "title": "Modern Warfare 4",
+    "chapter": "Campaign recap",
+    "poster": "img/cod/mw4/mw4-recap.jpg",
+    "meta": "2:32 · 811.4 MB · 1 files",
+    "files": [
+      {
+        "url": "https://github.com/Qstrx/noctis/releases/download/mw4-scenepack/MW4-Campaign-Recap-4K-English-Audio.mp4",
+        "name": "Campaign Recap",
+        "run": "2:32",
+        "size": "811.4 MB",
+        "direct": true,
+        "audio": "English · stereo + 8 channels",
+        "resolution": "3840 × 1634",
+        "fps": "30 fps"
+      }
+    ],
+    "fps": "30 fps",
+    "resolution": "4K · native aspect ratios",
+    "count": "1 files",
     "namedFiles": true,
     "quality": "4K H.264 · uses data while you watch."
   }
