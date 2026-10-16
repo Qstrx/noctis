@@ -1,0 +1,38 @@
+[
+  {
+    "poster": "mw4-campaign.jpg",
+    "asset": "rex_sp_coldopen_intro",
+    "at_seconds": 60,
+    "width": 1280,
+    "height": 720,
+    "source_frame_jpeg_sha256": "61ec0ba7f89f730b29d7235ee7805071d3f9208bf958235fb595b6d3fec1a095",
+    "published_jpeg_sha256": "f7c48990682a32c3865126df54074050ce1b329f68d146159cd2534b1e4e9688"
+  },
+  {
+    "poster": "mw4-campaign-sequence.jpg",
+    "asset": "rex_sp_coldopen_intro",
+    "at_seconds": 65,
+    "width": 1280,
+    "height": 720,
+    "source_frame_jpeg_sha256": "06d651d93a3947fe22e703d154a88f84cfdc24efa013334e389c53d5c2d3219f",
+    "published_jpeg_sha256": "7c6b70591d9fa0c1a8bd1e397055b0f34f27a0a60839c81b6ace0f8f43a49b00"
+  },
+  {
+    "poster": "mw4-dmz.jpg",
+    "asset": "rex_dmz_act1_intro",
+    "at_seconds": 10,
+    "width": 1280,
+    "height": 720,
+    "source_frame_jpeg_sha256": "10b30fb5aab413ee25bdbc7c4ccfeb6fe7b188e275b59605f762dcccf80c16c8",
+    "published_jpeg_sha256": "bd090639716b5862bfe1c9d7b6b7cad5edcfac13c299886cfb27a01fbdafc1ff"
+  },
+  {
+    "poster": "mw4-recap.jpg",
+    "asset": "sp_rex_recap",
+    "at_seconds": 45,
+    "width": 1280,
+    "height": 720,
+    "source_frame_jpeg_sha256": "1616125a97cee7569c45616394fc4a11690a1fe1b3ff294a354c9b05642c9b0e",
+    "published_jpeg_sha256": "6cf1287478a014901af7a5321fb3dbf76f58a8bcc4cf6bb01c0c31b5f1784f7a"
+  }
+]

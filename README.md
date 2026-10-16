@@ -4,7 +4,7 @@ Scene packs for video editors, available at [qstrx.github.io/noctis](https://qst
 
 ## Collections
 
-- **Call of Duty:** scene packs of John Price, Gaz, Soap and Ghost from Modern Warfare I–III (plus more clips of Gaz and Soap), the campaign cutscenes of the three games, and three Modern Warfare 4 trailers in release order.
+- **Call of Duty:** scene packs of John Price, Gaz, Soap and Ghost from Modern Warfare I–III (plus more clips of Gaz and Soap), the campaign cutscenes of the three games, and Modern Warfare 4 campaign scenes, consecutive campaign parts, DMZ, recap and three trailers.
 - **SIX:** selected Joe Graves scenes from eight Season 1 and ten Season 2 source episodes. These files are character scene packs, not full episodes.
 
 File entries show their duration and preview. Available previews play in the browser. Downloads retain the original GitHub and Google Drive destinations, with part selection for split files. After Start download, a reminder links to [@oceanxaep on TikTok](https://www.tiktok.com/@oceanxaep).
@@ -42,3 +42,7 @@ node scripts/test-in-app-download.cjs
 ```
 
 Set `PLAYWRIGHT_MODULE` to an existing module path if needed. The checks use a local server, disposable browser contexts and small intercepted attachments. They cover embedded-browser detection, multipart and provider files, clipboard fallback, focus return, credit reminders and narrow-screen fit. Captures are saved to the ignored `.review/in-app-download/` directory. Browser emulation does not replace testing on physical devices.
+
+## Modern Warfare 4
+
+The MW4 collection opens the Call of Duty page. Its four collections use verified release assets under `mw4-scenepack`: 22 campaign scenes, 21 consecutive campaign parts, 7 DMZ clips and 1 recap. Every video is below 2 GB; native geometry and fps are retained. The file chooser supports search, per-file metadata and audio availability. MW4 preview uses named scene selection. The older operator, trailer and SIX behavior is preserved.

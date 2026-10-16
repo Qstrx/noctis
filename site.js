@@ -186,6 +186,8 @@
   }
   function downloadNote(files) {
     const url = new URL((files.find(safeFile) || files[0]).url);
+    const named = typeof COD_PACKS !== 'undefined' && COD_PACKS.some(item => item.namedFiles && item.files.some(file => file.url === files[0]?.url));
+    if (named) return files.length > 1 ? 'GitHub · choose a file. Every download is under 2 GB.' : 'GitHub · MP4 video under 2 GB.';
     if (url.hostname === 'drive.google.com') return 'Google Drive · use the download arrow on the file page.';
     if (url.hostname === 'mega.nz') return 'Mega · download from the file page.';
     return files.length > 1 ? 'GitHub · choose a part to download.' : 'GitHub · original video file.';
@@ -226,6 +228,12 @@
     if (details.poster) $('hitCover').src = details.poster;
     else $('hitCover').removeAttribute('src');
     downloadGo.setAttribute('aria-label', 'Start download: ' + details.title);
+    downloadGo.disabled = false;
+    if ($('downloadFilterWrap')) $('downloadFilterWrap').hidden = true;
+    if ($('downloadFilter')) $('downloadFilter').value = '';
+    if ($('downloadCount')) $('downloadCount').hidden = true;
+    if ($('downloadEmpty')) $('downloadEmpty').hidden = true;
+    if ($('downloadSelected')) $('downloadSelected').hidden = true;
     choices.replaceChildren();
     return true;
   }
@@ -238,6 +246,10 @@
       return;
     }
     pendingFile = file;
+    if ($('downloadSelected') && file.audio) {
+      $('downloadSelected').hidden = false;
+      $('downloadSelected').textContent = [file.name, file.run, file.size, file.audio].filter(Boolean).join(' · ');
+    }
     downloadGo.hidden = false;
     if (!downloadDialog.open) downloadDialog.showModal();
     downloadGo.focus({ preventScroll: true });
@@ -260,17 +272,45 @@
       button.setAttribute('aria-pressed', String(index === firstPart));
       const info = create('span', '', 'transfer-part-info');
       info.append(create('strong', name));
-      const facts = [file.run, file.size].filter(Boolean).join(' · ');
+      const facts = [file.run, file.size, file.resolution, file.fps, file.audio].filter(Boolean).join(' · ');
       if (facts) info.append(create('small', facts));
       button.append(info, partChoiceIcon());
       button.addEventListener('click', () => {
         if (!downloadDialog.open) return;
         pendingFile = file;
+        downloadGo.disabled = false;
+        if ($('downloadSelected')) {
+          $('downloadSelected').hidden = false;
+          $('downloadSelected').textContent = 'Selected: ' + name;
+        }
         choices.querySelectorAll('button').forEach(option => option.setAttribute('aria-pressed', String(option === button)));
         downloadGo.setAttribute('aria-label', `Start download: ${$('hitT').textContent}, ${name}`);
       });
       choices.append(button);
     });
+    const filter = $('downloadFilter');
+    if (filter && files.length > 6) {
+      $('downloadFilterWrap').hidden = false;
+      $('downloadCount').hidden = false;
+      $('downloadCount').textContent = `${files.length} files`;
+      filter.oninput = () => {
+        const query = filter.value.trim().toLocaleLowerCase();
+        let visible = 0;
+        choices.querySelectorAll('button').forEach((option, index) => {
+          option.hidden = !(files[index].name || `Part ${index + 1}`).toLocaleLowerCase().includes(query);
+          if (!option.hidden) visible++;
+          if (option.hidden && pendingFile === files[index]) {
+            pendingFile = null;
+            option.setAttribute('aria-pressed', 'false');
+            downloadGo.disabled = true;
+            $('downloadSelected').hidden = false;
+            $('downloadSelected').textContent = 'Choose a matching file to download.';
+          }
+        });
+        $('downloadCount').textContent = `${visible} of ${files.length} files`;
+        $('downloadEmpty').hidden = visible !== 0;
+      };
+    }
     if (!downloadDialog.open) downloadDialog.showModal();
     choices.querySelector('button:not(:disabled)')?.focus({ preventScroll: true });
   }
@@ -339,21 +379,35 @@
     video.replaceChildren();
     video.preload = 'metadata';
     $('codPreviewError').hidden = true;
-    $('codPreviewTitle').textContent = pack.chapter;
+    const selectedFile = pack.files[index];
+    $('codPreviewTitle').textContent = pack.namedFiles ? selectedFile.name : pack.chapter;
     $('codPreviewLabel').textContent = pack.group === 'trailers' ? 'Call of Duty / Trailer preview' : 'Call of Duty / Scene preview';
-    $('codPreviewMeta').textContent = pack.meta + (pack.files.length > 1 ? ` · Part ${part + 1}` : '');
+    $('codPreviewMeta').textContent = pack.namedFiles ? [selectedFile.run, selectedFile.size, selectedFile.resolution, selectedFile.fps, selectedFile.audio].filter(Boolean).join(' · ') : pack.meta + (pack.files.length > 1 ? ` · Part ${part + 1}` : '');
+    if ($('codPreviewQuality')) $('codPreviewQuality').textContent = pack.quality || 'Original quality · uses data while you watch.';
     video.poster = pack.poster;
     video.setAttribute('aria-label', `${pack.title}, ${pack.chapter}${pack.files.length > 1 ? ', part ' + (part + 1) : ''}${pack.group === 'trailers' ? '' : ' scene pack'}`);
     $('codPreviewParts').hidden = pack.files.length === 1;
     $('codPreviewParts').replaceChildren();
-    pack.files.forEach((file, fileIndex) => {
+    if (pack.namedFiles) {
+      const label = create('label', 'Choose a scene', 'mw4-scene-select');
+      const select = create('select');
+      pack.files.forEach((file, fileIndex) => {
+        const option = create('option', file.name);
+        option.value = String(fileIndex);
+        option.selected = fileIndex === part;
+        select.append(option);
+      });
+      select.addEventListener('change', () => loadPart(Number(select.value)));
+      label.append(select);
+      $('codPreviewParts').append(label);
+    } else pack.files.forEach((file, fileIndex) => {
       const button = create('button', 'Part ' + (fileIndex + 1));
       button.type = 'button';
       button.setAttribute('aria-pressed', String(fileIndex === part));
       button.addEventListener('click', () => loadPart(fileIndex));
       $('codPreviewParts').append(button);
     });
-    if (restorePartFocus) $('codPreviewParts').querySelector('[aria-pressed="true"]')?.focus({ preventScroll: true });
+    if (restorePartFocus) $('codPreviewParts').querySelector('select, [aria-pressed="true"]')?.focus({ preventScroll: true });
     window.archiveMotion?.sceneChange(dialog);
     if (!safeFile(pack.files[part]) || pack.files[part].direct === false) { codFailed(id); return; }
     codStatus('Loading preview…');
@@ -364,7 +418,7 @@
     video.append(source);
     video.load();
     loadTimer = setTimeout(() => {
-      if (id === loadId && dialog.open && video.readyState < 3 && $('codPreviewError').hidden) codStatus('Still loading original-quality footage…');
+      if (id === loadId && dialog.open && video.readyState < 3 && $('codPreviewError').hidden) codStatus(pack.namedFiles ? 'Still loading 4K footage…' : 'Still loading original-quality footage…');
     }, 15000);
     const play = video.play();
     if (play) play.catch(error => {
@@ -402,7 +456,7 @@
   $('codPreviewDownload').addEventListener('click', () => {
     if (!pack) return;
     const file = pack.files[part];
-    const label = pack.chapter + (pack.files.length > 1 ? ` / Part ${part + 1}` : '');
+    const label = pack.chapter + (pack.namedFiles ? ' / ' + file.name : pack.files.length > 1 ? ` / Part ${part + 1}` : '');
     const opener = previewOpener;
     dialog.close();
     askFile(file, label, opener);
