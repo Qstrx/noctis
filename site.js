@@ -164,8 +164,8 @@
       const onePart = files.length === 1 && codPack.files.length > 1;
       return {
         title: codPack.id === 'full' ? 'All in one' : codPack.chapter,
-        context: codPack.title + (onePart ? ` · Part ${index + 1}` : ''),
-        facts: onePart ? [firstFile.run, firstFile.size, codPack.fps].filter(Boolean).join(' · ') : codPack.meta.split(' · ').slice(0, 2).concat(codPack.fps).join(' · '),
+        context: codPack.title + (codPack.editionLabel ? ' · ' + codPack.editionLabel : '') + (onePart ? ` · Part ${index + 1}` : ''),
+        facts: onePart ? [firstFile.run, firstFile.size, firstFile.resolution, firstFile.fps || codPack.fps].filter(Boolean).join(' · ') : codPack.meta.split(' · ').slice(0, 2).concat(codPack.fps).join(' · '),
         poster: cover?.getAttribute('src') || codPack.poster
       };
     }
@@ -248,7 +248,7 @@
     pendingFile = file;
     if ($('downloadSelected') && file.audio) {
       $('downloadSelected').hidden = false;
-      $('downloadSelected').textContent = [file.name, file.run, file.size, file.audio].filter(Boolean).join(' · ');
+      $('downloadSelected').textContent = [file.name, file.run, file.size, file.resolution, file.fps, file.audio].filter(Boolean).join(' · ');
     }
     downloadGo.hidden = false;
     if (!downloadDialog.open) downloadDialog.showModal();
@@ -418,7 +418,7 @@
     video.append(source);
     video.load();
     loadTimer = setTimeout(() => {
-      if (id === loadId && dialog.open && video.readyState < 3 && $('codPreviewError').hidden) codStatus(pack.namedFiles ? 'Still loading 4K footage…' : 'Still loading original-quality footage…');
+      if (id === loadId && dialog.open && video.readyState < 3 && $('codPreviewError').hidden) codStatus(pack.namedFiles ? 'Still loading ' + (pack.editionLabel || '4K') + ' footage…' : 'Still loading original-quality footage…');
     }, 15000);
     const play = video.play();
     if (play) play.catch(error => {
