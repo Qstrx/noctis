@@ -780,3 +780,13 @@ const MW4_VARIANT_PACKS = [
   }
 ];
 MW4_VARIANT_PACKS.forEach(pack => { Object.assign(pack, pack.editions["4K"]); COD_PACKS.push(pack); });
+
+// Per-scene artwork is a frame of the verified video, shared by all three editions.
+MW4_VARIANT_PACKS.forEach(pack => {
+  Object.values(pack.editions).forEach(edition => edition.files.forEach((file, index) => {
+    const scene = pack.id === 'mw4-recap' ? 'recap' : String(index + 1).padStart(2, '0');
+    file.scene = scene;
+    file.poster = 'img/cod/mw4/scenes/' + scene + '.jpg';
+    file.thumbnail = 'img/cod/mw4/scenes/' + scene + '-thumb.jpg';
+  }));
+});

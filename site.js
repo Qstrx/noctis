@@ -162,6 +162,12 @@
     if (codPack) {
       const index = codPack.files.findIndex(file => file.url === firstFile.url);
       const onePart = files.length === 1 && codPack.files.length > 1;
+      if (codPack.namedFiles && files.length === 1) return {
+        title: firstFile.name,
+        context: codPack.title + ' · ' + codPack.chapter + (codPack.editionLabel ? ' · ' + codPack.editionLabel : ''),
+        facts: [firstFile.run, firstFile.size, firstFile.resolution, firstFile.fps].filter(Boolean).join(' · '),
+        poster: firstFile.poster || codPack.poster
+      };
       return {
         title: codPack.id === 'full' ? 'All in one' : codPack.chapter,
         context: codPack.title + (codPack.editionLabel ? ' · ' + codPack.editionLabel : '') + (onePart ? ` · Part ${index + 1}` : ''),
