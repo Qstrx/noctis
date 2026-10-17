@@ -22,7 +22,7 @@
   }
 
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const previewDialogs = [...document.querySelectorAll('#preview, #codPreview')];
+  const previewDialogs = [...document.querySelectorAll('#preview, #codPreview, #mw4MobileDialog')];
   function syncMotion() {
     const enabled = !reducedMotion.matches;
     const previewOpen = previewDialogs.some(dialog => dialog.open);

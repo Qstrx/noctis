@@ -11,6 +11,53 @@
   const collectionButtons = [...root.querySelectorAll('[data-mw4-collection]')];
   const search = $('mw4Search'), type = $('mw4Type'), list = $('mw4SceneList');
   const video = $('mw4Video'), poster = $('mw4Poster'), play = $('mw4Play');
+  const detail = $('mw4Detail'), detailHome = detail.parentElement;
+  const mobileDialog = $('mw4MobileDialog');
+  const mobileLayout = window.matchMedia('(max-width: 900px)');
+  let mobileOpener = null, sheetHistory = false, sheetClosing = false;
+  function syncMobileLayout() {
+    if (mobileLayout.matches) $('mw4MobileMount').append(detail);
+    else {
+      if (mobileDialog.open) mobileDialog.close();
+      detailHome.append(detail);
+    }
+  }
+  function openMobileDetails(opener) {
+    if (!mobileLayout.matches) return;
+    mobileOpener = opener || document.activeElement;
+    if (!mobileDialog.open) {
+      mobileDialog.showModal();
+      mobileDialog.scrollTop = 0;
+      try {
+        history.pushState(Object.assign({}, history.state, { noctisMw4Scene: true }), '', location.href);
+        sheetHistory = true;
+      } catch { /* The close button also works in restricted embedded browsers. */ }
+    }
+  }
+  mobileLayout.addEventListener('change', syncMobileLayout);
+  $('mw4SheetClose').addEventListener('click', () => mobileDialog.close());
+  mobileDialog.addEventListener('close', () => {
+    stopPreview();
+    if (sheetHistory && history.state?.noctisMw4Scene) {
+      sheetHistory = false; sheetClosing = true;
+      history.back();
+    }
+    if (mobileOpener?.isConnected) mobileOpener.focus({ preventScroll: true });
+  });
+  window.addEventListener('popstate', () => {
+    if (sheetClosing) {
+      sheetClosing = false; updateUrl();
+      if (mobileOpener?.isConnected) mobileOpener.focus({ preventScroll: true });
+      return;
+    }
+    if (!sheetHistory || history.state?.noctisMw4Scene) return;
+    sheetHistory = false;
+    if (mobileDialog.open) mobileDialog.close();
+    updateUrl();
+  });
+  if (history.state?.noctisMw4Scene) {
+    try { history.replaceState(Object.assign({}, history.state, { noctisMw4Scene: false }), '', location.href); } catch {}
+  }
   const params = new URLSearchParams(location.search);
   const initial = params.get('scene');
   let collection = initial === 'recap' ? 'recap' : 'campaign';
@@ -28,7 +75,7 @@
     const url = new URL(location.href);
     url.searchParams.set('scene', currentFile().scene);
     url.searchParams.set('quality', quality);
-    try { history.replaceState(null, '', url); } catch { /* Embedded previews can restrict history. */ }
+    try { history.replaceState(history.state, '', url); } catch { /* Embedded previews can restrict history. */ }
   }
   function stopPreview() {
     ++load; clearTimeout(timer);
@@ -80,7 +127,6 @@
     if (!currentPack().editions['4K'].files[index]) return;
     stopPreview(); selected[collection] = index;
     const file = currentFile(), name = sceneName(file);
-    $('mw4QuickScene').value = String(index);
     $('mw4SceneTitle').textContent = name.title;
     $('mw4SceneSubtitle').textContent = collection === 'recap' ? 'Campaign recap · Separate from the campaign sequence' : 'Scene ' + file.scene + ' of 22 · ' + name.kind;
     poster.src = file.poster;
@@ -90,16 +136,13 @@
     $('mw4Previous').disabled = index === 0; $('mw4Next').disabled = index === currentPack().editions['4K'].files.length - 1;
     qualities.forEach(value => {
       const variant = currentFile(value);
-      root.querySelector('[data-mw4-dimensions="' + value + '"]').textContent = variant.resolution;
-      root.querySelector('[data-mw4-size="' + value + '"]').textContent = variant.size;
+      detail.querySelector('[data-mw4-dimensions="' + value + '"]').textContent = variant.resolution;
+      detail.querySelector('[data-mw4-size="' + value + '"]').textContent = variant.size;
     });
     buttons.forEach((button, i) => button.setAttribute('aria-current', String(i === index)));
     chooseQuality(quality);
     $('mw4SelectionStatus').textContent = file.name + ' selected. ' + file.fps + '. ' + file.audio + '.';
-    if (moveFocus && window.matchMedia('(max-width: 900px)').matches) {
-      $('mw4Library').dataset.expanded = 'false'; $('mw4ToggleList').setAttribute('aria-expanded', 'false');
-      $('mw4Detail').scrollIntoView({ behavior: 'instant', block: 'start' }); $('mw4Detail').focus({ preventScroll: true });
-    }
+    if (moveFocus && mobileLayout.matches) openMobileDetails(buttons[index]);
   }
   function filterScenes() {
     const query = normalize(search.value.trim());
@@ -120,14 +163,14 @@
     collectionButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mw4Collection === value)));
     type.disabled = value === 'recap';
     list.setAttribute('aria-label', value === 'recap' ? 'Campaign recap' : 'Campaign cutscenes'); list.replaceChildren();
-    $('mw4QuickScene').replaceChildren();
     buttons = currentPack().editions['4K'].files.map((file, index) => {
       const name = sceneName(file), li = document.createElement('li'), button = document.createElement('button');
-      const option = document.createElement('option'); option.value = String(index); option.textContent = file.name; $('mw4QuickScene').append(option);
       button.type = 'button'; button.className = 'mw4-scene';
       button.setAttribute('aria-label', 'Select ' + file.name + ', ' + file.run);
       const number = document.createElement('span'); number.className = 'mw4-scene-number'; number.textContent = value === 'recap' ? '' : file.scene; number.setAttribute('aria-hidden', 'true');
       const image = document.createElement('img'); image.src = file.thumbnail; image.alt = ''; image.width = 240; image.height = 102; image.loading = 'lazy'; image.decoding = 'async';
+      image.srcset = file.thumbnail + ' 240w, ' + file.poster + ' 1200w';
+      image.sizes = '(max-width: 599px) calc((100vw - 54px) / 2), (max-width: 900px) calc((100vw - 108px) / 3), 80px';
       const info = document.createElement('span'); info.className = 'mw4-scene-info';
       const title = document.createElement('strong'); title.textContent = name.title;
       const meta = document.createElement('small'); meta.textContent = name.kind + ' · ' + file.run; info.append(title, meta);
@@ -141,16 +184,10 @@
   }
   radios.forEach(radio => radio.addEventListener('change', () => chooseQuality(radio.value)));
   collectionButtons.forEach(button => button.addEventListener('click', () => renderCollection(button.dataset.mw4Collection)));
-  $('mw4QuickScene').addEventListener('change', () => chooseScene(Number($('mw4QuickScene').value)));
-  $('mw4ToggleList').addEventListener('click', () => {
-    const expanded = $('mw4Library').dataset.expanded !== 'true';
-    $('mw4Library').dataset.expanded = String(expanded); $('mw4ToggleList').setAttribute('aria-expanded', String(expanded));
-  });
   search.addEventListener('input', filterScenes); type.addEventListener('change', filterScenes);
   $('mw4Reset').addEventListener('click', () => { resetFilters(); search.focus(); });
-  $('mw4Previous').addEventListener('click', () => { resetFilters(); chooseScene(selected[collection] - 1); buttons[selected[collection]].scrollIntoView({ block: 'nearest' }); });
-  $('mw4Next').addEventListener('click', () => { resetFilters(); chooseScene(selected[collection] + 1); buttons[selected[collection]].scrollIntoView({ block: 'nearest' }); });
-  $('mw4Browse').addEventListener('click', () => { $('mw4Library').scrollIntoView({ behavior: 'instant', block: 'start' }); $('mw4QuickScene').focus({ preventScroll: true }); });
+  $('mw4Previous').addEventListener('click', () => { if (!mobileDialog.open) resetFilters(); chooseScene(selected[collection] - 1); if (!mobileDialog.open) buttons[selected[collection]].scrollIntoView({ block: 'nearest' }); else mobileDialog.scrollTop = 0; });
+  $('mw4Next').addEventListener('click', () => { if (!mobileDialog.open) resetFilters(); chooseScene(selected[collection] + 1); if (!mobileDialog.open) buttons[selected[collection]].scrollIntoView({ block: 'nearest' }); else mobileDialog.scrollTop = 0; });
   $('mw4Download').addEventListener('click', event => {
     const file = currentFile();
     video.pause();
@@ -163,5 +200,5 @@
   video.addEventListener('waiting', () => { if (!video.hidden && $('mw4VideoError').hidden) { $('mw4VideoState').textContent = 'Buffering preview…'; $('mw4VideoState').hidden = false; } });
   document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); });
   document.addEventListener('play', event => { if (event.target !== video) video.pause(); }, true);
-  renderCollection(collection); root.hidden = false; $('mw4Fallback').hidden = true;
+  renderCollection(collection); syncMobileLayout(); root.hidden = false; $('mw4Fallback').hidden = true;
 })();
