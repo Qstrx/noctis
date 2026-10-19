@@ -75,7 +75,7 @@ const server = http.createServer((req, res) => {
       check(await page.locator('#hit').isVisible() && !await page.locator('#browserNotice').count(), `${name}: a TikTok referrer does not block the normal download panel`);
       await context.close();
     }
-    for (const [route, selector] of [['cod.html', '[data-download-pack="mw1"]'], ['cod.html', '[data-download-pack="cuts1"]'], ['six.html', '[data-download-episode="5"][data-season="1"]']]) {
+    for (const [route, selector] of [['cod.html#price', '[data-download-pack="mw1"]'], ['cod.html#cutscenes', '[data-download-pack="cuts1"]'], ['six.html', '[data-download-episode="5"][data-season="1"]']]) {
       const { page, context, external } = await open(tiktok, route);
       await page.locator(selector).click();
       check(await page.locator('#browserNotice').isVisible() && external.length === 0, `${route} ${selector}: multipart/provider downloads use the same guard`);
@@ -88,7 +88,7 @@ const server = http.createServer((req, res) => {
       check(await page.evaluate(() => window.__copiedLink === location.href), `${route}: copy uses the website link, not a video URL`);
       const dialog = await page.locator('#browserNotice').evaluate(el => { const r = el.getBoundingClientRect(); return { width: r.width, height: r.height, x: r.x, y: r.y, viewport: innerHeight, overflow: document.documentElement.scrollWidth > innerWidth }; });
       check(dialog.x >= 0 && dialog.y >= 0 && dialog.y + dialog.height <= dialog.viewport + 1 && !dialog.overflow, `${route}: warning fits the phone viewport`);
-      if (selector.includes('mw1') || selector.includes('episode="5"')) await page.screenshot({ path: path.join(captureDir, `${route.replace('.html', '')}-in-app-phone.png`) });
+      if (selector.includes('mw1') || selector.includes('episode="5"')) await page.screenshot({ path: path.join(captureDir, `${route.replace(/\.html.*/, '')}-in-app-phone.png`) });
       await page.locator('.browser-notice-close').click();
       await page.locator(selector).click();
       check(await page.locator('#browserNotice').count() === 1 && await page.locator('#browserNoticeStatus').textContent() === '', `${route}: repeated attempts reuse one notice and reset copy feedback`);
@@ -98,7 +98,7 @@ const server = http.createServer((req, res) => {
       check((await page.locator('#browserNoticeStatus').textContent()).startsWith('Touch and hold') && await page.locator('#browserNoticeUrl').evaluate(el => el.selectionEnd === el.value.length), `${route}: denied clipboard shows selected URL and manual copy instructions`);
       await context.close();
     }
-    for (const [route, preview, final] of [['cod.html', '[data-cod-preview="mw1"]', '#codPreviewDownload'], ['six.html', '[data-preview][data-season="1"][data-episode="1"]', '#previewDownload']]) {
+    for (const [route, preview, final] of [['cod.html#price', '[data-cod-preview="mw1"]', '#codPreviewDownload'], ['six.html', '[data-preview][data-season="1"][data-episode="1"]', '#previewDownload']]) {
       const { page, context } = await open(tiktok, route);
       await page.locator(preview).click();
       await page.locator(final).click();
