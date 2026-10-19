@@ -24,14 +24,14 @@
 <link rel="preload" href="img/fonts/archivo-black-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="rank.css?v=2">
 <link rel="stylesheet" href="board.css?v=6">
-<link rel="stylesheet" href="mw4.css?v=scene-library-2">
+<link rel="stylesheet" href="mw4.css?v=missions-1">
 <link rel="stylesheet" href="credit.css?v=aurora-13">
 <script src="arrival.js?v=aurora-2"></script>
 <script src="archive-data.js?v=aurora-18" defer></script>
 <script src="mw4-data.js?v=scene-library-2" defer></script>
-<script src="mw4-quality.js?v=scene-library-2" defer></script>
+<script src="mw4-missions.js?v=missions-1" defer></script>
 <script src="credit.js?v=aurora-12" defer></script>
-<script src="site.js?v=scene-library-2" defer></script>
+<script src="site.js?v=missions-1" defer></script>
 <script src="motion.js?v=aurora-16" defer></script>
 <script src="aurora.js?v=aurora-11" defer blocking="render"></script>
 </head>
@@ -46,60 +46,13 @@
 <h1 class="sr-only">Call of Duty scene packs</h1>
 <section class="mw4-collection" id="mw4-campaign" aria-labelledby="mw4-collection-title">
   <header class="mw4-heading">
-    <div><h2 id="mw4-collection-title"><img src="img/cod/logos/mw4.webp" alt="Modern Warfare 4" width="1179" height="404"></h2><p>22 campaign cutscenes. Every scene, in three resolutions.</p></div>
+    <div><h2 id="mw4-collection-title"><img src="img/cod/logos/mw4.webp" alt="Modern Warfare 4" width="1179" height="404"></h2><p>22 campaign cutscenes from 17 missions, plus the recap. Every scene in three resolutions.</p></div>
     <nav class="mw4-jumps" aria-label="Call of Duty collections"><a href="#price">Operators</a><a href="#mw4-trailers">Trailers</a></nav>
   </header>
-  <p id="mw4Fallback" class="mw4-fallback">Loading the scene library. <a href="https://github.com/Qstrx/noctis/releases/tag/mw4-scenepack-versions">Browse all downloads on GitHub</a>.</p>
-  <div class="mw4-browser" id="mw4Browser" hidden>
-    <div class="mw4-library" id="mw4Library">
-      <div class="mw4-library-top">
-        <h3>Scene library</h3>
-        <div class="mw4-collections" role="group" aria-label="MW4 collection">
-          <button type="button" data-mw4-collection="campaign" aria-pressed="true">Campaign <span>22</span></button>
-          <button type="button" data-mw4-collection="recap" aria-pressed="false">Recap <span>1</span></button>
-        </div>
-      </div>
-      <div class="mw4-library-browser" id="mw4ListArea">
-        <div class="mw4-library-find">
-        <label class="mw4-search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><span class="sr-only">Find a MW4 scene</span><input id="mw4Search" type="search" placeholder="Find a scene…" autocomplete="off" spellcheck="false"></label>
-        <div class="mw4-list-heading"><p id="mw4Results" role="status">22 scenes</p><label><span class="sr-only">Filter by scene type</span><select id="mw4Type"><option value="all">All scenes</option><option value="Intro">Intros</option><option value="Interlude">Interludes</option><option value="Outro">Outros</option></select></label></div>
-      </div>
-      <ol class="mw4-scene-list" id="mw4SceneList" aria-label="Campaign cutscenes"></ol>
-      <div class="mw4-empty" id="mw4Empty" hidden><strong>No scenes found</strong><p>Try a mission name or clear your filters.</p><button type="button" id="mw4Reset">Clear filters</button></div>
-      <p class="mw4-library-foot" id="mw4LibraryFoot">22 scenes · 1:07:21 total</p>
-      </div>
-    </div>
-    <article class="mw4-detail" id="mw4Detail" aria-labelledby="mw4SceneTitle" tabindex="-1">
-      <div class="mw4-scene-heading">
-        <div><h3 id="mw4SceneTitle">Cold Open</h3><p id="mw4SceneSubtitle">Scene 01 of 22 · Intro</p></div>
-        <nav class="mw4-scene-nav" aria-label="Move between scenes"><button type="button" id="mw4Previous" aria-label="Previous scene"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg></button><button type="button" id="mw4Next" aria-label="Next scene"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 4 6 6-6 6"/></svg></button></nav>
-      </div>
-      <div class="mw4-screen">
-        <img id="mw4Poster" src="img/cod/mw4/scenes/01.jpg" alt="" width="1200" height="510" decoding="async" fetchpriority="high">
-        <video id="mw4Video" controls playsinline preload="none" hidden aria-label="Preview of the selected MW4 scene"></video>
-        <button type="button" id="mw4Play" class="mw4-play"><span class="mw4-play-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m9 5 11 7-11 7V5Z"/></svg></span><span>Play preview<small>1080p · uses data</small></span></button>
-        <p id="mw4VideoState" class="mw4-video-state" role="status" hidden></p>
-        <div class="mw4-video-error" id="mw4VideoError" role="alert" hidden><strong>Preview could not load</strong><p>You can still download this scene, or try the preview again.</p><button type="button" id="mw4Retry">Retry preview</button></div>
-      </div>
-      <dl class="mw4-scene-facts"><div><dt>Duration</dt><dd id="mw4Duration">3:41</dd></div><div><dt>Frame rate</dt><dd id="mw4Fps">60 fps · native</dd></div><div><dt>Audio</dt><dd id="mw4Audio">English · stereo</dd></div></dl>
-      <fieldset class="mw4-quality" aria-describedby="mw4QualityNote"><legend>Choose your resolution</legend><div class="mw4-quality-options">
-        <label><input type="radio" name="mw4-quality" value="4K" checked><span class="mw4-quality-face"><span class="mw4-quality-top"><strong>4K</strong><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="m6 10 2.5 2.5L14 7"/></svg></span><small>Maximum detail</small><span class="mw4-quality-dimensions" data-mw4-dimensions="4K">3840 × 1634</span><b data-mw4-size="4K">1.73 GB</b></span></label>
-        <label><input type="radio" name="mw4-quality" value="2K"><span class="mw4-quality-face"><span class="mw4-quality-top"><strong>2K</strong><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="m6 10 2.5 2.5L14 7"/></svg></span><small>Balanced size</small><span class="mw4-quality-dimensions" data-mw4-dimensions="2K">2560 × 1090</span><b data-mw4-size="2K">—</b></span></label>
-        <label><input type="radio" name="mw4-quality" value="1080p"><span class="mw4-quality-face"><span class="mw4-quality-top"><strong>1080p</strong><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="m6 10 2.5 2.5L14 7"/></svg></span><small>Smallest file</small><span class="mw4-quality-dimensions" data-mw4-dimensions="1080p">1920 × 816</span><b data-mw4-size="1080p">—</b></span></label>
-      </div><p id="mw4QualityNote" role="status">4K keeps the detail of the existing pack. Every file is under 2 GB.</p></fieldset>
-      <div class="mw4-download-area">
-      <button type="button" class="mw4-download" id="mw4Download"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="mw4DownloadLabel">Download 4K</span><span id="mw4DownloadSize">1.73 GB</span></button>
-      <p class="mw4-file-note" id="mw4FileNote">MP4 · H.264 · AAC stereo</p>
-      </div>
-      <p class="sr-only" id="mw4SelectionStatus" role="status" aria-atomic="true"></p>
-    </article>
-  </div>
+  <p id="mw4Fallback" class="mw4-fallback">Loading the campaign scenes. <a href="https://github.com/Qstrx/noctis/releases/tag/mw4-scenepack-versions">Browse all downloads on GitHub</a>.</p>
+  <ol class="mw4-missions" id="mw4Missions" aria-label="Modern Warfare 4 campaign missions" hidden></ol>
   <details class="mw4-source"><summary>Footage &amp; audio details</summary><div><p>The same scenes in every quality, each file under 2 GB. Native 30/60 fps and cinematic framing are preserved. Most footage is 3840 × 1634 in 4K, 2560 × 1090 in 2K, or 1920 × 816 in 1080p.</p><p>4K keeps the video from the existing size-capped pack without another video encode. 2K and 1080p are high-quality smaller conversions. All editions use H.264 video and one English AAC stereo track where recovered. Meltdown outro has no associated audio.</p><p>The 1080p/60 Kill Archer Outro sample exported successfully on a Samsung A55, as confirmed by its user. Other files and the 2K/4K editions have not been tested on that phone. Successful export depends on your device and editing app. The footage is SDR.</p><p>Campaign numbering follows the game's extracted progression data; runtime playback order was not observed in-game.</p></div></details>
 </section>
-<dialog id="mw4MobileDialog" class="mw4-mobile-dialog" aria-labelledby="mw4SceneTitle" closedby="any">
-  <header class="mw4-sheet-head"><button type="button" id="mw4SheetClose" aria-label="Back to the MW4 scene library"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg>All scenes</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg></button></header>
-  <div id="mw4MobileMount"></div>
-</dialog>
 
 <div class="board">
 <div class="board-head" aria-hidden="true"><span class="board-corner"></span><span class="board-col"><img src="img/cod/logos/mw1.svg" alt="" width="1000" height="231"><small>2019</small></span><span class="board-col"><img src="img/cod/logos/mw2.png" alt="" width="351" height="175"><small>2022</small></span><span class="board-col"><img src="img/cod/logos/mw3.png" alt="" width="635" height="175"><small>2023</small></span><span class="board-col"><span class="board-word">More clips</span><small>4K · 60 fps</small></span></div>
