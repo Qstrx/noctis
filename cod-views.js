@@ -7,11 +7,11 @@
   const nav = document.getElementById('codSwitch');
   if (!picker || !nav) return;
   const VIEWS = {
-    price: { title: 'John Price', show: ['#pack-price'], heading: '#row-price' },
-    gaz: { title: 'Gaz', show: ['#pack-gaz'], heading: '#row-gaz' },
-    ghost: { title: 'Ghost', show: ['#pack-ghost'], heading: '#row-ghost' },
-    soap: { title: 'Soap', show: ['#pack-soap'], heading: '#row-soap' },
-    cutscenes: { title: 'Cutscenes', show: ['#mw4-campaign', '#campaign-cutscenes', '.board-trailers'], heading: '#mw4-collection-title' }
+    price: { title: 'John Price', show: ['#pack-price'], heading: '#row-price', cover: '#pack-price .cover-frame' },
+    gaz: { title: 'Gaz', show: ['#pack-gaz'], heading: '#row-gaz', cover: '#pack-gaz .cover-frame' },
+    ghost: { title: 'Ghost', show: ['#pack-ghost'], heading: '#row-ghost', cover: '#pack-ghost .cover-frame' },
+    soap: { title: 'Soap', show: ['#pack-soap'], heading: '#row-soap', cover: '#pack-soap .cover-frame' },
+    cutscenes: { title: 'Cutscenes', show: ['#mw4-campaign', '#campaign-cutscenes', '.board-trailers'], heading: '#mw4-collection-title', cover: '.mw4-mission-cover' }
   };
   // Places inside a view that links can point at directly.
   const INSIDE = { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'cutscenes' };
@@ -54,7 +54,38 @@
     if (moveFocus) document.querySelector(view === 'choose' ? '#pickTitle' : VIEWS[view].heading)?.focus({ preventScroll: true });
   }
 
-  addEventListener('hashchange', () => show(viewFor(location.hash), true));
+  // Moving between views is one View Transition: the chosen name or picture
+  // (marked data-vt="heading" or "cover") travels into the view it opens.
+  const root = document.documentElement;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let from = null;
+  picker.addEventListener('click', event => {
+    const link = event.target.closest('[data-view-link]');
+    from = link?.querySelector('[data-vt]') || null;
+    if (!link) return;
+    const box = link.getBoundingClientRect();
+    root.style.setProperty('--vt-x', `${event.clientX || box.left + box.width / 2}px`);
+    root.style.setProperty('--vt-y', `${event.clientY || box.top + box.height / 2}px`);
+  });
+  addEventListener('hashchange', () => {
+    const next = viewFor(location.hash);
+    if (!document.startViewTransition || reduced.matches || document.body.dataset.motion === 'off') { from = null; show(next, true); return; }
+    const source = next.view !== 'choose' && current === 'choose' ? from : null;
+    let landed = null;
+    root.dataset.vtFrom = current; root.dataset.vtTo = next.view;
+    if (source) source.style.viewTransitionName = 'cod-pick';
+    const transition = document.startViewTransition(() => {
+      if (source) source.style.removeProperty('view-transition-name');
+      show(next, true);
+      landed = source && document.querySelector(VIEWS[next.view][source.dataset.vt === 'cover' ? 'cover' : 'heading']);
+      if (landed) landed.style.viewTransitionName = 'cod-pick';
+    });
+    transition.finished.finally(() => {
+      landed?.style.removeProperty('view-transition-name');
+      delete root.dataset.vtFrom; delete root.dataset.vtTo;
+      from = null;
+    });
+  });
   // The browser jumps to a matching id after load; the view decides the scroll instead.
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   const first = viewFor(location.hash);
