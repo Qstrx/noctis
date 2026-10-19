@@ -9,6 +9,24 @@
 .mw4-fallback{padding:24px;background:var(--panel);color:var(--muted)}
 .mw4-fallback a{color:var(--ink);text-decoration:underline}
 
+/* Which resolution: computers take any, phones may need a lighter file */
+.mw4-guide{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr);margin:0 0 30px;overflow:hidden;border-radius:20px;background:linear-gradient(115deg,color-mix(in srgb,var(--accent) 10%,transparent),transparent 50%),color-mix(in srgb,var(--panel-strong) 82%,transparent);box-shadow:inset 0 0 0 1px var(--line),0 20px 50px rgba(0,0,0,.25)}
+.mw4-guide>*{padding:22px 24px}
+.mw4-guide-kicker{color:var(--accent);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.mw4-guide h3{margin:8px 0 0;font:400 36px/.95 var(--title);letter-spacing:.01em;text-transform:uppercase}
+.mw4-guide-head p:last-child{max-width:38ch;margin-top:10px;color:var(--muted);font-size:13px;line-height:1.55}
+.mw4-guide-device{border-left:1px solid var(--line)}
+.mw4-guide-device[data-device=phone]{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.mw4-guide-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px var(--line-strong);color:var(--ink)}
+.mw4-guide-icon svg{width:22px;height:22px}
+.mw4-guide-device[data-device=phone] .mw4-guide-icon{background:color-mix(in srgb,var(--accent) 16%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent)}
+.mw4-guide-device h4{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0 0;font-size:15px;font-weight:650}
+.mw4-guide-device p{margin-top:6px;color:var(--muted);font-size:13px;line-height:1.55}
+.mw4-guide-device .mw4-guide-picks{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.mw4-guide-picks span{display:inline-flex;align-items:baseline;gap:6px;padding:5px 11px;border-radius:999px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent);color:var(--muted);font-size:12px}
+.mw4-guide-picks b{color:var(--accent);font-weight:650}
+.mw4-guide-you{padding:3px 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+
 /* Missions: one card per mission, its scenes as chips */
 .mw4-missions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 18px;margin:0;padding:0;list-style:none}
 .mw4-mission{min-width:0}
@@ -72,6 +90,14 @@
 .mw4-res input:checked+.mw4-res-face b,.mw4-res input:checked+.mw4-res-face em{color:var(--accent)}
 .mw4-res input:focus-visible+.mw4-res-face{outline:2px solid var(--accent);outline-offset:2px}
 .mw4-res-note{color:var(--muted);font-size:12px;line-height:1.5}
+.mw4-phone-tip{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 12px;padding:12px 14px;border-radius:12px;background:color-mix(in srgb,var(--accent) 9%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 40%,transparent)}
+.mw4-tip-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+.mw4-tip-icon svg{width:18px;height:18px}
+.mw4-phone-tip p{align-self:center;color:var(--ink);font-size:12.5px;line-height:1.5}
+.mw4-phone-tip strong{color:var(--accent)}
+.mw4-tip-picks{grid-column:2;display:flex;flex-wrap:wrap;gap:6px}
+.mw4-tip-picks button{min-height:38px;padding:6px 14px;border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);border-radius:999px;background:none;color:var(--accent);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;transition:background-color .2s ease,color .2s ease}
+.mw4-tip-picks button:hover{background:var(--accent);color:var(--accent-ink)}
 .mw4-download{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;margin-top:auto;padding:12px 22px;border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:650;white-space:nowrap;transition:transform .3s var(--ease-out),box-shadow .3s ease}
 .mw4-download svg{width:20px;height:20px;flex:none}
 .mw4-download-size{margin-left:auto;padding-left:14px;font-size:13px;font-weight:500;opacity:.8;font-variant-numeric:tabular-nums}
@@ -90,7 +116,7 @@
 .transfer-parts{max-height:min(42svh,352px);overflow:auto;overscroll-behavior:contain;scrollbar-color:var(--line-strong) transparent;scrollbar-width:thin}.transfer-part[hidden]{display:none}.transfer-part:focus-visible{outline:2px solid var(--mint);outline-offset:-2px}.transfer-action:disabled{opacity:.5;cursor:not-allowed}
 .mw4-scene-select{display:block;max-width:100%;margin-top:12px;color:var(--muted);font-size:12px}.mw4-scene-select select{display:block;width:100%;max-width:560px;min-height:44px;margin-top:8px;padding:10px 36px 10px 12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--panel-strong);color:var(--ink);font:inherit;font-size:14px;color-scheme:dark}
 
-@media(max-width:1100px){.mw4-missions{grid-template-columns:repeat(3,minmax(0,1fr))}.mw4-detail{grid-template-columns:1fr}}
+@media(max-width:1100px){.mw4-missions{grid-template-columns:repeat(3,minmax(0,1fr))}.mw4-detail{grid-template-columns:1fr}.mw4-guide{grid-template-columns:repeat(2,minmax(0,1fr))}.mw4-guide-head{grid-column:1/-1;padding-bottom:6px}.mw4-guide-device{border-top:1px solid var(--line)}.mw4-guide-device[data-device=computer]{border-left:0}}
 @media(max-width:760px){
   .mw4-missions{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}
   .mw4-mission-title{font-size:21px}
@@ -107,6 +133,16 @@
   .mw4-jumps{flex-direction:column;gap:0;align-items:flex-end}
   .mw4-jumps a{min-height:36px;font-size:12px}
   .mw4-source{margin-top:16px}
+  .mw4-guide{grid-template-columns:1fr;margin-bottom:24px;border-radius:18px}
+  .mw4-guide>*{padding:18px}
+  .mw4-guide h3{font-size:30px}
+  .mw4-guide-device{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:12px;border-left:0}
+  .mw4-guide-icon{grid-row:span 3;width:36px;height:36px;border-radius:10px}
+  .mw4-guide-icon svg{width:19px;height:19px}
+  .mw4-guide-device h4{margin-top:7px}
+  .mw4-guide-device .mw4-guide-picks{margin-top:10px}
+  .mw4-guide[data-yours=phone] .mw4-guide-device[data-device=phone]{order:1}
+  .mw4-guide[data-yours=phone] .mw4-guide-device[data-device=computer]{order:2}
   .mw4-res-face{grid-template-columns:58px minmax(0,1fr) auto;padding:12px}
   .mw4-scene-select select,.transfer-find input{font-size:16px}
   .transfer-parts{max-height:32svh}

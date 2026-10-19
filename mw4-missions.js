@@ -15,6 +15,10 @@
   };
   const SILENT = 'No associated audio';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  // Phones get a nudge toward the lighter files; on a computer any resolution is fine.
+  const phone = navigator.userAgentData?.mobile || /iPhone|iPod|Android.+Mobile|Windows Phone/i.test(navigator.userAgent)
+    || (matchMedia('(pointer: coarse)').matches && Math.max(screen.width, screen.height) < 1000);
+  const PHONE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>';
   const icon = (d, filled) => `<svg viewBox="0 0 20 20" ${filled ? 'fill="currentColor"' : 'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"'} aria-hidden="true"><path d="${d}"/></svg>`;
   const esc = text => String(text).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
@@ -70,6 +74,7 @@
       <dl class="mw4-facts"><div><dt>Duration</dt><dd data-fact="run"></dd></div><div><dt>Frame rate</dt><dd data-fact="fps"></dd></div><div><dt>Audio</dt><dd data-fact="audio"></dd></div></dl>
       <fieldset class="mw4-res"><legend>Resolution</legend>${QUALITIES.map(q => `<label><input type="radio" name="mw4-quality" value="${q}"><span class="mw4-res-face"><b>${q}</b><small data-dimensions></small><em data-size></em></span></label>`).join('')}</fieldset>
       <p class="mw4-res-note" role="status"></p>
+      <div class="mw4-phone-tip" hidden><span class="mw4-tip-icon">${PHONE_ICON}</span><p><strong>On a phone?</strong> <span class="mw4-tip-text"></span></p><div class="mw4-tip-picks"><button type="button" data-quality="2K"></button><button type="button" data-quality="1080p"></button></div></div>
       <button type="button" class="mw4-download">${icon('M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3')}<span class="mw4-download-label"></span><span class="mw4-download-size"></span></button>
       <p class="mw4-file-note"></p>
     </div>`;
@@ -134,6 +139,13 @@
       face.querySelector('[data-size]').textContent = variant.size;
     });
     $('.mw4-res-note').textContent = NOTES[quality];
+    $('.mw4-phone-tip').hidden = !(phone && quality === '4K');
+    $('.mw4-tip-text').textContent = `4K at ${scene.fps} is too heavy for many phones. If it won’t play or import, take a lighter file:`;
+    detail.querySelectorAll('.mw4-tip-picks button').forEach(button => {
+      const variant = scene.by[button.dataset.quality];
+      button.textContent = `${button.dataset.quality} · ${variant.size}`;
+      button.setAttribute('aria-label', `Switch to ${button.dataset.quality}, ${variant.size}`);
+    });
     $('.mw4-download-label').textContent = 'Download ' + quality;
     $('.mw4-download-size').textContent = file.size;
     $('.mw4-download').setAttribute('aria-label', `Download ${file.name}, ${quality}, ${file.size}`);
@@ -194,7 +206,13 @@
     detail.scrollIntoView({ block: 'nearest', behavior: reduced.matches ? 'auto' : 'smooth' });
   }));
   detail.addEventListener('keydown', event => { if (event.key === 'Escape' && !event.defaultPrevented) { event.preventDefault(); close(); } });
-  $('.mw4-res').addEventListener('change', event => { quality = event.target.value; useEdition(); render(); saveUrl(); });
+  function setQuality(value) { quality = value; useEdition(); render(); saveUrl(); }
+  $('.mw4-res').addEventListener('change', event => setQuality(event.target.value));
+  // The tip goes away once a lighter file is chosen, so focus moves to that choice.
+  detail.querySelectorAll('.mw4-tip-picks button').forEach(button => button.addEventListener('click', () => {
+    setQuality(button.dataset.quality);
+    $('.mw4-res input:checked')?.focus();
+  }));
   $('.mw4-download').addEventListener('click', event => {
     const file = scenes[current].by[quality];
     video?.pause();
@@ -205,6 +223,13 @@
   document.addEventListener('visibilitychange', () => { if (document.hidden) video?.pause(); });
   document.addEventListener('play', event => { if (video && event.target !== video) video.pause(); }, true);
 
+  const guide = document.getElementById('mw4Guide');
+  if (guide) {
+    guide.dataset.yours = phone ? 'phone' : 'computer';
+    const badge = document.createElement('span');
+    badge.className = 'mw4-guide-you'; badge.textContent = 'Your device';
+    guide.querySelector(`[data-device="${guide.dataset.yours}"] h4`)?.append(' ', badge);
+  }
   grid.hidden = false;
   document.getElementById('mw4Fallback').hidden = true;
   useEdition();
