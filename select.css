@@ -1,0 +1,54 @@
+/* A choice as a select screen: a numbered list, and the picture of the one
+   you are on beside it (select.js). The home and Call of Duty both open on one. */
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; src: url("img/fonts/barlow-condensed-700-latin.woff2") format("woff2"); font-display: swap; }
+body:has(.pick:not([hidden])) .site-header { z-index: 2; }
+.pick { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; gap: clamp(32px, 6vw, 96px); min-height: calc(100svh - 84px); padding: 40px 0 56px; }
+.pick a { color: inherit; text-decoration: none; }
+
+/* The picked one, blurred far behind everything */
+.pick-back { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.pick-back img { width: 100%; height: 100%; object-fit: cover; filter: blur(60px) saturate(.7); opacity: .16; transform: scale(1.3); transition: opacity .6s ease; }
+.pick-back.is-swap img { opacity: 0; }
+.pick-back::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, transparent, var(--sky-bg) 80%); }
+
+.pick-kicker { margin: 0; color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+.pick-title { margin: 8px 0 28px; font: 400 clamp(40px, 4.4vw, 64px)/.9 var(--title); letter-spacing: .01em; text-transform: uppercase; }
+.pick-title:focus { outline: none; }
+
+.pick-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.pick .pick-row { position: relative; display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: baseline; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); color: color-mix(in srgb, var(--ink) 45%, var(--sky-bg)); transition: color .3s ease; }
+.pick-no { font-size: 12px; font-variant-numeric: tabular-nums; transition: color .3s ease; }
+.pick-name { font: 700 clamp(30px, 3vw, 44px)/1 "Barlow Condensed", "Arial Narrow", sans-serif; letter-spacing: .005em; text-transform: uppercase; transition: transform .45s var(--ease); }
+.pick-count { font-size: 13px; }
+.pick-thumb { display: none; }
+.pick-row::before { content: ""; position: absolute; left: -18px; top: 50%; width: 3px; height: 0; translate: 0 -50%; background: var(--accent); transition: height .35s var(--ease); }
+.pick .pick-row.is-on { color: var(--ink); }
+.pick-row.is-on .pick-no { color: var(--accent); }
+.pick-row.is-on .pick-name { transform: translateX(8px); }
+.pick-row.is-on::before { height: 60%; }
+.pick .pick-row:focus-visible { outline: none; }
+.pick .pick-row:focus-visible .pick-name { text-decoration: underline 2px var(--accent); text-underline-offset: 6px; }
+
+/* The picture of the one you are on */
+.pick-view { margin: 0; }
+.pick-frame { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 6px; background: var(--panel-strong); box-shadow: 0 30px 80px rgba(0, 0, 0, .5); }
+.pick-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity .5s ease, transform 1.2s var(--ease); }
+.pick-frame img.is-on { opacity: 1; transform: none; }
+.pick-view figcaption { display: flex; justify-content: space-between; gap: 16px; margin-top: 14px; color: var(--muted); font-size: 13px; }
+.pick-view figcaption span:last-child { color: var(--ink); text-align: right; }
+
+/* Phone: the list alone, each row with its own picture; a tap opens it */
+@media (max-width: 900px) {
+  .pick { grid-template-columns: minmax(0, 1fr); align-items: start; min-height: 0; padding: 24px 0 40px; }
+  .pick-view, .pick-back, .pick-row::before { display: none; }
+  .pick .pick-row { grid-template-columns: 26px minmax(0, 1fr) 84px; grid-template-rows: auto auto; align-items: center; gap: 2px 12px; padding: 12px 0; color: var(--ink); }
+  .pick-no { grid-row: 1 / 3; color: var(--muted); }
+  .pick-name { font-size: 32px; }
+  .pick-count { grid-column: 2; color: var(--muted); font-size: 12px; }
+  .pick-thumb { display: block; grid-column: 3; grid-row: 1 / 3; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; background: var(--panel-strong); }
+  .pick-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .pick-row.is-on .pick-name { transform: none; }
+  .pick-row.is-on .pick-no { color: var(--muted); }
+  .pick-row:active { background: rgba(255, 255, 255, .04); }
+}
+@media (prefers-reduced-motion: reduce) { .pick *, .pick *::before { transition: none !important; } }

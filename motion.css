@@ -1,19 +1,16 @@
 /* Motion for Ocean’s Scenepacks.
-   One large moment per page (the passage between home and a collection), title
-   cards that rise into place, and short answers to every touch. Everything
+   Title cards that rise into place and short answers to every touch. Everything
    here only animates transform, opacity and clip-path, and all of it stands
    down for reduced motion. */
 
 /* ---------- Between documents ---------------------------------------------
-   Where the browser supports cross-document View Transitions, the chosen
-   photo travels from the home into the collection's title card. */
+   Where the browser supports cross-document View Transitions, pages cross-fade. */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
 }
-.sky { view-transition-name: sky; }
 .site-header .brand { view-transition-name: brand; }
-[data-world-choice=cod] [data-choice-media], body[data-world=cod] .hero-media { view-transition-name: hero-cod; }
-[data-world-choice=six] [data-choice-media], body[data-world=six] .hero-media { view-transition-name: hero-six; }
+body[data-world=cod] .hero-media { view-transition-name: hero-cod; }
+body[data-world=six] .hero-media { view-transition-name: hero-six; }
 ::view-transition-group(*) { animation-duration: .85s; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
 ::view-transition-group(hero-cod), ::view-transition-group(hero-six) { overflow: clip; border-radius: 20px; }
 ::view-transition-old(hero-cod), ::view-transition-new(hero-cod),
@@ -23,41 +20,6 @@
 @keyframes vt-leave { to { opacity: 0; } }
 @keyframes vt-enter { from { opacity: 0; } }
 
-/* ---------- The fallback passage --------------------------------------------
-   Without View Transitions, the selected aurora hue gently exposes the next
-   document: a stationary atmosphere becomes opaque for a slow load and
-   dissolves on arrival. */
-.passage-veil,
-html[data-arriving]::after {
-  --passage-surface: #07100f;
-  --passage-light: 111, 245, 191;
-  --passage-companion: 96, 181, 190;
-}
-.passage-veil { position: fixed; z-index: 30; inset: 0; overflow: hidden; pointer-events: none; contain: layout paint; }
-.passage-veil[data-world=cod],
-html[data-arriving=cod]::after { --passage-surface: #100e08; --passage-light: 232, 190, 112; --passage-companion: 141, 166, 91; }
-.passage-veil[data-world=six],
-html[data-arriving=six]::after { --passage-surface: #061019; --passage-light: 127, 202, 244; --passage-companion: 128, 149, 226; }
-.passage-curtain { position: absolute; inset: 0; will-change: opacity; background: var(--passage-surface); }
-.passage-curtain::after {
-  content: ""; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 110% 120% at var(--passage-origin, 50%) 110%, rgba(var(--passage-light), .2), transparent 72%),
-    radial-gradient(ellipse 95% 110% at calc(100% - var(--passage-origin, 50%)) -10%, rgba(var(--passage-companion), .13), transparent 75%);
-}
-/* arrival.js paints the opaque curtain into the first frame of the next page,
-   before motion.js can build the veil that dissolves it. */
-html[data-arriving]::after {
-  content: ""; position: fixed; z-index: 30; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 110% 120% at var(--passage-origin, 50%) 110%, rgba(var(--passage-light), .2), transparent 72%),
-    radial-gradient(ellipse 95% 110% at calc(100% - var(--passage-origin, 50%)) -10%, rgba(var(--passage-companion), .13), transparent 75%),
-    var(--passage-surface);
-  /* Never strands the page if the motion script does not run. */
-  animation: passage-cover-release 300ms 3s both;
-}
-@keyframes passage-cover-release { to { opacity: 0; visibility: hidden; } }
-@media (prefers-reduced-motion: reduce) { .passage-veil, html[data-arriving]::after { display: none; } }
 
 /* ---------- Title cards -----------------------------------------------------
    Letters rise out of their own line, photos unveil upward, the wave mark
@@ -76,7 +38,6 @@ html[data-arriving]::after {
   /* A shared photo is already travelling; let it land without a second entrance. */
   html.vt-arrival :is(.intro-unveil, .intro-unveil img, .intro-lift, .brand-mark path) { animation: none; }
   /* Hold the entrance under the fallback veil until it starts to lift. */
-  html[data-arriving] :is(.split .ch, .intro-fade, .intro-unveil, .intro-unveil img, .intro-lift) { animation-play-state: paused; }
 }
 @keyframes mark-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes letter-rise { from { transform: translateY(110%) rotate(4deg); } }

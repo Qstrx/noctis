@@ -1,36 +1,6 @@
-/* Call of Duty: choose an operator or the cutscenes, then that view alone (cod-views.js). */
-.cod-pick { padding: 28px 0 56px; }
-.cod-pick-head { max-width: 680px; margin-bottom: 28px; }
-.cod-pick-kicker { color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
-.cod-pick-head h2 { margin: 8px 0 0; font: 400 clamp(44px, 6vw, 80px)/.9 var(--title); letter-spacing: .01em; text-transform: uppercase; }
-.cod-pick-head p:last-child { margin-top: 14px; color: var(--muted); font-size: 15px; }
-.cod-pick-head h2:focus, .board-who h2:focus, .mw4-heading h2:focus { outline: none; }
-
-/* Operators: four portraits, like a squad select screen */
-.cod-ops { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
-.cod-op, .cod-cuts { position: relative; display: block; overflow: hidden; isolation: isolate; border-radius: 18px; background: var(--panel-strong); color: var(--ink); box-shadow: 0 0 0 1px var(--line), 0 24px 60px rgba(0, 0, 0, .35); transition: transform .5s var(--ease-out), box-shadow .5s ease; }
-.cod-op { aspect-ratio: 3 / 4; }
-.cod-op-img, .cod-cuts-img { position: absolute; inset: 0; z-index: -2; }
-.cod-op-img img, .cod-cuts-img img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) brightness(.8); transform: scale(1.04); transition: transform 1.2s var(--ease-out), filter .6s ease; }
-.cod-op::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(4, 6, 3, .95), rgba(4, 6, 3, .55) 38%, transparent 66%); }
-.cod-op-text { position: absolute; left: 18px; right: 18px; bottom: 18px; display: grid; justify-items: start; gap: 4px; }
-.cod-op-ins { width: 28px; height: 28px; margin-bottom: 6px; color: var(--accent); filter: drop-shadow(0 4px 12px color-mix(in srgb, var(--accent) 35%, transparent)); }
-.cod-op-ins path, .cod-op-ins rect { fill: currentColor; }
-.cod-op-name { font: 400 clamp(26px, 2.6vw, 38px)/1 "Archivo Black", Impact, sans-serif; letter-spacing: -.01em; text-transform: uppercase; }
-.cod-op-meta { margin-top: 4px; font-size: 13px; font-weight: 600; }
-.cod-op-games { color: var(--muted); font-size: 12px; }
-.cod-op:hover, .cod-op:focus-visible, .cod-cuts:hover, .cod-cuts:focus-visible { transform: translateY(-6px); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 70%, transparent), 0 30px 70px rgba(0, 0, 0, .45); }
-.cod-op:hover img, .cod-op:focus-visible img, .cod-cuts:hover img, .cod-cuts:focus-visible img { transform: scale(1); filter: none; }
-.cod-op:focus-visible, .cod-cuts:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-
-/* The cutscenes: one wide card under the squad */
-.cod-cuts { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 18px; min-height: 250px; margin-top: 16px; padding: 28px; }
-.cod-cuts::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(4, 6, 3, .94), rgba(4, 6, 3, .6) 45%, rgba(4, 6, 3, .15)), linear-gradient(0deg, rgba(4, 6, 3, .6), transparent 50%); }
-.cod-cuts-img img { object-position: 70% 35%; }
-.cod-cuts-text { display: grid; justify-items: start; gap: 4px; max-width: 560px; }
-.cod-cuts-go { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); transition: transform .5s var(--ease-out); }
-.cod-cuts-go svg { width: 22px; height: 22px; }
-.cod-cuts:hover .cod-cuts-go { transform: translateX(4px); }
+/* Call of Duty: a view for each operator and one for the cutscenes (cod-views.js);
+   the choice itself is a select screen (select.css). */
+.board-who h2:focus, .mw4-heading h2:focus { outline: none; }
 
 /* Inside a view: back to the choice, or straight to another section */
 .cod-switch { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; padding: 18px 0 8px; }
@@ -49,27 +19,13 @@ body:not([data-view=choose]) .board-row .rk .ins { width: 38px; height: 38px; }
 body:not([data-view=choose]) .board-row + .board-row::before { display: none; }
 
 @media (max-width: 1100px) {
-  .cod-ops { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cod-op { aspect-ratio: 16 / 11; }
   /* One operator at a time: a grid, not a swipe strip */
   body[data-view]:not([data-view=choose]) .board-cells { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; margin-inline: 0; padding: 0; overflow: visible; scroll-snap-type: none; }
 }
 @media (max-width: 600px) {
-  .cod-pick { padding: 12px 0 40px; }
-  .cod-pick-head { margin-bottom: 20px; }
-  .cod-pick-head p:last-child { font-size: 14px; }
-  .cod-ops { gap: 10px; }
-  .cod-op { aspect-ratio: 3 / 4; border-radius: 16px; }
-  .cod-op-text { left: 12px; right: 12px; bottom: 12px; }
-  .cod-op-ins { width: 22px; height: 22px; margin-bottom: 2px; }
-  .cod-op-name { font-size: 21px; }
-  .cod-op-meta { font-size: 12px; }
-  .cod-op-games { display: none; }
-  .cod-cuts { min-height: 200px; margin-top: 10px; padding: 18px; border-radius: 16px; gap: 12px; }
-  .cod-cuts-go { width: 44px; height: 44px; }
   .cod-switch { padding-top: 6px; }
   .cod-tabs { width: 100%; }
   .cod-tabs a { padding: 0 13px; }
   body[data-view]:not([data-view=choose]) .board-cells { grid-template-columns: minmax(0, 1fr); }
 }
-@media (prefers-reduced-motion: reduce) { .cod-op, .cod-cuts, .cod-op-img img, .cod-cuts-img img, .cod-cuts-go, .cod-tabs a { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .cod-tabs a { transition: none; } }

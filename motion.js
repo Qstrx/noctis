@@ -1,8 +1,8 @@
 (() => {
   'use strict';
 
-  // Motion for the archive. The selected world's light carries between pages,
-  // title cards rise, footage reveals as it scrolls in and every touch answers.
+  // Motion for the archive: title cards rise, footage reveals as it scrolls in
+  // and every touch answers.
   const ease = 'cubic-bezier(.2,.8,.2,1)';
   const easeOut = 'cubic-bezier(.16,1,.3,1)';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -10,16 +10,10 @@
   const enabled = () => document.body.dataset.motion !== 'off' && !reduced.matches;
   const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
   const root = document.documentElement;
-  const world = document.body.dataset.world;
   const animations = new Map();
   const closing = new Set();
   const scenes = new WeakMap();
   const dialogs = [...document.querySelectorAll('dialog')];
-  const main = document.querySelector('main');
-  const choices = [...document.querySelectorAll('[data-world-choice]')];
-  // Cross-document View Transitions carry the chosen photo between pages.
-  const crossDocument = 'CSSViewTransitionRule' in window;
-  let hoveredChoice = null;
 
   function cancel(element) {
     const running = animations.get(element);
@@ -186,157 +180,6 @@
   }
   window.archiveMotion = { sceneChange };
 
-  /* ---------- Home choices ----------
-     Leaning toward a collection tints the sky; its poster tilts toward the
-     pointer and catches the light where the pointer is. */
-  const passageKey = 'oceans-spectral-transfer';
-  let veil = null, curtain = null, passageAnimation = null, pending = null, passageTimer = 0;
-  const originOf = choice => {
-    const rect = choice?.querySelector('[data-choice-media]')?.getBoundingClientRect();
-    return rect?.width ? Math.max(0, Math.min(1, (rect.left + rect.width / 2) / innerWidth)) : .5;
-  };
-  function palette(selectedWorld, duration, origin = .5, commit = false) {
-    dispatchEvent(new CustomEvent('oceans:palette', { detail: { world: selectedWorld, duration, origin, commit } }));
-  }
-  function setChoice(force = false) {
-    if (pending || world !== 'home') return;
-    const focused = document.activeElement?.closest('[data-world-choice]');
-    const selected = hoveredChoice || focused;
-    const targetWorld = selected?.dataset.worldChoice || '';
-    if (!force && document.body.dataset.choice === targetWorld) return;
-    document.body.dataset.choice = targetWorld;
-    choices.forEach(choice => choice.classList.toggle('is-selected', choice === selected));
-    dispatchEvent(new CustomEvent('oceans:aurora-focus', { detail: { active: !!selected } }));
-    palette(targetWorld || 'home', 700, originOf(selected));
-  }
-  choices.forEach(choice => {
-    let frame = 0, last = null;
-    choice.addEventListener('pointerenter', event => {
-      if (event.pointerType === 'touch') return;
-      hoveredChoice = choice;
-      setChoice();
-    });
-    choice.addEventListener('pointermove', event => {
-      if (event.pointerType === 'touch' || !enabled()) return;
-      last = event;
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        const rect = choice.getBoundingClientRect();
-        const x = clamp((last.clientX - rect.left) / rect.width, 0, 1);
-        const y = clamp((last.clientY - rect.top) / rect.height, 0, 1);
-        choice.style.setProperty('--rx', `${((.5 - y) * 12).toFixed(2)}deg`);
-        choice.style.setProperty('--ry', `${((x - .5) * 14).toFixed(2)}deg`);
-        choice.style.setProperty('--gx', `${(x * 100).toFixed(1)}%`);
-        choice.style.setProperty('--gy', `${(y * 100).toFixed(1)}%`);
-      });
-    });
-    choice.addEventListener('pointerleave', () => {
-      cancelAnimationFrame(frame);
-      frame = 0;
-      ['--rx', '--ry', '--gx', '--gy'].forEach(name => choice.style.removeProperty(name));
-      hoveredChoice = null;
-      setChoice();
-    });
-    choice.addEventListener('focus', () => { hoveredChoice = null; setChoice(); });
-    choice.addEventListener('blur', () => queueMicrotask(setChoice));
-  });
-  function rememberSky() { dispatchEvent(new CustomEvent('oceans:aurora-remember')); }
-
-  /* ---------- The fallback passage ----------
-     The sky's selected hue accumulates as one continuous atmospheric exposure.
-     Its fully opaque final frame holds for a real load, then dissolves on
-     arrival. Content stays in place and visible by default. */
-  function clearPassage() {
-    clearTimeout(passageTimer);
-    passageAnimation?.cancel(); passageAnimation = null;
-    veil?.remove(); veil = null; curtain = null;
-    if (main) main.inert = false;
-    delete document.body.dataset.passage;
-  }
-  function createVeil(chosen, origin) {
-    veil = document.createElement('div');
-    veil.className = 'passage-veil';
-    veil.dataset.world = chosen;
-    veil.setAttribute('aria-hidden', 'true');
-    veil.style.setProperty('--passage-origin', `${origin * 100}%`);
-    curtain = document.createElement('div');
-    curtain.className = 'passage-curtain';
-    veil.append(curtain);
-    document.body.append(veil);
-    return curtain;
-  }
-  function go() {
-    if (!pending || pending.committed) return;
-    const href = pending.href;
-    try { sessionStorage.setItem(passageKey, JSON.stringify({ world: pending.world, origin: pending.origin, to: new URL(href).pathname, at: Date.now() })); } catch (_) {}
-    pending.committed = true;
-    document.body.dataset.passage = 'holding';
-    rememberSky(); location.assign(href);
-  }
-  function cancelPassage() {
-    const opener = pending?.opener; pending = null; clearPassage();
-    try { sessionStorage.removeItem(passageKey); } catch (_) {}
-    opener?.focus({ preventScroll: true });
-    palette('home', 500, originOf(opener));
-  }
-  document.addEventListener('click', event => {
-    const link = event.target.closest('.world-choice, .site-nav a, .back-link, .brand');
-    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || link.target === '_blank') return;
-    const destination = new URL(link.href, location.href);
-    if (destination.origin !== location.origin || !/\/(index|cod|six)\.html$/.test(destination.pathname) || destination.hash || destination.pathname === location.pathname) return;
-    if (world !== 'home') { rememberSky(); return; }
-    const chosen = link.dataset.worldChoice;
-    if (!enabled() || !main?.animate) {
-      if (chosen) palette(chosen, 0, originOf(link), true);
-      rememberSky(); return;
-    }
-    if (crossDocument) {
-      // The browser carries the photo across; the sky starts turning now.
-      if (chosen) {
-        palette(chosen, 700, originOf(link), true);
-        dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
-      }
-      rememberSky(); return;
-    }
-    event.preventDefault(); if (pending) return;
-    clearPassage();
-    if (!['cod', 'six'].includes(chosen)) { rememberSky(); location.assign(destination.href); return; }
-    const origin = originOf(link);
-    pending = { href: destination.href, world: chosen, origin, opener: link };
-    const light = createVeil(chosen, origin); main.inert = true;
-    document.body.dataset.passage = 'departing';
-    palette(chosen, 700, origin, true);
-    dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
-    passageAnimation = light.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, easing: 'cubic-bezier(.45,0,.2,1)', fill: 'forwards' });
-    passageTimer = setTimeout(go, 700);
-  });
-  function takePassage() {
-    try {
-      const raw = sessionStorage.getItem(passageKey); sessionStorage.removeItem(passageKey);
-      const value = raw && JSON.parse(raw);
-      if (value && Date.now() - value.at >= 0 && Date.now() - value.at < 6000 && value.to === location.pathname && ['cod', 'six'].includes(value.world) && Number.isFinite(value.origin) && value.origin >= 0 && value.origin <= 1) return value;
-    } catch (_) {}
-    return null;
-  }
-  const incoming = takePassage();
-  if (incoming && enabled()) {
-    createVeil(incoming.world, incoming.origin);
-    document.body.dataset.passage = 'arriving';
-  }
-  // Same frame: the veil takes over the first-paint cover from arrival.js,
-  // and the paused title card starts underneath it.
-  delete root.dataset.arriving;
-  root.style.removeProperty('--passage-origin');
-  function arrive() {
-    if (!curtain || pending) return;
-    if (!enabled()) { clearPassage(); return; }
-    passageAnimation = curtain.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 800, easing: 'cubic-bezier(.45,0,.2,1)', fill: 'forwards' });
-    passageAnimation.finished.then(() => { if (!pending) clearPassage(); }, () => {});
-  }
-  if (document.readyState !== 'complete') document.addEventListener('DOMContentLoaded', arrive, { once: true }); else arrive();
-  document.addEventListener('keydown', event => { if (pending && !pending.committed && event.key === 'Escape') { event.preventDefault(); cancelPassage(); } });
-
   /* ---------- Revealed while scrolling ---------- */
   const reveals = [...document.querySelectorAll('.reveal')];
   let revealObserver = null;
@@ -458,14 +301,12 @@
   document.fonts?.ready.then(layout);
 
   /* ---------- Page lifecycle ---------- */
-  addEventListener('pageshow', event => { if (event.persisted) { pending = null; hoveredChoice = null; clearPassage(); layout(); setChoice(true); } });
-  addEventListener('pagehide', () => { rememberSky(); passageAnimation?.cancel(); [...animations.keys()].forEach(cancel); });
+  addEventListener('pageshow', event => { if (event.persisted) layout(); });
+  addEventListener('pagehide', () => { [...animations.keys()].forEach(cancel); });
   function syncMotion() {
     if (enabled()) return;
-    clearPassage();
     revealAll();
     [...animations.keys()].forEach(cancel); [...closing].forEach(dialog => { if (dialog.open) dialog.close(); });
-    if (pending) { palette(pending.world, 0, pending.origin, true); go(); }
     updateMarkers(); updateHero();
   }
   addEventListener('oceans:motion', syncMotion); reduced.addEventListener('change', syncMotion);
