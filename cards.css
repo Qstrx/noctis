@@ -1,0 +1,59 @@
+/* Pack cards, shared by Call of Duty and SIX, and the SIX seasons. */
+
+/* Cards */
+.pack-card { position: relative; display: flex; flex-direction: column; min-width: 0; }
+.pack-cover { position: relative; isolation: isolate; transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .7s var(--ease-out); }
+.pack-cover.is-tilting { transition-duration: .15s; }
+.pack-cover::before { content: ""; position: absolute; z-index: -1; left: 6%; right: 6%; top: 28%; bottom: -14%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 62%, transparent), transparent); filter: blur(22px); opacity: 0; transform: translateX(calc((var(--gx, .5) - .5) * 40%)); transition: opacity .5s var(--ease); pointer-events: none; }
+.cover-frame { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; background: var(--panel-strong); box-shadow: 0 0 0 1px var(--line); transform: translateZ(0); }
+.cover-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: var(--fx, 50%) var(--fy, 50%); transition: transform 1.4s var(--ease-out), filter .6s ease; }
+.cover-frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .16) 50%, transparent 65%); transform: translateX(-120%); pointer-events: none; }
+.cover-badge, .cover-time { position: absolute; z-index: 1; padding: 4px 8px; border-radius: 6px; background: rgba(2, 6, 11, .78); color: #e7eeee; font-size: 11px; line-height: 1.3; pointer-events: none; }
+.cover-badge { top: 10px; left: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.cover-time { right: 10px; bottom: 10px; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.pack-info { margin-top: 18px; }
+.pack-info h3 { font: 500 18px/1.35 var(--font); letter-spacing: -.01em; text-wrap: balance; }
+.pack-info p { margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.6; font-variant-numeric: tabular-nums; }
+.pack-info .pack-date { margin-top: 0; color: var(--faint); }
+.pack-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 16px; }
+.action { position: relative; display: inline-flex; flex: 1; align-items: center; justify-content: center; gap: 8px; min-height: 44px; overflow: hidden; padding: 9px 14px; border: 1px solid var(--line-strong); border-radius: 10px; background: rgba(3, 9, 13, .5); color: var(--ink); font-size: 12px; font-weight: 500; isolation: isolate; transition: color .3s ease, border-color .3s ease, background-color .3s ease; }
+.action::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--accent); transform: translateY(101%); transition: transform .45s var(--ease-out); }
+.action svg { width: 16px; height: 16px; flex-basis: 16px; }
+.action svg path { stroke: currentColor; stroke-width: 1.5; fill: none; }
+.action[data-preview] svg path, .action[data-cod-preview] svg path { fill: currentColor; stroke: none; }
+.action.primary { border-color: color-mix(in srgb, var(--accent) 34%, transparent); background: color-mix(in srgb, var(--accent) 11%, transparent); color: var(--accent); }
+.action.primary:hover { color: var(--accent-ink); border-color: var(--accent); }
+.action.primary:hover::before { transform: none; }
+.action.secondary { flex: 0 0 auto; }
+.action.secondary:hover { border-color: color-mix(in srgb, var(--accent) 55%, transparent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+
+
+/* SIX seasons */
+.chapter-no { display: block; color: transparent; font: 400 120px/.78 var(--title); -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 55%, transparent); letter-spacing: .02em; }
+.season-collections { display: grid; gap: 112px; margin-top: 72px; }
+.season { display: grid; gap: 36px; scroll-margin-top: 80px; }
+.season-head { display: flex; align-items: flex-end; gap: 20px 28px; }
+.season-head h2 { font: 400 clamp(44px, 5vw, 68px)/.9 var(--title); letter-spacing: .01em; text-transform: uppercase; }
+.season-head p { margin-top: 10px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.episode-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 44px 24px; }
+
+@media (max-width: 1100px) {
+  .episode-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .season-collections { gap: 88px; margin-top: 48px; }
+  .episode-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .season-head .chapter-no { font-size: 80px; }
+  .season-head { gap: 16px; }
+  .episode-grid { gap: 32px 14px; }
+  .episode-grid .pack-info { margin-top: 12px; }
+  .episode-grid .pack-info h3 { font-size: 15px; }
+  .episode-grid .pack-info p { font-size: 11px; }
+  .episode-grid .pack-actions { padding-top: 12px; gap: 6px; }
+  .episode-grid .action { min-height: 42px; padding: 0; }
+  .episode-grid .action-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .episode-grid .action.secondary { flex: 1; }
+  .episode-grid .cover-badge, .episode-grid .cover-time { font-size: 10px; padding: 3px 6px; }
+}

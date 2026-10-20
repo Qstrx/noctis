@@ -1,5 +1,5 @@
 /* Motion for Ocean’s Scenepacks.
-   Title cards that rise into place and short answers to every touch. Everything
+   Pages cross-fade, footage rises in as it scrolls, and every touch answers. Everything
    here only animates transform, opacity and clip-path, and all of it stands
    down for reduced motion. */
 
@@ -9,42 +9,18 @@
   @view-transition { navigation: auto; }
 }
 .site-header .brand { view-transition-name: brand; }
-body[data-world=cod] .hero-media { view-transition-name: hero-cod; }
-body[data-world=six] .hero-media { view-transition-name: hero-six; }
 ::view-transition-group(*) { animation-duration: .85s; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
-::view-transition-group(hero-cod), ::view-transition-group(hero-six) { overflow: clip; border-radius: 20px; }
-::view-transition-old(hero-cod), ::view-transition-new(hero-cod),
-::view-transition-old(hero-six), ::view-transition-new(hero-six) { height: 100%; object-fit: cover; }
 ::view-transition-old(root) { animation: vt-leave .4s ease both; }
 ::view-transition-new(root) { animation: vt-enter .6s .12s ease both; }
 @keyframes vt-leave { to { opacity: 0; } }
 @keyframes vt-enter { from { opacity: 0; } }
 
-
-/* ---------- Title cards -----------------------------------------------------
-   Letters rise out of their own line, photos unveil upward, the wave mark
-   draws itself. Plain CSS, so the very first frame is already in motion. */
-.split { display: block; }
-.split > [aria-hidden] { display: block; pointer-events: none; }
-.split .w { display: inline-block; overflow: hidden; vertical-align: top; padding: .06em .015em 0; margin: -.06em -.015em 0; }
-.split .ch { display: inline-block; }
+/* ---------- The wave mark draws itself ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .brand-mark path { stroke-dasharray: 1; animation: mark-draw 1.8s .1s var(--ease-out) backwards; }
-  .split .ch { animation: letter-rise 1s calc(var(--d, 0ms) + var(--i) * 32ms) var(--ease-out) backwards; }
-  .intro-fade { animation: intro-fade .9s var(--d, 0ms) var(--ease-out) backwards; }
-  .intro-unveil { animation: intro-unveil 1.25s var(--d, 0ms) cubic-bezier(.7, 0, .2, 1) backwards; }
-  .intro-unveil img { animation: intro-settle 1.9s var(--d, 0ms) var(--ease-out) backwards; }
-  .intro-lift { animation: intro-lift 1.3s var(--d, 0ms) var(--ease-out) backwards; }
-  /* A shared photo is already travelling; let it land without a second entrance. */
-  html.vt-arrival :is(.intro-unveil, .intro-unveil img, .intro-lift, .brand-mark path) { animation: none; }
-  /* Hold the entrance under the fallback veil until it starts to lift. */
+  html.vt-arrival .brand-mark path { animation: none; }
 }
 @keyframes mark-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes letter-rise { from { transform: translateY(110%) rotate(4deg); } }
-@keyframes intro-fade { from { opacity: 0; transform: translateY(16px); } }
-@keyframes intro-unveil { from { clip-path: inset(100% 0 0 0 round 20px); } to { clip-path: inset(0 0 0 0 round 20px); } }
-@keyframes intro-settle { from { transform: scale(1.28); } }
-@keyframes intro-lift { from { opacity: 0; transform: perspective(900px) translateY(56px) rotateX(18deg); } }
 
 /* ---------- Revealed while scrolling ------------------------------------------
    arrival.js marks the document before its first paint; motion.js reveals
@@ -53,17 +29,6 @@ html.reveal-ready .reveal { transition: opacity .9s var(--ease-out) var(--rd, 0m
 html.reveal-ready .reveal:not(.is-in) { opacity: 0; transform: translateY(36px); }
 html.reveal-ready:not(.reveal-live) .reveal:not(.is-in) { animation: reveal-fallback 1ms 2.5s forwards; }
 @keyframes reveal-fallback { to { opacity: 1; transform: none; } }
-/* Chapter logos open like a title sequence, then catch one sweep of light. */
-html.reveal-ready .chapter-heading .logo-wrap { transition: clip-path 1.2s cubic-bezier(.7, 0, .2, 1) .15s; }
-html.reveal-ready .chapter-heading:not(.is-in) .logo-wrap { clip-path: inset(0 100% 0 0); }
-html.reveal-ready .chapter-heading .chapter-no { transition: opacity 1.2s ease .1s, transform 1.4s var(--ease-out) .1s; }
-html.reveal-ready .chapter-heading:not(.is-in) .chapter-no,
-html.reveal-ready .season-head:not(.is-in) .chapter-no { opacity: 0; transform: translateX(-24px); }
-html.reveal-ready .season-head .chapter-no { transition: opacity 1.2s ease .1s, transform 1.4s var(--ease-out) .1s; }
-@media (prefers-reduced-motion: no-preference) {
-  .chapter-heading.is-in .logo-wrap::after { animation: logo-sheen 1.6s 1s ease-in-out both; }
-}
-@keyframes logo-sheen { from { background-position: 100% 0; } to { background-position: 0% 0; } }
 
 /* ---------- Cards ----------------------------------------------------------- */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
@@ -73,13 +38,10 @@ html.reveal-ready .season-head .chapter-no { transition: opacity 1.2s ease .1s, 
   body:not([data-motion=off]) .pack-card:hover .cover-frame::after { transform: translateX(120%); transition: transform 1.1s var(--ease-out); }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .complete-pack::after { animation: edge-run 7s linear infinite; }
-  body[data-motion=off] .complete-pack::after { animation: none; }
   .action.is-pressed svg { animation: press-drop .5s var(--ease-out); }
   .action[data-preview].is-pressed svg, .action[data-cod-preview].is-pressed svg { animation: press-pop .45s var(--ease-out); }
   body:not([data-motion=off]) :is(.action, .transfer-action, .preview-close, .preview-dialog button):active:not(:disabled) { transform: scale(.96); transition: transform .1s ease; }
 }
-@keyframes edge-run { to { --edge: 360deg; } }
 @keyframes press-drop { 35% { transform: translateY(5px); } }
 @keyframes press-pop { 35% { transform: scale(1.3); } }
 
@@ -99,17 +61,14 @@ dialog.is-closing { pointer-events: none; }
   body[data-motion=on] dialog[open]::backdrop { animation: archive-veil-in 300ms ease both; }
   body[data-motion=on] dialog.is-closing::backdrop { animation: archive-veil-out 180ms ease both; }
 }
-.action svg, .back-link svg { transition: transform .3s var(--ease-out); }
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  body:not([data-motion=off]) .back-link:hover svg { transform: translateX(-4px); }
-}
+.action svg { transition: transform .3s var(--ease-out); }
 
 /* ---------- Reduced motion ------------------------------------------------------
    Quick color and fade confirmations stay; travel, tilt and scale do not. */
-body[data-motion=off] :is(.pack-cover, .cover-frame img, .action svg, .back-link svg, [data-choice-media], [data-choice-media] img, .hero-media img) { transform: none !important; }
-body[data-motion=off] .nav-marker, body[data-motion=off] .rail-marker { transition: none; }
+body[data-motion=off] :is(.pack-cover, .cover-frame img, .action svg) { transform: none !important; }
+body[data-motion=off] .nav-marker { transition: none; }
 html:has(body[data-motion=off]) { scroll-behavior: auto; }
 @media (prefers-reduced-motion: reduce) {
-  :is(.pack-cover, .cover-frame img, .action svg, .back-link svg, [data-choice-media], [data-choice-media] img, .hero-media img) { transform: none !important; }
-  .nav-marker, .rail-marker { transition: none; }
+  :is(.pack-cover, .cover-frame img, .action svg) { transform: none !important; }
+  .nav-marker { transition: none; }
 }

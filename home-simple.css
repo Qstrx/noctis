@@ -1,3 +1,0 @@
-/* Home: choose Call of Duty or SIX on a select screen (select.css, select.js). */
-/* The move to a collection is the home's own; no browser cross-fade on top of it. */
-@view-transition { navigation: none; }
