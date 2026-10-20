@@ -146,7 +146,7 @@
     $('.mw4-download-label').textContent = 'Download ' + quality;
     $('.mw4-download-size').textContent = file.size;
     $('.mw4-download').setAttribute('aria-label', `Download ${file.name}, ${quality}, ${file.size}`);
-    $('.mw4-file-note').textContent = 'MP4 · H.264 · Under 2 GB';
+    $('.mw4-file-note').textContent = 'MP4 · H.264';
     $('[data-step="-1"]').disabled = current === 0;
     $('[data-step="1"]').disabled = current === scenes.length - 1;
     grid.querySelectorAll('.mw4-clip').forEach(clip => {
