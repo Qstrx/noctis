@@ -154,6 +154,8 @@
     svg.append(circle, check);
     return svg;
   }
+  // What the download panel says: the pack's name, where it comes from above
+  // it, and a few tags (resolution, part).
   function downloadDetails(files, label, opener) {
     const firstFile = files.find(safeFile) || files[0];
     const card = opener?.closest?.('.pack-card');
@@ -164,14 +166,15 @@
       const onePart = files.length === 1 && codPack.files.length > 1;
       if (codPack.namedFiles && files.length === 1) return {
         title: firstFile.name,
-        context: codPack.title + ' · ' + codPack.chapter + (codPack.editionLabel ? ' · ' + codPack.editionLabel : ''),
-        facts: [firstFile.run, firstFile.size, resolutionLabel(firstFile.resolution)].filter(Boolean).join(' · '),
+        context: codPack.title + ' · ' + codPack.chapter,
+        tags: [resolutionLabel(firstFile.resolution)],
         poster: firstFile.poster || codPack.poster
       };
+      const cutscenes = codPack.group === 'cutscenes' || codPack.group === 'trailers';
       return {
-        title: codPack.id === 'full' ? 'All in one' : codPack.chapter,
-        context: codPack.title + (codPack.editionLabel ? ' · ' + codPack.editionLabel : '') + (onePart ? ` · Part ${index + 1}` : ''),
-        facts: onePart ? [firstFile.run, firstFile.size, resolutionLabel(firstFile.resolution || codPack.resolution)].filter(Boolean).join(' · ') : codPack.meta.split(' · ').slice(0, 2).concat(resolutionLabel(codPack.resolution)).filter(Boolean).join(' · '),
+        title: cutscenes ? codPack.chapter : codPack.title,
+        context: cutscenes ? codPack.title : codPack.chapter,
+        tags: [resolutionLabel(firstFile.resolution || codPack.resolution), onePart ? `Part ${index + 1}` : ''],
         poster: cover?.getAttribute('src') || codPack.poster
       };
     }
@@ -182,13 +185,13 @@
         const onePart = files.length === 1 && episode.parts;
         return {
           title: episode.title,
-          context: `Joe Graves scenes · SIX · S${String(season).padStart(2, '0')} E${String(episode.ep).padStart(2, '0')}` + (onePart ? ` · Part ${firstFile.part}` : ''),
-          facts: [onePart ? firstFile.run : episode.run, onePart ? firstFile.size : episode.size, '1080p'].filter(Boolean).join(' · '),
+          context: `Joe Graves · SIX · S${String(season).padStart(2, '0')} E${String(episode.ep).padStart(2, '0')}`,
+          tags: ['1080p', onePart ? `Part ${firstFile.part}` : ''],
           poster: cover?.getAttribute('src') || `img/six/s${season}-e${String(episode.ep).padStart(2, '0')}.jpg`
         };
       }
     }
-    return { title: label || firstFile.name || 'Scene pack', context: '', facts: [firstFile.run, firstFile.size].filter(Boolean).join(' · '), poster: cover?.getAttribute('src') };
+    return { title: label || firstFile.name || 'Scene pack', context: '', tags: [], poster: cover?.getAttribute('src') };
   }
   // 3840 × 1634 reads as 4K, 2560 × … as 2K and 1920 × … as 1080p.
   const resolutionLabel = value => {
@@ -196,13 +199,12 @@
     if (!width) return value;
     return width >= 3800 ? '4K' : width >= 2500 ? '2K' : width >= 1900 ? '1080p' : value;
   };
+  // Only what the visitor has to do differently gets a note.
   function downloadNote(files) {
     const url = new URL((files.find(safeFile) || files[0]).url);
-    const named = typeof COD_PACKS !== 'undefined' && COD_PACKS.some(item => item.namedFiles && item.files.some(file => file.url === files[0]?.url));
-    if (named) return files.length > 1 ? 'GitHub · choose a file. Every download is under 2 GB.' : 'GitHub · MP4 video under 2 GB.';
-    if (url.hostname === 'drive.google.com') return 'Google Drive · use the download arrow on the file page.';
-    if (url.hostname === 'mega.nz') return 'Mega · download from the file page.';
-    return files.length > 1 ? 'GitHub · choose a part to download.' : 'GitHub · original video file.';
+    if (url.hostname === 'drive.google.com') return 'Opens on Google Drive: use the download arrow on the file page.';
+    if (url.hostname === 'mega.nz') return 'Opens on Mega: download from the file page.';
+    return files.length > 1 ? 'Choose a file below.' : '';
   }
   function closeDownload() {
     pendingFile = null;
@@ -233,9 +235,11 @@
     const details = downloadDetails(files, label, opener);
     $('hitT').textContent = details.title;
     $('hitS').textContent = details.context;
-    $('hitMeta').textContent = details.facts;
-    $('hitMeta').hidden = !details.facts;
+    const tags = details.tags.filter(Boolean);
+    $('hitMeta').replaceChildren(...tags.map(tag => create('li', tag)));
+    $('hitMeta').hidden = !tags.length;
     $('hitNote').textContent = downloadNote(files);
+    $('hitNote').hidden = !$('hitNote').textContent;
     $('hitCover').hidden = !details.poster;
     if (details.poster) $('hitCover').src = details.poster;
     else $('hitCover').removeAttribute('src');
@@ -260,7 +264,7 @@
     pendingFile = file;
     if ($('downloadSelected') && file.audio) {
       $('downloadSelected').hidden = false;
-      $('downloadSelected').textContent = [file.name, file.run, file.size, resolutionLabel(file.resolution)].filter(Boolean).join(' · ');
+      $('downloadSelected').textContent = [file.name, resolutionLabel(file.resolution)].filter(Boolean).join(' · ');
     }
     downloadGo.hidden = false;
     if (!downloadDialog.open) downloadDialog.showModal();
@@ -284,7 +288,7 @@
       button.setAttribute('aria-pressed', String(index === firstPart));
       const info = create('span', '', 'transfer-part-info');
       info.append(create('strong', name));
-      const facts = [file.run, file.size, resolutionLabel(file.resolution)].filter(Boolean).join(' · ');
+      const facts = resolutionLabel(file.resolution) || '';
       if (facts) info.append(create('small', facts));
       button.append(info, partChoiceIcon());
       button.addEventListener('click', () => {

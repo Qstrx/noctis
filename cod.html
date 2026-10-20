@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="select.css?v=15">
 <link rel="stylesheet" href="cod.css?v=11">
 <link rel="stylesheet" href="mw4.css?v=16">
-<link rel="stylesheet" href="download.css?v=11">
+<link rel="stylesheet" href="download.css?v=12">
 <link rel="stylesheet" href="credit.css?v=11">
 <script src="arrival.js?v=11"></script>
 <script src="archive-data.js?v=11" defer></script>
@@ -32,7 +32,7 @@
 <script src="cod-views.js?v=14" defer></script>
 <script src="select.js?v=13" defer></script>
 <script src="credit.js?v=11" defer></script>
-<script src="site.js?v=16" defer></script>
+<script src="site.js?v=18" defer></script>
 <script src="motion.js?v=11" defer></script>
 </head>
 <body data-world="cod" data-theme="night" data-motion="on">
@@ -251,12 +251,17 @@
 </section>
 </main>
 <dialog class="download-dialog transfer-dialog" id="hit" aria-labelledby="hitT" aria-describedby="hitS hitNote">
+  <div class="transfer-poster"><img class="transfer-cover" id="hitCover" src="img/icon.svg" alt="" width="960" height="408" hidden></div>
   <button class="transfer-close" type="button" id="hitNo" aria-label="Cancel download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-  <div class="transfer-file"><img class="transfer-cover" id="hitCover" src="img/icon.svg" alt="" width="80" height="80" hidden><div class="transfer-heading"><h2 id="hitT">Scene pack</h2><p id="hitS"></p></div></div>
-  <p class="transfer-facts" id="hitMeta" hidden></p>
+  <div class="transfer-body">
+  <div class="transfer-heading"><p class="transfer-kicker" id="hitS"></p><h2 id="hitT">Scene pack</h2></div>
+  <ul class="transfer-tags" id="hitMeta" hidden></ul>
   <p class="transfer-note" id="hitNote"></p>
   <div class="transfer-find" id="downloadFilterWrap" hidden><label for="downloadFilter">Find a file</label><input type="search" id="downloadFilter" placeholder="Search name or number" autocomplete="off"></div><p class="transfer-count" id="downloadCount" role="status" hidden></p><p class="transfer-empty" id="downloadEmpty" hidden>No files match your search. Try a different name or number.</p><div class="transfer-parts" id="downloadChoices" role="group" aria-label="File parts"></div>
-  <p class="transfer-selected" id="downloadSelected" hidden></p><div class="transfer-footer"><p class="transfer-credit">Please credit Ocean’s Scenepacks.</p><button class="transfer-action" id="hitGo" type="button"><span>Start download</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+  <p class="transfer-selected" id="downloadSelected" hidden></p>
+  <button class="transfer-action" id="hitGo" type="button"><span>Start download</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <p class="transfer-credit">Please credit <a href="https://www.tiktok.com/@oceanxaep" target="_blank" rel="noopener noreferrer">@oceanxaep</a> on TikTok</p>
+  </div>
 </dialog>
 <dialog class="preview-dialog cod-preview" id="codPreview" aria-labelledby="codPreviewTitle"><div class="preview-top"><span class="preview-label" id="codPreviewLabel">Call of Duty / Scene preview</span><button class="preview-close" id="codPreviewClose" type="button" aria-label="Close preview"><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div class="preview-main"><div class="preview-heading"><h2 id="codPreviewTitle">Modern Warfare</h2><p class="preview-meta" id="codPreviewMeta"></p><div class="preview-parts" id="codPreviewParts" role="group" aria-label="Pack parts"></div></div><div class="preview-screen"><video id="codVideo" controls playsinline preload="none" aria-label="Call of Duty scene preview"></video><span class="preview-state" id="codPreviewState" role="status"></span><div class="preview-error" id="codPreviewError" hidden><strong>Preview unavailable</strong><p>You can still download the original file.</p><button type="button" id="codPreviewRetry">Try again</button></div></div><div class="preview-bottom"><button class="preview-download" id="codPreviewDownload" type="button">Download this file <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div></dialog><noscript><p class="no-script">Enable JavaScript to preview and download the scene packs.</p></noscript>
 </body>

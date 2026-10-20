@@ -20,12 +20,12 @@
 <link rel="stylesheet" href="site.css?v=14">
 <link rel="stylesheet" href="motion.css?v=11">
 <link rel="stylesheet" href="cards.css?v=11">
-<link rel="stylesheet" href="download.css?v=11">
+<link rel="stylesheet" href="download.css?v=12">
 <link rel="stylesheet" href="credit.css?v=11">
 <script src="arrival.js?v=11"></script>
 <script src="archive-data.js?v=11" defer></script>
 <script src="credit.js?v=11" defer></script>
-<script src="site.js?v=16" defer></script>
+<script src="site.js?v=18" defer></script>
 <script src="motion.js?v=11" defer></script>
 <script src="player.js?v=11" defer></script>
 </head>
@@ -141,12 +141,16 @@
 </div>
 </main>
 <dialog class="download-dialog transfer-dialog" id="hit" aria-labelledby="hitT" aria-describedby="hitS hitNote">
+  <div class="transfer-poster"><img class="transfer-cover" id="hitCover" src="img/icon.svg" alt="" width="960" height="408" hidden></div>
   <button class="transfer-close" type="button" id="hitNo" aria-label="Cancel download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-  <div class="transfer-file"><img class="transfer-cover" id="hitCover" src="img/icon.svg" alt="" width="80" height="80" hidden><div class="transfer-heading"><h2 id="hitT">Scene pack</h2><p id="hitS"></p></div></div>
-  <p class="transfer-facts" id="hitMeta" hidden></p>
+  <div class="transfer-body">
+  <div class="transfer-heading"><p class="transfer-kicker" id="hitS"></p><h2 id="hitT">Scene pack</h2></div>
+  <ul class="transfer-tags" id="hitMeta" hidden></ul>
   <p class="transfer-note" id="hitNote"></p>
   <div class="transfer-parts" id="downloadChoices" role="group" aria-label="File parts"></div>
-  <div class="transfer-footer"><p class="transfer-credit">Please credit Ocean’s Scenepacks.</p><button class="transfer-action" id="hitGo" type="button"><span>Start download</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+  <button class="transfer-action" id="hitGo" type="button"><span>Start download</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <p class="transfer-credit">Please credit <a href="https://www.tiktok.com/@oceanxaep" target="_blank" rel="noopener noreferrer">@oceanxaep</a> on TikTok</p>
+  </div>
 </dialog>
 <dialog class="preview-dialog" id="preview" aria-labelledby="previewTitle" aria-describedby="previewDescription">
   <div class="preview-top">
