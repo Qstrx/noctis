@@ -52,34 +52,23 @@ body:has(.pick:not([hidden])) .site-header { z-index: 2; }
   .pick-row:active { background: rgba(255, 255, 255, .04); }
 }
 
-/* ---------- Centred: the home ----------
-   The names stand in the middle of the screen; the picture of the one you
-   are on fills the stage behind them. */
-.pick.is-center { grid-template-columns: minmax(0, 1fr); justify-items: center; align-items: center; min-height: calc(100svh - 84px); padding: 24px 0 64px; text-align: center; }
-.pick-stage { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: var(--page); }
-.pick-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; filter: saturate(.9) brightness(.62); transform: scale(1.06); transition: opacity .8s ease, transform 2.4s var(--ease-out); }
-.pick-stage img.is-on { opacity: 1; transform: none; }
-.pick-stage::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 85% 75% at 50% 50%, color-mix(in srgb, var(--page) 20%, transparent) 30%, var(--page) 100%), linear-gradient(180deg, var(--page), transparent 22%, transparent 70%, var(--page)); }
-.is-center .pick-main { display: grid; justify-items: center; width: min(760px, 100%); }
-.is-center .pick-kicker + .pick-list { margin-top: 26px; }
-.is-center .pick-list { width: 100%; border-top: 0; }
-.pick.is-center .pick-row { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 8px; padding: 16px 0 18px; border-bottom: 0; color: color-mix(in srgb, var(--ink) 38%, transparent); }
-.is-center .pick-row::before { left: 50%; top: auto; bottom: 0; width: 0; height: 2px; translate: -50% 0; transition: width .45s var(--ease); }
-.pick.is-center .pick-row.is-on { color: var(--ink); }
-.is-center .pick-row.is-on::before { width: 56px; height: 2px; }
-.is-center .pick-no { order: -1; }
-.is-center .pick-name { font-size: clamp(56px, 9vw, 128px); line-height: .9; white-space: nowrap; transition: transform .6s var(--ease), color .3s ease; }
-.is-center .pick-row.is-on .pick-name { transform: scale(1.03); }
-.is-center .pick-count { max-width: 40ch; color: var(--muted); font-size: 13px; opacity: 0; transform: translateY(-4px); transition: opacity .35s ease, transform .45s var(--ease); }
-.is-center .pick-row.is-on .pick-count { opacity: 1; transform: none; }
+/* ---------- The home: two collections, held together in the middle ---------- */
+.pick.is-home { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(40px, 5vw, 72px); width: min(1120px, 100%); min-height: calc(100svh - 84px - 72px); margin-inline: auto; padding: 32px 0; }
+.is-home .pick-kicker + .pick-list { margin-top: 18px; }
+.pick.is-home .pick-row { grid-template-columns: 34px minmax(0, 1fr); row-gap: 6px; padding: 22px 0; }
+.is-home .pick-no { align-self: start; padding-top: 10px; }
+.is-home .pick-name { font-size: clamp(44px, 4.6vw, 68px); line-height: .92; white-space: nowrap; }
+.is-home .pick-count { grid-column: 2; color: var(--muted); }
+.is-home .pick-row.is-on .pick-count { color: var(--ink); }
+.is-home .pick-frame { aspect-ratio: 4 / 3; border-radius: 10px; box-shadow: 0 0 0 1px var(--line), 0 40px 100px rgba(0, 0, 0, .55); }
+.is-home .pick-back img { opacity: .22; }
 @media (max-width: 900px) {
-  .pick.is-center { min-height: calc(100svh - 110px); padding: 16px 0 40px; }
-  .is-center .pick-thumb { display: none; }
-  .pick.is-center .pick-row { grid-template-columns: minmax(0, 1fr); padding: 14px 0; color: var(--ink); }
-  .is-center .pick-row::before { display: block; }
-  .is-center .pick-no { grid-row: auto; }
-  .is-center .pick-name { font-size: clamp(52px, 17vw, 88px); }
-  .is-center .pick-count { grid-column: auto; opacity: 1; transform: none; }
+  .pick.is-home { grid-template-columns: minmax(0, 1fr); min-height: 0; padding: 24px 0 40px; }
+  .pick.is-home .pick-row { grid-template-columns: 26px minmax(0, 1fr) 96px; padding: 16px 0; }
+  .is-home .pick-no { padding-top: 0; }
+  .is-home .pick-name { font-size: clamp(34px, 10vw, 46px); }
+  .is-home .pick-count { grid-column: 2; grid-row: 2; }
+  .is-home .pick-thumb { grid-row: 1 / 3; }
 }
 
 @media (prefers-reduced-motion: reduce) { .pick *, .pick *::before { transition: none !important; } }

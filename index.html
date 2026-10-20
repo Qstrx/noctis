@@ -20,10 +20,10 @@
 <link rel="preload" href="img/fonts/barlow-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="site.css?v=11">
 <link rel="stylesheet" href="motion.css?v=11">
-<link rel="stylesheet" href="select.css?v=12">
+<link rel="stylesheet" href="select.css?v=13">
 <script src="arrival.js?v=11"></script>
 <script src="site.js?v=11" defer></script>
-<script src="select.js?v=12" defer></script>
+<script src="select.js?v=13" defer></script>
 <script src="motion.js?v=11" defer></script>
 </head>
 <body data-world="home" data-palette="cod" data-theme="night" data-motion="on">
@@ -32,8 +32,8 @@
   <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s</span></a>
 </header>
 <main class="catalog-main" id="main"><h1 class="sr-only">Choose a collection</h1>
-<section class="pick is-center" aria-label="Collections">
-  <div class="pick-stage" aria-hidden="true"><img class="is-on" src="img/home/cod-ghost.jpg" alt="" style="object-position:50% 30%"><img src="img/home/cod-ghost.jpg" alt=""></div>
+<section class="pick is-home" aria-label="Collections">
+  <div class="pick-back" aria-hidden="true"><img src="img/home/cod-ghost.jpg" alt="" style="object-position:50% 30%"></div>
   <div class="pick-main">
     <p class="pick-kicker">Ocean’s scenepacks</p>
     <ol class="pick-list">
@@ -41,6 +41,10 @@
     <li><a class="pick-row" href="six.html" data-palette="six" data-img="img/joe.jpg" data-focus="50% 38%" data-meta="SIX, seasons 1 and 2" data-info="18 scene packs · Joe Graves"><span class="pick-no">02</span><span class="pick-name">SIX</span><span class="pick-count">Seasons 1–2</span><span class="pick-thumb" aria-hidden="true"><img src="img/joe.jpg" alt="" style="object-position:50% 38%" loading="lazy" decoding="async"></span></a></li>
     </ol>
   </div>
+  <figure class="pick-view" aria-hidden="true">
+    <div class="pick-frame"><img class="is-on" src="img/home/cod-ghost.jpg" alt="" style="object-position:50% 30%"><img src="img/home/cod-ghost.jpg" alt=""></div>
+    <figcaption><span class="pick-meta">Modern Warfare I–III and MW4</span><span class="pick-info">Scene packs · 22 MW4 cutscenes</span></figcaption>
+  </figure>
 </section>
 </main>
 
