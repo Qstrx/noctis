@@ -11,6 +11,8 @@
     gaz: { title: 'Gaz', show: ['#pack-gaz'], heading: '#row-gaz' },
     ghost: { title: 'Ghost', show: ['#pack-ghost'], heading: '#row-ghost' },
     soap: { title: 'Soap', show: ['#pack-soap'], heading: '#row-soap' },
+    valeria: { title: 'Valeria', show: ['#pack-valeria'], heading: '#row-valeria' },
+    archer: { title: 'The Archer', show: ['#pack-archer'], heading: '#row-archer' },
     cutscenes: { title: 'Cutscenes', show: ['#mw4-campaign', '#campaign-cutscenes', '.board-trailers'], heading: '#mw4-collection-title' }
   };
   // Places inside a view that links can point at directly.

@@ -33,6 +33,9 @@
 .board-cell .action.secondary .action-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .board-cell.is-empty { display: grid; place-items: center; align-self: start; aspect-ratio: 16 / 9; border-radius: 12px; background: repeating-linear-gradient(135deg, transparent 0 10px, color-mix(in srgb, var(--ink) 3%, transparent) 10px 11px); box-shadow: inset 0 0 0 1px var(--line); color: var(--faint); font-size: 11px; text-align: center; padding: 10px; }
 
+/* Operators: MW1, MW2, MW3, MW4 and more clips */
+.board:not(.board-trailers) .board-head, .board:not(.board-trailers) .board-row { grid-template-columns: var(--who) repeat(5, minmax(0, 1fr)); }
+
 /* Trailers: three columns of four */
 .board-trailers .board-head .board-col:nth-child(5) { display: none; }
 
