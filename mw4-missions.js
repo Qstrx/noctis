@@ -223,13 +223,9 @@
   document.addEventListener('visibilitychange', () => { if (document.hidden) video?.pause(); });
   document.addEventListener('play', event => { if (video && event.target !== video) video.pause(); }, true);
 
+  // On a phone, the phone advice comes first in the guide.
   const guide = document.getElementById('mw4Guide');
-  if (guide) {
-    guide.dataset.yours = phone ? 'phone' : 'computer';
-    const badge = document.createElement('span');
-    badge.className = 'mw4-guide-you'; badge.textContent = 'Your device';
-    guide.querySelector(`[data-device="${guide.dataset.yours}"] h4`)?.append(' ', badge);
-  }
+  if (guide) guide.dataset.yours = phone ? 'phone' : 'computer';
   grid.hidden = false;
   document.getElementById('mw4Fallback').hidden = true;
   useEdition();
