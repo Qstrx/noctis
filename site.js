@@ -165,13 +165,13 @@
       if (codPack.namedFiles && files.length === 1) return {
         title: firstFile.name,
         context: codPack.title + ' · ' + codPack.chapter + (codPack.editionLabel ? ' · ' + codPack.editionLabel : ''),
-        facts: [firstFile.run, firstFile.size, firstFile.resolution, firstFile.fps].filter(Boolean).join(' · '),
+        facts: [firstFile.run, firstFile.size, resolutionLabel(firstFile.resolution)].filter(Boolean).join(' · '),
         poster: firstFile.poster || codPack.poster
       };
       return {
         title: codPack.id === 'full' ? 'All in one' : codPack.chapter,
         context: codPack.title + (codPack.editionLabel ? ' · ' + codPack.editionLabel : '') + (onePart ? ` · Part ${index + 1}` : ''),
-        facts: onePart ? [firstFile.run, firstFile.size, firstFile.resolution, firstFile.fps || codPack.fps].filter(Boolean).join(' · ') : codPack.meta.split(' · ').slice(0, 2).concat(codPack.fps).join(' · '),
+        facts: onePart ? [firstFile.run, firstFile.size, resolutionLabel(firstFile.resolution || codPack.resolution)].filter(Boolean).join(' · ') : codPack.meta.split(' · ').slice(0, 2).concat(resolutionLabel(codPack.resolution)).filter(Boolean).join(' · '),
         poster: cover?.getAttribute('src') || codPack.poster
       };
     }
@@ -183,13 +183,19 @@
         return {
           title: episode.title,
           context: `Joe Graves scenes · SIX · S${String(season).padStart(2, '0')} E${String(episode.ep).padStart(2, '0')}` + (onePart ? ` · Part ${firstFile.part}` : ''),
-          facts: [onePart ? firstFile.run : episode.run, onePart ? firstFile.size : episode.size, '1080p · 24 fps'].filter(Boolean).join(' · '),
+          facts: [onePart ? firstFile.run : episode.run, onePart ? firstFile.size : episode.size, '1080p'].filter(Boolean).join(' · '),
           poster: cover?.getAttribute('src') || `img/six/s${season}-e${String(episode.ep).padStart(2, '0')}.jpg`
         };
       }
     }
     return { title: label || firstFile.name || 'Scene pack', context: '', facts: [firstFile.run, firstFile.size].filter(Boolean).join(' · '), poster: cover?.getAttribute('src') };
   }
+  // 3840 × 1634 reads as 4K, 2560 × … as 2K and 1920 × … as 1080p.
+  const resolutionLabel = value => {
+    const width = parseInt(value, 10);
+    if (!width) return value;
+    return width >= 3800 ? '4K' : width >= 2500 ? '2K' : width >= 1900 ? '1080p' : value;
+  };
   function downloadNote(files) {
     const url = new URL((files.find(safeFile) || files[0]).url);
     const named = typeof COD_PACKS !== 'undefined' && COD_PACKS.some(item => item.namedFiles && item.files.some(file => file.url === files[0]?.url));
@@ -254,7 +260,7 @@
     pendingFile = file;
     if ($('downloadSelected') && file.audio) {
       $('downloadSelected').hidden = false;
-      $('downloadSelected').textContent = [file.name, file.run, file.size, file.resolution, file.fps, file.audio].filter(Boolean).join(' · ');
+      $('downloadSelected').textContent = [file.name, file.run, file.size, resolutionLabel(file.resolution)].filter(Boolean).join(' · ');
     }
     downloadGo.hidden = false;
     if (!downloadDialog.open) downloadDialog.showModal();
@@ -278,7 +284,7 @@
       button.setAttribute('aria-pressed', String(index === firstPart));
       const info = create('span', '', 'transfer-part-info');
       info.append(create('strong', name));
-      const facts = [file.run, file.size, file.resolution, file.fps, file.audio].filter(Boolean).join(' · ');
+      const facts = [file.run, file.size, resolutionLabel(file.resolution)].filter(Boolean).join(' · ');
       if (facts) info.append(create('small', facts));
       button.append(info, partChoiceIcon());
       button.addEventListener('click', () => {
@@ -388,7 +394,7 @@
     const selectedFile = pack.files[index];
     $('codPreviewTitle').textContent = pack.namedFiles ? selectedFile.name : pack.chapter;
     $('codPreviewLabel').textContent = pack.group === 'trailers' ? 'Call of Duty / Trailer preview' : 'Call of Duty / Scene preview';
-    $('codPreviewMeta').textContent = pack.namedFiles ? [selectedFile.run, selectedFile.size, selectedFile.resolution, selectedFile.fps, selectedFile.audio].filter(Boolean).join(' · ') : pack.meta + (pack.files.length > 1 ? ` · Part ${part + 1}` : '');
+    $('codPreviewMeta').textContent = pack.namedFiles ? [selectedFile.run, selectedFile.size, resolutionLabel(selectedFile.resolution)].filter(Boolean).join(' · ') : pack.meta + (pack.files.length > 1 ? ` · Part ${part + 1}` : '');
     if ($('codPreviewQuality')) $('codPreviewQuality').textContent = pack.quality || 'Original quality · uses data while you watch.';
     video.poster = pack.poster;
     video.setAttribute('aria-label', `${pack.title}, ${pack.chapter}${pack.files.length > 1 ? ', part ' + (part + 1) : ''}${pack.group === 'trailers' ? '' : ' scene pack'}`);

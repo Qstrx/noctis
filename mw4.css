@@ -79,9 +79,8 @@
 .mw4-res legend{float:left;width:100%;margin:0 0 6px;padding:2px 4px 0;color:var(--muted);font-size:12px}
 .mw4-res label{position:relative;min-width:0;cursor:pointer}
 .mw4-res input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
-.mw4-res-face{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:8px;padding:12px 14px;border-radius:10px;transition:background-color .25s ease,box-shadow .25s ease}
+.mw4-res-face{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:12px 14px;border-radius:10px;transition:background-color .25s ease,box-shadow .25s ease}
 .mw4-res-face b{font-size:17px;font-weight:650;letter-spacing:-.02em}
-.mw4-res-face small{color:var(--faint);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mw4-res-face em{color:var(--muted);font-size:13px;font-style:normal;font-variant-numeric:tabular-nums;white-space:nowrap}
 .mw4-res label:hover .mw4-res-face{background:rgba(255,255,255,.04)}
 .mw4-res input:checked+.mw4-res-face{background:color-mix(in srgb,var(--accent) 16%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 70%,transparent)}
@@ -135,7 +134,7 @@
   .mw4-guide-device .mw4-guide-picks{margin-top:10px}
   .mw4-guide[data-yours=phone] .mw4-guide-device[data-device=phone]{order:1}
   .mw4-guide[data-yours=phone] .mw4-guide-device[data-device=computer]{order:2}
-  .mw4-res-face{grid-template-columns:58px minmax(0,1fr) auto;padding:12px}
+  .mw4-res-face{padding:12px}
   .mw4-scene-select select,.transfer-find input{font-size:16px}
   .transfer-parts{max-height:32svh}
 }

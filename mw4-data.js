@@ -237,7 +237,7 @@ const MW4_VARIANT_PACKS = [
         "fps": "30/60 fps · native rates",
         "resolution": "4K · cinematic framing",
         "count": "22 files",
-        "quality": "4K H.264 · English stereo where available · uses data while you watch.",
+        "quality": "4K · uses data while you watch.",
         "cardFacts": "28.44 GB total · 1 silent clip"
       },
       "2K": {
@@ -468,7 +468,7 @@ const MW4_VARIANT_PACKS = [
         "fps": "30/60 fps · native rates",
         "resolution": "2K · cinematic framing",
         "count": "22 files",
-        "quality": "2K H.264 · English stereo where available · uses data while you watch.",
+        "quality": "2K · uses data while you watch.",
         "cardFacts": "11.59 GB total · 1 silent clip"
       },
       "1080p": {
@@ -699,7 +699,7 @@ const MW4_VARIANT_PACKS = [
         "fps": "30/60 fps · native rates",
         "resolution": "1080p · cinematic framing",
         "count": "22 files",
-        "quality": "1080p H.264 · English stereo where available · uses data while you watch.",
+        "quality": "1080p · uses data while you watch.",
         "cardFacts": "5.77 GB total · 1 silent clip"
       }
     }
@@ -731,7 +731,7 @@ const MW4_VARIANT_PACKS = [
         "fps": "30 fps",
         "resolution": "4K · cinematic framing",
         "count": "1 file",
-        "quality": "4K H.264 · English stereo where available · uses data while you watch.",
+        "quality": "4K · uses data while you watch.",
         "cardFacts": "797.1 MB total · English stereo"
       },
       "2K": {
@@ -752,7 +752,7 @@ const MW4_VARIANT_PACKS = [
         "fps": "30 fps",
         "resolution": "2K · cinematic framing",
         "count": "1 file",
-        "quality": "2K H.264 · English stereo where available · uses data while you watch.",
+        "quality": "2K · uses data while you watch.",
         "cardFacts": "358.0 MB total · English stereo"
       },
       "1080p": {
@@ -773,7 +773,7 @@ const MW4_VARIANT_PACKS = [
         "fps": "30 fps",
         "resolution": "1080p · cinematic framing",
         "count": "1 file",
-        "quality": "1080p H.264 · English stereo where available · uses data while you watch.",
+        "quality": "1080p · uses data while you watch.",
         "cardFacts": "176.7 MB total · English stereo"
       }
     }
