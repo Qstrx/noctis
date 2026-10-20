@@ -92,7 +92,6 @@ body:has(.pick:not([hidden])) .site-header { z-index: 2; }
   .is-home .pick-row:active { background: rgba(255, 255, 255, .03); }
   .is-home .pick-row:active .pick-thumb img { transform: scale(1.05); }
   body[data-world=home] .site-header { min-height: 72px; flex-wrap: nowrap; padding-top: 0; }
-  body[data-world=home] .site-nav { order: 0; width: auto; height: 72px; }
 }
 @media (max-width: 900px) and (orientation: landscape) {
   .pick.is-home { min-height: 0; padding-bottom: 28px; }
