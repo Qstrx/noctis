@@ -42,8 +42,8 @@ body[data-credit=open] > .site-header { opacity: 0; }
 .credit-poster { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 4px; }
 .credit-source-title { margin-top: 16px; max-width: 38ch; font-family: var(--font); font-size: 15px; font-weight: 400; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
 .credit-copy { min-width: 0; }
-.credit-heading { max-width: 16ch; margin: 0; font: 400 clamp(40px, 4.4vw, 64px)/.92 var(--title); letter-spacing: .01em; text-transform: uppercase; text-wrap: balance; }
-.credit-account { display: flex; width: fit-content; align-items: center; gap: 14px; min-height: 44px; margin-top: 22px; font: 700 clamp(30px, 3.4vw, 46px)/1.1 "Barlow Condensed", "Arial Narrow", sans-serif; letter-spacing: .01em; color: var(--accent); text-decoration: none; }
+.credit-heading { max-width: 22ch; margin: 0; font-family: var(--display); font-size: clamp(28px, 2.8vw, 36px); font-weight: 400; line-height: 1.25; letter-spacing: -.025em; text-wrap: balance; }
+.credit-account { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; margin-top: 20px; font-family: var(--display); font-size: clamp(32px, 4.1vw, 56px); font-weight: 400; line-height: 1.2; letter-spacing: -.025em; color: var(--accent); text-decoration: none; }
 .credit-account span { text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 30%, transparent); text-decoration-thickness: 1px; text-underline-offset: 8px; transition: text-decoration-color 150ms ease; }
 .credit-account svg { width: 24px; height: 24px; flex: 0 0 24px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .credit-account:hover span { text-decoration-color: currentColor; }
@@ -67,8 +67,8 @@ body[data-credit=open] > .site-header { opacity: 0; }
   .credit-composition { grid-template-columns: 1fr; gap: 28px; max-width: 420px; }
   .credit-poster { max-height: 150px; }
   .credit-source-title { margin-top: 12px; font-size: 14px; }
-  .credit-heading { font-size: clamp(36px, 11vw, 48px); }
-  .credit-account { font-size: clamp(28px, 8vw, 36px); margin-top: 18px; gap: 12px; }
+  .credit-heading { font-size: 28px; }
+  .credit-account { font-size: clamp(32px, 8vw, 40px); margin-top: 18px; gap: 12px; }
   .credit-account svg { width: 20px; height: 20px; flex-basis: 20px; }
   .credit-continue { margin-top: 28px; }
 }
@@ -77,8 +77,8 @@ body[data-credit=open] > .site-header { opacity: 0; }
   .credit-composition { max-width: 920px; grid-template-columns: 1fr 1.1fr; gap: 40px; }
   .credit-poster { max-height: 180px; }
   .credit-source-title { margin-top: 10px; font-size: 14px; }
-  .credit-heading { font-size: 36px; }
-  .credit-account { margin-top: 14px; font-size: 32px; }
+  .credit-heading { font-size: 28px; }
+  .credit-account { margin-top: 14px; font-size: 36px; }
   .credit-continue { margin-top: 22px; }
 }
 @media (prefers-reduced-motion: reduce) {
