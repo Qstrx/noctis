@@ -16,7 +16,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS' : 'FAIL') + ': ' +
   const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
   await p.goto(o + '/index.html'); await p.waitForTimeout(1200);
   await p.hover('.pick-row[href="six.html"]'); await p.waitForTimeout(500);
-  ok(await p.evaluate(() => document.body.dataset.palette === 'six' && document.querySelector('.pick-stage img.is-on').getAttribute('src') === 'img/joe.jpg'), 'home: pointing at SIX switches the colour and the picture');
+  ok(await p.evaluate(() => document.body.dataset.palette === 'six' && document.querySelector('.pick-frame img.is-on').getAttribute('src') === 'img/joe.jpg'), 'home: pointing at SIX switches the colour and the picture');
   await p.click('.pick-row[href="cod.html"]'); await p.waitForURL('**/cod.html', { timeout: 5000 });
   await p.waitForTimeout(1500);
   ok(await p.evaluate(() => document.body.dataset.view === 'choose' && !document.getElementById('choose').hidden), 'home → cod.html opens on the select screen');
