@@ -1,16 +1,22 @@
 /* A focused transfer panel, colored by the collection that opened it. */
 .transfer-dialog{width:min(480px,calc(100% - 32px));padding:28px;background:var(--panel-strong);border:0;box-shadow:0 24px 80px rgba(0,0,0,.48);border-radius:16px;overflow:auto}
-.transfer-close{position:absolute;right:16px;top:16px;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--muted)}
-.transfer-close:hover{background:var(--panel);color:var(--ink)}
-.transfer-file{display:flex;align-items:center;gap:16px;padding-right:36px;min-width:0}
-.transfer-cover{display:block;flex:0 0 80px;width:80px;height:80px;object-fit:cover;border-radius:8px}
-.transfer-heading{min-width:0}
-.transfer-heading h2{font:500 22px/1.3 var(--display);letter-spacing:-.02em;overflow-wrap:anywhere;text-wrap:balance}
-.transfer-heading p{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5;text-wrap:pretty}
-.transfer-facts{margin-top:20px;color:var(--ink);font-size:12px;line-height:1.6;font-variant-numeric:tabular-nums}
-.transfer-note{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.6;text-wrap:pretty}
-.transfer-parts:not(:empty){margin-top:24px;border-top:1px solid var(--line)}
-.transfer-part{display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;min-height:64px;padding:16px 4px;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--ink)}
+.transfer-close{position:absolute;z-index:2;right:14px;top:14px;display:grid;place-items:center;width:40px;height:40px;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.45);color:var(--ink);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.transfer-close:hover{background:rgba(0,0,0,.7)}
+
+/* The download panel: the pack's picture, its name, a few tags, one button. */
+.download-dialog.transfer-dialog{width:min(460px,calc(100% - 32px));padding:0;border-radius:20px;background:var(--page);box-shadow:0 0 0 1px var(--line),0 40px 120px rgba(0,0,0,.6)}
+.transfer-poster{position:relative;overflow:hidden;background:var(--panel-strong)}
+.transfer-poster:has(.transfer-cover[hidden]){height:56px}
+.transfer-cover{display:block;width:100%;height:auto;aspect-ratio:16/8;object-fit:cover}
+.transfer-poster::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,var(--page))}
+.transfer-body{position:relative;margin-top:-34px;padding:0 28px 26px}
+.transfer-kicker{color:var(--accent);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.transfer-heading h2{margin-top:6px;font:400 clamp(34px,8vw,46px)/.95 var(--title);letter-spacing:.01em;text-transform:uppercase;overflow-wrap:anywhere;text-wrap:balance}
+.transfer-tags{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0;padding:0;list-style:none}
+.transfer-tags li{padding:4px 10px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line-strong);font:700 12px/1.4 "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.transfer-note{margin-top:14px;color:var(--muted);font-size:13px;line-height:1.55;text-wrap:pretty}
+.transfer-parts:not(:empty){margin-top:18px;border-top:1px solid var(--line)}
+.transfer-part{display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;min-height:60px;padding:14px 4px;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--ink)}
 .transfer-part:hover:not(:disabled){color:var(--mint)}
 .transfer-part[aria-pressed=true]{color:var(--mint)}
 .transfer-part svg{width:20px;height:20px;flex:0 0 20px}
@@ -19,10 +25,12 @@
 .transfer-part-info{min-width:0}
 .transfer-part strong{display:block;font-size:14px;line-height:1.5;font-weight:500;overflow-wrap:anywhere}
 .transfer-part small{display:block;margin-top:3px;color:var(--muted);font-size:12px;line-height:1.5;font-variant-numeric:tabular-nums}
-.transfer-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:24px}
-.transfer-credit{flex:1 1 160px;max-width:26ch;color:var(--muted);font-size:12px;line-height:1.5}
-.transfer-action{display:inline-flex;align-items:center;justify-content:center;gap:20px;min-height:48px;padding:12px 20px;border:0;border-radius:8px;background:var(--mint);color:var(--mint-ink);font-size:13px;line-height:1.5;font-weight:600}
+.transfer-action{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:52px;padding:12px 22px;border:0;border-radius:12px;background:var(--mint);color:var(--mint-ink);font-size:15px;line-height:1.5;font-weight:650;transition:filter .2s ease,transform .2s ease}
 .transfer-action:hover{filter:brightness(1.08)}
+.download-dialog .transfer-action{width:100%;margin-top:24px}
+.transfer-credit{margin-top:14px;color:var(--muted);font-size:13px;line-height:1.5;text-align:center}
+.transfer-credit a{color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent) 60%,transparent);text-underline-offset:3px}
+.transfer-credit a:hover{color:var(--accent)}
 .browser-notice h2{padding-right:60px;font:500 24px/1.3 var(--display);letter-spacing:-.02em;text-wrap:balance}
 .browser-notice p{margin-top:16px;font-size:16px;line-height:1.6;color:var(--muted);text-wrap:pretty}
 .browser-notice .browser-notice-steps{color:var(--ink)}
@@ -33,4 +41,4 @@
 .browser-notice-url{display:block;width:100%;min-width:0;margin-top:8px;padding:12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--panel);color:var(--ink);font:400 16px/1.5 var(--font);caret-color:var(--mint)}
 .browser-notice .transfer-action{width:100%;margin-top:16px;font-size:15px}
 .browser-notice .browser-notice-status{min-height:1.6em;font-size:14px}
-@media(max-width:480px){.transfer-dialog{padding:24px}.transfer-file{gap:12px;padding-right:28px}.transfer-cover{width:64px;height:72px;flex-basis:64px}.transfer-heading h2{font-size:20px}.transfer-footer{flex-direction:column-reverse;align-items:stretch;gap:16px}.transfer-action{width:100%}.transfer-credit{flex:auto;max-width:none;text-align:center}.transfer-footer:has(.transfer-action[hidden]) .transfer-credit{text-align:left}}
+@media(max-width:480px){.transfer-dialog{padding:24px}.download-dialog.transfer-dialog{padding:0}.transfer-body{padding:0 20px 22px}.transfer-action{width:100%}}
