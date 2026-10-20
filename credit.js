@@ -107,7 +107,6 @@
     document.body.dataset.credit = 'open';
 
     if (moving()) {
-      dispatchEvent(new CustomEvent('oceans:aurora-pulse'));
       animate(dialog, [{ opacity: .45 }, { opacity: 1 }], 300);
       if (!dialog.querySelector('.credit-source').hidden) {
         animate(dialog.querySelector('.credit-poster'), [

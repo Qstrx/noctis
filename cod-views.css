@@ -1,0 +1,31 @@
+/* Call of Duty: a view for each operator and one for the cutscenes (cod-views.js);
+   the choice itself is a select screen (select.css). */
+.board-who h2:focus, .mw4-heading h2:focus { outline: none; }
+
+/* Inside a view: back to the choice, or straight to another section */
+.cod-switch { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; padding: 18px 0 8px; }
+.cod-back { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--muted); font-size: 13px; }
+.cod-back svg { width: 18px; height: 18px; }
+.cod-back:hover { color: var(--ink); }
+.cod-tabs { display: flex; gap: 4px; max-width: 100%; padding: 4px; overflow-x: auto; border-radius: 999px; background: rgba(255, 255, 255, .04); box-shadow: inset 0 0 0 1px var(--line); scrollbar-width: none; }
+.cod-tabs::-webkit-scrollbar { display: none; }
+.cod-tabs a { display: flex; flex: none; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; color: var(--muted); font-size: 13px; font-weight: 600; transition: background-color .25s ease, color .25s ease; }
+.cod-tabs a:hover { color: var(--ink); }
+.cod-tabs a[aria-current=page] { background: var(--accent); color: var(--accent-ink); }
+
+/* An operator's view: the row becomes the page */
+body:not([data-view=choose]) .board-row .rk .nm { font-size: clamp(34px, 5vw, 64px); }
+body:not([data-view=choose]) .board-row .rk .ins { width: 38px; height: 38px; }
+body:not([data-view=choose]) .board-row + .board-row::before { display: none; }
+
+@media (max-width: 1100px) {
+  /* One operator at a time: a grid, not a swipe strip */
+  body[data-view]:not([data-view=choose]) .board-cells { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; margin-inline: 0; padding: 0; overflow: visible; scroll-snap-type: none; }
+}
+@media (max-width: 600px) {
+  .cod-switch { padding-top: 6px; }
+  .cod-tabs { width: 100%; }
+  .cod-tabs a { padding: 0 13px; }
+  body[data-view]:not([data-view=choose]) .board-cells { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { .cod-tabs a { transition: none; } }

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'none'; media-src https://github.com https://release-assets.githubusercontent.com; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#090c08">
+<meta name="theme-color" content="#0b0c0a">
 <title>Call of Duty — Ocean’s Scenepacks</title>
 <meta name="description" content="Price, Ghost, Soap and Gaz scene packs, campaign cutscenes and Modern Warfare 4 campaign cutscenes and trailers. Preview and download footage for your edits.">
 <meta property="og:title" content="Call of Duty — Ocean’s Scenepacks">
@@ -17,94 +17,89 @@
 <link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <link rel="preload" href="img/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="site.css?v=aurora-15">
-<link rel="stylesheet" href="motion.css?v=aurora-16">
-<link rel="stylesheet" href="archive.css?v=aurora-18">
+<link rel="stylesheet" href="site.css?v=select-1">
+<link rel="stylesheet" href="motion.css?v=select-1">
+<link rel="stylesheet" href="archive.css?v=select-1">
 <link rel="stylesheet" href="download.css?v=mw4-1">
 <link rel="preload" href="img/fonts/archivo-black-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="rank.css?v=2">
 <link rel="stylesheet" href="board.css?v=6">
-<link rel="stylesheet" href="mw4.css?v=scene-library-2">
+<link rel="stylesheet" href="mw4.css?v=missions-2">
+<link rel="stylesheet" href="select.css?v=1">
+<link rel="stylesheet" href="cod-views.css?v=2">
 <link rel="stylesheet" href="credit.css?v=aurora-13">
-<script src="arrival.js?v=aurora-2"></script>
+<script src="arrival.js?v=select-1"></script>
 <script src="archive-data.js?v=aurora-18" defer></script>
 <script src="mw4-data.js?v=scene-library-2" defer></script>
-<script src="mw4-quality.js?v=scene-library-2" defer></script>
-<script src="credit.js?v=aurora-12" defer></script>
-<script src="site.js?v=scene-library-2" defer></script>
-<script src="motion.js?v=aurora-16" defer></script>
-<script src="aurora.js?v=aurora-11" defer blocking="render"></script>
+<script src="mw4-missions.js?v=missions-2" defer></script>
+<script src="cod-views.js?v=2" defer></script>
+<script src="select.js?v=1" defer></script>
+<script src="credit.js?v=select-1" defer></script>
+<script src="site.js?v=missions-1" defer></script>
+<script src="motion.js?v=select-1" defer></script>
 </head>
 <body data-world="cod" data-theme="night" data-motion="on">
 <a class="skip-link" href="#main">Skip to content</a>
-<div class="sky" aria-hidden="true"><canvas id="auroraCanvas"></canvas><div class="sky-veil"></div></div>
 <header class="site-header">
   <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s<span class="brand-caption">scenepacks</span></span></a>
   <nav class="site-nav" aria-label="Main navigation"><a href="index.html">Collections</a><a href="cod.html" aria-current="page">Call of Duty</a><a href="six.html">SIX</a></nav>
 </header>
 <main class="catalog-main" id="main">
 <h1 class="sr-only">Call of Duty scene packs</h1>
+<section class="pick" id="choose" aria-labelledby="pickTitle">
+  <div class="pick-back" aria-hidden="true"><img src="img/cod/price-mw2.jpg" alt="" style="object-position:64% 35%"></div>
+  <div class="pick-main">
+    <p class="pick-kicker">Ocean’s scenepacks</p>
+    <h2 class="pick-title" id="pickTitle" tabindex="-1">Call of Duty</h2>
+    <ol class="pick-list">
+    <li><a class="pick-row" href="#price" data-view-link="price" data-img="img/cod/price-mw2.jpg" data-focus="64% 35%" data-meta="Modern Warfare I–III" data-info="3 scene packs · 4K 60 fps"><span class="pick-no">01</span><span class="pick-name">John Price</span><span class="pick-count">3 scene packs</span><span class="pick-thumb" aria-hidden="true"><img src="img/cod/price-mw2.jpg" alt="" style="object-position:64% 35%" loading="lazy" decoding="async"></span></a></li>
+    <li><a class="pick-row" href="#gaz" data-view-link="gaz" data-img="img/cod/gaz-extra.jpg" data-focus="42% 35%" data-meta="Modern Warfare I–III, more clips" data-info="4 scene packs · 4K 60 fps"><span class="pick-no">02</span><span class="pick-name">Gaz</span><span class="pick-count">4 scene packs</span><span class="pick-thumb" aria-hidden="true"><img src="img/cod/gaz-extra.jpg" alt="" style="object-position:42% 35%" loading="lazy" decoding="async"></span></a></li>
+    <li><a class="pick-row" href="#ghost" data-view-link="ghost" data-img="img/home/cod-ghost.jpg" data-focus="46% 35%" data-meta="Modern Warfare II–III" data-info="2 scene packs · 4K 60 fps"><span class="pick-no">03</span><span class="pick-name">Ghost</span><span class="pick-count">2 scene packs</span><span class="pick-thumb" aria-hidden="true"><img src="img/home/cod-ghost.jpg" alt="" style="object-position:46% 35%" loading="lazy" decoding="async"></span></a></li>
+    <li><a class="pick-row" href="#soap" data-view-link="soap" data-img="img/cod/soap-mw3.jpg" data-focus="56% 35%" data-meta="Modern Warfare II–III, more clips" data-info="3 scene packs · 4K 60 fps"><span class="pick-no">04</span><span class="pick-name">Soap</span><span class="pick-count">3 scene packs</span><span class="pick-thumb" aria-hidden="true"><img src="img/cod/soap-mw3.jpg" alt="" style="object-position:56% 35%" loading="lazy" decoding="async"></span></a></li>
+    <li><a class="pick-row" href="#cutscenes" data-view-link="cutscenes" data-img="img/cod/mw4/scenes/16.jpg" data-focus="70% 35%" data-meta="MW4 campaign · MW I–III campaigns · trailers" data-info="22 MW4 scenes in 4K, 2K and 1080p"><span class="pick-no">05</span><span class="pick-name">Cutscenes</span><span class="pick-count">22 MW4 scenes</span><span class="pick-thumb" aria-hidden="true"><img src="img/cod/mw4/scenes/16.jpg" alt="" style="object-position:70% 35%" loading="lazy" decoding="async"></span></a></li>
+    </ol>
+  </div>
+  <figure class="pick-view" aria-hidden="true">
+    <div class="pick-frame"><img class="is-on" src="img/cod/price-mw2.jpg" alt="" style="object-position:64% 35%"><img src="img/cod/price-mw2.jpg" alt=""></div>
+    <figcaption><span class="pick-meta">Modern Warfare I–III</span><span class="pick-info">3 scene packs · 4K 60 fps</span></figcaption>
+  </figure>
+</section>
+<nav class="cod-switch" id="codSwitch" aria-label="Call of Duty sections" hidden>
+  <a class="cod-back" href="#choose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6 6-6-6 6-6"/></svg>All of Call of Duty</a>
+  <div class="cod-tabs"><a href="#price" data-view-link="price">Price</a><a href="#gaz" data-view-link="gaz">Gaz</a><a href="#ghost" data-view-link="ghost">Ghost</a><a href="#soap" data-view-link="soap">Soap</a><a href="#cutscenes" data-view-link="cutscenes">Cutscenes</a></div>
+</nav>
 <section class="mw4-collection" id="mw4-campaign" aria-labelledby="mw4-collection-title">
   <header class="mw4-heading">
-    <div><h2 id="mw4-collection-title"><img src="img/cod/logos/mw4.webp" alt="Modern Warfare 4" width="1179" height="404"></h2><p>22 campaign cutscenes. Every scene, in three resolutions.</p></div>
-    <nav class="mw4-jumps" aria-label="Call of Duty collections"><a href="#price">Operators</a><a href="#mw4-trailers">Trailers</a></nav>
+    <div><h2 id="mw4-collection-title" tabindex="-1"><img src="img/cod/logos/mw4.webp" alt="Modern Warfare 4" width="1179" height="404"></h2><p>22 campaign cutscenes from 17 missions, plus the recap. Every scene in three resolutions.</p></div>
+    <nav class="mw4-jumps" aria-label="More cutscenes"><a href="#campaign-cutscenes">MW I–III campaigns</a><a href="#mw4-trailers">Trailers</a></nav>
   </header>
-  <p id="mw4Fallback" class="mw4-fallback">Loading the scene library. <a href="https://github.com/Qstrx/noctis/releases/tag/mw4-scenepack-versions">Browse all downloads on GitHub</a>.</p>
-  <div class="mw4-browser" id="mw4Browser" hidden>
-    <div class="mw4-library" id="mw4Library">
-      <div class="mw4-library-top">
-        <h3>Scene library</h3>
-        <div class="mw4-collections" role="group" aria-label="MW4 collection">
-          <button type="button" data-mw4-collection="campaign" aria-pressed="true">Campaign <span>22</span></button>
-          <button type="button" data-mw4-collection="recap" aria-pressed="false">Recap <span>1</span></button>
-        </div>
-      </div>
-      <div class="mw4-library-browser" id="mw4ListArea">
-        <div class="mw4-library-find">
-        <label class="mw4-search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><span class="sr-only">Find a MW4 scene</span><input id="mw4Search" type="search" placeholder="Find a scene…" autocomplete="off" spellcheck="false"></label>
-        <div class="mw4-list-heading"><p id="mw4Results" role="status">22 scenes</p><label><span class="sr-only">Filter by scene type</span><select id="mw4Type"><option value="all">All scenes</option><option value="Intro">Intros</option><option value="Interlude">Interludes</option><option value="Outro">Outros</option></select></label></div>
-      </div>
-      <ol class="mw4-scene-list" id="mw4SceneList" aria-label="Campaign cutscenes"></ol>
-      <div class="mw4-empty" id="mw4Empty" hidden><strong>No scenes found</strong><p>Try a mission name or clear your filters.</p><button type="button" id="mw4Reset">Clear filters</button></div>
-      <p class="mw4-library-foot" id="mw4LibraryFoot">22 scenes · 1:07:21 total</p>
-      </div>
+  <aside class="mw4-guide" id="mw4Guide" aria-labelledby="mw4GuideTitle">
+    <div class="mw4-guide-head">
+      <p class="mw4-guide-kicker">Before you download</p>
+      <h3 id="mw4GuideTitle">4K, 2K or 1080p?</h3>
+      <p>Every scene comes in all three, with the same footage, framing and frame rate. Only the detail and the file size change.</p>
     </div>
-    <article class="mw4-detail" id="mw4Detail" aria-labelledby="mw4SceneTitle" tabindex="-1">
-      <div class="mw4-scene-heading">
-        <div><h3 id="mw4SceneTitle">Cold Open</h3><p id="mw4SceneSubtitle">Scene 01 of 22 · Intro</p></div>
-        <nav class="mw4-scene-nav" aria-label="Move between scenes"><button type="button" id="mw4Previous" aria-label="Previous scene"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg></button><button type="button" id="mw4Next" aria-label="Next scene"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 4 6 6-6 6"/></svg></button></nav>
-      </div>
-      <div class="mw4-screen">
-        <img id="mw4Poster" src="img/cod/mw4/scenes/01.jpg" alt="" width="1200" height="510" decoding="async" fetchpriority="high">
-        <video id="mw4Video" controls playsinline preload="none" hidden aria-label="Preview of the selected MW4 scene"></video>
-        <button type="button" id="mw4Play" class="mw4-play"><span class="mw4-play-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m9 5 11 7-11 7V5Z"/></svg></span><span>Play preview<small>1080p · uses data</small></span></button>
-        <p id="mw4VideoState" class="mw4-video-state" role="status" hidden></p>
-        <div class="mw4-video-error" id="mw4VideoError" role="alert" hidden><strong>Preview could not load</strong><p>You can still download this scene, or try the preview again.</p><button type="button" id="mw4Retry">Retry preview</button></div>
-      </div>
-      <dl class="mw4-scene-facts"><div><dt>Duration</dt><dd id="mw4Duration">3:41</dd></div><div><dt>Frame rate</dt><dd id="mw4Fps">60 fps · native</dd></div><div><dt>Audio</dt><dd id="mw4Audio">English · stereo</dd></div></dl>
-      <fieldset class="mw4-quality" aria-describedby="mw4QualityNote"><legend>Choose your resolution</legend><div class="mw4-quality-options">
-        <label><input type="radio" name="mw4-quality" value="4K" checked><span class="mw4-quality-face"><span class="mw4-quality-top"><strong>4K</strong><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="m6 10 2.5 2.5L14 7"/></svg></span><small>Maximum detail</small><span class="mw4-quality-dimensions" data-mw4-dimensions="4K">3840 × 1634</span><b data-mw4-size="4K">1.73 GB</b></span></label>
-        <label><input type="radio" name="mw4-quality" value="2K"><span class="mw4-quality-face"><span class="mw4-quality-top"><strong>2K</strong><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="m6 10 2.5 2.5L14 7"/></svg></span><small>Balanced size</small><span class="mw4-quality-dimensions" data-mw4-dimensions="2K">2560 × 1090</span><b data-mw4-size="2K">—</b></span></label>
-        <label><input type="radio" name="mw4-quality" value="1080p"><span class="mw4-quality-face"><span class="mw4-quality-top"><strong>1080p</strong><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="m6 10 2.5 2.5L14 7"/></svg></span><small>Smallest file</small><span class="mw4-quality-dimensions" data-mw4-dimensions="1080p">1920 × 816</span><b data-mw4-size="1080p">—</b></span></label>
-      </div><p id="mw4QualityNote" role="status">4K keeps the detail of the existing pack. Every file is under 2 GB.</p></fieldset>
-      <div class="mw4-download-area">
-      <button type="button" class="mw4-download" id="mw4Download"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="mw4DownloadLabel">Download 4K</span><span id="mw4DownloadSize">1.73 GB</span></button>
-      <p class="mw4-file-note" id="mw4FileNote">MP4 · H.264 · AAC stereo</p>
-      </div>
-      <p class="sr-only" id="mw4SelectionStatus" role="status" aria-atomic="true"></p>
-    </article>
-  </div>
-  <details class="mw4-source"><summary>Footage & audio details</summary><div><p>The same scenes in every quality, each file under 2 GB. Native 30/60 fps and cinematic framing are preserved. Most footage is 3840 × 1634 in 4K, 2560 × 1090 in 2K, or 1920 × 816 in 1080p.</p><p>4K keeps the video from the existing size-capped pack without another video encode. 2K and 1080p are high-quality smaller conversions. All editions use H.264 video and one English AAC stereo track where recovered. Meltdown outro has no associated audio.</p><p>The 1080p/60 Kill Archer Outro sample exported successfully on a Samsung A55, as confirmed by its user. Other files and the 2K/4K editions have not been tested on that phone. Successful export depends on your device and editing app. The footage is SDR.</p><p>Campaign numbering follows the game's extracted progression data; runtime playback order was not observed in-game.</p></div></details>
+    <div class="mw4-guide-device" data-device="computer">
+      <span class="mw4-guide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span>
+      <h4>On a computer</h4>
+      <p>Take whichever you like. 4K keeps every detail; 2K and 1080p are quicker to download.</p>
+    </div>
+    <div class="mw4-guide-device" data-device="phone">
+      <span class="mw4-guide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span>
+      <h4>On a phone</h4>
+      <p>Many phones can’t play or edit 4K at 60 fps. If a 4K file won’t open or import into your editing app, choose a lower resolution.</p>
+      <p class="mw4-guide-picks"><span><b>2K</b> balanced</span><span><b>1080p</b> lightest</span></p>
+    </div>
+  </aside>
+  <p id="mw4Fallback" class="mw4-fallback">Loading the campaign scenes. <a href="https://github.com/Qstrx/noctis/releases/tag/mw4-scenepack-versions">Browse all downloads on GitHub</a>.</p>
+  <ol class="mw4-missions" id="mw4Missions" aria-label="Modern Warfare 4 campaign missions" hidden></ol>
+  <details class="mw4-source"><summary>Footage &amp; audio details</summary><div><p>The same scenes in every quality, each file under 2 GB. Native 30/60 fps and cinematic framing are preserved. Most footage is 3840 × 1634 in 4K, 2560 × 1090 in 2K, or 1920 × 816 in 1080p.</p><p>4K keeps the video from the existing size-capped pack without another video encode. 2K and 1080p are high-quality smaller conversions. All editions use H.264 video and one English AAC stereo track where recovered. Meltdown outro has no associated audio.</p><p>The 1080p/60 Kill Archer Outro sample exported successfully on a Samsung A55, as confirmed by its user. Other files and the 2K/4K editions have not been tested on that phone. Successful export depends on your device and editing app. The footage is SDR.</p><p>Campaign numbering follows the game's extracted progression data; runtime playback order was not observed in-game.</p></div></details>
 </section>
-<dialog id="mw4MobileDialog" class="mw4-mobile-dialog" aria-labelledby="mw4SceneTitle" closedby="any">
-  <header class="mw4-sheet-head"><button type="button" id="mw4SheetClose" aria-label="Back to the MW4 scene library"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 4-6 6 6 6"/></svg>All scenes</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg></button></header>
-  <div id="mw4MobileMount"></div>
-</dialog>
 
 <div class="board">
 <div class="board-head" aria-hidden="true"><span class="board-corner"></span><span class="board-col"><img src="img/cod/logos/mw1.svg" alt="" width="1000" height="231"><small>2019</small></span><span class="board-col"><img src="img/cod/logos/mw2.png" alt="" width="351" height="175"><small>2022</small></span><span class="board-col"><img src="img/cod/logos/mw3.png" alt="" width="635" height="175"><small>2023</small></span><span class="board-col"><span class="board-word">More clips</span><small>4K · 60 fps</small></span></div>
-<section class="board-row" id="price" aria-labelledby="row-price">
-<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="5" rx="1"/><rect x="4" y="14" width="16" height="5" rx="1"/></svg><h2 class="nm" id="row-price">John Price</h2><span class="rs">4K</span></div></header>
+<section class="board-row" id="pack-price" data-view="price" aria-labelledby="row-price">
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="5" rx="1"/><rect x="4" y="14" width="16" height="5" rx="1"/></svg><h2 class="nm" id="row-price" tabindex="-1">John Price</h2><span class="rs">4K</span></div></header>
 <div class="board-cells">
 <div class="board-cell"><article class="pack-card reveal" id="mw1" data-kind="price" aria-labelledby="tmw1">
   <p class="card-game"><img src="img/cod/logos/mw1.svg" alt="" width="1000" height="231" loading="lazy" decoding="async"><span>2019</span></p>
@@ -127,8 +122,8 @@
 <div class="board-cell is-empty" aria-hidden="true"></div>
 </div>
 </section>
-<section class="board-row" id="gaz" aria-labelledby="row-gaz">
-<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5v2.6L12 6.6l-9 5.5zM3 14 12 8.5l9 5.5v2.6l-9-5.5-9 5.5zM3 18.5 12 13l9 5.5v2.6l-9-5.5-9 5.5z"/></svg><h2 class="nm" id="row-gaz">Gaz</h2><span class="rs">4K</span></div></header>
+<section class="board-row" id="pack-gaz" data-view="gaz" aria-labelledby="row-gaz">
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5v2.6L12 6.6l-9 5.5zM3 14 12 8.5l9 5.5v2.6l-9-5.5-9 5.5zM3 18.5 12 13l9 5.5v2.6l-9-5.5-9 5.5z"/></svg><h2 class="nm" id="row-gaz" tabindex="-1">Gaz</h2><span class="rs">4K</span></div></header>
 <div class="board-cells">
 <div class="board-cell"><article class="pack-card reveal" id="gaz-mw1" data-kind="gaz" aria-labelledby="tgaz-mw1">
   <p class="card-game"><img src="img/cod/logos/mw1.svg" alt="" width="1000" height="231" loading="lazy" decoding="async"><span>2019</span></p>
@@ -156,8 +151,8 @@
 </article></div>
 </div>
 </section>
-<section class="board-row" id="soap" aria-labelledby="row-soap">
-<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5v2.6L12 6.6l-9 5.5zM3 14 12 8.5l9 5.5v2.6l-9-5.5-9 5.5zM3 18.5 12 13l9 5.5v2.6l-9-5.5-9 5.5z"/></svg><h2 class="nm" id="row-soap">Soap</h2><span class="rs">4K</span></div></header>
+<section class="board-row" id="pack-soap" data-view="soap" aria-labelledby="row-soap">
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5v2.6L12 6.6l-9 5.5zM3 14 12 8.5l9 5.5v2.6l-9-5.5-9 5.5zM3 18.5 12 13l9 5.5v2.6l-9-5.5-9 5.5z"/></svg><h2 class="nm" id="row-soap" tabindex="-1">Soap</h2><span class="rs">4K</span></div></header>
 <div class="board-cells">
 <div class="board-cell is-empty" aria-hidden="true"></div>
 <div class="board-cell"><article class="pack-card reveal" id="soap-mw2" data-kind="soap" aria-labelledby="tsoap-mw2">
@@ -180,8 +175,8 @@
 </article></div>
 </div>
 </section>
-<section class="board-row" id="ghost" aria-labelledby="row-ghost">
-<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9.5" width="16" height="5" rx="1"/></svg><h2 class="nm" id="row-ghost">Ghost</h2><span class="rs">4K</span></div></header>
+<section class="board-row" id="pack-ghost" data-view="ghost" aria-labelledby="row-ghost">
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9.5" width="16" height="5" rx="1"/></svg><h2 class="nm" id="row-ghost" tabindex="-1">Ghost</h2><span class="rs">4K</span></div></header>
 <div class="board-cells">
 <div class="board-cell is-empty" aria-hidden="true"></div>
 <div class="board-cell"><article class="pack-card reveal" id="ghost-mw2" data-kind="ghost" aria-labelledby="tghost-mw2">
@@ -199,8 +194,8 @@
 <div class="board-cell is-empty" aria-hidden="true"></div>
 </div>
 </section>
-<section class="board-row" id="cutscenes" aria-labelledby="row-cutscenes">
-<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM5 7v2h2V7zm0 4v2h2v-2zm0 4v2h2v-2zM17 7v2h2V7zm0 4v2h2v-2zm0 4v2h2v-2zM9 7v10h6V7z" fill-rule="evenodd"/></svg><h2 class="nm" id="row-cutscenes">Cutscenes</h2><span class="rs">2K</span></div></header>
+<section class="board-row" id="campaign-cutscenes" data-view="cutscenes" aria-labelledby="row-cutscenes">
+<header class="board-who reveal"><div class="rk"><svg class="ins" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM5 7v2h2V7zm0 4v2h2v-2zm0 4v2h2v-2zM17 7v2h2V7zm0 4v2h2v-2zm0 4v2h2v-2zM9 7v10h6V7z" fill-rule="evenodd"/></svg><h2 class="nm" id="row-cutscenes" tabindex="-1">Cutscenes</h2><span class="rs">2K</span></div></header>
 <div class="board-cells">
 <div class="board-cell"><article class="pack-card reveal" id="cuts1" data-kind="cutscenes" aria-labelledby="tcuts1">
   <p class="card-game"><img src="img/cod/logos/mw1.svg" alt="" width="1000" height="231" loading="lazy" decoding="async"><span>2019</span></p>

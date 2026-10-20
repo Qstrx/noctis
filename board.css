@@ -71,8 +71,6 @@
   .cover-game img { height: 20px; }
   .board-cell .pack-actions { padding-top: 10px; }
 }
-  .board-name { font-size: 40px; }
-}
 
 /* The game of every scene, on its image */
 .cover-game { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; display: flex; align-items: flex-end; height: 52%; padding: 0 12px 11px; background: linear-gradient(0deg, rgba(2, 5, 3, .88), transparent); pointer-events: none; }

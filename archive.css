@@ -1,4 +1,4 @@
-/* Collections: a title card, a rail that follows you, and footage that catches the aurora. */
+/* Collections: a title card, a rail that follows you, and the footage. */
 
 /* Hero */
 .hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); align-items: end; gap: 32px 56px; padding: 36px 0 56px; }
