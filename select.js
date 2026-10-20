@@ -7,7 +7,8 @@
   const picker = document.querySelector('.pick');
   if (!picker) return;
   const rows = [...picker.querySelectorAll('.pick-row')];
-  const frames = [...picker.querySelectorAll('.pick-frame img')];
+  // The pictures that follow the list: a frame beside it, or the whole stage behind it.
+  const frames = [...picker.querySelectorAll('.pick-frame img, .pick-stage img')];
   const back = picker.querySelector('.pick-back');
   const backImg = back?.querySelector('img');
   const meta = picker.querySelector('.pick-meta');
