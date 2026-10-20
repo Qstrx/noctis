@@ -13,7 +13,6 @@
     '2K': 'A smaller download with more detail than 1080p. Original framing and frame rate.',
     '1080p': 'The smallest download. Original framing and frame rate. Device support varies.'
   };
-  const SILENT = 'No associated audio';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   // Phones get a nudge toward the lighter files; on a computer any resolution is fine.
   const phone = navigator.userAgentData?.mobile || /iPhone|iPod|Android.+Mobile|Windows Phone/i.test(navigator.userAgent)
@@ -28,7 +27,7 @@
     const [title, kind] = file.name.replace(/^\d+\s*[—–-]\s*/, '').split(' · ');
     scenes.push({
       index: scenes.length, no: isRecap ? 'recap' : file.scene, title, kind: isRecap ? 'Recap' : kind, recap: isRecap,
-      run: file.run, fps: file.fps, audio: file.audio, poster: file.poster,
+      run: file.run, fps: file.fps, poster: file.poster,
       by: Object.fromEntries(QUALITIES.map(q => [q, pack.editions[q].files[i]]))
     });
   }));
@@ -71,7 +70,7 @@
           <button type="button" class="mw4-close" aria-label="Close the scene">${icon('m5 5 10 10M15 5 5 15')}</button>
         </div>
       </div>
-      <dl class="mw4-facts"><div><dt>Duration</dt><dd data-fact="run"></dd></div><div><dt>Frame rate</dt><dd data-fact="fps"></dd></div><div><dt>Audio</dt><dd data-fact="audio"></dd></div></dl>
+      <dl class="mw4-facts"><div><dt>Duration</dt><dd data-fact="run"></dd></div><div><dt>Frame rate</dt><dd data-fact="fps"></dd></div></dl>
       <fieldset class="mw4-res"><legend>Resolution</legend>${QUALITIES.map(q => `<label><input type="radio" name="mw4-quality" value="${q}"><span class="mw4-res-face"><b>${q}</b><small data-dimensions></small><em data-size></em></span></label>`).join('')}</fieldset>
       <p class="mw4-res-note" role="status"></p>
       <div class="mw4-phone-tip" hidden><span class="mw4-tip-icon">${PHONE_ICON}</span><p><strong>On a phone?</strong> <span class="mw4-tip-text"></span></p><div class="mw4-tip-picks"><button type="button" data-quality="2K"></button><button type="button" data-quality="1080p"></button></div></div>
@@ -129,9 +128,7 @@
     $('.mw4-kicker').textContent = scene.recap ? 'Campaign recap · separate from the 22 scenes' : `Scene ${scene.no} of 22 · ${scene.kind}`;
     $('.mw4-detail-title').textContent = scene.recap ? 'Campaign Recap' : `${scene.title} · ${scene.kind}`;
     $('[data-fact=run]').textContent = scene.run;
-    $('[data-fact=fps]').textContent = scene.fps + ' · native';
-    $('[data-fact=audio]').textContent = scene.audio;
-    $('[data-fact=audio]').classList.toggle('is-silent', scene.audio === SILENT);
+    $('[data-fact=fps]').textContent = scene.fps;
     detail.querySelectorAll('.mw4-res input').forEach(input => {
       const variant = scene.by[input.value], face = input.nextElementSibling;
       input.checked = input.value === quality;
@@ -149,7 +146,7 @@
     $('.mw4-download-label').textContent = 'Download ' + quality;
     $('.mw4-download-size').textContent = file.size;
     $('.mw4-download').setAttribute('aria-label', `Download ${file.name}, ${quality}, ${file.size}`);
-    $('.mw4-file-note').textContent = 'MP4 · H.264 · ' + (scene.audio === SILENT ? SILENT : 'AAC stereo') + ' · Under 2 GB';
+    $('.mw4-file-note').textContent = 'MP4 · H.264 · Under 2 GB';
     $('[data-step="-1"]').disabled = current === 0;
     $('[data-step="1"]').disabled = current === scenes.length - 1;
     grid.querySelectorAll('.mw4-clip').forEach(clip => {
