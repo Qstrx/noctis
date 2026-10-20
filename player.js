@@ -89,10 +89,11 @@ function loadPreview(index, time){
   previewFeedback.textContent = "";
   previewLink.hidden = true;
   previewError.hidden = true;
-  document.getElementById("previewTitle").textContent = "Joe Graves — " + current.entry.title;
-  document.getElementById("previewMeta").textContent = "From season " + padEpisode(current.season) + ", episode " + padEpisode(current.ep) + " · " + current.file.run + " · 1080p" +
+  document.getElementById("previewKicker").textContent = "Joe Graves · S" + padEpisode(current.season) + " E" + padEpisode(current.ep);
+  document.getElementById("previewTitle").textContent = current.entry.title;
+  document.getElementById("previewMeta").textContent = current.file.run +
     (current.entry.parts ? " · Part " + current.part + " of " + current.entry.parts.length : "");
-  document.getElementById("previewDownload").innerHTML = "<span>Download ↓</span><small>" + current.file.size + "</small>";
+  document.getElementById("previewDownload").innerHTML = "<span>Download ↓</span>";
   document.getElementById("previewDownload").setAttribute("aria-label", "Download Joe Graves scenes from season " + current.season + ", episode " + current.ep + ", " + current.entry.title +
     (current.entry.parts ? ", part " + current.part : ""));
   previewVideo.poster = SHOTS[current.season] + padEpisode(current.ep) + ".jpg";
