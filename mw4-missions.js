@@ -75,7 +75,6 @@
       <p class="mw4-res-note" role="status"></p>
       <div class="mw4-phone-tip" hidden><span class="mw4-tip-icon">${PHONE_ICON}</span><p><strong>On a phone?</strong> <span class="mw4-tip-text"></span></p><div class="mw4-tip-picks"><button type="button" data-quality="2K"></button><button type="button" data-quality="1080p"></button></div></div>
       <button type="button" class="mw4-download">${icon('M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3')}<span class="mw4-download-label"></span><span class="mw4-download-size"></span></button>
-      <p class="mw4-file-note"></p>
     </div>`;
   const $ = selector => detail.querySelector(selector);
   const media = $('.mw4-media'), poster = $('.mw4-poster'), state = $('.mw4-video-state'), failure = $('.mw4-video-error');
@@ -146,7 +145,6 @@
     $('.mw4-download-label').textContent = 'Download ' + quality;
     $('.mw4-download-size').textContent = file.size;
     $('.mw4-download').setAttribute('aria-label', `Download ${file.name}, ${quality}, ${file.size}`);
-    $('.mw4-file-note').textContent = 'MP4 · H.264';
     $('[data-step="-1"]').disabled = current === 0;
     $('[data-step="1"]').disabled = current === scenes.length - 1;
     grid.querySelectorAll('.mw4-clip').forEach(clip => {
