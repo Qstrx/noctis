@@ -27,7 +27,7 @@
     const [title, kind] = file.name.replace(/^\d+\s*[—–-]\s*/, '').split(' · ');
     scenes.push({
       index: scenes.length, no: isRecap ? 'recap' : file.scene, title, kind: isRecap ? 'Recap' : kind, recap: isRecap,
-      run: file.run, fps: file.fps, poster: file.poster,
+      run: file.run, poster: file.poster,
       by: Object.fromEntries(QUALITIES.map(q => [q, pack.editions[q].files[i]]))
     });
   }));
@@ -70,8 +70,8 @@
           <button type="button" class="mw4-close" aria-label="Close the scene">${icon('m5 5 10 10M15 5 5 15')}</button>
         </div>
       </div>
-      <dl class="mw4-facts"><div><dt>Duration</dt><dd data-fact="run"></dd></div><div><dt>Frame rate</dt><dd data-fact="fps"></dd></div></dl>
-      <fieldset class="mw4-res"><legend>Resolution</legend>${QUALITIES.map(q => `<label><input type="radio" name="mw4-quality" value="${q}"><span class="mw4-res-face"><b>${q}</b><small data-dimensions></small><em data-size></em></span></label>`).join('')}</fieldset>
+      <dl class="mw4-facts"><div><dt>Duration</dt><dd data-fact="run"></dd></div></dl>
+      <fieldset class="mw4-res"><legend>Resolution</legend>${QUALITIES.map(q => `<label><input type="radio" name="mw4-quality" value="${q}"><span class="mw4-res-face"><b>${q}</b><em data-size></em></span></label>`).join('')}</fieldset>
       <p class="mw4-res-note" role="status"></p>
       <div class="mw4-phone-tip" hidden><span class="mw4-tip-icon">${PHONE_ICON}</span><p><strong>On a phone?</strong> <span class="mw4-tip-text"></span></p><div class="mw4-tip-picks"><button type="button" data-quality="2K"></button><button type="button" data-quality="1080p"></button></div></div>
       <button type="button" class="mw4-download">${icon('M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3')}<span class="mw4-download-label"></span><span class="mw4-download-size"></span></button>
@@ -127,16 +127,14 @@
     $('.mw4-kicker').textContent = scene.recap ? 'Campaign recap · separate from the 22 scenes' : `Scene ${scene.no} of 22 · ${scene.kind}`;
     $('.mw4-detail-title').textContent = scene.recap ? 'Campaign Recap' : `${scene.title} · ${scene.kind}`;
     $('[data-fact=run]').textContent = scene.run;
-    $('[data-fact=fps]').textContent = scene.fps;
     detail.querySelectorAll('.mw4-res input').forEach(input => {
       const variant = scene.by[input.value], face = input.nextElementSibling;
       input.checked = input.value === quality;
-      face.querySelector('[data-dimensions]').textContent = variant.resolution;
       face.querySelector('[data-size]').textContent = variant.size;
     });
     $('.mw4-res-note').textContent = NOTES[quality];
     $('.mw4-phone-tip').hidden = !(phone && quality === '4K');
-    $('.mw4-tip-text').textContent = `4K at ${scene.fps} is too heavy for many phones. If it won’t play or import, take a lighter file:`;
+    $('.mw4-tip-text').textContent = '4K is too heavy for many phones. If it won’t play or import, take a lighter file:';
     detail.querySelectorAll('.mw4-tip-picks button').forEach(button => {
       const variant = scene.by[button.dataset.quality];
       button.textContent = `${button.dataset.quality} · ${variant.size}`;
