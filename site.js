@@ -396,8 +396,13 @@
     video.preload = 'metadata';
     $('codPreviewError').hidden = true;
     const selectedFile = pack.files[index];
-    // Whose pack and which game: "John Price — Modern Warfare II".
-    $('codPreviewTitle').textContent = pack.namedFiles ? selectedFile.name : pack.group === 'trailers' ? pack.chapter : `${pack.title} — ${pack.chapter}`;
+    // Whose pack, large, with its game above it: "Modern Warfare II" / "John Price".
+    const [trailerNo, trailerName] = pack.chapter.split(' — ');
+    const heading = pack.namedFiles ? [pack.title, selectedFile.name]
+      : pack.group === 'trailers' ? [`${pack.title} · ${trailerNo}`, trailerName || trailerNo]
+      : [pack.chapter, pack.title];
+    $('codPreviewKicker').textContent = heading[0];
+    $('codPreviewTitle').textContent = heading[1];
     $('codPreviewLabel').textContent = pack.group === 'trailers' ? 'Call of Duty / Trailer preview' : 'Call of Duty / Scene preview';
     $('codPreviewMeta').textContent = (selectedFile.run || pack.meta.split(' · ')[0]) + (pack.files.length > 1 && !pack.namedFiles ? ` · Part ${part + 1}` : '');
     video.poster = pack.poster;

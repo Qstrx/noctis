@@ -15,18 +15,29 @@
 
 /* ---------- A section: insignia, name, resolution, then its packs ---------- */
 .op { padding: 44px 0 24px; scroll-margin-top: 24px; }
-.op + .op { border-top: 1px solid var(--line); }
+/* A line between sections shown together (the cutscenes view, or no scripts) */
+.op:not([hidden]) ~ .op:not([hidden]) { border-top: 1px solid var(--line); }
 .op-head { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; column-gap: 16px; margin-bottom: 28px; }
 .op-ins { display: block; width: 36px; height: 36px; color: var(--accent); filter: drop-shadow(0 4px 12px color-mix(in srgb, var(--accent) 35%, transparent)); }
 .op-ins path, .op-ins rect { fill: currentColor; }
 .op-name { margin: 0; font: 400 clamp(34px, 5vw, 64px)/1 "Archivo Black", Impact, sans-serif; letter-spacing: -.01em; text-transform: uppercase; overflow-wrap: anywhere; }
 .op-name:focus { outline: none; }
-.op-name.is-logo img { display: block; width: 100%; max-width: 220px; height: auto; }
 .op-head::after { content: ""; grid-column: 3; height: 1px; background: linear-gradient(90deg, var(--line-strong), transparent); }
 .op-res { grid-column: 4; padding: 4px 11px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line-strong); font: 700 12px "Barlow Condensed", sans-serif; letter-spacing: .25em; }
 
-/* The packs: as many columns as fit, never a gap for a game without one */
-.pack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 44px 24px; }
+/* The packs: the columns follow how many there are, so a row never ends half empty */
+.pack-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 24px; }
+.pack-grid:has(> :nth-child(2):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pack-grid:has(> :nth-child(4):last-child) { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 20px; }
+/* One pack: a large picture with its details beside it */
+.pack-grid:has(> :only-child) { grid-template-columns: minmax(0, 1fr); }
+.pack-grid > .pack-card:only-child { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-rows: 1fr auto; column-gap: clamp(28px, 4vw, 56px); align-items: end; }
+.pack-grid > .pack-card:only-child .pack-cover { grid-row: 1 / 3; }
+.pack-grid > .pack-card:only-child .pack-info { margin-top: 0; }
+.pack-grid > .pack-card:only-child .pack-info h3 { font: 400 clamp(34px, 3.4vw, 48px)/.95 var(--title); letter-spacing: .01em; text-transform: uppercase; }
+.pack-grid > .pack-card:only-child .pack-info p { margin-top: 10px; font-size: 13px; }
+.pack-grid > .pack-card:only-child .pack-actions { padding-top: 22px; }
+.pack-grid > .pack-card:only-child .action { min-height: 50px; font-size: 13px; }
 
 /* The game of every pack, on its image */
 .cover-game { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; display: flex; align-items: flex-end; height: 52%; padding: 0 14px 12px; background: linear-gradient(0deg, rgba(2, 5, 3, .88), transparent); pointer-events: none; }
@@ -34,6 +45,19 @@
 .cover-game-word { font: 400 22px/1 var(--title); letter-spacing: .03em; text-transform: uppercase; }
 .cover-time { z-index: 2; }
 
+@media (max-width: 1100px) {
+  .pack-grid:has(> :nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+}
+/* Narrower screens: two columns, then one; the count rules above step aside */
+@media (max-width: 860px) {
+  .pack-grid, .pack-grid:has(> :nth-child(2):last-child), .pack-grid:has(> :nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
+  .pack-grid > .pack-card:only-child { display: flex; align-items: stretch; max-width: 560px; }
+  .pack-grid > .pack-card:only-child .pack-info h3 { font-size: 30px; }
+  .pack-grid > .pack-card:only-child .pack-info { margin-top: 18px; }
+}
+@media (max-width: 560px) {
+  .pack-grid, .pack-grid:has(> :nth-child(2):last-child), .pack-grid:has(> :nth-child(4):last-child) { grid-template-columns: minmax(0, 1fr); }
+}
 @media (max-width: 760px) {
   .cod-switch { padding-top: 6px; }
   .cod-tabs { width: 100%; }
@@ -44,7 +68,6 @@
   .op-res { grid-column: 3; padding: 3px 9px; font-size: 11px; }
   .op-ins { width: 28px; height: 28px; }
   .op-name { font-size: 30px; }
-  .op-name.is-logo img { max-width: 160px; }
   .pack-grid { gap: 36px; }
   .cover-game img { height: 22px; }
 }
