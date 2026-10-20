@@ -19,7 +19,6 @@
   // Places inside a view that links can point at directly.
   const INSIDE = { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'cutscenes' };
   const sections = [document.getElementById('mw4-campaign'), ...document.querySelectorAll('.op')].filter(Boolean);
-  const notes = document.querySelector('.source-notes');
   const baseTitle = document.title;
   let current = null;
 
@@ -39,8 +38,6 @@
     nav.hidden = view === 'choose';
     const shown = view === 'choose' ? [] : VIEWS[view].show;
     sections.forEach(section => { section.hidden = !shown.includes(section.id); });
-    // The notes about the source go with every view.
-    if (notes) notes.hidden = view === 'choose';
     nav.querySelectorAll('[data-view-link]').forEach(link => {
       if (link.dataset.viewLink === view) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');

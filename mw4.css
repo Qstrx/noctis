@@ -104,10 +104,6 @@
 @media(prefers-reduced-motion:no-preference){.mw4-detail{animation:mw4-open .45s var(--ease-out)}}
 @keyframes mw4-open{from{opacity:0;transform:translateY(-8px)}}
 
-.mw4-source{margin-top:28px;color:var(--muted);font-size:12px;line-height:1.7}
-.mw4-source summary{width:fit-content;cursor:pointer;color:var(--ink);padding-block:12px}
-.mw4-source div{max-width:74ch;padding-top:8px}
-.mw4-source p+p{margin-top:8px}
 .transfer-find{margin-top:20px}.transfer-find label{display:block;margin-bottom:8px;font-size:12px;color:var(--ink)}
 .transfer-find input{display:block;width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit;font-size:14px;caret-color:var(--mint)}
 .transfer-find input::placeholder{color:var(--muted);opacity:1}.transfer-count,.transfer-empty,.transfer-selected{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.6}.transfer-selected{color:var(--ink)}
@@ -130,7 +126,6 @@
   .mw4-heading p{font-size:13px;max-width:28ch;margin-top:10px}
   .mw4-jumps{flex-direction:column;gap:0;align-items:flex-end}
   .mw4-jumps a{min-height:36px;font-size:12px}
-  .mw4-source{margin-top:16px}
   .mw4-guide{grid-template-columns:1fr;margin-bottom:24px;border-radius:18px}
   .mw4-guide>*{padding:18px}
   .mw4-guide h3{font-size:30px}

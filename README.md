@@ -36,6 +36,7 @@ Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of
 | `credit.css`, `credit.js` | The credit reminder after a download |
 | `player.js` | The SIX preview player |
 | `motion.css`, `motion.js`, `arrival.js` | Page fades, scroll reveals, card tilt and the navigation underline |
+| `quality.html`, `quality.css` | One page with the resolution, frame rate and format of every pack |
 | `archive-data.js` | Files, sizes and links of every pack |
 
 Every page is dark and flat, with one colour per collection: sand for Call of Duty, blue for SIX. The home and Call of Duty open on the same select screen: a numbered list beside a picture of the row you are on. Pointing, focus, the arrow keys or the number keys move through it; a click, a tap or Enter opens it. Phones show the list alone, each row with its picture. On the home the two names lead, large, with a smaller picture of the one you are on beside them; the page takes that collection's colour.

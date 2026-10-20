@@ -1,0 +1,32 @@
+/* Quality: one page with the resolution, frame rate and format of every pack. */
+.quality { max-width: 1040px; padding-top: 56px; }
+.quality-head { max-width: 640px; }
+.quality-kicker { color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+.quality-head h1 { margin: 8px 0 16px; font: 400 clamp(56px, 8vw, 104px)/.88 var(--title); letter-spacing: .01em; text-transform: uppercase; }
+.quality-head p:last-child { color: var(--muted); font-size: 15px; line-height: 1.6; }
+.quality-group { margin-top: 64px; }
+.quality-group h2 { margin-bottom: 18px; font: 700 clamp(30px, 3vw, 40px)/1 "Barlow Condensed", "Arial Narrow", sans-serif; text-transform: uppercase; }
+.quality-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14px; }
+.quality-table thead th:nth-child(1) { width: 34%; }
+.quality-table thead th:nth-child(2) { width: 19%; }
+.quality-table thead th:nth-child(3) { width: 17%; }
+.quality-table thead th { padding: 0 16px 12px 0; color: var(--faint); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-align: left; text-transform: uppercase; border-bottom: 1px solid var(--line-strong); }
+.quality-table tbody th, .quality-table td { padding: 18px 16px 18px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.quality-table tbody th { font-weight: 600; }
+.quality-table tbody th small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 400; }
+.quality-table td { font-variant-numeric: tabular-nums; }
+.quality-table td:last-child { color: var(--muted); font-size: 13px; line-height: 1.55; white-space: normal; }
+.quality-tip { max-width: 70ch; margin-top: 18px; padding: 14px 16px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 8%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent); color: var(--ink); font-size: 13px; line-height: 1.6; }
+
+/* Phone: each pack becomes a small card of its own */
+@media (max-width: 760px) {
+  .quality { padding-top: 32px; }
+  .quality-group { margin-top: 48px; }
+  .quality-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .quality-table, .quality-table tbody, .quality-table tr { display: block; }
+  .quality-table tr { padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .quality-table tbody th, .quality-table td { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; width: auto; padding: 4px 0; border: 0; white-space: normal; }
+  .quality-table tbody th { display: block; padding-bottom: 10px; }
+  .quality-table td::before { content: attr(data-label); color: var(--faint); font-size: 12px; }
+  .quality-table td:empty { display: none; }
+}
