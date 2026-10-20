@@ -81,14 +81,6 @@ button svg, a svg, summary svg { width: 20px; height: 20px; flex: 0 0 20px; }
 .catalog-main { width: min(1240px, calc(100% - 80px)); margin: 0 auto; padding-bottom: 72px; }
 h1, h2, h3, p { margin: 0; }
 h1, h2 { font-family: var(--display); }
-.source-notes { margin-top: 56px; font-size: 12px; color: var(--muted); max-width: 780px; }
-.source-notes summary { cursor: pointer; list-style: none; display: inline-flex; gap: 6px; align-items: center; min-height: 34px; color: var(--muted); }
-.source-notes summary::-webkit-details-marker { display: none; }
-.source-notes summary:hover { color: var(--mint); }
-.source-notes summary svg { width: 15px; height: 15px; transition: transform .35s var(--ease); }
-.source-notes[open] summary svg { transform: rotate(180deg); }
-.source-notes > div { padding: 12px 0 16px; max-width: 72ch; line-height: 1.7; }
-.source-notes p + p { margin-top: 10px; }
 dialog { color: var(--ink); background: var(--panel-strong); border: 1px solid var(--line-strong); border-radius: 16px; padding: 0; max-height: calc(100svh - 40px); box-shadow: 0 30px 100px #0009; }
 dialog::backdrop { background: rgba(1,4,9,.72); backdrop-filter: blur(10px); }
 body:has(dialog[open]) { overflow: hidden; }
