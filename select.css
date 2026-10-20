@@ -51,4 +51,35 @@ body:has(.pick:not([hidden])) .site-header { z-index: 2; }
   .pick-row.is-on .pick-no { color: var(--muted); }
   .pick-row:active { background: rgba(255, 255, 255, .04); }
 }
+
+/* ---------- Centred: the home ----------
+   The names stand in the middle of the screen; the picture of the one you
+   are on fills the stage behind them. */
+.pick.is-center { grid-template-columns: minmax(0, 1fr); justify-items: center; align-items: center; min-height: calc(100svh - 84px); padding: 24px 0 64px; text-align: center; }
+.pick-stage { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: var(--page); }
+.pick-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; filter: saturate(.9) brightness(.62); transform: scale(1.06); transition: opacity .8s ease, transform 2.4s var(--ease-out); }
+.pick-stage img.is-on { opacity: 1; transform: none; }
+.pick-stage::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 85% 75% at 50% 50%, color-mix(in srgb, var(--page) 20%, transparent) 30%, var(--page) 100%), linear-gradient(180deg, var(--page), transparent 22%, transparent 70%, var(--page)); }
+.is-center .pick-main { display: grid; justify-items: center; width: min(760px, 100%); }
+.is-center .pick-kicker + .pick-list { margin-top: 26px; }
+.is-center .pick-list { width: 100%; border-top: 0; }
+.pick.is-center .pick-row { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 8px; padding: 16px 0 18px; border-bottom: 0; color: color-mix(in srgb, var(--ink) 38%, transparent); }
+.is-center .pick-row::before { left: 50%; top: auto; bottom: 0; width: 0; height: 2px; translate: -50% 0; transition: width .45s var(--ease); }
+.pick.is-center .pick-row.is-on { color: var(--ink); }
+.is-center .pick-row.is-on::before { width: 56px; height: 2px; }
+.is-center .pick-no { order: -1; }
+.is-center .pick-name { font-size: clamp(56px, 9vw, 128px); line-height: .9; white-space: nowrap; transition: transform .6s var(--ease), color .3s ease; }
+.is-center .pick-row.is-on .pick-name { transform: scale(1.03); }
+.is-center .pick-count { max-width: 40ch; color: var(--muted); font-size: 13px; opacity: 0; transform: translateY(-4px); transition: opacity .35s ease, transform .45s var(--ease); }
+.is-center .pick-row.is-on .pick-count { opacity: 1; transform: none; }
+@media (max-width: 900px) {
+  .pick.is-center { min-height: calc(100svh - 110px); padding: 16px 0 40px; }
+  .is-center .pick-thumb { display: none; }
+  .pick.is-center .pick-row { grid-template-columns: minmax(0, 1fr); padding: 14px 0; color: var(--ink); }
+  .is-center .pick-row::before { display: block; }
+  .is-center .pick-no { grid-row: auto; }
+  .is-center .pick-name { font-size: clamp(52px, 17vw, 88px); }
+  .is-center .pick-count { grid-column: auto; opacity: 1; transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) { .pick *, .pick *::before { transition: none !important; } }
