@@ -12,6 +12,7 @@ body:has(.pick:not([hidden])) .site-header { z-index: 2; }
 .pick-back::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, transparent, var(--sky-bg) 80%); }
 
 .pick-kicker { margin: 0; color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+.pick-kicker + .pick-list { margin-top: 22px; }
 .pick-title { margin: 8px 0 28px; font: 400 clamp(40px, 4.4vw, 64px)/.9 var(--title); letter-spacing: .01em; text-transform: uppercase; }
 .pick-title:focus { outline: none; }
 
