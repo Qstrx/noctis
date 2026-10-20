@@ -244,58 +244,7 @@
     event.target.closest?.('.action')?.classList.remove('is-pressed');
   });
 
-  /* ---------- The chapter rail follows the reader ---------- */
-  const rail = document.querySelector('.rail');
-  const railLinks = rail ? [...rail.querySelectorAll('.rail-link')] : [];
-  const railTargets = railLinks.map(link => document.getElementById(decodeURIComponent(link.hash.slice(1)))).filter(Boolean);
-  const railMarker = rail?.querySelector('.rail-marker');
-  let railCurrent = null;
-  function placeRailMarker(instant = false) {
-    if (!rail || !railMarker) return;
-    const link = railLinks.find(item => item.hash === `#${railCurrent}`);
-    rail.classList.toggle('has-current', !!link);
-    if (!link) return;
-    if (instant) railMarker.style.transition = 'none';
-    railMarker.style.setProperty('--mx', `${link.offsetLeft}px`);
-    railMarker.style.setProperty('--mw', `${link.offsetWidth}px`);
-    if (instant) requestAnimationFrame(() => railMarker.style.removeProperty('transition'));
-    const overflow = rail.scrollWidth > rail.clientWidth;
-    if (overflow) rail.scrollTo({ left: link.offsetLeft - (rail.clientWidth - link.offsetWidth) / 2, behavior: enabled() ? 'smooth' : 'auto' });
-  }
-  function updateRail() {
-    if (!rail) return;
-    const line = innerHeight * .4;
-    let current = null;
-    railTargets.forEach(target => { if (target.getBoundingClientRect().top <= line) current = target.id; });
-    if (current !== railCurrent) {
-      const first = railCurrent === null;
-      railCurrent = current;
-      railLinks.forEach(link => {
-        if (link.hash === `#${current}`) link.setAttribute('aria-current', 'location');
-        else link.removeAttribute('aria-current');
-      });
-      placeRailMarker(first);
-    }
-    const scrollable = document.documentElement.scrollHeight - innerHeight;
-    rail.style.setProperty('--progress', scrollable > 0 ? clamp(scrollY / scrollable, 0, 1).toFixed(4) : '0');
-  }
-
-  /* ---------- The title card drifts as the page scrolls away ---------- */
-  const heroMedia = document.querySelector('.hero-media');
-  function updateHero() {
-    if (!heroMedia) return;
-    // The photo is scaled 1.1 inside its frame; never drift past that margin.
-    const shift = enabled() ? Math.min(scrollY * .08, heroMedia.clientHeight * .045) : 0;
-    heroMedia.style.setProperty('--hero-shift', `${shift.toFixed(1)}px`);
-  }
-
-  let scrollFrame = 0;
-  function onScroll() {
-    if (scrollFrame) return;
-    scrollFrame = requestAnimationFrame(() => { scrollFrame = 0; updateRail(); updateHero(); });
-  }
-  addEventListener('scroll', onScroll, { passive: true });
-  function layout() { updateMarkers(); placeRailMarker(true); onScroll(); }
+  function layout() { updateMarkers(); }
   layout();
   addEventListener('resize', layout, { passive: true });
   document.fonts?.ready.then(layout);
@@ -307,7 +256,7 @@
     if (enabled()) return;
     revealAll();
     [...animations.keys()].forEach(cancel); [...closing].forEach(dialog => { if (dialog.open) dialog.close(); });
-    updateMarkers(); updateHero();
+    updateMarkers();
   }
   addEventListener('oceans:motion', syncMotion); reduced.addEventListener('change', syncMotion);
 })();

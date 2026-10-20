@@ -787,6 +787,5 @@ MW4_VARIANT_PACKS.forEach(pack => {
     const scene = pack.id === 'mw4-recap' ? 'recap' : String(index + 1).padStart(2, '0');
     file.scene = scene;
     file.poster = 'img/cod/mw4/scenes/' + scene + '.jpg';
-    file.thumbnail = 'img/cod/mw4/scenes/' + scene + '-thumb.jpg';
   }));
 });

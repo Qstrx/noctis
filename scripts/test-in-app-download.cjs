@@ -28,7 +28,8 @@ const server = http.createServer((req, res) => {
 (async () => {
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const origin = `http://127.0.0.1:${server.address().port}`;
-  const browser = await chromium.launch({ channel: 'chrome', headless: true });
+  // PLAYWRIGHT_CHANNEL=chrome uses an installed Chrome; by default Playwright's own Chromium.
+  const browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || undefined, headless: true });
   const errors = [];
   const open = async (ua, route = 'six.html', extra = {}) => {
     const context = await browser.newContext({ userAgent: ua, viewport: { width: 390, height: 844 }, reducedMotion: 'reduce', ...extra });

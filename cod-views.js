@@ -6,18 +6,20 @@
   const picker = document.getElementById('choose');
   const nav = document.getElementById('codSwitch');
   if (!picker || !nav) return;
+  // Each view: its title, the sections it shows and the heading that takes focus.
   const VIEWS = {
-    price: { title: 'John Price', show: ['#pack-price'], heading: '#row-price' },
-    gaz: { title: 'Gaz', show: ['#pack-gaz'], heading: '#row-gaz' },
-    ghost: { title: 'Ghost', show: ['#pack-ghost'], heading: '#row-ghost' },
-    soap: { title: 'Soap', show: ['#pack-soap'], heading: '#row-soap' },
-    valeria: { title: 'Valeria', show: ['#pack-valeria'], heading: '#row-valeria' },
-    archer: { title: 'The Archer', show: ['#pack-archer'], heading: '#row-archer' },
-    cutscenes: { title: 'Cutscenes', show: ['#mw4-campaign', '#campaign-cutscenes', '.board-trailers'], heading: '#mw4-collection-title' }
+    price: { title: 'John Price', show: ['pack-price'], heading: 'row-price' },
+    gaz: { title: 'Gaz', show: ['pack-gaz'], heading: 'row-gaz' },
+    ghost: { title: 'Ghost', show: ['pack-ghost'], heading: 'row-ghost' },
+    soap: { title: 'Soap', show: ['pack-soap'], heading: 'row-soap' },
+    valeria: { title: 'Valeria', show: ['pack-valeria'], heading: 'row-valeria' },
+    archer: { title: 'The Archer', show: ['pack-archer'], heading: 'row-archer' },
+    cutscenes: { title: 'Cutscenes', show: ['mw4-campaign', 'campaign-cutscenes', 'mw4-trailers'], heading: 'mw4-collection-title' }
   };
   // Places inside a view that links can point at directly.
   const INSIDE = { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'cutscenes' };
-  const sections = [document.getElementById('mw4-campaign'), ...document.querySelectorAll('.board, .board-row, .source-notes')].filter(Boolean);
+  const sections = [document.getElementById('mw4-campaign'), ...document.querySelectorAll('.op')].filter(Boolean);
+  const notes = document.querySelector('.source-notes');
   const baseTitle = document.title;
   let current = null;
 
@@ -35,17 +37,10 @@
     document.body.dataset.view = view;
     picker.hidden = view !== 'choose';
     nav.hidden = view === 'choose';
-    if (view === 'choose') sections.forEach(section => { section.hidden = true; });
-    else {
-      const visible = new Set(VIEWS[view].show.flatMap(selector => [...document.querySelectorAll(selector)]));
-      sections.forEach(section => {
-        // A board stays when one of its rows is shown; the source notes go with every view.
-        const keep = visible.has(section) || section.classList.contains('source-notes')
-          || (section.classList.contains('board') && [...visible].some(item => section.contains(item)))
-          || [...visible].some(item => item !== section && item.contains(section));
-        section.hidden = !keep;
-      });
-    }
+    const shown = view === 'choose' ? [] : VIEWS[view].show;
+    sections.forEach(section => { section.hidden = !shown.includes(section.id); });
+    // The notes about the source go with every view.
+    if (notes) notes.hidden = view === 'choose';
     nav.querySelectorAll('[data-view-link]').forEach(link => {
       if (link.dataset.viewLink === view) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
@@ -53,7 +48,7 @@
     document.title = view === 'choose' ? baseTitle : `${VIEWS[view].title} — ${baseTitle}`;
     if (target) target.scrollIntoView({ block: 'start' });
     else if (changed || moveFocus) scrollTo(0, 0);
-    if (moveFocus) document.querySelector(view === 'choose' ? '#pickTitle' : VIEWS[view].heading)?.focus({ preventScroll: true });
+    if (moveFocus) document.getElementById(view === 'choose' ? 'pickTitle' : VIEWS[view].heading)?.focus({ preventScroll: true });
   }
 
   // Leaving the choice, the view rises in; select.js has already stepped the list out.
