@@ -215,7 +215,8 @@
     if (warnInAppBrowser(downloadOpener)) return;
     const file = pendingFile;
     const opener = downloadOpener;
-    const title = $('hitT')?.textContent || file.name || 'Scene pack';
+    // Whose pack and which game, under the picture on the credit screen.
+    const title = [$('hitT')?.textContent || file.name || 'Scene pack', $('hitS')?.textContent].filter(Boolean).join(' · ');
     const poster = $('hitCover')?.getAttribute('src') || '';
     pendingFile = null;
     const link = document.createElement('a');
@@ -401,8 +402,8 @@
     const heading = pack.namedFiles ? [pack.title, selectedFile.name]
       : pack.group === 'trailers' ? [`${pack.title} · ${trailerNo}`, trailerName || trailerNo]
       : [pack.chapter, pack.title];
-    $('codPreviewKicker').textContent = heading[0];
-    $('codPreviewTitle').textContent = heading[1];
+    // The name, with its game beside it: "Gaz  Modern Warfare".
+    $('codPreviewTitle').replaceChildren(heading[1], ' ', create('span', heading[0], 'preview-game'));
     $('codPreviewLabel').textContent = pack.group === 'trailers' ? 'Call of Duty / Trailer preview' : 'Call of Duty / Scene preview';
     $('codPreviewMeta').textContent = (selectedFile.run || pack.meta.split(' · ')[0]) + (pack.files.length > 1 && !pack.namedFiles ? ` · Part ${part + 1}` : '');
     video.poster = pack.poster;
