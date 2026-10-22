@@ -171,6 +171,12 @@
         poster: firstFile.poster || codPack.poster
       };
       const cutscenes = codPack.group === 'cutscenes' || codPack.group === 'trailers';
+      if (codPack.group === 'gameplay') return {
+        title: codPack.chapter,
+        context: '',
+        tags: [resolutionLabel(firstFile.resolution || codPack.resolution), onePart ? `Part ${index + 1}` : ''],
+        poster: cover?.getAttribute('src') || codPack.poster
+      };
       return {
         title: cutscenes ? codPack.chapter : codPack.title,
         context: cutscenes ? codPack.title : codPack.chapter,
@@ -403,7 +409,9 @@
       : pack.group === 'trailers' ? [`${pack.title} · ${trailerNo}`, trailerName || trailerNo]
       : [pack.chapter, pack.title];
     // The name, with its game beside it: "Gaz  Modern Warfare".
-    $('codPreviewTitle').replaceChildren(heading[1], ' ', create('span', heading[0], 'preview-game'));
+    // Gameplay packs show only the video's own name.
+    if (pack.group === 'gameplay') $('codPreviewTitle').replaceChildren(pack.chapter);
+    else $('codPreviewTitle').replaceChildren(heading[1], ' ', create('span', heading[0], 'preview-game'));
     $('codPreviewLabel').textContent = pack.group === 'trailers' ? 'Call of Duty / Trailer preview' : 'Call of Duty / Scene preview';
     $('codPreviewMeta').textContent = (selectedFile.run || pack.meta.split(' · ')[0]) + (pack.files.length > 1 && !pack.namedFiles ? ` · Part ${part + 1}` : '');
     video.poster = pack.poster;
