@@ -14,6 +14,7 @@
     soap: { title: 'Soap', show: ['pack-soap'], heading: 'row-soap' },
     valeria: { title: 'Valeria', show: ['pack-valeria'], heading: 'row-valeria' },
     archer: { title: 'The Archer', show: ['pack-archer'], heading: 'row-archer' },
+    gameplay: { title: 'Gameplay', show: ['pack-gameplay'], heading: 'row-gameplay' },
     cutscenes: { title: 'Cutscenes', show: ['mw4-campaign', 'campaign-cutscenes', 'mw4-trailers'], heading: 'mw4-collection-title' }
   };
   // Places inside a view that links can point at directly.
