@@ -30,6 +30,8 @@
   window.oceansCount = function (fileUrl, title) {
     let name = fileUrl;
     try { name = decodeURIComponent(new URL(fileUrl).pathname.split('/').pop()) || new URL(fileUrl).hostname; } catch {}
+    // Drive and Mega links end in "view" or an id, so name those by the pack instead.
+    if (!/\.[a-z0-9]{2,4}$/i.test(name) && title) name = title.replace(/\s*·\s*/g, ' - ');
     send({ p: 'download/' + name, t: title || name, e: 'true' });
   };
 })();
