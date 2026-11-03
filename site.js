@@ -225,6 +225,7 @@
     const title = [$('hitT')?.textContent || file.name || 'Scene pack', $('hitS')?.textContent].filter(Boolean).join(' · ');
     const poster = $('hitCover')?.getAttribute('src') || '';
     pendingFile = null;
+    window.oceansCount?.(file.url, title);
     const link = document.createElement('a');
     link.href = file.url;
     link.rel = 'noopener noreferrer';
