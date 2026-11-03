@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src https://oceans-scenepacks.goatcounter.com; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#060708">
+<title>Back soon — Ocean’s Scenepacks</title>
+<link rel="icon" href="img/icon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
+<link rel="preload" href="img/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script src="count.js?v=1" defer></script>
+<style>
+@font-face { font-family: "Anton"; src: url("img/fonts/anton-latin.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; src: url("img/fonts/barlow-condensed-700-latin.woff2") format("woff2"); font-display: swap; }
+
+:root {
+  --page: #060708; --ink: #eef4f5; --muted: #a9babe; --faint: #6f8287;
+  --accent: #6ff5bf; --line: rgba(238, 244, 245, .12);
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  min-height: 100vh; min-height: 100svh; overflow-x: hidden;
+  background: var(--page); color: var(--ink);
+  font: 400 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+  display: grid; grid-template-rows: auto 1fr auto;
+}
+
+/* The picture: a rappel over the city at night, drifting slowly. */
+.scene { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.scene img {
+  position: absolute; right: 0; top: 50%; height: 118%; width: auto; min-width: 62%;
+  object-fit: cover; object-position: 60% 40%;
+  transform: translateY(-50%) scale(1.04); opacity: .78;
+  filter: contrast(1.12) brightness(.9);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 42%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 42%);
+  animation: drift 26s ease-in-out infinite alternate;
+}
+@keyframes drift { to { transform: translateY(-52%) scale(1.12) translateX(-2%); } }
+.scene::before { /* green aurora from below, the site's colour */
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 50% at 18% 100%, rgba(111, 245, 191, .16), transparent 70%),
+    radial-gradient(40% 35% at 85% 0%, rgba(111, 245, 191, .06), transparent 70%),
+    linear-gradient(180deg, rgba(6, 7, 8, .55), transparent 30%, transparent 70%, rgba(6, 7, 8, .9));
+}
+.scene::after { /* fine scanlines, like a paused frame */
+  content: ""; position: absolute; inset: 0; opacity: .35; mix-blend-mode: overlay;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .55) 0 1px, transparent 1px 3px);
+}
+.sweep { /* a slow band of light passing down the screen */
+  position: fixed; left: 0; right: 0; top: -30%; height: 30%; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(111, 245, 191, .05), transparent);
+  animation: sweep 7s linear infinite;
+}
+@keyframes sweep { to { top: 100%; } }
+
+header, main, footer { position: relative; z-index: 2; padding-inline: max(16px, 5vw); }
+
+header {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  padding-block: 22px; border-bottom: 1px solid var(--line);
+  font: 700 13px/1 var(--cond); letter-spacing: .26em; text-transform: uppercase;
+}
+.brand { display: flex; align-items: center; gap: 12px; color: var(--ink); }
+.brand img { width: 22px; height: 22px; }
+.live { display: flex; align-items: center; gap: 10px; color: var(--accent); white-space: nowrap; }
+.live i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .2; box-shadow: none; } }
+
+main { display: flex; flex-direction: column; justify-content: center; padding-block: 8vh; max-width: 900px; }
+.kicker {
+  display: flex; align-items: center; gap: 14px; margin: 0 0 22px;
+  font: 700 14px/1 var(--cond); letter-spacing: .32em; text-transform: uppercase; color: var(--muted);
+}
+.kicker::before { content: ""; width: 44px; height: 1px; background: var(--accent); }
+
+h1 {
+  margin: 0; font: 400 clamp(4.2rem, 17vw, 11.5rem)/.84 "Anton", Impact, sans-serif;
+  text-transform: uppercase; letter-spacing: .005em;
+}
+h1 span { display: block; }
+h1 .ghost { color: transparent; -webkit-text-stroke: 1.5px rgba(238, 244, 245, .85); }
+h1 span { animation: rise .9s cubic-bezier(.2, .7, .1, 1) both; }
+h1 span + span { animation-delay: .12s; }
+@keyframes rise { from { opacity: 0; transform: translateY(28px); clip-path: inset(0 0 100% 0); } to { opacity: 1; transform: none; clip-path: inset(0 0 -10% 0); } }
+
+.lede { margin: 30px 0 0; max-width: 40ch; font-size: clamp(1rem, 2.4vw, 1.15rem); color: var(--muted); animation: fade 1s .35s both; }
+.lede strong { color: var(--ink); font-weight: 600; }
+@keyframes fade { from { opacity: 0; } }
+
+/* Status board */
+.board {
+  margin-top: 40px; width: min(100%, 520px);
+  border: 1px solid var(--line); background: rgba(6, 7, 8, .55);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  animation: fade 1s .5s both;
+}
+.row {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px;
+  padding: 14px 18px; border-bottom: 1px solid var(--line);
+  font: 700 14px/1 var(--cond); letter-spacing: .2em; text-transform: uppercase;
+}
+.row:last-of-type { border-bottom: 0; }
+.row span { color: var(--faint); }
+.row b { font-weight: 700; color: var(--ink); }
+.row b.ok { color: var(--accent); }
+.row b.wait { color: #f0c87a; }
+.bar { position: relative; height: 3px; overflow: hidden; background: rgba(238, 244, 245, .08); }
+.bar::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 38%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: load 1.9s cubic-bezier(.5, 0, .5, 1) infinite;
+}
+@keyframes load { from { left: -40%; } to { left: 100%; } }
+
+footer {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px;
+  padding-block: 20px; border-top: 1px solid var(--line);
+  font: 700 12px/1.4 var(--cond); letter-spacing: .24em; text-transform: uppercase; color: var(--faint);
+}
+
+@media (max-width: 720px) {
+  .scene img { min-width: 0; width: 100%; height: 100%; top: 0; transform: none; opacity: .4;
+    -webkit-mask-image: linear-gradient(180deg, #000 20%, transparent 85%); mask-image: linear-gradient(180deg, #000 20%, transparent 85%);
+    animation: none; }
+  header { padding-block: 16px; font-size: 11px; letter-spacing: .2em; }
+  .brand span { display: none; }
+  main { justify-content: flex-end; padding-block: 18vh 6vh; }
+  h1 { font-size: 30vw; }
+  .row { padding: 13px 14px; font-size: 13px; letter-spacing: .14em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  .sweep { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="scene" aria-hidden="true"><img src="img/price.jpg" alt=""></div>
+<div class="sweep" aria-hidden="true"></div>
+
+<header>
+  <div class="brand"><img src="img/icon.svg" alt=""><span>Ocean’s Scenepacks</span></div>
+  <div class="live"><i aria-hidden="true"></i>Offline · Maintenance</div>
+</header>
+
+<main>
+  <p class="kicker">Closed for maintenance</p>
+  <h1><span>Back</span><span class="ghost">soon.</span></h1>
+  <p class="lede">The archive is offline while I work on it. <strong>Nothing is gone</strong>: every scene pack will be right here when it reopens. Come back later.</p>
+
+  <div class="board" role="status" aria-label="Site status">
+    <div class="row"><span>Scene packs</span><b class="ok">Safe</b></div>
+    <div class="row"><span>Downloads</span><b class="wait">Paused</b></div>
+    <div class="row"><span>Work in progress</span><b>Reopening soon</b></div>
+    <div class="bar" aria-hidden="true"></div>
+  </div>
+</main>
+
+<footer>
+  <span>Ocean’s Scenepacks</span>
+  <span>No watermark · No sign-in</span>
+</footer>
+</body>
+</html>
