@@ -148,13 +148,13 @@
   document.querySelectorAll('.row[data-versions]').forEach(rowEl => setVersion(rowEl, QUALITIES.find(q => JSON.parse(rowEl.dataset.versions)[q])));
 
   // ---------- The slices ----------
-  // ---------- The cast: a quiet grid of portraits ----------
-  const card = (view, i) => `<li style="--n:${i}"><a class="who${view.still ? '' : ' is-soon'}" href="#${view.id}" data-view="${view.id}"><span class="who-pic">${view.still ? `<img src="${view.still}" alt="" style="object-position:${view.focus}" loading="lazy" decoding="async">` : '<span>Soon</span>'}</span><span class="who-name">${esc(view.name)}</span><span class="who-meta">${esc(view.count)}</span></a></li>`;
-  cast.innerHTML = VIEWS.filter(view => !SPECIAL.includes(view.id)).map(card).join('');
-  document.getElementById('footage').innerHTML = VIEWS.filter(view => SPECIAL.includes(view.id)).map((view, i) => card(view, i + 11)).join('');
+  // ---------- The tiles: square pictures edge to edge, a name on each ----------
+  // Price and the full cutscenes are wide, so every row is full.
+  const WIDE = ['price', 'cutscenes'];
+  cast.innerHTML = VIEWS.map((view, i) => `<li class="${WIDE.includes(view.id) ? 'is-wide' : ''}" style="--n:${i}"><a class="tile${view.still ? '' : ' is-soon'}" href="#${view.id}" data-view="${view.id}"><span class="tile-pic">${view.still ? `<img src="${view.still}" alt="" style="object-position:${view.focus}" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${esc(view.count)}</span></span></a></li>`).join('');
   VIEWS.forEach(view => Shelf.add(view.id, view));
-  // The sheet's picture grows out of the portrait.
-  const sourceFor = id => document.querySelector(`.who[data-view="${CSS.escape(id)}"] .who-pic`);
+  // The sheet's picture grows out of the tile.
+  const sourceFor = id => document.querySelector(`.tile[data-view="${CSS.escape(id)}"] .tile-pic`);
   // A link to an MW4 scene opens the cutscenes with that scene.
   if (!location.hash && new URLSearchParams(location.search).has('scene')) {
     history.replaceState(history.state, '', '#cutscenes');
