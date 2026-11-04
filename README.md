@@ -28,7 +28,7 @@ Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of
 | `index.html` | Home: two full-height doors, Call of Duty and SIX |
 | `clean.css`, `ui.js` | The look shared by every page (header, buttons, the quality switch, the doors, the slices, the sheet and its rows) and small pieces of motion |
 | `shelf.js` | Slices and their sheet: a slice opens its own address (`cod.html#ghost`) and its picture grows into the top of the sheet; Back, Escape and the close button send it back |
-| `cod-page.js` | Call of Duty: a slice per character and one for the cutscenes; each sheet lists the packs from Modern Warfare to MW4 with their 4K, 2K and 1080p versions, and the gameplay under Price, Ghost and Gaz (`GAMEPLAY` at the top) |
+| `cod-page.js` | Call of Duty: a carousel of portraits (characters, full cutscenes, trailers) moved by swipe, drag, wheel or arrows, the centred one named below; each sheet lists the packs from Modern Warfare to MW4 with their 4K, 2K and 1080p versions, and the gameplay under Price, Ghost and Gaz (`GAMEPLAY` at the top) |
 | `six-page.js` | SIX: a slice per season, each sheet a row per episode |
 | `img/stage/` | Full-HD stills taken from the packs themselves, for the slices and the sheets |
 | `cod.html`, `six.html` | The two collections |
