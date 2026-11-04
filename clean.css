@@ -123,6 +123,39 @@ body[data-world] .action svg path { fill: none; stroke: currentColor; stroke-wid
 .empty { margin: 8px 0 0; padding: 28px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
 
 /* =====================================================================
+   The index (Call of Duty): every name large, the picture beside it
+   ===================================================================== */
+.roster { min-height: 100svh; padding: calc(var(--head) + clamp(12px, 3vh, 32px)) var(--gut) clamp(20px, 4vh, 40px); }
+.roster-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); align-items: center; gap: clamp(24px, 5vw, 96px); max-width: 1440px; min-height: calc(100svh - var(--head) - clamp(32px, 7vh, 72px)); margin: 0 auto; }
+.index { margin: 0; padding: 0; list-style: none; }
+.index-gap { height: clamp(14px, 2.6vh, 28px); }
+.entry { position: relative; display: grid; grid-template-columns: 2.6em auto minmax(0, 1fr); align-items: baseline; gap: 0 12px; padding: .28vh 0; color: var(--ink); outline: none; }
+.entry-no { font: 500 11px/1 var(--mono); color: var(--faint); transition: color .4s ease; }
+.entry-name { display: block; overflow: hidden; padding: .06em 24px .02em 0; }
+.entry-name > span { display: inline-block; font: 400 clamp(32px, 5.3vh, 70px)/.98 var(--title); letter-spacing: .01em; text-transform: uppercase; white-space: nowrap; transition: color .45s ease, transform .7s var(--ease-out); animation: name-in 1.1s calc(var(--n) * 45ms + 120ms) var(--ease-out) both; }
+@keyframes name-in { from { transform: translateY(105%); } }
+.entry-meta { padding-left: 34px; font: 500 12px/1 var(--mono); color: var(--muted); opacity: 0; transform: translateX(-8px); transition: opacity .4s ease, transform .6s var(--ease-out); white-space: nowrap; }
+.entry-thumb { display: none; }
+.entry.is-soon .entry-name > span { color: #55555b; }
+/* The one you are on leads; the rest step back */
+.index:hover .entry .entry-name > span, .index:focus-within .entry .entry-name > span { color: #36363b; }
+.index .entry.is-on .entry-name > span { color: var(--ink); transform: translateX(18px); }
+.index .entry.is-on.is-soon .entry-name > span { color: #8a8a90; }
+.entry.is-on .entry-no { color: var(--accent); }
+.entry.is-on .entry-meta { opacity: 1; transform: none; }
+.entry:focus-visible .entry-name > span { text-decoration: underline 3px var(--accent); text-underline-offset: 6px; }
+.viewer { position: relative; margin: 0; justify-self: end; width: min(100%, 460px); animation: viewer-in 1.4s .3s var(--ease-io) both; }
+@keyframes viewer-in { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+.viewer-frame { position: relative; aspect-ratio: 4 / 5; max-height: calc(100svh - var(--head) - 140px); overflow: hidden; border-radius: 16px; background: radial-gradient(120% 90% at 50% 100%, #1a1a1d, #0e0e10); }
+.viewer-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.viewer-frame img.is-leaving { z-index: 0; }
+.viewer-frame img:not(.is-leaving) { z-index: 1; }
+.viewer-soon { position: absolute; inset: 0; display: grid; place-items: center; font: 500 12px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--faint); opacity: 0; transition: opacity .5s ease; }
+.viewer-frame.is-blank .viewer-soon { opacity: 1; }
+.viewer figcaption { display: flex; justify-content: space-between; gap: 16px; margin-top: 14px; font: 500 12px/1.4 var(--mono); color: var(--muted); }
+.viewer-no { color: var(--ink); }
+
+/* =====================================================================
    The sheet: a slice grown into its page
    ===================================================================== */
 .sheet { position: fixed; inset: 0; z-index: 60; overflow-y: auto; overscroll-behavior: contain; background: var(--page); }
@@ -222,6 +255,19 @@ body[data-world] .quality-tip { border-radius: 12px; }
   .slice::after { background: linear-gradient(90deg, rgba(9, 9, 10, .75), rgba(9, 9, 10, 0) 70%); }
   .slice-name { top: 50%; bottom: auto; left: 20px; transform: translateY(-50%); font-size: clamp(26px, 8.5cqi, 44px); }
   .slice-count { display: none; }
+  .roster { padding-top: calc(var(--head) + 8px); }
+  .roster-grid { display: block; min-height: 0; }
+  .viewer { display: none; }
+  .index-gap { height: 18px; }
+  .entry { grid-template-columns: 1.9em minmax(0, 1fr) 64px; grid-template-rows: auto auto; align-items: center; gap: 2px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .entry-no { grid-row: 1 / 3; align-self: center; }
+  .entry-name > span { font-size: clamp(30px, 9vw, 40px); }
+  .entry-meta { grid-column: 2; grid-row: 2; padding-left: 0; opacity: 1; transform: none; font-size: 11px; }
+  .entry-thumb { display: block; grid-column: 3; grid-row: 1 / 3; width: 64px; height: 64px; overflow: hidden; border-radius: 10px; background: radial-gradient(120% 90% at 50% 100%, #1a1a1d, #0e0e10); }
+  .entry-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .index:hover .entry .entry-name > span, .index:focus-within .entry .entry-name > span { color: var(--ink); }
+  .index .entry.is-on .entry-name > span { transform: none; }
+  .entry.is-soon .entry-name > span, .index .entry.is-soon .entry-name > span { color: #55555b; }
   .slices.is-many { height: auto; }
   .slices.is-many .slice { flex: none; height: 96px; }
   .slices.is-many .slice-name { left: 20px; right: 12px; bottom: auto; top: 50%; writing-mode: horizontal-tb; transform: translateY(-50%); font-size: clamp(26px, 8.5cqi, 40px); }
@@ -242,5 +288,5 @@ body[data-world] .quality-tip { border-radius: 12px; }
   .row .seg > button { padding: 0 9px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .is-rising .ch, .door-pic, .door-copy, .slice, .rows.is-entering .row, .label.is-entering, .sheet-mw4.is-entering { animation: none !important; }
+  .entry-name > span, .viewer, .is-rising .ch, .door-pic, .door-copy, .slice, .rows.is-entering .row, .label.is-entering, .sheet-mw4.is-entering { animation: none !important; }
 }

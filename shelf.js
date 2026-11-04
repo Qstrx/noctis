@@ -17,7 +17,11 @@
   let current = null, openedHere = false, busy = null;
   const EASE = 'cubic-bezier(.77, 0, .18, 1)';
 
-  const sliceOf = id => document.querySelector(`.slice[data-view="${CSS.escape(id)}"]`);
+  // Where a sheet's picture flies from and back to, and what takes focus
+  // after closing. A page can set both; by default it is the slice.
+  const linkOf = id => document.querySelector(`[data-view="${CSS.escape(id)}"]`);
+  let sourceOf = id => linkOf(id);
+  const sliceOf = id => sourceOf(id);
   const visible = rect => rect.bottom > 0 && rect.top < innerHeight && rect.width > 0;
 
   function fly(src, focus, from, to, radius) {
@@ -93,7 +97,7 @@
       sheet.hidden = true;
       document.documentElement.classList.remove('sheet-open');
       box.style.visibility = '';
-      slice?.focus({ preventScroll: true });
+      linkOf(id)?.focus({ preventScroll: true });
     };
     const from = box.getBoundingClientRect();
     const to = slice?.getBoundingClientRect();
@@ -141,6 +145,7 @@
     add(id, view) { views.set(id, view); },
     start(options = {}) {
       aliases = options.aliases || {};
+      if (options.sourceFor) sourceOf = options.sourceFor;
       addEventListener('hashchange', () => route());
       if (options.initial && !location.hash) history.replaceState(history.state, '', `#${options.initial}`);
       route({ initial: true });

@@ -6,8 +6,9 @@
   // 4K, 2K and 1080p, and for Price, Ghost and Gaz their gameplay. Everything
   // is built from COD_PACKS here, before site.js and motion.js run, so
   // Preview and Download work on these rows as on any other card.
-  const slices = document.getElementById('slices');
-  if (!slices || !window.Shelf || typeof COD_PACKS === 'undefined') return;
+  const index = document.getElementById('index');
+  const viewer = document.getElementById('viewer');
+  if (!index || !viewer || !window.Shelf || typeof COD_PACKS === 'undefined') return;
 
   const VIEWS = [
     { id: 'price', name: 'John Price', still: 'img/stage/price.jpg', focus: '36% 30%' },
@@ -148,14 +149,57 @@
   document.querySelectorAll('.row[data-versions]').forEach(rowEl => setVersion(rowEl, QUALITIES.find(q => JSON.parse(rowEl.dataset.versions)[q])));
 
   // ---------- The slices ----------
-  slices.classList.add('is-many');
-  slices.innerHTML = VIEWS.map((view, i) => `<a class="slice${view.still ? '' : ' is-blank'}" href="#${view.id}" data-view="${view.id}" style="--n:${i}">${view.still ? `<img class="slice-pic" src="${view.still}" alt="" style="object-position:${view.focus}" decoding="async">` : ''}<span class="slice-name">${esc(view.name)}</span><span class="slice-count">${esc(view.count)}</span></a>`).join('');
+  // ---------- The index: every name, large; the picture beside it ----------
+  index.innerHTML = VIEWS.map((view, i) => `${view.id === 'cutscenes' ? '<li class="index-gap" aria-hidden="true"></li>' : ''}<li style="--n:${i}"><a class="entry${view.still ? '' : ' is-soon'}" href="#${view.id}" data-view="${view.id}">
+      <span class="entry-no">${pad(i + 1)}</span>
+      <span class="entry-name"><span>${esc(view.name)}</span></span>
+      <span class="entry-meta">${esc(view.count)}</span>
+      <span class="entry-thumb">${view.still ? `<img src="${view.still}" alt="" style="object-position:${view.focus}" loading="lazy" decoding="async">` : ''}</span>
+    </a></li>`).join('');
   VIEWS.forEach(view => Shelf.add(view.id, view));
+  const frame = viewer.querySelector('.viewer-frame');
+  const caption = { no: viewer.querySelector('.viewer-no'), meta: viewer.querySelector('.viewer-meta') };
+  let shown = null;
+  // The new picture rises over the old one; the old one sinks and darkens.
+  function preview(id) {
+    if (id === shown) return;
+    const view = VIEWS.find(item => item.id === id);
+    const up = !shown || VIEWS.findIndex(item => item.id === shown) < VIEWS.indexOf(view);
+    shown = id;
+    index.querySelectorAll('.entry').forEach(entry => entry.classList.toggle('is-on', entry.dataset.view === id));
+    caption.no.textContent = `${pad(VIEWS.indexOf(view) + 1)} — ${view.name}`;
+    caption.meta.textContent = view.count;
+    frame.classList.toggle('is-blank', !view.still);
+    const old = [...frame.querySelectorAll('img:not(.is-leaving)')];
+    if (!view.still) { old.forEach(img => img.remove()); return; }
+    const img = new Image();
+    img.alt = '';
+    img.decoding = 'async';
+    img.src = view.still;
+    img.style.objectPosition = view.focus;
+    frame.append(img);
+    if (UI.still() || !old.length) { old.forEach(item => item.remove()); return; }
+    const ease = 'cubic-bezier(.77, 0, .18, 1)';
+    img.animate([{ clipPath: up ? 'inset(100% 0 0 0)' : 'inset(0 0 100% 0)', transform: 'scale(1.18)' }, { clipPath: 'inset(0 0 0 0)', transform: 'scale(1)' }], { duration: 900, easing: ease });
+    old.forEach(item => {
+      item.classList.add('is-leaving');
+      item.animate([{ transform: 'none', filter: 'brightness(1)' }, { transform: `translateY(${up ? -8 : 8}%) scale(1.05)`, filter: 'brightness(.3)' }], { duration: 900, easing: ease, fill: 'forwards' })
+        .finished.then(() => item.remove(), () => item.remove());
+    });
+  }
+  index.addEventListener('pointerover', event => { const entry = event.target.closest('.entry'); if (entry) preview(entry.dataset.view); });
+  index.addEventListener('focusin', event => { const entry = event.target.closest('.entry'); if (entry) preview(entry.dataset.view); });
+  preview(VIEWS[0].id);
+  // The sheet's picture flies from the large picture, or on a phone from the row's thumbnail.
+  const sourceFor = id => {
+    if (getComputedStyle(viewer).display !== 'none') { preview(id); return frame; }
+    return index.querySelector(`.entry[data-view="${CSS.escape(id)}"] .entry-thumb`);
+  };
   // A link to an MW4 scene opens the cutscenes with that scene.
   if (!location.hash && new URLSearchParams(location.search).has('scene')) {
     history.replaceState(history.state, '', '#cutscenes');
     addEventListener('load', () => document.getElementById('mw4Detail')?.scrollIntoView({ block: 'center' }));
   }
   // Old addresses still land in the right sheet.
-  Shelf.start({ aliases: { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'trailers', gameplay: 'price', 'pack-gameplay': 'price', 'pack-price': 'price', 'pack-gaz': 'gaz', 'pack-ghost': 'ghost', 'pack-soap': 'soap', 'pack-valeria': 'valeria', 'pack-archer': 'archer' } });
+  Shelf.start({ sourceFor, aliases: { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'trailers', gameplay: 'price', 'pack-gameplay': 'price', 'pack-price': 'price', 'pack-gaz': 'gaz', 'pack-ghost': 'ghost', 'pack-soap': 'soap', 'pack-valeria': 'valeria', 'pack-archer': 'archer' } });
 })();
