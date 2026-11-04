@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="site.css?v=17">
 <link rel="stylesheet" href="motion.css?v=11">
 <link rel="stylesheet" href="cards.css?v=12">
-<link rel="stylesheet" href="cod.css?v=17">
+<link rel="stylesheet" href="cod.css?v=18">
 <link rel="stylesheet" href="mw4.css?v=16">
 <link rel="stylesheet" href="download.css?v=15">
 <link rel="stylesheet" href="credit.css?v=17">
@@ -29,23 +29,21 @@
 <script src="archive-data.js?v=12" defer></script>
 <script src="mw4-data.js?v=13" defer></script>
 <script src="mw4-missions.js?v=16" defer></script>
-<script src="cod-views.js?v=15" defer></script>
+<script src="cod-views.js?v=16" defer></script>
 <script src="credit.js?v=11" defer></script>
 <script src="site.js?v=22" defer></script>
 <script src="motion.js?v=11" defer></script>
 </head>
 <body data-world="cod" data-theme="night" data-motion="on">
 <a class="skip-link" href="#main">Skip to content</a>
-<div class="cod-ambient" aria-hidden="true"><img id="codAmbient" src="img/cod/price-mw2.jpg" alt=""></div>
 <header class="site-header">
   <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s<span class="brand-caption">scenepacks</span></span></a>
   <nav class="site-nav" aria-label="Main navigation"><a href="index.html">Collections</a><a href="cod.html" aria-current="page">Call of Duty</a><a href="six.html">SIX</a><a href="quality.html">Quality</a></nav>
 </header>
 <main class="catalog-main" id="main">
-<section class="roster-screen" id="choose" aria-labelledby="pickTitle">
-  <header class="roster-head"><h1 class="roster-title" id="pickTitle" tabindex="-1">Call of Duty</h1><p>Pick a character, then a game. Each game holds that character’s scene pack and any gameplay from it.</p></header>
-  <ul class="roster" id="roster" aria-label="Characters"></ul>
-  <a class="roster-cuts" href="#cutscenes" data-view-link="cutscenes"><img src="img/cod/mw4/scenes/16.jpg" alt="" decoding="async"><span class="roster-cuts-name">Cutscenes</span><span class="roster-cuts-info">22 MW4 scenes in 4K, 2K and 1080p · MW I–III campaigns · trailers</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+<section class="grid-screen" id="choose" aria-labelledby="pickTitle">
+  <header class="grid-head"><h1 class="grid-title" id="pickTitle" tabindex="-1">Call of Duty</h1><p>Choose a character and a game. Each one opens its scene pack and gameplay.</p></header>
+  <ul class="tracks" id="packGrid" aria-label="Characters and games"></ul>
   <noscript><p class="no-script">This page needs JavaScript to show the packs. <a href="https://github.com/Qstrx/noctis/releases">Browse all downloads on GitHub</a>.</p></noscript>
 </section>
 <nav class="cod-switch" id="codSwitch" aria-label="Call of Duty sections" hidden>
