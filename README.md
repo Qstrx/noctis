@@ -11,6 +11,10 @@ File entries show their duration and preview. Available previews play in the bro
 
 Mobile in-app browsers receive instructions for opening the site in Safari or Chrome before downloading. Detection uses device and browser signals; a TikTok referrer alone does not block downloads in an external browser.
 
+## Early access
+
+The site is open with only Call of Duty, and in it only Ghost's scene packs: every other section is blurred and cannot be opened, SIX and Quality send visitors to the home. `OPEN` in `cod-page.js` lists the sections that open; set `earlyAccess` to `false` in both `cod-page.js` and `arrival.js` to open everything.
+
 ## Run locally
 
 This is a static HTML, CSS and JavaScript site. No build step or backend is required.

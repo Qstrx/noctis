@@ -27,6 +27,11 @@
     { id: 'trailers', name: 'Trailers', still: 'img/stage/trailers.jpg', focus: '62% 50%' }
   ];
   const SPECIAL = ['cutscenes', 'trailers'];
+  // Early access: only these sections open; everything else is blurred and
+  // locked. Empty the list's check (earlyAccess = false) to open them all.
+  const earlyAccess = true;
+  const OPEN = ['ghost'];
+  const isOpen = id => !earlyAccess || OPEN.includes(id);
   // Which MW4 gameplay shows under which character. Gameplay listed under
   // nobody goes at the end of the full cutscenes.
   const GAMEPLAY = {
@@ -36,6 +41,7 @@
   };
   const YEARS = { 'Modern Warfare': 2019, 'Modern Warfare II': 2022, 'Modern Warfare III': 2023, 'Modern Warfare 4': 2026 };
   const QUALITIES = ['4K', '2K', '1080p'];
+  const LOCK = '<span class="tile-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>';
   const PLAY = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3.5 11 6.5-11 6.5z"/></svg>';
   const SAVE = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 16h12" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const esc = text => String(text).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
@@ -149,13 +155,13 @@
     const clips = (GAMEPLAY[view.id] || []).map(byId).filter(Boolean);
     view.meta = packs.length ? `${plural(packs.length, 'pack')} · ${clock(packs.reduce((sum, pack) => sum + seconds(runOf(pack)), 0))}` : 'Coming soon';
     view.soon = !packs.length;
-    view.count = packs.length ? plural(packs.length, 'pack') + (clips.length ? ` · ${clips.length} gameplay` : '') : 'Coming soon';
+    view.count = packs.length ? plural(packs.length, 'pack') + (clips.length && !earlyAccess ? ` · ${clips.length} gameplay` : '') : 'Coming soon';
     const part = document.createElement('div');
     part.className = 'sheet-part';
     part.dataset.part = view.id;
     part.hidden = true;
     part.innerHTML = label('Scene packs', packs.length ? `${plural(packs.length, 'game')}` : '') + (packs.length ? rows(packs.map(gameRow), 'is-games') : `<p class="empty">${esc(view.name)}’s scene packs are on the way.</p>`)
-      + (view.id in GAMEPLAY && clips.length ? label('Gameplay', `Modern Warfare 4 · ${plural(clips.length, 'scene')}`) + rows(clips.map(pack => row(pack, { title: pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}` })), 'is-clips') : '');
+      + (view.id in GAMEPLAY && clips.length ? label('Gameplay', earlyAccess ? 'Coming soon' : `Modern Warfare 4 · ${plural(clips.length, 'scene')}`) + (earlyAccess ? `<div class="locked-block" aria-hidden="true" inert>${rows(clips.map(pack => row(pack, { title: pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}` })), 'is-clips')}</div>` : rows(clips.map(pack => row(pack, { title: pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}` })), 'is-clips')) : '');
     parts.append(part);
   });
   // Full cutscenes: Modern Warfare to MW III, then the MW4 campaign.
@@ -191,8 +197,8 @@
   // and the trailers (one part) share a larger row at the bottom.
   const SIZE = { trailers: 'is-trailers', cutscenes: 'is-full' };
   // Sections still to come show a blurred still of their game, a teaser.
-  cast.innerHTML = VIEWS.map((view, i) => `${view.id === 'cutscenes' ? '<li class="tiles-break" aria-hidden="true"></li>' : ''}<li class="${SIZE[view.id] || ''}" style="--n:${i}"><a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light><span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${esc(view.count)}</span></span></a></li>`).join('');
-  VIEWS.forEach(view => Shelf.add(view.id, view));
+  cast.innerHTML = VIEWS.map((view, i) => `${view.id === 'cutscenes' ? '<li class="tiles-break" aria-hidden="true"></li>' : ''}<li class="${SIZE[view.id] || ''}" style="--n:${i}">${isOpen(view.id) ? `<a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light>` : `<a class="tile is-locked" data-view="${view.id}" aria-disabled="true" aria-label="${esc(view.name)}, locked">`}<span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${isOpen(view.id) ? esc(view.count) : 'Locked'}</span></span>${isOpen(view.id) ? '' : LOCK}</a></li>`).join('');
+  VIEWS.filter(view => isOpen(view.id)).forEach(view => Shelf.add(view.id, view));
   // The room takes the colours of the tile under the pointer.
   const glow = document.getElementById('glow');
   let lit = null;

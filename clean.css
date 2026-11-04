@@ -356,3 +356,24 @@ body[data-world] .quality-tip { border-radius: 12px; }
 @media (prefers-reduced-motion: reduce) {
   .tiles > li, .tile-text, .tiles-title, .is-rising .ch, .door-pic, .door-copy, .slice, .rows.is-entering .row, .label.is-entering, .sheet-mw4.is-entering { animation: none !important; }
 }
+
+/* =====================================================================
+   Early access: locked sections are blurred and cannot be opened
+   ===================================================================== */
+.early-access .site-nav a[href="six.html"], .early-access .site-nav a[href="quality.html"] { pointer-events: none; opacity: .35; }
+.tile.is-locked { cursor: not-allowed; }
+.tile.is-locked .tile-pic img { filter: blur(14px) grayscale(.7) brightness(.4) !important; transform: scale(1.18) !important; }
+.tile.is-locked .tile-text { filter: blur(2.5px); opacity: .55; }
+.tile.is-locked::before, .tile.is-locked::after { display: none; }
+.tiles:hover .tile:not(.is-locked) .tile-pic img { filter: brightness(.45) saturate(.6); }
+.tiles .tile:not(.is-locked):hover .tile-pic img { filter: brightness(.95) saturate(1.05); transform: scale(1.08); }
+.tile-lock { position: absolute; z-index: 2; left: 50%; top: 50%; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: rgba(9, 9, 10, .55); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); color: rgba(255, 255, 255, .8); transform: translate(-50%, -50%); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.tile-lock svg { width: 18px; height: 18px; }
+.door.is-locked { cursor: not-allowed; }
+.door.is-locked .door-pic { filter: blur(18px) grayscale(.8) brightness(.4) !important; transform: scale(1.2) !important; }
+.door.is-locked .door-title { filter: blur(3px); opacity: .6; }
+.door.is-locked:hover { flex-grow: 1; }
+.door-lock { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25); }
+.door.is-locked:hover .door-enter { background: transparent; color: inherit; }
+.locked-block { position: relative; }
+.locked-block > .rows { filter: blur(6px); opacity: .45; pointer-events: none; user-select: none; }
