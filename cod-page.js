@@ -148,7 +148,7 @@
   });
   // Full cutscenes: Modern Warfare to MW III, then the MW4 campaign.
   const cuts = VIEWS.find(view => view.id === 'cutscenes');
-  cuts.meta = '4 games · 83 scenes';
+  cuts.meta = `4 games · ${22 + ['mw1', 'mw2', 'mw3'].reduce((sum, id) => sum + byId(`${id}-campaign-individual`).files.length, 0)} scenes`;
   cuts.count = 'MW to MW4';
   // Trailers: their own sheet.
   const trailers = VIEWS.find(view => view.id === 'trailers');

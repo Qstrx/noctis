@@ -11,7 +11,7 @@ const MW_CAMPAIGN_PACKS = [
   "editions": {
    "4K": {
     "editionLabel": "4K",
-    "meta": "30:03 · 7.41 GB · 17 files",
+    "meta": "29:56 · 7.41 GB · 16 files",
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-01-Verdansk-4K.mp4",
@@ -134,21 +134,9 @@ const MW_CAMPAIGN_PACKS = [
       "poster": "img/cod/cuts/mw1-10.jpg"
      },
      {
-      "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-11-The-Village-4K.mp4",
-      "name": "11 — The Village",
-      "scene": "11",
-      "run": "0:08",
-      "size": "1.9 MB",
-      "direct": true,
-      "audio": "No audio",
-      "resolution": "3840 × 1634",
-      "fps": "30 fps",
-      "poster": "img/cod/cuts/mw1-11.jpg"
-     },
-     {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-12-St-Petersburg-4K.mp4",
-      "name": "12 — St. Petersburg",
-      "scene": "12",
+      "name": "11 — St. Petersburg",
+      "scene": "11",
       "run": "2:01",
       "size": "528.1 MB",
       "direct": true,
@@ -159,8 +147,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-13-The-Estate-4K.mp4",
-      "name": "13 — The Estate",
-      "scene": "13",
+      "name": "12 — The Estate",
+      "scene": "12",
       "run": "1:45",
       "size": "370.9 MB",
       "direct": true,
@@ -171,8 +159,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-14-The-Lab-4K.mp4",
-      "name": "14 — The Lab",
-      "scene": "14",
+      "name": "13 — The Lab",
+      "scene": "13",
       "run": "3:54",
       "size": "1.04 GB",
       "direct": true,
@@ -183,8 +171,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-15-The-Lab-The-Sacrifice-4K.mp4",
-      "name": "15 — The Lab: The Sacrifice",
-      "scene": "15",
+      "name": "14 — The Lab: The Sacrifice",
+      "scene": "14",
       "run": "1:42",
       "size": "390.9 MB",
       "direct": true,
@@ -195,8 +183,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-16-Epilogue-4K.mp4",
-      "name": "16 — Epilogue",
-      "scene": "16",
+      "name": "15 — Epilogue",
+      "scene": "15",
       "run": "1:59",
       "size": "534.5 MB",
       "direct": true,
@@ -207,8 +195,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-17-Spec-Ops-Opening-4K.mp4",
-      "name": "17 — Spec Ops Opening",
-      "scene": "17",
+      "name": "16 — Spec Ops Opening",
+      "scene": "16",
       "run": "2:13",
       "size": "489.5 MB",
       "direct": true,
@@ -221,7 +209,7 @@ const MW_CAMPAIGN_PACKS = [
    },
    "2K": {
     "editionLabel": "2K",
-    "meta": "30:03 · 4.19 GB · 17 files",
+    "meta": "29:56 · 4.19 GB · 16 files",
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-01-Verdansk-2K.mp4",
@@ -344,21 +332,9 @@ const MW_CAMPAIGN_PACKS = [
       "poster": "img/cod/cuts/mw1-10.jpg"
      },
      {
-      "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-11-The-Village-2K.mp4",
-      "name": "11 — The Village",
-      "scene": "11",
-      "run": "0:08",
-      "size": "0.4 MB",
-      "direct": true,
-      "audio": "No audio",
-      "resolution": "2560 × 1088",
-      "fps": "30 fps",
-      "poster": "img/cod/cuts/mw1-11.jpg"
-     },
-     {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-12-St-Petersburg-2K.mp4",
-      "name": "12 — St. Petersburg",
-      "scene": "12",
+      "name": "11 — St. Petersburg",
+      "scene": "11",
       "run": "2:01",
       "size": "295.3 MB",
       "direct": true,
@@ -369,8 +345,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-13-The-Estate-2K.mp4",
-      "name": "13 — The Estate",
-      "scene": "13",
+      "name": "12 — The Estate",
+      "scene": "12",
       "run": "1:45",
       "size": "254.9 MB",
       "direct": true,
@@ -381,8 +357,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-14-The-Lab-2K.mp4",
-      "name": "14 — The Lab",
-      "scene": "14",
+      "name": "13 — The Lab",
+      "scene": "13",
       "run": "3:54",
       "size": "565.7 MB",
       "direct": true,
@@ -393,8 +369,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-15-The-Lab-The-Sacrifice-2K.mp4",
-      "name": "15 — The Lab: The Sacrifice",
-      "scene": "15",
+      "name": "14 — The Lab: The Sacrifice",
+      "scene": "14",
       "run": "1:42",
       "size": "228.1 MB",
       "direct": true,
@@ -405,8 +381,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-16-Epilogue-2K.mp4",
-      "name": "16 — Epilogue",
-      "scene": "16",
+      "name": "15 — Epilogue",
+      "scene": "15",
       "run": "1:59",
       "size": "275.3 MB",
       "direct": true,
@@ -417,8 +393,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-17-Spec-Ops-Opening-2K.mp4",
-      "name": "17 — Spec Ops Opening",
-      "scene": "17",
+      "name": "16 — Spec Ops Opening",
+      "scene": "16",
       "run": "2:13",
       "size": "229.7 MB",
       "direct": true,
@@ -431,7 +407,7 @@ const MW_CAMPAIGN_PACKS = [
    },
    "1080p": {
     "editionLabel": "1080p",
-    "meta": "30:03 · 2.38 GB · 17 files",
+    "meta": "29:56 · 2.38 GB · 16 files",
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-01-Verdansk-1080p.mp4",
@@ -554,21 +530,9 @@ const MW_CAMPAIGN_PACKS = [
       "poster": "img/cod/cuts/mw1-10.jpg"
      },
      {
-      "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-11-The-Village-1080p.mp4",
-      "name": "11 — The Village",
-      "scene": "11",
-      "run": "0:08",
-      "size": "0.2 MB",
-      "direct": true,
-      "audio": "No audio",
-      "resolution": "1920 × 816",
-      "fps": "30 fps",
-      "poster": "img/cod/cuts/mw1-11.jpg"
-     },
-     {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-12-St-Petersburg-1080p.mp4",
-      "name": "12 — St. Petersburg",
-      "scene": "12",
+      "name": "11 — St. Petersburg",
+      "scene": "11",
       "run": "2:01",
       "size": "168.0 MB",
       "direct": true,
@@ -579,8 +543,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-13-The-Estate-1080p.mp4",
-      "name": "13 — The Estate",
-      "scene": "13",
+      "name": "12 — The Estate",
+      "scene": "12",
       "run": "1:45",
       "size": "143.5 MB",
       "direct": true,
@@ -591,8 +555,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-14-The-Lab-1080p.mp4",
-      "name": "14 — The Lab",
-      "scene": "14",
+      "name": "13 — The Lab",
+      "scene": "13",
       "run": "3:54",
       "size": "322.9 MB",
       "direct": true,
@@ -603,8 +567,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-15-The-Lab-The-Sacrifice-1080p.mp4",
-      "name": "15 — The Lab: The Sacrifice",
-      "scene": "15",
+      "name": "14 — The Lab: The Sacrifice",
+      "scene": "14",
       "run": "1:42",
       "size": "127.2 MB",
       "direct": true,
@@ -615,8 +579,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-16-Epilogue-1080p.mp4",
-      "name": "16 — Epilogue",
-      "scene": "16",
+      "name": "15 — Epilogue",
+      "scene": "15",
       "run": "1:59",
       "size": "154.0 MB",
       "direct": true,
@@ -627,8 +591,8 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-17-Spec-Ops-Opening-1080p.mp4",
-      "name": "17 — Spec Ops Opening",
-      "scene": "17",
+      "name": "16 — Spec Ops Opening",
+      "scene": "16",
       "run": "2:13",
       "size": "134.9 MB",
       "direct": true,
