@@ -378,10 +378,15 @@ body[data-world] .quality-tip { border-radius: 12px; }
 .locked-block { position: relative; }
 .locked-block > .rows { filter: blur(6px); opacity: .45; pointer-events: none; user-select: none; }
 
-/* Solo: during early access the site is a single page, Ghost's */
+/* Solo: during early access the site is one page with only the open
+   tiles (Ghost), large and centred, and a note under them */
 .solo-note { display: none; }
-.solo .solo-note { display: block; margin: clamp(56px, 10vh, 96px) 0 0; padding-top: 28px; border-top: 1px solid var(--line); font: 400 clamp(26px, 3vw, 40px)/1 var(--title); letter-spacing: .02em; text-transform: uppercase; text-align: center; color: var(--muted); }
-.solo .sheet-close, .solo .site-nav { display: none; }
-.solo body[data-world] .site-header { z-index: 70; background: linear-gradient(180deg, rgba(9, 9, 10, .9), rgba(9, 9, 10, 0)); }
-.solo .sheet-inner { padding-top: calc(var(--head) + 4px); }
-.solo #main { visibility: hidden; }
+.solo .site-nav { display: none; }
+.solo .tiles-page { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100svh; }
+.solo .tiles-title { align-self: stretch; justify-content: center; }
+.solo .tiles { width: 100%; }
+.solo .tiles > li { width: min(440px, 100%); }
+.solo .tile-name { font-size: clamp(32px, 3.6vw, 48px); }
+.solo .tile-meta { font-size: 13px; }
+.solo .solo-note { display: block; margin: clamp(28px, 5vh, 48px) 0 0; font: 400 clamp(22px, 2.4vw, 30px)/1 var(--title); letter-spacing: .03em; text-transform: uppercase; text-align: center; color: var(--muted); animation: tile-text-in 1s .7s var(--ease-out) both; }
+@media (max-width: 760px) { .solo .tile-meta { display: block; } .solo .tile-text { padding: 16px; } }

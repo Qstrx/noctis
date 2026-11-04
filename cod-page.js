@@ -197,7 +197,8 @@
   // and the trailers (one part) share a larger row at the bottom.
   const SIZE = { trailers: 'is-trailers', cutscenes: 'is-full' };
   // Sections still to come show a blurred still of their game, a teaser.
-  cast.innerHTML = VIEWS.map((view, i) => `${view.id === 'cutscenes' ? '<li class="tiles-break" aria-hidden="true"></li>' : ''}<li class="${SIZE[view.id] || ''}" style="--n:${i}">${isOpen(view.id) ? `<a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light>` : `<a class="tile is-locked" data-view="${view.id}" aria-disabled="true" aria-label="${esc(view.name)}, locked">`}<span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${isOpen(view.id) ? esc(view.count) : 'Locked'}</span></span>${isOpen(view.id) ? '' : LOCK}</a></li>`).join('');
+  // During early access only the open sections are shown at all.
+  cast.innerHTML = VIEWS.filter(view => isOpen(view.id)).map((view, i) => `${view.id === 'cutscenes' ? '<li class="tiles-break" aria-hidden="true"></li>' : ''}<li class="${SIZE[view.id] || ''}" style="--n:${i}">${isOpen(view.id) ? `<a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light>` : `<a class="tile is-locked" data-view="${view.id}" aria-disabled="true" aria-label="${esc(view.name)}, locked">`}<span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${isOpen(view.id) ? esc(view.count) : 'Locked'}</span></span>${isOpen(view.id) ? '' : LOCK}</a></li>`).join('');
   VIEWS.filter(view => isOpen(view.id)).forEach(view => Shelf.add(view.id, view));
   // The room takes the colours of the tile under the pointer.
   const glow = document.getElementById('glow');
@@ -225,5 +226,5 @@
   }
   // Old addresses still land in the right sheet.
   // During early access the page opens straight on the one open section.
-  Shelf.start({ sourceFor, pinned: earlyAccess && OPEN.length === 1 ? OPEN[0] : null, aliases: { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'trailers', gameplay: 'price', 'pack-gameplay': 'price', 'pack-price': 'price', 'pack-gaz': 'gaz', 'pack-ghost': 'ghost', 'pack-soap': 'soap', 'pack-valeria': 'valeria', 'pack-archer': 'archer' } });
+  Shelf.start({ sourceFor, aliases: { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'trailers', gameplay: 'price', 'pack-gameplay': 'price', 'pack-price': 'price', 'pack-gaz': 'gaz', 'pack-ghost': 'ghost', 'pack-soap': 'soap', 'pack-valeria': 'valeria', 'pack-archer': 'archer' } });
 })();
