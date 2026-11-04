@@ -72,7 +72,6 @@
   // ---------- One row ----------
   let rowNo = 0;
   const LOGOS = { 'Modern Warfare': 'img/cod/logos/mw1.svg', 'Modern Warfare II': 'img/cod/logos/mw2.png', 'Modern Warfare III': 'img/cod/logos/mw3.png', 'Modern Warfare 4': 'img/cod/logos/mw4.webp' };
-  const fpsOf = pack => (pack.fps || '').replace('~', '').replace(' FPS', ' fps');
   const filesOf = pack => pack.files.length === 1 ? (pack.files[0].direct === false ? 'Drive' : '1') : String(pack.files.length);
   // A scene pack as a block of its own: the game's logo and year, a wide
   // picture, then its numbers, quality and download.
@@ -89,7 +88,7 @@
       <div class="game-id">${logo ? `<img src="${logo}" alt="" loading="lazy" decoding="async">` : `<span class="game-word">${esc(pack.chapter)}</span>`}<h3 class="sr-only" id="${key}">${esc(pack.chapter)}</h3><span class="game-year">${YEARS[pack.chapter] || 'Extra footage'}</span></div>
       <div class="pack-cover"><span class="cover-frame"><img src="${pack.poster}" alt="" loading="lazy" decoding="async"></span>${canPreview ? `<button class="row-play" type="button" data-cod-preview="${found[lightest].id}" aria-label="Preview ${esc(label)}"><i>${PLAY}</i></button>` : ''}<span class="game-time">${runOf(pack)}</span></div>
       <div class="game-side">
-        <dl class="game-specs"><div><dt>Size</dt><dd data-spec="size">${sizeOf(found[first])}</dd></div><div><dt>Files</dt><dd data-spec="files">${filesOf(found[first])}</dd></div><div><dt>Frame rate</dt><dd data-spec="fps">${fpsOf(found[first])}</dd></div></dl>
+        <dl class="game-specs"><div><dt>Size</dt><dd data-spec="size">${sizeOf(found[first])}</dd></div><div><dt>Files</dt><dd data-spec="files">${filesOf(found[first])}</dd></div></dl>
         <div class="seg" role="radiogroup" aria-label="Quality" data-pill><span class="pill"></span>${QUALITIES.map(q => found[q]
           ? `<button type="button" role="radio" aria-checked="${q === first}" data-q="${q}">${q}</button>`
           : `<button type="button" role="radio" aria-checked="false" disabled title="Coming soon">${q}</button>`).join('')}</div>
@@ -126,7 +125,7 @@
     download.dataset.downloadPack = pack.id;
     download.querySelector('.action-size').textContent = sizeOf(pack);
     const spec = name => rowEl.querySelector(`[data-spec="${name}"]`);
-    if (spec('size')) { spec('size').textContent = sizeOf(pack); spec('files').textContent = filesOf(pack); spec('fps').textContent = fpsOf(pack); }
+    if (spec('size')) { spec('size').textContent = sizeOf(pack); spec('files').textContent = filesOf(pack); }
     download.setAttribute('aria-label', `Download ${pack.title}, ${pack.chapter}, ${q}, ${sizeOf(pack)}`);
     const seg = rowEl.querySelector('.seg');
     if (seg) UI.pill(seg);
