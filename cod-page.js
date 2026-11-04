@@ -155,50 +155,54 @@
   const trailerPacks = COD_PACKS.filter(pack => pack.group === 'trailers');
   trailers.meta = `${plural(trailerPacks.length, 'trailer')} · 4K`;
   trailers.count = plural(trailerPacks.length, 'trailer');
+  const GAME_NAMES = ['Modern Warfare', 'Modern Warfare II', 'Modern Warfare III', 'Modern Warfare 4'];
+  const trailerGames = GAME_NAMES.map((name, i) => ({ id: `mw${i + 1}`, name, packs: trailerPacks.filter(pack => pack.title === name) }));
   const trailerPart = document.createElement('div');
   trailerPart.className = 'sheet-part';
   trailerPart.dataset.part = 'trailers';
   trailerPart.hidden = true;
-  trailerPart.innerHTML = label('Modern Warfare 4') + '<ul class="rows is-games" id="trailerRows"></ul>';
+  trailerPart.innerHTML = '<div class="game-switch" id="trailerSwitch" role="tablist" aria-label="Choose a game"></div>' + trailerGames.map(game =>
+    `<div class="game-panel" id="t-panel-${game.id}" role="tabpanel" aria-labelledby="t-tab-${game.id}" data-game="${game.id}" hidden>${rows(game.packs.map(pack => block(pack, { name: pack.chapter.split(' — ')[1] || pack.chapter })), 'is-games')}</div>`).join('');
   parts.append(trailerPart);
   // One tab per game; only the chosen game's scenes show.
   ['1', '2', '3'].forEach(n => { document.getElementById(`mw${n}Whole`).innerHTML = block(byId(`cuts${n}`), { name: byId(`cuts${n}`).chapter }); });
-  const switcher = document.getElementById('gameSwitch');
-  const GAME_IDS = ['mw1', 'mw2', 'mw3', 'mw4'];
-  switcher.innerHTML = GAME_IDS.map(id => {
-    const pack = byId(`${id}-campaign-individual`);
-    const name = id === 'mw4' ? 'Modern Warfare 4' : pack.title;
-    const count = id === 'mw4' ? 22 : pack.files.length;
-    return `<button type="button" role="tab" id="tab-${id}" aria-controls="panel-${id}" aria-selected="false" tabindex="-1" data-game="${id}"><img src="${LOGOS[name]}" alt=""><span class="sr-only">${esc(name)}</span><small>${count} scenes</small></button>`;
-  }).join('');
   const sheetEl = document.getElementById('sheet');
-  function pickGame(id, { keepPlace = false } = {}) {
-    switcher.querySelectorAll('[role=tab]').forEach(tab => {
-      const on = tab.dataset.game === id;
-      tab.setAttribute('aria-selected', String(on));
-      tab.tabIndex = on ? 0 : -1;
+  // A tab per game above that game's panel; only the chosen one shows.
+  function gameTabs(box, prefix, games, first) {
+    const ids = games.map(game => game.id);
+    box.innerHTML = games.map(game => `<button type="button" role="tab" id="${prefix}tab-${game.id}" aria-controls="${prefix}panel-${game.id}" aria-selected="false" tabindex="-1" data-game="${game.id}"><img src="${LOGOS[game.name]}" alt=""><span class="sr-only">${esc(game.name)}</span><small>${game.note}</small></button>`).join('');
+    const panels = [...box.parentElement.querySelectorAll('.game-panel')];
+    function pick(id, { keepPlace = false } = {}) {
+      box.querySelectorAll('[role=tab]').forEach(tab => {
+        const on = tab.dataset.game === id;
+        tab.setAttribute('aria-selected', String(on));
+        tab.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(panel => { panel.hidden = panel.dataset.game !== id; });
+      // An open scene finds its row again now that its grid has a size.
+      dispatchEvent(new Event('resize'));
+      if (!keepPlace && sheetEl.scrollTop > box.offsetTop) sheetEl.scrollTop = box.parentElement.offsetTop;
+    }
+    box.addEventListener('click', event => {
+      const tab = event.target.closest('[role=tab]');
+      if (tab) pick(tab.dataset.game);
     });
-    document.querySelectorAll('.game-panel').forEach(panel => { panel.hidden = panel.dataset.game !== id; });
-    // An open scene finds its row again now that its grid has a size.
-    dispatchEvent(new Event('resize'));
-    if (!keepPlace && sheetEl.scrollTop > switcher.offsetTop) sheetEl.scrollTop = switcher.parentElement.offsetTop;
+    box.addEventListener('keydown', event => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const next = ids[(ids.indexOf(event.target.dataset.game) + step + ids.length) % ids.length];
+      pick(next);
+      document.getElementById(`${prefix}tab-${next}`).focus();
+    });
+    pick(first, { keepPlace: true });
   }
-  switcher.addEventListener('click', event => {
-    const tab = event.target.closest('[role=tab]');
-    if (tab) pickGame(tab.dataset.game);
-  });
-  switcher.addEventListener('keydown', event => {
-    const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
-    if (!step) return;
-    event.preventDefault();
-    const now = GAME_IDS.indexOf(event.target.dataset.game);
-    const next = GAME_IDS[(now + step + GAME_IDS.length) % GAME_IDS.length];
-    pickGame(next);
-    document.getElementById(`tab-${next}`).focus();
-  });
   const asked = new URLSearchParams(location.search);
-  pickGame(asked.has('scene') ? 'mw4' : ['mw1', 'mw2', 'mw3'].find(id => asked.has(id)) || 'mw1', { keepPlace: true });
-  document.getElementById('trailerRows').innerHTML = COD_PACKS.filter(pack => pack.group === 'trailers').map(pack => block(pack, { name: pack.chapter.split(' — ')[1] || pack.chapter })).join('');
+  gameTabs(document.getElementById('gameSwitch'), '', GAME_NAMES.map((name, i) => {
+    const id = `mw${i + 1}`;
+    return { id, name, note: `${id === 'mw4' ? 22 : byId(`${id}-campaign-individual`).files.length} scenes` };
+  }), asked.has('scene') ? 'mw4' : ['mw1', 'mw2', 'mw3'].find(id => asked.has(id)) || 'mw1');
+  gameTabs(document.getElementById('trailerSwitch'), 't-', trailerGames.map(game => ({ ...game, note: plural(game.packs.length, 'trailer') })), 'mw1');
   const assigned = new Set(Object.values(GAMEPLAY).flat());
   const loose = COD_PACKS.filter(pack => pack.group === 'gameplay' && !assigned.has(pack.id));
   document.getElementById('looseLabel').hidden = !loose.length;
