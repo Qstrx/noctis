@@ -4,7 +4,7 @@ Scene packs for video editors, available at [qstrx.github.io/noctis](https://qst
 
 ## Collections
 
-- **Call of Duty:** scene packs of John Price, Gaz, Ghost and Soap from Modern Warfare I–III and Modern Warfare 4 (plus more clips of Gaz and Soap), Valeria and The Archer from Modern Warfare 4, the campaign cutscenes of Modern Warfare I–III, and 22 Modern Warfare 4 campaign cutscenes, a separate campaign recap and three trailers.
+- **Call of Duty:** scene packs of John Price, Gaz, Ghost and Soap from Modern Warfare I–III and Modern Warfare 4 (plus more clips of Gaz and Soap), Valeria and The Archer from Modern Warfare 4, each with the gameplay from that game, the campaign cutscenes of Modern Warfare I–III, and 22 Modern Warfare 4 campaign cutscenes, a separate campaign recap and three trailers.
 - **SIX:** selected Joe Graves scenes from eight Season 1 and ten Season 2 source episodes. These files are character scene packs, not full episodes.
 
 File entries show their duration and preview. Available previews play in the browser. Downloads retain the original GitHub and Google Drive destinations, with part selection for split files. After Start download, a reminder links to [@oceanxaep on TikTok](https://www.tiktok.com/@oceanxaep).
@@ -28,9 +28,9 @@ Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of
 | `index.html` | Home: choose Call of Duty or SIX |
 | `cod.html`, `six.html` | The two collections |
 | `site.css` | Fonts, colours, header, dialogs, shared base |
-| `select.css`, `select.js` | The select screens on the home and on Call of Duty |
+| `select.css`, `select.js` | The select screen on the home |
 | `cards.css` | Pack cards (cover, details, Preview and Download) and the SIX seasons |
-| `cod.css`, `cod-views.js` | Call of Duty sections, one view at a time |
+| `cod.css`, `cod-views.js` | The Call of Duty roster, character and game pages, built from `archive-data.js`, one view at a time |
 | `mw4.css`, `mw4-data.js`, `mw4-missions.js` | The Modern Warfare 4 campaign cutscenes |
 | `download.css`, `site.js` | The download dialog, in-app browser notice and Call of Duty previews |
 | `credit.css`, `credit.js` | The credit reminder after a download |
@@ -39,9 +39,9 @@ Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of
 | `quality.html`, `quality.css` | One page with the resolution, frame rate and format of every pack |
 | `archive-data.js` | Files, sizes and links of every pack |
 
-Every page is dark and flat, with one colour per collection: sand for Call of Duty, blue for SIX. The home and Call of Duty open on the same select screen: a numbered list beside a picture of the row you are on. Pointing, focus, the arrow keys or the number keys move through it; a click, a tap or Enter opens it. Phones show the list alone, each row with its picture; on the home the list sits in the middle of the screen, each row a large name with what it holds and a portrait beside it. On larger screens the home's two names lead, large, with a smaller picture of the one you are on beside them; the page takes that collection's colour.
+Every page is dark and flat, with one colour per collection: sand for Call of Duty, blue for SIX. The home opens on a select screen: a numbered list beside a picture of the row you are on. Pointing, focus, the arrow keys or the number keys move through it; a click, a tap or Enter opens it. Phones show the list alone in the middle of the screen, each row a large name with what it holds and a portrait beside it. On larger screens the two names lead, large, with a smaller picture of the one you are on beside them; the page takes that collection's colour.
 
-On Call of Duty each choice is its own view with its own address (`cod.html#price`, `#gaz`, `#ghost`, `#soap`, `#valeria`, `#archer`, `#cutscenes`), so links, Back and Forward work. A bar at the top of every view leads back to the choice or straight to another section. A view shows that character's packs as a grid whose columns follow how many packs there are (a single pack gets a large picture with its details beside it), one card per game with the game's logo on its cover; Cutscenes shows the Modern Warfare 4 campaign, the Modern Warfare I–III campaign cutscenes and the MW4 trailers, and an MW4 scene link (`?scene=`) opens it directly. Without scripts every section shows. SIX opens directly on its seasons.
+Call of Duty opens on a roster: one tall picture per character, the one you are on opening wider, and a wide link to the cutscenes under it. Phones show the characters two by two. A character page lists their games as wide frames, and a game page holds the scene pack with its details, then a Gameplay section with the gameplay from that game. A character with one game opens straight on it. Every step is its own address (`cod.html#price`, `#price/mw4`, `#valeria`, `#cutscenes`), so links, Back and Forward work; a trail and tabs at the top lead back or across, and `#gameplay`, the old address, opens Price in MW4. Cutscenes shows the Modern Warfare 4 campaign, gameplay that belongs to no character, the Modern Warfare I–III campaign cutscenes and the MW4 trailers, and an MW4 scene link (`?scene=`) opens it directly. Which characters a gameplay pack appears under is its `chars` list in `archive-data.js`; an empty list puts it in Cutscenes. The page needs scripts and says so without them. SIX opens directly on its seasons.
 
 Reduced motion turns movement into plain fades. Fonts are Latin subsets of Anton, Archivo Black and Barlow Condensed, licensed under the SIL Open Font License in [img/fonts/OFL.txt](img/fonts/OFL.txt). The travelling navigation underline follows AuroraGrab’s, under the [MIT license](LICENSE-AuroraGrab). Official game logo sources are listed in [img/cod/logos/README.md](img/cod/logos/README.md). SIX previews support links to timestamps.
 

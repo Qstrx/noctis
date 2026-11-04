@@ -1,12 +1,46 @@
-/* Call of Duty: one section per operator, the campaign cutscenes and the MW4
-   trailers. cod-views.js shows one at a time; the choice is a select screen. */
+/* Call of Duty: the roster of characters, a page per character, a page per game
+   (scene pack, then gameplay), the campaign cutscenes and the MW4 trailers.
+   cod-views.js builds them and shows one at a time. */
 
-/* ---------- Back to the choice, or straight to another section ---------- */
+/* The picture of where you are, blurred far behind everything */
+.cod-ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.cod-ambient img { width: 100%; height: 100%; object-fit: cover; filter: blur(70px) saturate(.75); opacity: .17; transform: scale(1.3); }
+.cod-ambient::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 30%, transparent, var(--page) 78%); }
+
+/* ---------- The roster: one tall frame per character; the one you are on opens up ---------- */
+.roster-screen { display: grid; gap: 20px; padding: 36px 0 8px; }
+.roster-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 40px; }
+.roster-title { font: 400 clamp(48px, 6vw, 84px)/.9 var(--title); letter-spacing: .01em; text-transform: uppercase; }
+.roster-title:focus { outline: none; }
+.roster-head p { max-width: 44ch; color: var(--muted); font-size: 14px; text-wrap: pretty; }
+.roster { display: flex; gap: 8px; height: clamp(380px, calc(100svh - 400px), 600px); margin: 0; padding: 0; list-style: none; }
+.roster li { display: flex; flex: 1 1 0; min-width: 0; transition: flex-grow .6s var(--ease-out); }
+.roster li:has(.roster-tile:hover), .roster li:has(.roster-tile:focus-visible) { flex-grow: 2.1; }
+.roster-tile { position: relative; display: flex; flex: 1; flex-direction: column; justify-content: flex-end; gap: 4px; min-width: 0; overflow: hidden; padding: 16px; border-radius: 8px; background: var(--panel-strong); box-shadow: inset 0 0 0 1px var(--line); isolation: isolate; animation: rise .7s var(--ease-out) calc(var(--i) * 55ms) backwards; }
+.roster-tile img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; filter: saturate(.72) brightness(.72); transition: filter .5s ease, transform 1.2s var(--ease-out); }
+.roster-tile::before { content: ""; position: absolute; inset: 40% 0 0; z-index: -1; background: linear-gradient(0deg, rgba(5, 6, 4, .92), transparent); }
+.roster-tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px transparent; transition: box-shadow .3s ease; }
+.roster-tile:hover img, .roster-tile:focus-visible img { filter: none; transform: scale(1.03); }
+.roster-tile:hover::after, .roster-tile:focus-visible::after { box-shadow: inset 0 0 0 2px var(--accent); }
+.roster-tile:focus-visible { outline: none; }
+.roster-name { font: 400 clamp(26px, 2.7vw, 38px)/1 var(--title); letter-spacing: .015em; text-transform: uppercase; white-space: nowrap; }
+.roster-games { color: var(--accent); font: 700 14px/1.2 "Barlow Condensed", "Arial Narrow", sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+.roster-cuts { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px 24px; min-height: 92px; overflow: hidden; padding: 16px 24px; border-radius: 8px; background: var(--panel-strong); box-shadow: inset 0 0 0 1px var(--line); isolation: isolate; animation: rise .7s var(--ease-out) .35s backwards; transition: box-shadow .3s ease; }
+.roster-cuts img { position: absolute; inset: 0 0 0 auto; z-index: -1; width: 70%; height: 100%; object-fit: cover; object-position: 70% 35%; opacity: .55; -webkit-mask-image: linear-gradient(90deg, transparent, #000 70%); mask-image: linear-gradient(90deg, transparent, #000 70%); transition: opacity .4s ease; }
+.roster-cuts:hover, .roster-cuts:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); outline: none; }
+.roster-cuts:hover img { opacity: .85; }
+.roster-cuts-name { font: 400 clamp(26px, 2.7vw, 38px)/1 var(--title); letter-spacing: .015em; text-transform: uppercase; }
+.roster-cuts-info { color: var(--ink); font-size: 13px; text-shadow: 0 1px 8px rgba(0, 0, 0, .8); }
+.roster-cuts svg { width: 24px; height: 24px; flex: none; transition: transform .3s var(--ease-out); }
+.roster-cuts:hover svg { transform: translateX(5px); }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+
+/* ---------- Where you are, and straight to another section ---------- */
 .cod-switch { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; padding: 18px 0 8px; }
-.cod-back { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--muted); font-size: 13px; }
-.cod-back svg { width: 18px; height: 18px; transition: transform .3s var(--ease-out); }
-.cod-back:hover { color: var(--ink); }
-.cod-back:hover svg { transform: translateX(-4px); }
+.cod-crumbs { display: flex; flex-wrap: wrap; align-items: center; min-height: 44px; margin: 0; padding: 0; color: var(--ink); font-size: 13px; list-style: none; }
+.cod-crumbs li + li::before { content: "/"; margin: 0 10px; color: var(--faint); }
+.cod-crumbs a { color: var(--muted); text-decoration: underline transparent; transition: color .2s ease, text-decoration-color .2s ease; }
+.cod-crumbs a:hover { color: var(--ink); text-decoration-color: var(--accent); }
 .cod-tabs { display: flex; gap: 4px; max-width: 100%; padding: 4px; overflow-x: auto; border-radius: 999px; background: rgba(255, 255, 255, .04); box-shadow: inset 0 0 0 1px var(--line); scrollbar-width: none; }
 .cod-tabs::-webkit-scrollbar { display: none; }
 .cod-tabs a { display: flex; flex: none; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; color: var(--muted); font-size: 13px; font-weight: 600; transition: background-color .25s ease, color .25s ease; }
@@ -34,10 +68,58 @@
 .pack-grid > .pack-card:only-child { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-rows: 1fr auto; column-gap: clamp(28px, 4vw, 56px); align-items: end; }
 .pack-grid > .pack-card:only-child .pack-cover { grid-row: 1 / 3; }
 .pack-grid > .pack-card:only-child .pack-info { margin-top: 0; }
-.pack-grid > .pack-card:only-child .pack-info h3 { font: 400 clamp(34px, 3.4vw, 48px)/.95 var(--title); letter-spacing: .01em; text-transform: uppercase; }
+.pack-grid > .pack-card:only-child .pack-info :is(h3, h4) { font: 400 clamp(30px, 3vw, 42px)/.95 var(--title); letter-spacing: .01em; text-transform: uppercase; }
 .pack-grid > .pack-card:only-child .pack-info p { margin-top: 10px; font-size: 13px; }
 .pack-grid > .pack-card:only-child .pack-actions { padding-top: 22px; }
 .pack-grid > .pack-card:only-child .action { min-height: 50px; font-size: 13px; }
+
+/* ---------- A character: their picture, then their games as wide frames ---------- */
+.char-view, .game-view { padding-top: 20px; }
+.char-hero { position: relative; display: flex; align-items: flex-end; min-height: clamp(200px, 25vw, 300px); margin-bottom: 28px; isolation: isolate; }
+.char-hero img { position: absolute; inset: 0 0 0 auto; z-index: -1; width: min(78%, 960px); height: 100%; object-fit: cover; border-radius: 8px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 55%); mask-image: linear-gradient(90deg, transparent, #000 55%); }
+.char-hero-text { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 6px 16px; padding-bottom: 6px; }
+.char-hero .op-name { font: 400 clamp(52px, 8vw, 112px)/.9 var(--title); letter-spacing: .01em; }
+.char-hero p { grid-column: 2; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.game-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.game-strip { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 28px; min-height: clamp(116px, 13vw, 164px); overflow: hidden; padding: 20px 28px; border-radius: 8px; background: var(--panel-strong); box-shadow: inset 0 0 0 1px var(--line); isolation: isolate; }
+.game-strip-art { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; transition: transform 1.2s var(--ease-out); }
+.game-strip::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(6, 7, 5, .82) 8%, rgba(6, 7, 5, .12) 50%, rgba(6, 7, 5, .72)); }
+.game-strip::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 2px transparent; transition: box-shadow .25s ease; pointer-events: none; }
+.game-strip:hover::after, .game-strip:focus-visible::after { box-shadow: inset 0 0 0 2px var(--accent); }
+.game-strip:focus-visible { outline: none; }
+.game-strip:hover .game-strip-art { transform: scale(1.04); }
+.game-strip-logo img { display: block; width: auto; height: clamp(28px, 3.4vw, 44px); max-width: 100%; object-fit: contain; object-position: left center; filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0, 0, 0, .6)); }
+.game-word { font: 400 clamp(26px, 3vw, 38px)/1 var(--title); letter-spacing: .02em; text-transform: uppercase; }
+.game-strip-info { display: grid; gap: 2px; justify-items: end; font-size: 13px; font-variant-numeric: tabular-nums; text-align: right; }
+.game-strip-info .is-gameplay { color: var(--accent); font-weight: 600; }
+.game-strip-go { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--line-strong); transition: background-color .25s ease, color .25s ease; }
+.game-strip-go svg { width: 20px; height: 20px; }
+.game-strip:hover .game-strip-go { background: var(--accent); color: var(--accent-ink); }
+
+/* ---------- A game: who and which, then the scene pack and the gameplay ---------- */
+.game-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px 16px; margin-bottom: 8px; }
+.game-head .op-name { font: 400 clamp(40px, 5.6vw, 76px)/.95 var(--title); letter-spacing: .01em; }
+.game-head-logo img { display: block; width: auto; height: clamp(26px, 3.2vw, 42px); max-width: 240px; object-fit: contain; object-position: right center; filter: brightness(0) invert(1); }
+.game-tabs { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.game-tabs a { display: flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 6px; box-shadow: inset 0 0 0 1px var(--line); color: var(--muted); font: 700 15px/1 "Barlow Condensed", "Arial Narrow", sans-serif; letter-spacing: .05em; text-transform: uppercase; transition: color .2s ease, box-shadow .2s ease; }
+.game-tabs a:hover { color: var(--ink); box-shadow: inset 0 0 0 1px var(--line-strong); }
+.game-tabs a[aria-current=page] { background: var(--accent); box-shadow: none; color: var(--accent-ink); }
+.pack-block { padding-top: 40px; scroll-margin-top: 16px; }
+.block-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 20px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.block-head h3 { font: 700 clamp(26px, 2.6vw, 34px)/1 "Barlow Condensed", "Arial Narrow", sans-serif; letter-spacing: .02em; text-transform: uppercase; }
+.block-head span { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+
+/* The cover starts the preview too */
+.cover-play { position: absolute; z-index: 1; inset: 0; display: grid; place-items: center; padding: 0; border: 0; border-radius: 12px; background: transparent; color: #fff; }
+.cover-play svg { width: 56px; height: 56px; flex: none; padding: 16px; border-radius: 50%; background: rgba(5, 6, 4, .62); opacity: 0; transform: scale(.9); transition: opacity .25s ease, transform .35s var(--ease-out); }
+.cover-play svg path { fill: currentColor; }
+.pack-card:hover .cover-play svg { opacity: 1; transform: none; }
+.pack-grid > .pack-feature:only-child { align-items: stretch; }
+.pack-feature .cover-frame { height: 100%; min-height: 100%; aspect-ratio: 12 / 5; }
+.pack-specs { display: grid; gap: 0; margin: 16px 0 0; }
+.pack-specs div { display: flex; justify-content: space-between; gap: 20px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 13px; font-variant-numeric: tabular-nums; }
+.pack-specs dt { color: var(--muted); }
+.pack-specs dd { margin: 0; text-align: right; }
 
 /* The game of every pack, on its image */
 .cover-game { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; display: flex; align-items: flex-end; height: 52%; padding: 0 14px 12px; background: linear-gradient(0deg, rgba(2, 5, 3, .88), transparent); pointer-events: none; }
@@ -48,11 +130,21 @@
 @media (max-width: 1100px) {
   .pack-grid:has(> :nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
 }
+@media (max-width: 900px) {
+  .roster { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; }
+  .roster-tile { aspect-ratio: 1; padding: 12px; }
+  .roster-tile img { filter: saturate(.85) brightness(.85); }
+  .roster-name { font-size: 28px; }
+  .roster-games { font-size: 12px; letter-spacing: .03em; }
+  .roster-cuts { grid-template-columns: minmax(0, 1fr) auto; }
+  .roster-cuts-info { grid-column: 1; grid-row: 2; }
+  .roster-cuts svg { grid-column: 2; grid-row: 1 / 3; }
+}
 /* Narrower screens: two columns, then one; the count rules above step aside */
 @media (max-width: 860px) {
   .pack-grid, .pack-grid:has(> :nth-child(2):last-child), .pack-grid:has(> :nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
   .pack-grid > .pack-card:only-child { display: flex; align-items: stretch; max-width: 560px; }
-  .pack-grid > .pack-card:only-child .pack-info h3 { font-size: 30px; }
+  .pack-grid > .pack-card:only-child .pack-info :is(h3, h4) { font-size: 30px; }
   .pack-grid > .pack-card:only-child .pack-info { margin-top: 18px; }
 }
 @media (max-width: 560px) {
@@ -63,12 +155,21 @@
   .cod-tabs { width: 100%; }
   .cod-tabs a { padding: 0 13px; }
   .op { padding-top: 32px; }
+  .char-view, .game-view { padding-top: 8px; }
+  .char-hero { min-height: 170px; margin-bottom: 20px; }
+  .char-hero img { width: 100%; }
+  .game-strip { grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 16px; }
+  .game-strip-go { display: none; }
+  .game-head { grid-template-columns: auto minmax(0, 1fr); }
+  .game-head-logo { grid-column: 1 / -1; }
+  .game-head-logo img { object-position: left center; }
+  .pack-block { padding-top: 32px; }
   .op-head { grid-template-columns: auto minmax(0, 1fr) auto; column-gap: 12px; margin-bottom: 20px; }
   .op-head::after { display: none; }
   .op-res { grid-column: 3; padding: 3px 9px; font-size: 11px; }
   .op-ins { width: 28px; height: 28px; }
-  .op-name { font-size: 30px; }
+  .op-head .op-name { font-size: 30px; }
   .pack-grid { gap: 36px; }
   .cover-game img { height: 22px; }
 }
-@media (prefers-reduced-motion: reduce) { .cod-tabs a, .cod-back svg { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .cod-tabs a, .roster li, .roster-tile img { transition: none; } .roster-tile, .roster-cuts { animation: none; } }

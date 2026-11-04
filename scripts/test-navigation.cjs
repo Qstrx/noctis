@@ -1,5 +1,5 @@
 'use strict';
-// The select screens and the Call of Duty views: pointer, keys, Back and a tap.
+// The home select screen and the Call of Duty views: pointer, keys, Back and a tap.
 // Run with playwright installed, or set PLAYWRIGHT_MODULE to its path.
 const fs = require('node:fs'), path = require('node:path'), http = require('node:http');
 const { chromium, devices } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
@@ -19,26 +19,31 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS' : 'FAIL') + ': ' +
   ok(await p.evaluate(() => document.body.dataset.palette === 'six' && document.querySelector('.pick-frame img.is-on').getAttribute('src') === 'img/joe.jpg'), 'home: pointing at SIX switches the colour and the picture');
   await p.click('.pick-row[href="cod.html"]'); await p.waitForURL('**/cod.html', { timeout: 5000 });
   await p.waitForTimeout(1500);
-  ok(await p.evaluate(() => document.body.dataset.view === 'choose' && !document.getElementById('choose').hidden), 'home → cod.html opens on the select screen');
-  const op = await p.evaluate(() => getComputedStyle(document.querySelector('.pick-row')).opacity);
-  ok(op === '1', 'cod: rows visible after entrance (' + op + ')');
-  await p.mouse.move(5, 890); await p.keyboard.press('1'); await p.keyboard.press('ArrowDown'); await p.keyboard.press('ArrowDown');
-  ok(await p.evaluate(() => document.querySelector('.pick-row.is-on')?.dataset.viewLink === 'ghost'), 'keys: ↓↓ selects Ghost');
-  await p.keyboard.press('Enter'); await p.waitForTimeout(1500);
-  ok(await p.evaluate(() => [...document.querySelectorAll('#pack-ghost .pack-grid > *')].every(card => card.matches('article.pack-card'))), 'a view holds only packs, no empty slots');
-  ok(await p.evaluate(() => location.hash === '#ghost' && document.body.dataset.view === 'ghost' && document.getElementById('choose').hidden && !document.getElementById('pack-ghost').hidden), 'Enter opens the Ghost view');
-  await p.click('.cod-back'); await p.waitForTimeout(1500);
-  ok(await p.evaluate(() => document.body.dataset.view === 'choose' && [...document.querySelectorAll('.pick-row')].every(r => getComputedStyle(r).opacity === '1')), 'back to the choice: list visible again');
-  await p.click('.pick-row[href="#cutscenes"]'); await p.waitForTimeout(1500);
+  ok(await p.evaluate(() => document.body.dataset.view === 'choose' && !document.getElementById('choose').hidden), 'home → cod.html opens on the roster');
+  const op = await p.evaluate(() => getComputedStyle(document.querySelector('.roster-tile')).opacity);
+  ok(op === '1', 'cod: tiles visible after entrance (' + op + ')');
+  ok(await p.evaluate(() => document.querySelectorAll('.roster-tile').length === 6), 'the roster shows six characters');
+  await p.click('.roster-tile[href="#ghost"]'); await p.waitForTimeout(1200);
+  ok(await p.evaluate(() => location.hash === '#ghost' && document.getElementById('choose').hidden && !document.getElementById('pack-ghost').hidden), 'a click opens the Ghost page');
+  ok(await p.evaluate(() => document.querySelectorAll('#pack-ghost .game-strip').length === 3), 'Ghost lists three games');
+  await p.click('#pack-ghost .game-strip[href="#ghost/mw4"]'); await p.waitForTimeout(1200);
+  ok(await p.evaluate(() => document.body.dataset.view === 'ghost/mw4' && !document.getElementById('pack-ghost-mw4').hidden), 'a game opens its page');
+  ok(await p.evaluate(() => [...document.querySelectorAll('#pack-ghost-mw4-gameplay h4')].some(h => h.textContent === 'Price vs Ghost')), 'the game page holds its gameplay');
+  ok(await p.evaluate(() => [...document.querySelectorAll('#pack-price-mw4-gameplay h4')].some(h => h.textContent === 'Price vs Ghost')), 'shared gameplay shows on both characters');
+  await p.click('.cod-crumbs a[href="#choose"]'); await p.waitForTimeout(1200);
+  ok(await p.evaluate(() => document.body.dataset.view === 'choose'), 'the trail leads back to the roster');
+  await p.click('.roster-cuts'); await p.waitForTimeout(1200);
   ok(await p.evaluate(() => document.body.dataset.view === 'cutscenes' && !document.getElementById('mw4-campaign').hidden), 'click opens cutscenes');
   await p.goBack(); await p.waitForTimeout(1200);
-  ok(await p.evaluate(() => document.body.dataset.view === 'choose'), 'browser Back returns to the choice');
-  await p.click('.pick-row[href="#soap"]', { modifiers: ['Control'] }).catch(() => {}); await p.waitForTimeout(400);
-  ok(await p.evaluate(() => document.body.dataset.view === 'choose'), 'ctrl-click leaves this tab alone');
+  ok(await p.evaluate(() => document.body.dataset.view === 'choose'), 'browser Back returns to the roster');
+  await p.goto(o + '/cod.html#valeria'); await p.waitForTimeout(1200);
+  ok(await p.evaluate(() => !document.getElementById('pack-valeria-mw4').hidden), 'a character with one game opens on that game');
+  await p.goto(o + '/cod.html#gameplay'); await p.waitForTimeout(1200);
+  ok(await p.evaluate(() => document.body.dataset.view === 'price/mw4'), 'the old gameplay address still lands on gameplay');
   const ph = await browser.newContext(devices['iPhone 13']);
   const q = await ph.newPage(); q.on('pageerror', e => errs.push(e.message));
   await q.goto(o + '/cod.html'); await q.waitForTimeout(1200);
-  await q.tap('.pick-row[href="#gaz"]'); await q.waitForTimeout(1500);
+  await q.tap('.roster-tile[href="#gaz"]'); await q.waitForTimeout(1500);
   ok(await q.evaluate(() => document.body.dataset.view === 'gaz'), 'phone: tap opens Gaz');
   ok(errs.length === 0, 'no page errors ' + JSON.stringify(errs));
   await browser.close(); server.close();
