@@ -22,16 +22,16 @@
 <link rel="stylesheet" href="mw4.css?v=16">
 <link rel="stylesheet" href="download.css?v=15">
 <link rel="stylesheet" href="credit.css?v=17">
-<link rel="stylesheet" href="clean.css?v=27">
+<link rel="stylesheet" href="clean.css?v=28">
 <script src="arrival.js?v=15"></script>
 <script src="count.js?v=2" defer></script>
 <script src="ui.js?v=2" defer></script>
 <script src="archive-data.js?v=13" defer></script>
 <script src="mw4-data.js?v=13" defer></script>
-<script src="cuts-data.js?v=3" defer></script>
-<script src="mw4-missions.js?v=19" defer></script>
+<script src="cuts-data.js?v=4" defer></script>
+<script src="mw4-missions.js?v=20" defer></script>
 <script src="shelf.js?v=9" defer></script>
-<script src="cod-page.js?v=31" defer></script>
+<script src="cod-page.js?v=32" defer></script>
 <script src="credit.js?v=11" defer></script>
 <script src="site.js?v=22" defer></script>
 <script src="motion.js?v=11" defer></script>
@@ -54,13 +54,23 @@
     <div class="sheet-top"><div class="sheet-pic"><img alt=""></div><div class="sheet-head"><h2 class="sheet-title" id="sheetTitle" tabindex="-1"></h2><p class="sheet-meta"></p></div></div>
     <div id="sheetParts">
       <div class="sheet-part" data-part="cutscenes" hidden>
-        <p class="label" id="mw1Label">Modern Warfare</p>
-        <div class="sheet-mw4"><ol class="mw4-missions" id="mw1Missions" aria-label="Modern Warfare campaign cutscenes" hidden></ol></div>
-        <p class="label" id="mw2Label">Modern Warfare II</p>
-        <div class="sheet-mw4"><ol class="mw4-missions" id="mw2Missions" aria-label="Modern Warfare II campaign cutscenes" hidden></ol></div>
-        <p class="label" id="mw3Label">Modern Warfare III</p>
-        <div class="sheet-mw4"><ol class="mw4-missions" id="mw3Missions" aria-label="Modern Warfare III campaign cutscenes" hidden></ol></div>
-        <p class="label" id="mw4Label">Modern Warfare 4</p>
+        <div class="game-switch" id="gameSwitch" role="tablist" aria-label="Choose a game"></div>
+        <div class="game-panel" id="panel-mw1" role="tabpanel" aria-labelledby="tab-mw1" data-game="mw1" hidden>
+          <div class="sheet-mw4"><ol class="mw4-missions" id="mw1Missions" aria-label="Modern Warfare campaign cutscenes" hidden></ol></div>
+          <p class="label">The whole campaign in one file</p>
+          <ul class="rows is-games" id="mw1Whole"></ul>
+        </div>
+        <div class="game-panel" id="panel-mw2" role="tabpanel" aria-labelledby="tab-mw2" data-game="mw2" hidden>
+          <div class="sheet-mw4"><ol class="mw4-missions" id="mw2Missions" aria-label="Modern Warfare II campaign cutscenes" hidden></ol></div>
+          <p class="label">The whole campaign in one file</p>
+          <ul class="rows is-games" id="mw2Whole"></ul>
+        </div>
+        <div class="game-panel" id="panel-mw3" role="tabpanel" aria-labelledby="tab-mw3" data-game="mw3" hidden>
+          <div class="sheet-mw4"><ol class="mw4-missions" id="mw3Missions" aria-label="Modern Warfare III campaign cutscenes" hidden></ol></div>
+          <p class="label">The whole campaign in one file</p>
+          <ul class="rows is-games" id="mw3Whole"></ul>
+        </div>
+        <div class="game-panel" id="panel-mw4" role="tabpanel" aria-labelledby="tab-mw4" data-game="mw4" hidden>
         <div class="sheet-mw4">
 <section class="mw4-collection" id="mw4-campaign" aria-label="Modern Warfare 4 campaign cutscenes">
   <header class="mw4-heading">
@@ -91,8 +101,7 @@
         </div>
         <p class="label" id="looseLabel">Gameplay</p>
         <ul class="rows is-games" id="looseRows"></ul>
-        <p class="label">Whole campaigns in one file</p>
-        <ul class="rows is-games" id="cutsRows"></ul>
+        </div>
       </div>
     </div>
   </div>

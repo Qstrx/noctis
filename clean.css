@@ -231,6 +231,18 @@ html.sheet-solid #main, html.sheet-solid .site-header { visibility: hidden; }
 @keyframes row-in { from { opacity: 0; transform: translateY(16px); } }
 .label.is-entering, .sheet-mw4.is-entering { animation: row-in .8s .2s var(--ease-out) both; }
 
+/* ---------- Full cutscenes: one tab per game, kept in view ---------- */
+.game-switch { position: sticky; z-index: 2; top: 60px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: clamp(24px, 4vh, 40px) 0 20px; padding: 8px 0; background: var(--page); }
+.game-switch [role=tab] { display: grid; align-content: center; justify-items: center; gap: 10px; min-height: 92px; padding: 14px 8px; border: 0; border-radius: 12px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--muted); transition: box-shadow .2s ease, color .2s ease; }
+.game-switch img { display: block; width: auto; height: clamp(20px, 2.8vw, 34px); max-width: 100%; object-fit: contain; filter: brightness(0) invert(1); opacity: .55; transition: opacity .2s ease; }
+.game-switch small { font: 500 12px/1 var(--font); }
+.game-switch [role=tab]:hover { box-shadow: inset 0 0 0 1px var(--line-strong); color: var(--ink); }
+.game-switch [role=tab]:hover img { opacity: .85; }
+.game-switch [aria-selected=true], .game-switch [aria-selected=true]:hover { box-shadow: inset 0 0 0 2px var(--accent); color: var(--ink); }
+.game-switch [aria-selected=true] img { opacity: 1; }
+.mw4-mission-run { position: absolute; z-index: 1; right: 8px; bottom: 8px; padding: 4px 8px; border-radius: 999px; background: rgba(9, 9, 10, .72); color: #fff; font: 500 12px/1 var(--mono); }
+.mw4-detail { scroll-margin-top: 170px; }
+
 /* ---------- The MW4 campaign inside the cutscenes sheet ---------- */
 .sheet-mw4 { margin-top: 12px; }
 body[data-world=cod] .mw4-collection { margin: 0; padding: 0; border: 0; }
@@ -272,6 +284,9 @@ body[data-world] .quality-tip { border-radius: 12px; }
   body[data-world] .site-nav a::after, body[data-world] .nav-marker { bottom: 12px; }
   .doors { flex-direction: column; }
   .sheet-inner { padding-top: 68px; }
+  .game-switch { gap: 5px; }
+  .game-switch [role=tab] { min-height: 70px; padding: 10px 4px; gap: 7px; border-radius: 10px; }
+  .game-switch small { font-size: 11px; }
   .tiles-page { padding-top: calc(var(--head) + 18px); }
   .tiles { --cols: 3; --gap: 6px; }
   .tile-text { padding: 9px; gap: 4px; }

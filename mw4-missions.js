@@ -43,9 +43,9 @@
     const first = mission.scenes[0], last = mission.scenes[mission.scenes.length - 1];
     const label = mission.recap ? 'Recap' : first === last ? 'Scene ' + first.no : `Scenes ${first.no}–${last.no}`;
     return `<li class="mw4-mission${mission.recap ? ' is-recap' : ''}" data-mission="${m}">
-      <button type="button" class="mw4-mission-cover" data-scene="${first.index}" aria-controls="mw4Detail" aria-label="${esc(`Open ${mission.title}, ${first.kind}, ${first.run}`)}"><img src="${first.poster}" alt="" width="1200" height="510" loading="lazy"><span class="mw4-mission-no">${esc(label)}</span></button>
+      <button type="button" class="mw4-mission-cover" data-scene="${first.index}" aria-controls="${prefix}Detail" aria-label="${esc(['Open ' + mission.title, first.kind, first.run].filter(Boolean).join(', '))}"><img src="${first.poster}" alt="" width="1200" height="510" loading="lazy"><span class="mw4-mission-no">${esc(label)}</span>${first.kind ? '' : `<span class="mw4-mission-run">${first.run}</span>`}</button>
       <h3 class="mw4-mission-title">${esc(mission.title)}</h3>
-      <div class="mw4-clips">${mission.scenes.map(scene => `<button type="button" class="mw4-clip" data-scene="${scene.index}" aria-controls="mw4Detail" aria-expanded="false" aria-label="${esc(`${mission.title}, ${scene.kind}, ${scene.run}`)}"><b>${esc(scene.kind)}</b>${scene.run}</button>`).join('')}</div>
+      ${first.kind ? `<div class="mw4-clips">${mission.scenes.map(scene => `<button type="button" class="mw4-clip" data-scene="${scene.index}" aria-controls="${prefix}Detail" aria-expanded="false" aria-label="${esc(`${mission.title}, ${scene.kind}, ${scene.run}`)}"><b>${esc(scene.kind)}</b>${scene.run}</button>`).join('')}</div>` : ''}
     </li>`;
   }).join('');
 
@@ -104,7 +104,7 @@
     const id = load, scene = scenes[current];
     video = document.createElement('video');
     video.className = 'mw4-video'; video.controls = true; video.playsInline = true; video.preload = 'auto'; video.poster = scene.poster;
-    video.setAttribute('aria-label', `${scene.title} ${scene.kind} preview in 1080p`);
+    video.setAttribute('aria-label', `${scene.title} ${scene.kind || ''} preview in 1080p`);
     video.addEventListener('error', () => { if (id === load) { clearTimeout(slow); state.hidden = true; failure.hidden = false; } });
     ['playing', 'canplay'].forEach(name => video.addEventListener(name, () => { if (id === load) { clearTimeout(slow); state.hidden = true; } }));
     video.addEventListener('waiting', () => { if (id === load && failure.hidden) { state.textContent = 'Buffering preview…'; state.hidden = false; } });
@@ -123,8 +123,8 @@
   function render() {
     const scene = scenes[current], file = scene.by[quality];
     poster.src = scene.poster;
-    $('.mw4-kicker').textContent = scene.recap ? 'Campaign recap · separate from the 22 scenes' : `Scene ${scene.no} of ${scenes.filter(item => !item.recap).length} · ${scene.kind}`;
-    $('.mw4-detail-title').textContent = scene.recap ? 'Campaign Recap' : `${scene.title} · ${scene.kind}`;
+    $('.mw4-kicker').textContent = scene.recap ? 'Campaign recap · separate from the 22 scenes' : `Scene ${scene.no} of ${scenes.filter(item => !item.recap).length}${scene.kind ? ` · ${scene.kind}` : ''}`;
+    $('.mw4-detail-title').textContent = scene.recap ? 'Campaign Recap' : scene.kind ? `${scene.title} · ${scene.kind}` : scene.title;
     $('[data-fact=run]').textContent = scene.run;
     detail.querySelectorAll('.mw4-res input').forEach(input => {
       const variant = scene.by[input.value], face = input.nextElementSibling;
@@ -184,7 +184,7 @@
     const target = event.target.closest('[data-scene]');
     if (!target || detail.contains(target)) return;
     const index = Number(target.dataset.scene);
-    if (open && index === current && target.classList.contains('mw4-clip')) { close(); return; }
+    if (open && index === current && (target.classList.contains('mw4-clip') || !scenes[index].kind)) { close(); return; }
     opener = target;
     show(index, { focus: true });
   });

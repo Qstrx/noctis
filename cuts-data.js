@@ -15,7 +15,7 @@ const MW_CAMPAIGN_PACKS = [
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-01-Verdansk-4K.mp4",
-      "name": "01 — Verdansk · Cutscene",
+      "name": "01 — Verdansk",
       "scene": "01",
       "run": "1:55",
       "size": "405.2 MB",
@@ -27,7 +27,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-02-London-4K.mp4",
-      "name": "02 — London · Cutscene",
+      "name": "02 — London",
       "scene": "02",
       "run": "1:19",
       "size": "294.5 MB",
@@ -39,7 +39,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-03-The-Safehouse-4K.mp4",
-      "name": "03 — The Safehouse · Cutscene",
+      "name": "03 — The Safehouse",
       "scene": "03",
       "run": "3:21",
       "size": "925.9 MB",
@@ -51,7 +51,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-04-The-Safehouse-Finale-4K.mp4",
-      "name": "04 — The Safehouse: Finale · Cutscene",
+      "name": "04 — The Safehouse: Finale",
       "scene": "04",
       "run": "0:22",
       "size": "70.8 MB",
@@ -63,7 +63,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-05-The-Townhouse-4K.mp4",
-      "name": "05 — The Townhouse · Cutscene",
+      "name": "05 — The Townhouse",
       "scene": "05",
       "run": "0:43",
       "size": "218.6 MB",
@@ -75,7 +75,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-06-The-Marines-4K.mp4",
-      "name": "06 — The Marines · Cutscene",
+      "name": "06 — The Marines",
       "scene": "06",
       "run": "2:29",
       "size": "580.6 MB",
@@ -87,7 +87,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-07-The-Embassy-4K.mp4",
-      "name": "07 — The Embassy · Cutscene",
+      "name": "07 — The Embassy",
       "scene": "07",
       "run": "1:26",
       "size": "367.5 MB",
@@ -99,7 +99,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-08-The-Highway-4K.mp4",
-      "name": "08 — The Highway · Cutscene",
+      "name": "08 — The Highway",
       "scene": "08",
       "run": "0:35",
       "size": "184.1 MB",
@@ -111,7 +111,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-09-The-Tunnels-4K.mp4",
-      "name": "09 — The Tunnels · Cutscene",
+      "name": "09 — The Tunnels",
       "scene": "09",
       "run": "1:53",
       "size": "477.6 MB",
@@ -123,7 +123,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-10-Captive-4K.mp4",
-      "name": "10 — Captive · Cutscene",
+      "name": "10 — Captive",
       "scene": "10",
       "run": "2:19",
       "size": "535.6 MB",
@@ -135,7 +135,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-11-The-Village-4K.mp4",
-      "name": "11 — The Village · Cutscene",
+      "name": "11 — The Village",
       "scene": "11",
       "run": "0:08",
       "size": "1.9 MB",
@@ -147,7 +147,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-12-St-Petersburg-4K.mp4",
-      "name": "12 — St. Petersburg · Cutscene",
+      "name": "12 — St. Petersburg",
       "scene": "12",
       "run": "2:01",
       "size": "528.1 MB",
@@ -159,7 +159,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-13-The-Estate-4K.mp4",
-      "name": "13 — The Estate · Cutscene",
+      "name": "13 — The Estate",
       "scene": "13",
       "run": "1:45",
       "size": "370.9 MB",
@@ -171,7 +171,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-14-The-Lab-4K.mp4",
-      "name": "14 — The Lab · Cutscene",
+      "name": "14 — The Lab",
       "scene": "14",
       "run": "3:54",
       "size": "1.04 GB",
@@ -183,7 +183,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-15-The-Lab-The-Sacrifice-4K.mp4",
-      "name": "15 — The Lab: The Sacrifice · Cutscene",
+      "name": "15 — The Lab: The Sacrifice",
       "scene": "15",
       "run": "1:42",
       "size": "390.9 MB",
@@ -195,7 +195,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-16-Epilogue-4K.mp4",
-      "name": "16 — Epilogue · Cutscene",
+      "name": "16 — Epilogue",
       "scene": "16",
       "run": "1:59",
       "size": "534.5 MB",
@@ -207,7 +207,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-17-Spec-Ops-Opening-4K.mp4",
-      "name": "17 — Spec Ops Opening · Cutscene",
+      "name": "17 — Spec Ops Opening",
       "scene": "17",
       "run": "2:13",
       "size": "489.5 MB",
@@ -225,7 +225,7 @@ const MW_CAMPAIGN_PACKS = [
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-01-Verdansk-2K.mp4",
-      "name": "01 — Verdansk · Cutscene",
+      "name": "01 — Verdansk",
       "scene": "01",
       "run": "1:55",
       "size": "248.7 MB",
@@ -237,7 +237,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-02-London-2K.mp4",
-      "name": "02 — London · Cutscene",
+      "name": "02 — London",
       "scene": "02",
       "run": "1:19",
       "size": "176.8 MB",
@@ -249,7 +249,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-03-The-Safehouse-2K.mp4",
-      "name": "03 — The Safehouse · Cutscene",
+      "name": "03 — The Safehouse",
       "scene": "03",
       "run": "3:21",
       "size": "531.3 MB",
@@ -261,7 +261,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-04-The-Safehouse-Finale-2K.mp4",
-      "name": "04 — The Safehouse: Finale · Cutscene",
+      "name": "04 — The Safehouse: Finale",
       "scene": "04",
       "run": "0:22",
       "size": "37.7 MB",
@@ -273,7 +273,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-05-The-Townhouse-2K.mp4",
-      "name": "05 — The Townhouse · Cutscene",
+      "name": "05 — The Townhouse",
       "scene": "05",
       "run": "0:43",
       "size": "117.9 MB",
@@ -285,7 +285,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-06-The-Marines-2K.mp4",
-      "name": "06 — The Marines · Cutscene",
+      "name": "06 — The Marines",
       "scene": "06",
       "run": "2:29",
       "size": "335.5 MB",
@@ -297,7 +297,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-07-The-Embassy-2K.mp4",
-      "name": "07 — The Embassy · Cutscene",
+      "name": "07 — The Embassy",
       "scene": "07",
       "run": "1:26",
       "size": "209.6 MB",
@@ -309,7 +309,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-08-The-Highway-2K.mp4",
-      "name": "08 — The Highway · Cutscene",
+      "name": "08 — The Highway",
       "scene": "08",
       "run": "0:35",
       "size": "99.9 MB",
@@ -321,7 +321,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-09-The-Tunnels-2K.mp4",
-      "name": "09 — The Tunnels · Cutscene",
+      "name": "09 — The Tunnels",
       "scene": "09",
       "run": "1:53",
       "size": "259.3 MB",
@@ -333,7 +333,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-10-Captive-2K.mp4",
-      "name": "10 — Captive · Cutscene",
+      "name": "10 — Captive",
       "scene": "10",
       "run": "2:19",
       "size": "326.9 MB",
@@ -345,7 +345,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-11-The-Village-2K.mp4",
-      "name": "11 — The Village · Cutscene",
+      "name": "11 — The Village",
       "scene": "11",
       "run": "0:08",
       "size": "0.4 MB",
@@ -357,7 +357,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-12-St-Petersburg-2K.mp4",
-      "name": "12 — St. Petersburg · Cutscene",
+      "name": "12 — St. Petersburg",
       "scene": "12",
       "run": "2:01",
       "size": "295.3 MB",
@@ -369,7 +369,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-13-The-Estate-2K.mp4",
-      "name": "13 — The Estate · Cutscene",
+      "name": "13 — The Estate",
       "scene": "13",
       "run": "1:45",
       "size": "254.9 MB",
@@ -381,7 +381,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-14-The-Lab-2K.mp4",
-      "name": "14 — The Lab · Cutscene",
+      "name": "14 — The Lab",
       "scene": "14",
       "run": "3:54",
       "size": "565.7 MB",
@@ -393,7 +393,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-15-The-Lab-The-Sacrifice-2K.mp4",
-      "name": "15 — The Lab: The Sacrifice · Cutscene",
+      "name": "15 — The Lab: The Sacrifice",
       "scene": "15",
       "run": "1:42",
       "size": "228.1 MB",
@@ -405,7 +405,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-16-Epilogue-2K.mp4",
-      "name": "16 — Epilogue · Cutscene",
+      "name": "16 — Epilogue",
       "scene": "16",
       "run": "1:59",
       "size": "275.3 MB",
@@ -417,7 +417,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-17-Spec-Ops-Opening-2K.mp4",
-      "name": "17 — Spec Ops Opening · Cutscene",
+      "name": "17 — Spec Ops Opening",
       "scene": "17",
       "run": "2:13",
       "size": "229.7 MB",
@@ -435,7 +435,7 @@ const MW_CAMPAIGN_PACKS = [
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-01-Verdansk-1080p.mp4",
-      "name": "01 — Verdansk · Cutscene",
+      "name": "01 — Verdansk",
       "scene": "01",
       "run": "1:55",
       "size": "140.4 MB",
@@ -447,7 +447,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-02-London-1080p.mp4",
-      "name": "02 — London · Cutscene",
+      "name": "02 — London",
       "scene": "02",
       "run": "1:19",
       "size": "99.8 MB",
@@ -459,7 +459,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-03-The-Safehouse-1080p.mp4",
-      "name": "03 — The Safehouse · Cutscene",
+      "name": "03 — The Safehouse",
       "scene": "03",
       "run": "3:21",
       "size": "302.2 MB",
@@ -471,7 +471,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-04-The-Safehouse-Finale-1080p.mp4",
-      "name": "04 — The Safehouse: Finale · Cutscene",
+      "name": "04 — The Safehouse: Finale",
       "scene": "04",
       "run": "0:22",
       "size": "20.9 MB",
@@ -483,7 +483,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-05-The-Townhouse-1080p.mp4",
-      "name": "05 — The Townhouse · Cutscene",
+      "name": "05 — The Townhouse",
       "scene": "05",
       "run": "0:43",
       "size": "66.5 MB",
@@ -495,7 +495,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-06-The-Marines-1080p.mp4",
-      "name": "06 — The Marines · Cutscene",
+      "name": "06 — The Marines",
       "scene": "06",
       "run": "2:29",
       "size": "188.2 MB",
@@ -507,7 +507,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-07-The-Embassy-1080p.mp4",
-      "name": "07 — The Embassy · Cutscene",
+      "name": "07 — The Embassy",
       "scene": "07",
       "run": "1:26",
       "size": "118.8 MB",
@@ -519,7 +519,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-08-The-Highway-1080p.mp4",
-      "name": "08 — The Highway · Cutscene",
+      "name": "08 — The Highway",
       "scene": "08",
       "run": "0:35",
       "size": "57.9 MB",
@@ -531,7 +531,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-09-The-Tunnels-1080p.mp4",
-      "name": "09 — The Tunnels · Cutscene",
+      "name": "09 — The Tunnels",
       "scene": "09",
       "run": "1:53",
       "size": "146.4 MB",
@@ -543,7 +543,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-10-Captive-1080p.mp4",
-      "name": "10 — Captive · Cutscene",
+      "name": "10 — Captive",
       "scene": "10",
       "run": "2:19",
       "size": "184.5 MB",
@@ -555,7 +555,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-11-The-Village-1080p.mp4",
-      "name": "11 — The Village · Cutscene",
+      "name": "11 — The Village",
       "scene": "11",
       "run": "0:08",
       "size": "0.2 MB",
@@ -567,7 +567,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-12-St-Petersburg-1080p.mp4",
-      "name": "12 — St. Petersburg · Cutscene",
+      "name": "12 — St. Petersburg",
       "scene": "12",
       "run": "2:01",
       "size": "168.0 MB",
@@ -579,7 +579,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-13-The-Estate-1080p.mp4",
-      "name": "13 — The Estate · Cutscene",
+      "name": "13 — The Estate",
       "scene": "13",
       "run": "1:45",
       "size": "143.5 MB",
@@ -591,7 +591,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-14-The-Lab-1080p.mp4",
-      "name": "14 — The Lab · Cutscene",
+      "name": "14 — The Lab",
       "scene": "14",
       "run": "3:54",
       "size": "322.9 MB",
@@ -603,7 +603,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-15-The-Lab-The-Sacrifice-1080p.mp4",
-      "name": "15 — The Lab: The Sacrifice · Cutscene",
+      "name": "15 — The Lab: The Sacrifice",
       "scene": "15",
       "run": "1:42",
       "size": "127.2 MB",
@@ -615,7 +615,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-16-Epilogue-1080p.mp4",
-      "name": "16 — Epilogue · Cutscene",
+      "name": "16 — Epilogue",
       "scene": "16",
       "run": "1:59",
       "size": "154.0 MB",
@@ -627,7 +627,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW1-Campaign-17-Spec-Ops-Opening-1080p.mp4",
-      "name": "17 — Spec Ops Opening · Cutscene",
+      "name": "17 — Spec Ops Opening",
       "scene": "17",
       "run": "2:13",
       "size": "134.9 MB",
@@ -656,7 +656,7 @@ const MW_CAMPAIGN_PACKS = [
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-01-The-Strike-4K.mp4",
-      "name": "01 — The Strike · Cutscene",
+      "name": "01 — The Strike",
       "scene": "01",
       "run": "0:27",
       "size": "117.2 MB",
@@ -668,7 +668,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-02-Ghost-Shepherd-and-Laswell-4K.mp4",
-      "name": "02 — Ghost, Shepherd and Laswell · Cutscene",
+      "name": "02 — Ghost, Shepherd and Laswell",
       "scene": "02",
       "run": "2:51",
       "size": "897.3 MB",
@@ -680,7 +680,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-03-Shepherd-and-Laswell-Amsterdam-at-Night-4K.mp4",
-      "name": "03 — Shepherd and Laswell, Amsterdam at Night · Cutscene",
+      "name": "03 — Shepherd and Laswell, Amsterdam at Night",
       "scene": "03",
       "run": "2:57",
       "size": "949.1 MB",
@@ -692,7 +692,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-04-Amsterdam-Price-at-the-Cafe-4K.mp4",
-      "name": "04 — Amsterdam: Price at the Cafe · Cutscene",
+      "name": "04 — Amsterdam: Price at the Cafe",
       "scene": "04",
       "run": "0:33",
       "size": "283.7 MB",
@@ -704,7 +704,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-05-Vargas-and-Hassan-Briefing-4K.mp4",
-      "name": "05 — Vargas and Hassan Briefing · Cutscene",
+      "name": "05 — Vargas and Hassan Briefing",
       "scene": "05",
       "run": "0:38",
       "size": "158.4 MB",
@@ -716,7 +716,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-06-Las-Almas-Ghost-Soap-and-Alejandro-4K.mp4",
-      "name": "06 — Las Almas: Ghost, Soap and Alejandro · Cutscene",
+      "name": "06 — Las Almas: Ghost, Soap and Alejandro",
       "scene": "06",
       "run": "3:47",
       "size": "1.63 GB",
@@ -728,7 +728,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-07-The-Submarine-4K.mp4",
-      "name": "07 — The Submarine · Cutscene",
+      "name": "07 — The Submarine",
       "scene": "07",
       "run": "1:01",
       "size": "351.6 MB",
@@ -740,7 +740,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-08-The-Submarine-Aftermath-4K.mp4",
-      "name": "08 — The Submarine: Aftermath · Cutscene",
+      "name": "08 — The Submarine: Aftermath",
       "scene": "08",
       "run": "0:20",
       "size": "113.6 MB",
@@ -752,7 +752,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-09-Hassan-Captured-4K.mp4",
-      "name": "09 — Hassan Captured · Cutscene",
+      "name": "09 — Hassan Captured",
       "scene": "09",
       "run": "3:49",
       "size": "1.38 GB",
@@ -764,7 +764,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-10-Price-and-Gaz-at-Sunset-Urzikstan-4K.mp4",
-      "name": "10 — Price and Gaz at Sunset, Urzikstan · Cutscene",
+      "name": "10 — Price and Gaz at Sunset, Urzikstan",
       "scene": "10",
       "run": "2:29",
       "size": "975.8 MB",
@@ -776,7 +776,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-11-Price-Laswell-and-Farah-in-the-Desert-4K.mp4",
-      "name": "11 — Price, Laswell and Farah in the Desert · Cutscene",
+      "name": "11 — Price, Laswell and Farah in the Desert",
       "scene": "11",
       "run": "2:22",
       "size": "815.1 MB",
@@ -788,7 +788,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-12-Valeria-Interrogated-Briefing-at-Sea-4K.mp4",
-      "name": "12 — Valeria Interrogated, Briefing at Sea · Cutscene",
+      "name": "12 — Valeria Interrogated, Briefing at Sea",
       "scene": "12",
       "run": "4:09",
       "size": "1.45 GB",
@@ -800,7 +800,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-13-Graves-Betrayal-4K.mp4",
-      "name": "13 — Graves' Betrayal · Cutscene",
+      "name": "13 — Graves' Betrayal",
       "scene": "13",
       "run": "2:43",
       "size": "926.1 MB",
@@ -812,7 +812,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-14-The-Farm-at-Night-4K.mp4",
-      "name": "14 — The Farm at Night · Cutscene",
+      "name": "14 — The Farm at Night",
       "scene": "14",
       "run": "3:02",
       "size": "1.15 GB",
@@ -824,7 +824,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-15-Price-and-Shepherd-the-Team-Prepares-4K.mp4",
-      "name": "15 — Price and Shepherd, the Team Prepares · Cutscene",
+      "name": "15 — Price and Shepherd, the Team Prepares",
       "scene": "15",
       "run": "3:24",
       "size": "1.39 GB",
@@ -836,7 +836,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-16-Price-and-Valeria-the-Prisoner-4K.mp4",
-      "name": "16 — Price and Valeria the Prisoner · Cutscene",
+      "name": "16 — Price and Valeria the Prisoner",
       "scene": "16",
       "run": "3:03",
       "size": "1.17 GB",
@@ -848,7 +848,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-17-Chicago-Price-and-Laswell-at-the-Bar-4K.mp4",
-      "name": "17 — Chicago: Price and Laswell at the Bar · Cutscene",
+      "name": "17 — Chicago: Price and Laswell at the Bar",
       "scene": "17",
       "run": "2:28",
       "size": "614.0 MB",
@@ -860,7 +860,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-18-On-the-Plane-The-Gun-4K.mp4",
-      "name": "18 — On the Plane: The Gun · Cutscene",
+      "name": "18 — On the Plane: The Gun",
       "scene": "18",
       "run": "1:21",
       "size": "389.4 MB",
@@ -878,7 +878,7 @@ const MW_CAMPAIGN_PACKS = [
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-01-The-Strike-2K.mp4",
-      "name": "01 — The Strike · Cutscene",
+      "name": "01 — The Strike",
       "scene": "01",
       "run": "0:27",
       "size": "62.0 MB",
@@ -890,7 +890,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-02-Ghost-Shepherd-and-Laswell-2K.mp4",
-      "name": "02 — Ghost, Shepherd and Laswell · Cutscene",
+      "name": "02 — Ghost, Shepherd and Laswell",
       "scene": "02",
       "run": "2:51",
       "size": "661.5 MB",
@@ -902,7 +902,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-03-Shepherd-and-Laswell-Amsterdam-at-Night-2K.mp4",
-      "name": "03 — Shepherd and Laswell, Amsterdam at Night · Cutscene",
+      "name": "03 — Shepherd and Laswell, Amsterdam at Night",
       "scene": "03",
       "run": "2:57",
       "size": "673.9 MB",
@@ -914,7 +914,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-04-Amsterdam-Price-at-the-Cafe-2K.mp4",
-      "name": "04 — Amsterdam: Price at the Cafe · Cutscene",
+      "name": "04 — Amsterdam: Price at the Cafe",
       "scene": "04",
       "run": "0:33",
       "size": "103.6 MB",
@@ -926,7 +926,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-05-Vargas-and-Hassan-Briefing-2K.mp4",
-      "name": "05 — Vargas and Hassan Briefing · Cutscene",
+      "name": "05 — Vargas and Hassan Briefing",
       "scene": "05",
       "run": "0:38",
       "size": "90.5 MB",
@@ -938,7 +938,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-06-Las-Almas-Ghost-Soap-and-Alejandro-2K.mp4",
-      "name": "06 — Las Almas: Ghost, Soap and Alejandro · Cutscene",
+      "name": "06 — Las Almas: Ghost, Soap and Alejandro",
       "scene": "06",
       "run": "3:47",
       "size": "1.40 GB",
@@ -950,7 +950,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-07-The-Submarine-2K.mp4",
-      "name": "07 — The Submarine · Cutscene",
+      "name": "07 — The Submarine",
       "scene": "07",
       "run": "1:01",
       "size": "264.9 MB",
@@ -962,7 +962,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-08-The-Submarine-Aftermath-2K.mp4",
-      "name": "08 — The Submarine: Aftermath · Cutscene",
+      "name": "08 — The Submarine: Aftermath",
       "scene": "08",
       "run": "0:20",
       "size": "87.1 MB",
@@ -974,7 +974,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-09-Hassan-Captured-2K.mp4",
-      "name": "09 — Hassan Captured · Cutscene",
+      "name": "09 — Hassan Captured",
       "scene": "09",
       "run": "3:49",
       "size": "1.08 GB",
@@ -986,7 +986,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-10-Price-and-Gaz-at-Sunset-Urzikstan-2K.mp4",
-      "name": "10 — Price and Gaz at Sunset, Urzikstan · Cutscene",
+      "name": "10 — Price and Gaz at Sunset, Urzikstan",
       "scene": "10",
       "run": "2:29",
       "size": "841.4 MB",
@@ -998,7 +998,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-11-Price-Laswell-and-Farah-in-the-Desert-2K.mp4",
-      "name": "11 — Price, Laswell and Farah in the Desert · Cutscene",
+      "name": "11 — Price, Laswell and Farah in the Desert",
       "scene": "11",
       "run": "2:22",
       "size": "683.4 MB",
@@ -1010,7 +1010,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-12-Valeria-Interrogated-Briefing-at-Sea-2K.mp4",
-      "name": "12 — Valeria Interrogated, Briefing at Sea · Cutscene",
+      "name": "12 — Valeria Interrogated, Briefing at Sea",
       "scene": "12",
       "run": "4:09",
       "size": "1.14 GB",
@@ -1022,7 +1022,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-13-Graves-Betrayal-2K.mp4",
-      "name": "13 — Graves' Betrayal · Cutscene",
+      "name": "13 — Graves' Betrayal",
       "scene": "13",
       "run": "2:43",
       "size": "674.7 MB",
@@ -1034,7 +1034,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-14-The-Farm-at-Night-2K.mp4",
-      "name": "14 — The Farm at Night · Cutscene",
+      "name": "14 — The Farm at Night",
       "scene": "14",
       "run": "3:02",
       "size": "924.5 MB",
@@ -1046,7 +1046,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-15-Price-and-Shepherd-the-Team-Prepares-2K.mp4",
-      "name": "15 — Price and Shepherd, the Team Prepares · Cutscene",
+      "name": "15 — Price and Shepherd, the Team Prepares",
       "scene": "15",
       "run": "3:24",
       "size": "1.17 GB",
@@ -1058,7 +1058,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-16-Price-and-Valeria-the-Prisoner-2K.mp4",
-      "name": "16 — Price and Valeria the Prisoner · Cutscene",
+      "name": "16 — Price and Valeria the Prisoner",
       "scene": "16",
       "run": "3:03",
       "size": "921.4 MB",
@@ -1070,7 +1070,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-17-Chicago-Price-and-Laswell-at-the-Bar-2K.mp4",
-      "name": "17 — Chicago: Price and Laswell at the Bar · Cutscene",
+      "name": "17 — Chicago: Price and Laswell at the Bar",
       "scene": "17",
       "run": "2:28",
       "size": "386.6 MB",
@@ -1082,7 +1082,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-18-On-the-Plane-The-Gun-2K.mp4",
-      "name": "18 — On the Plane: The Gun · Cutscene",
+      "name": "18 — On the Plane: The Gun",
       "scene": "18",
       "run": "1:21",
       "size": "247.7 MB",
@@ -1100,7 +1100,7 @@ const MW_CAMPAIGN_PACKS = [
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-01-The-Strike-1080p.mp4",
-      "name": "01 — The Strike · Cutscene",
+      "name": "01 — The Strike",
       "scene": "01",
       "run": "0:27",
       "size": "36.3 MB",
@@ -1112,7 +1112,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-02-Ghost-Shepherd-and-Laswell-1080p.mp4",
-      "name": "02 — Ghost, Shepherd and Laswell · Cutscene",
+      "name": "02 — Ghost, Shepherd and Laswell",
       "scene": "02",
       "run": "2:51",
       "size": "363.9 MB",
@@ -1124,7 +1124,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-03-Shepherd-and-Laswell-Amsterdam-at-Night-1080p.mp4",
-      "name": "03 — Shepherd and Laswell, Amsterdam at Night · Cutscene",
+      "name": "03 — Shepherd and Laswell, Amsterdam at Night",
       "scene": "03",
       "run": "2:57",
       "size": "366.7 MB",
@@ -1136,7 +1136,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-04-Amsterdam-Price-at-the-Cafe-1080p.mp4",
-      "name": "04 — Amsterdam: Price at the Cafe · Cutscene",
+      "name": "04 — Amsterdam: Price at the Cafe",
       "scene": "04",
       "run": "0:33",
       "size": "60.0 MB",
@@ -1148,7 +1148,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-05-Vargas-and-Hassan-Briefing-1080p.mp4",
-      "name": "05 — Vargas and Hassan Briefing · Cutscene",
+      "name": "05 — Vargas and Hassan Briefing",
       "scene": "05",
       "run": "0:38",
       "size": "52.3 MB",
@@ -1160,7 +1160,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-06-Las-Almas-Ghost-Soap-and-Alejandro-1080p.mp4",
-      "name": "06 — Las Almas: Ghost, Soap and Alejandro · Cutscene",
+      "name": "06 — Las Almas: Ghost, Soap and Alejandro",
       "scene": "06",
       "run": "3:47",
       "size": "754.0 MB",
@@ -1172,7 +1172,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-07-The-Submarine-1080p.mp4",
-      "name": "07 — The Submarine · Cutscene",
+      "name": "07 — The Submarine",
       "scene": "07",
       "run": "1:01",
       "size": "139.4 MB",
@@ -1184,7 +1184,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-08-The-Submarine-Aftermath-1080p.mp4",
-      "name": "08 — The Submarine: Aftermath · Cutscene",
+      "name": "08 — The Submarine: Aftermath",
       "scene": "08",
       "run": "0:20",
       "size": "46.1 MB",
@@ -1196,7 +1196,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-09-Hassan-Captured-1080p.mp4",
-      "name": "09 — Hassan Captured · Cutscene",
+      "name": "09 — Hassan Captured",
       "scene": "09",
       "run": "3:49",
       "size": "602.2 MB",
@@ -1208,7 +1208,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-10-Price-and-Gaz-at-Sunset-Urzikstan-1080p.mp4",
-      "name": "10 — Price and Gaz at Sunset, Urzikstan · Cutscene",
+      "name": "10 — Price and Gaz at Sunset, Urzikstan",
       "scene": "10",
       "run": "2:29",
       "size": "455.5 MB",
@@ -1220,7 +1220,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-11-Price-Laswell-and-Farah-in-the-Desert-1080p.mp4",
-      "name": "11 — Price, Laswell and Farah in the Desert · Cutscene",
+      "name": "11 — Price, Laswell and Farah in the Desert",
       "scene": "11",
       "run": "2:22",
       "size": "373.4 MB",
@@ -1232,7 +1232,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-12-Valeria-Interrogated-Briefing-at-Sea-1080p.mp4",
-      "name": "12 — Valeria Interrogated, Briefing at Sea · Cutscene",
+      "name": "12 — Valeria Interrogated, Briefing at Sea",
       "scene": "12",
       "run": "4:09",
       "size": "622.7 MB",
@@ -1244,7 +1244,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-13-Graves-Betrayal-1080p.mp4",
-      "name": "13 — Graves' Betrayal · Cutscene",
+      "name": "13 — Graves' Betrayal",
       "scene": "13",
       "run": "2:43",
       "size": "387.3 MB",
@@ -1256,7 +1256,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-14-The-Farm-at-Night-1080p.mp4",
-      "name": "14 — The Farm at Night · Cutscene",
+      "name": "14 — The Farm at Night",
       "scene": "14",
       "run": "3:02",
       "size": "492.4 MB",
@@ -1268,7 +1268,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-15-Price-and-Shepherd-the-Team-Prepares-1080p.mp4",
-      "name": "15 — Price and Shepherd, the Team Prepares · Cutscene",
+      "name": "15 — Price and Shepherd, the Team Prepares",
       "scene": "15",
       "run": "3:24",
       "size": "622.5 MB",
@@ -1280,7 +1280,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-16-Price-and-Valeria-the-Prisoner-1080p.mp4",
-      "name": "16 — Price and Valeria the Prisoner · Cutscene",
+      "name": "16 — Price and Valeria the Prisoner",
       "scene": "16",
       "run": "3:03",
       "size": "503.5 MB",
@@ -1292,7 +1292,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-17-Chicago-Price-and-Laswell-at-the-Bar-1080p.mp4",
-      "name": "17 — Chicago: Price and Laswell at the Bar · Cutscene",
+      "name": "17 — Chicago: Price and Laswell at the Bar",
       "scene": "17",
       "run": "2:28",
       "size": "221.0 MB",
@@ -1304,7 +1304,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW2-Campaign-18-On-the-Plane-The-Gun-1080p.mp4",
-      "name": "18 — On the Plane: The Gun · Cutscene",
+      "name": "18 — On the Plane: The Gun",
       "scene": "18",
       "run": "1:21",
       "size": "143.8 MB",
@@ -1333,7 +1333,7 @@ const MW_CAMPAIGN_PACKS = [
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-01-Divers-and-the-Title-4K.mp4",
-      "name": "01 — Divers and the Title · Cutscene",
+      "name": "01 — Divers and the Title",
       "scene": "01",
       "run": "2:10",
       "size": "397.5 MB",
@@ -1345,7 +1345,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-02-Ship-in-the-Storm-4K.mp4",
-      "name": "02 — Ship in the Storm · Cutscene",
+      "name": "02 — Ship in the Storm",
       "scene": "02",
       "run": "0:42",
       "size": "180.9 MB",
@@ -1357,7 +1357,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-03-Price-Ghost-and-Gaz-on-the-Plane-Urzikstan-4K.mp4",
-      "name": "03 — Price, Ghost and Gaz on the Plane, Urzikstan · Cutscene",
+      "name": "03 — Price, Ghost and Gaz on the Plane, Urzikstan",
       "scene": "03",
       "run": "3:01",
       "size": "884.7 MB",
@@ -1369,7 +1369,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-04-The-Port-Farah-and-Alex-4K.mp4",
-      "name": "04 — The Port: Farah and Alex · Cutscene",
+      "name": "04 — The Port: Farah and Alex",
       "scene": "04",
       "run": "1:49",
       "size": "610.9 MB",
@@ -1381,7 +1381,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-05-Graves-and-Shadow-Company-4K.mp4",
-      "name": "05 — Graves and Shadow Company · Cutscene",
+      "name": "05 — Graves and Shadow Company",
       "scene": "05",
       "run": "3:25",
       "size": "1.14 GB",
@@ -1393,7 +1393,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-06-Price-Gaz-and-Ghost-in-the-Helicopter-4K.mp4",
-      "name": "06 — Price, Gaz and Ghost in the Helicopter · Cutscene",
+      "name": "06 — Price, Gaz and Ghost in the Helicopter",
       "scene": "06",
       "run": "1:02",
       "size": "348.4 MB",
@@ -1405,7 +1405,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-07-Briefing-Price-and-Farah-in-the-Woods-4K.mp4",
-      "name": "07 — Briefing, Price and Farah in the Woods · Cutscene",
+      "name": "07 — Briefing, Price and Farah in the Woods",
       "scene": "07",
       "run": "2:52",
       "size": "1.08 GB",
@@ -1417,7 +1417,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-08-Price-on-the-Mountain-the-Missile-Launch-4K.mp4",
-      "name": "08 — Price on the Mountain, the Missile Launch · Cutscene",
+      "name": "08 — Price on the Mountain, the Missile Launch",
       "scene": "08",
       "run": "0:34",
       "size": "159.8 MB",
@@ -1429,7 +1429,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-09-Three-Hours-Earlier-Nikolais-Hangar-4K.mp4",
-      "name": "09 — Three Hours Earlier: Nikolai's Hangar · Cutscene",
+      "name": "09 — Three Hours Earlier: Nikolai's Hangar",
       "scene": "09",
       "run": "2:10",
       "size": "737.9 MB",
@@ -1441,7 +1441,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-10-The-Military-Base-4K.mp4",
-      "name": "10 — The Military Base · Cutscene",
+      "name": "10 — The Military Base",
       "scene": "10",
       "run": "2:20",
       "size": "655.3 MB",
@@ -1453,7 +1453,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-11-The-Airport-Makarov-at-Security-4K.mp4",
-      "name": "11 — The Airport: Makarov at Security · Cutscene",
+      "name": "11 — The Airport: Makarov at Security",
       "scene": "11",
       "run": "1:06",
       "size": "430.5 MB",
@@ -1465,7 +1465,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-12-News-of-the-Flight-Farah-and-Alex-on-the-Bike-4K.mp4",
-      "name": "12 — News of the Flight, Farah and Alex on the Bike · Cutscene",
+      "name": "12 — News of the Flight, Farah and Alex on the Bike",
       "scene": "12",
       "run": "2:33",
       "size": "804.3 MB",
@@ -1477,7 +1477,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-13-Laswells-Briefing-Verdansk-Four-Years-Ago-4K.mp4",
-      "name": "13 — Laswell's Briefing, Verdansk Four Years Ago · Cutscene",
+      "name": "13 — Laswell's Briefing, Verdansk Four Years Ago",
       "scene": "13",
       "run": "3:22",
       "size": "1.15 GB",
@@ -1489,7 +1489,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-14-Helicopter-Flashback-Price-and-Gaz-4K.mp4",
-      "name": "14 — Helicopter Flashback: Price and Gaz · Cutscene",
+      "name": "14 — Helicopter Flashback: Price and Gaz",
       "scene": "14",
       "run": "1:53",
       "size": "588.1 MB",
@@ -1501,7 +1501,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-15-Shepherds-Video-Call-with-Task-Force-141-4K.mp4",
-      "name": "15 — Shepherd's Video Call with Task Force 141 · Cutscene",
+      "name": "15 — Shepherd's Video Call with Task Force 141",
       "scene": "15",
       "run": "3:29",
       "size": "1.14 GB",
@@ -1513,7 +1513,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-16-The-Resort-Soap-and-Laswell-4K.mp4",
-      "name": "16 — The Resort: Soap and Laswell · Cutscene",
+      "name": "16 — The Resort: Soap and Laswell",
       "scene": "16",
       "run": "3:02",
       "size": "1.07 GB",
@@ -1525,7 +1525,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-17-Graves-Briefing-Price-on-the-Roof-4K.mp4",
-      "name": "17 — Graves, Briefing, Price on the Roof · Cutscene",
+      "name": "17 — Graves, Briefing, Price on the Roof",
       "scene": "17",
       "run": "2:24",
       "size": "806.3 MB",
@@ -1537,7 +1537,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-18-Convoy-Briefing-Snipers-in-the-Snow-4K.mp4",
-      "name": "18 — Convoy Briefing, Snipers in the Snow · Cutscene",
+      "name": "18 — Convoy Briefing, Snipers in the Snow",
       "scene": "18",
       "run": "1:24",
       "size": "422.2 MB",
@@ -1549,7 +1549,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-19-Shepherd-and-the-141-in-the-Snow-4K.mp4",
-      "name": "19 — Shepherd and the 141 in the Snow · Cutscene",
+      "name": "19 — Shepherd and the 141 in the Snow",
       "scene": "19",
       "run": "1:58",
       "size": "686.6 MB",
@@ -1561,7 +1561,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-20-Briefing-with-Price-Graves-and-Shepherd-4K.mp4",
-      "name": "20 — Briefing with Price, Graves and Shepherd · Cutscene",
+      "name": "20 — Briefing with Price, Graves and Shepherd",
       "scene": "20",
       "run": "1:12",
       "size": "410.4 MB",
@@ -1573,7 +1573,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-21-The-Airport-with-Graves-and-Farah-4K.mp4",
-      "name": "21 — The Airport with Graves and Farah · Cutscene",
+      "name": "21 — The Airport with Graves and Farah",
       "scene": "21",
       "run": "1:44",
       "size": "646.6 MB",
@@ -1585,7 +1585,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-22-Price-and-Farah-After-the-Crash-4K.mp4",
-      "name": "22 — Price and Farah After the Crash · Cutscene",
+      "name": "22 — Price and Farah After the Crash",
       "scene": "22",
       "run": "1:34",
       "size": "589.6 MB",
@@ -1597,7 +1597,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-23-Shepherd-at-the-Senate-the-London-Briefing-4K.mp4",
-      "name": "23 — Shepherd at the Senate, the London Briefing · Cutscene",
+      "name": "23 — Shepherd at the Senate, the London Briefing",
       "scene": "23",
       "run": "3:28",
       "size": "1.16 GB",
@@ -1609,7 +1609,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-24-Subway-Briefing-4K.mp4",
-      "name": "24 — Subway Briefing · Cutscene",
+      "name": "24 — Subway Briefing",
       "scene": "24",
       "run": "0:47",
       "size": "252.5 MB",
@@ -1621,7 +1621,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-25-Laswells-Report-Soaps-Ashes-4K.mp4",
-      "name": "25 — Laswell's Report, Soap's Ashes · Cutscene",
+      "name": "25 — Laswell's Report, Soap's Ashes",
       "scene": "25",
       "run": "2:15",
       "size": "791.5 MB",
@@ -1633,7 +1633,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-26-Price-at-Shepherds-After-the-Credits-4K.mp4",
-      "name": "26 — Price at Shepherd's: After the Credits · Cutscene",
+      "name": "26 — Price at Shepherd's: After the Credits",
       "scene": "26",
       "run": "1:44",
       "size": "505.9 MB",
@@ -1651,7 +1651,7 @@ const MW_CAMPAIGN_PACKS = [
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-01-Divers-and-the-Title-2K.mp4",
-      "name": "01 — Divers and the Title · Cutscene",
+      "name": "01 — Divers and the Title",
       "scene": "01",
       "run": "2:10",
       "size": "269.2 MB",
@@ -1663,7 +1663,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-02-Ship-in-the-Storm-2K.mp4",
-      "name": "02 — Ship in the Storm · Cutscene",
+      "name": "02 — Ship in the Storm",
       "scene": "02",
       "run": "0:42",
       "size": "96.8 MB",
@@ -1675,7 +1675,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-03-Price-Ghost-and-Gaz-on-the-Plane-Urzikstan-2K.mp4",
-      "name": "03 — Price, Ghost and Gaz on the Plane, Urzikstan · Cutscene",
+      "name": "03 — Price, Ghost and Gaz on the Plane, Urzikstan",
       "scene": "03",
       "run": "3:01",
       "size": "636.4 MB",
@@ -1687,7 +1687,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-04-The-Port-Farah-and-Alex-2K.mp4",
-      "name": "04 — The Port: Farah and Alex · Cutscene",
+      "name": "04 — The Port: Farah and Alex",
       "scene": "04",
       "run": "1:49",
       "size": "468.9 MB",
@@ -1699,7 +1699,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-05-Graves-and-Shadow-Company-2K.mp4",
-      "name": "05 — Graves and Shadow Company · Cutscene",
+      "name": "05 — Graves and Shadow Company",
       "scene": "05",
       "run": "3:25",
       "size": "810.5 MB",
@@ -1711,7 +1711,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-06-Price-Gaz-and-Ghost-in-the-Helicopter-2K.mp4",
-      "name": "06 — Price, Gaz and Ghost in the Helicopter · Cutscene",
+      "name": "06 — Price, Gaz and Ghost in the Helicopter",
       "scene": "06",
       "run": "1:02",
       "size": "274.8 MB",
@@ -1723,7 +1723,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-07-Briefing-Price-and-Farah-in-the-Woods-2K.mp4",
-      "name": "07 — Briefing, Price and Farah in the Woods · Cutscene",
+      "name": "07 — Briefing, Price and Farah in the Woods",
       "scene": "07",
       "run": "2:52",
       "size": "772.8 MB",
@@ -1735,7 +1735,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-08-Price-on-the-Mountain-the-Missile-Launch-2K.mp4",
-      "name": "08 — Price on the Mountain, the Missile Launch · Cutscene",
+      "name": "08 — Price on the Mountain, the Missile Launch",
       "scene": "08",
       "run": "0:34",
       "size": "113.5 MB",
@@ -1747,7 +1747,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-09-Three-Hours-Earlier-Nikolais-Hangar-2K.mp4",
-      "name": "09 — Three Hours Earlier: Nikolai's Hangar · Cutscene",
+      "name": "09 — Three Hours Earlier: Nikolai's Hangar",
       "scene": "09",
       "run": "2:10",
       "size": "514.3 MB",
@@ -1759,7 +1759,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-10-The-Military-Base-2K.mp4",
-      "name": "10 — The Military Base · Cutscene",
+      "name": "10 — The Military Base",
       "scene": "10",
       "run": "2:20",
       "size": "490.1 MB",
@@ -1771,7 +1771,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-11-The-Airport-Makarov-at-Security-2K.mp4",
-      "name": "11 — The Airport: Makarov at Security · Cutscene",
+      "name": "11 — The Airport: Makarov at Security",
       "scene": "11",
       "run": "1:06",
       "size": "306.1 MB",
@@ -1783,7 +1783,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-12-News-of-the-Flight-Farah-and-Alex-on-the-Bike-2K.mp4",
-      "name": "12 — News of the Flight, Farah and Alex on the Bike · Cutscene",
+      "name": "12 — News of the Flight, Farah and Alex on the Bike",
       "scene": "12",
       "run": "2:33",
       "size": "590.2 MB",
@@ -1795,7 +1795,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-13-Laswells-Briefing-Verdansk-Four-Years-Ago-2K.mp4",
-      "name": "13 — Laswell's Briefing, Verdansk Four Years Ago · Cutscene",
+      "name": "13 — Laswell's Briefing, Verdansk Four Years Ago",
       "scene": "13",
       "run": "3:22",
       "size": "810.4 MB",
@@ -1807,7 +1807,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-14-Helicopter-Flashback-Price-and-Gaz-2K.mp4",
-      "name": "14 — Helicopter Flashback: Price and Gaz · Cutscene",
+      "name": "14 — Helicopter Flashback: Price and Gaz",
       "scene": "14",
       "run": "1:53",
       "size": "438.1 MB",
@@ -1819,7 +1819,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-15-Shepherds-Video-Call-with-Task-Force-141-2K.mp4",
-      "name": "15 — Shepherd's Video Call with Task Force 141 · Cutscene",
+      "name": "15 — Shepherd's Video Call with Task Force 141",
       "scene": "15",
       "run": "3:29",
       "size": "829.4 MB",
@@ -1831,7 +1831,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-16-The-Resort-Soap-and-Laswell-2K.mp4",
-      "name": "16 — The Resort: Soap and Laswell · Cutscene",
+      "name": "16 — The Resort: Soap and Laswell",
       "scene": "16",
       "run": "3:02",
       "size": "840.8 MB",
@@ -1843,7 +1843,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-17-Graves-Briefing-Price-on-the-Roof-2K.mp4",
-      "name": "17 — Graves, Briefing, Price on the Roof · Cutscene",
+      "name": "17 — Graves, Briefing, Price on the Roof",
       "scene": "17",
       "run": "2:24",
       "size": "583.2 MB",
@@ -1855,7 +1855,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-18-Convoy-Briefing-Snipers-in-the-Snow-2K.mp4",
-      "name": "18 — Convoy Briefing, Snipers in the Snow · Cutscene",
+      "name": "18 — Convoy Briefing, Snipers in the Snow",
       "scene": "18",
       "run": "1:24",
       "size": "220.9 MB",
@@ -1867,7 +1867,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-19-Shepherd-and-the-141-in-the-Snow-2K.mp4",
-      "name": "19 — Shepherd and the 141 in the Snow · Cutscene",
+      "name": "19 — Shepherd and the 141 in the Snow",
       "scene": "19",
       "run": "1:58",
       "size": "438.0 MB",
@@ -1879,7 +1879,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-20-Briefing-with-Price-Graves-and-Shepherd-2K.mp4",
-      "name": "20 — Briefing with Price, Graves and Shepherd · Cutscene",
+      "name": "20 — Briefing with Price, Graves and Shepherd",
       "scene": "20",
       "run": "1:12",
       "size": "268.8 MB",
@@ -1891,7 +1891,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-21-The-Airport-with-Graves-and-Farah-2K.mp4",
-      "name": "21 — The Airport with Graves and Farah · Cutscene",
+      "name": "21 — The Airport with Graves and Farah",
       "scene": "21",
       "run": "1:44",
       "size": "469.4 MB",
@@ -1903,7 +1903,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-22-Price-and-Farah-After-the-Crash-2K.mp4",
-      "name": "22 — Price and Farah After the Crash · Cutscene",
+      "name": "22 — Price and Farah After the Crash",
       "scene": "22",
       "run": "1:34",
       "size": "462.8 MB",
@@ -1915,7 +1915,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-23-Shepherd-at-the-Senate-the-London-Briefing-2K.mp4",
-      "name": "23 — Shepherd at the Senate, the London Briefing · Cutscene",
+      "name": "23 — Shepherd at the Senate, the London Briefing",
       "scene": "23",
       "run": "3:28",
       "size": "799.0 MB",
@@ -1927,7 +1927,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-24-Subway-Briefing-2K.mp4",
-      "name": "24 — Subway Briefing · Cutscene",
+      "name": "24 — Subway Briefing",
       "scene": "24",
       "run": "0:47",
       "size": "161.8 MB",
@@ -1939,7 +1939,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-25-Laswells-Report-Soaps-Ashes-2K.mp4",
-      "name": "25 — Laswell's Report, Soap's Ashes · Cutscene",
+      "name": "25 — Laswell's Report, Soap's Ashes",
       "scene": "25",
       "run": "2:15",
       "size": "554.0 MB",
@@ -1951,7 +1951,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-26-Price-at-Shepherds-After-the-Credits-2K.mp4",
-      "name": "26 — Price at Shepherd's: After the Credits · Cutscene",
+      "name": "26 — Price at Shepherd's: After the Credits",
       "scene": "26",
       "run": "1:44",
       "size": "364.3 MB",
@@ -1969,7 +1969,7 @@ const MW_CAMPAIGN_PACKS = [
     "files": [
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-01-Divers-and-the-Title-1080p.mp4",
-      "name": "01 — Divers and the Title · Cutscene",
+      "name": "01 — Divers and the Title",
       "scene": "01",
       "run": "2:10",
       "size": "150.1 MB",
@@ -1981,7 +1981,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-02-Ship-in-the-Storm-1080p.mp4",
-      "name": "02 — Ship in the Storm · Cutscene",
+      "name": "02 — Ship in the Storm",
       "scene": "02",
       "run": "0:42",
       "size": "59.0 MB",
@@ -1993,7 +1993,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-03-Price-Ghost-and-Gaz-on-the-Plane-Urzikstan-1080p.mp4",
-      "name": "03 — Price, Ghost and Gaz on the Plane, Urzikstan · Cutscene",
+      "name": "03 — Price, Ghost and Gaz on the Plane, Urzikstan",
       "scene": "03",
       "run": "3:01",
       "size": "340.1 MB",
@@ -2005,7 +2005,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-04-The-Port-Farah-and-Alex-1080p.mp4",
-      "name": "04 — The Port: Farah and Alex · Cutscene",
+      "name": "04 — The Port: Farah and Alex",
       "scene": "04",
       "run": "1:49",
       "size": "244.9 MB",
@@ -2017,7 +2017,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-05-Graves-and-Shadow-Company-1080p.mp4",
-      "name": "05 — Graves and Shadow Company · Cutscene",
+      "name": "05 — Graves and Shadow Company",
       "scene": "05",
       "run": "3:25",
       "size": "427.9 MB",
@@ -2029,7 +2029,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-06-Price-Gaz-and-Ghost-in-the-Helicopter-1080p.mp4",
-      "name": "06 — Price, Gaz and Ghost in the Helicopter · Cutscene",
+      "name": "06 — Price, Gaz and Ghost in the Helicopter",
       "scene": "06",
       "run": "1:02",
       "size": "146.0 MB",
@@ -2041,7 +2041,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-07-Briefing-Price-and-Farah-in-the-Woods-1080p.mp4",
-      "name": "07 — Briefing, Price and Farah in the Woods · Cutscene",
+      "name": "07 — Briefing, Price and Farah in the Woods",
       "scene": "07",
       "run": "2:52",
       "size": "423.0 MB",
@@ -2053,7 +2053,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-08-Price-on-the-Mountain-the-Missile-Launch-1080p.mp4",
-      "name": "08 — Price on the Mountain, the Missile Launch · Cutscene",
+      "name": "08 — Price on the Mountain, the Missile Launch",
       "scene": "08",
       "run": "0:34",
       "size": "60.1 MB",
@@ -2065,7 +2065,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-09-Three-Hours-Earlier-Nikolais-Hangar-1080p.mp4",
-      "name": "09 — Three Hours Earlier: Nikolai's Hangar · Cutscene",
+      "name": "09 — Three Hours Earlier: Nikolai's Hangar",
       "scene": "09",
       "run": "2:10",
       "size": "275.9 MB",
@@ -2077,7 +2077,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-10-The-Military-Base-1080p.mp4",
-      "name": "10 — The Military Base · Cutscene",
+      "name": "10 — The Military Base",
       "scene": "10",
       "run": "2:20",
       "size": "258.8 MB",
@@ -2089,7 +2089,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-11-The-Airport-Makarov-at-Security-1080p.mp4",
-      "name": "11 — The Airport: Makarov at Security · Cutscene",
+      "name": "11 — The Airport: Makarov at Security",
       "scene": "11",
       "run": "1:06",
       "size": "159.4 MB",
@@ -2101,7 +2101,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-12-News-of-the-Flight-Farah-and-Alex-on-the-Bike-1080p.mp4",
-      "name": "12 — News of the Flight, Farah and Alex on the Bike · Cutscene",
+      "name": "12 — News of the Flight, Farah and Alex on the Bike",
       "scene": "12",
       "run": "2:33",
       "size": "317.8 MB",
@@ -2113,7 +2113,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-13-Laswells-Briefing-Verdansk-Four-Years-Ago-1080p.mp4",
-      "name": "13 — Laswell's Briefing, Verdansk Four Years Ago · Cutscene",
+      "name": "13 — Laswell's Briefing, Verdansk Four Years Ago",
       "scene": "13",
       "run": "3:22",
       "size": "437.2 MB",
@@ -2125,7 +2125,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-14-Helicopter-Flashback-Price-and-Gaz-1080p.mp4",
-      "name": "14 — Helicopter Flashback: Price and Gaz · Cutscene",
+      "name": "14 — Helicopter Flashback: Price and Gaz",
       "scene": "14",
       "run": "1:53",
       "size": "230.1 MB",
@@ -2137,7 +2137,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-15-Shepherds-Video-Call-with-Task-Force-141-1080p.mp4",
-      "name": "15 — Shepherd's Video Call with Task Force 141 · Cutscene",
+      "name": "15 — Shepherd's Video Call with Task Force 141",
       "scene": "15",
       "run": "3:29",
       "size": "439.7 MB",
@@ -2149,7 +2149,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-16-The-Resort-Soap-and-Laswell-1080p.mp4",
-      "name": "16 — The Resort: Soap and Laswell · Cutscene",
+      "name": "16 — The Resort: Soap and Laswell",
       "scene": "16",
       "run": "3:02",
       "size": "441.1 MB",
@@ -2161,7 +2161,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-17-Graves-Briefing-Price-on-the-Roof-1080p.mp4",
-      "name": "17 — Graves, Briefing, Price on the Roof · Cutscene",
+      "name": "17 — Graves, Briefing, Price on the Roof",
       "scene": "17",
       "run": "2:24",
       "size": "317.5 MB",
@@ -2173,7 +2173,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-18-Convoy-Briefing-Snipers-in-the-Snow-1080p.mp4",
-      "name": "18 — Convoy Briefing, Snipers in the Snow · Cutscene",
+      "name": "18 — Convoy Briefing, Snipers in the Snow",
       "scene": "18",
       "run": "1:24",
       "size": "122.8 MB",
@@ -2185,7 +2185,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-19-Shepherd-and-the-141-in-the-Snow-1080p.mp4",
-      "name": "19 — Shepherd and the 141 in the Snow · Cutscene",
+      "name": "19 — Shepherd and the 141 in the Snow",
       "scene": "19",
       "run": "1:58",
       "size": "238.6 MB",
@@ -2197,7 +2197,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-20-Briefing-with-Price-Graves-and-Shepherd-1080p.mp4",
-      "name": "20 — Briefing with Price, Graves and Shepherd · Cutscene",
+      "name": "20 — Briefing with Price, Graves and Shepherd",
       "scene": "20",
       "run": "1:12",
       "size": "147.4 MB",
@@ -2209,7 +2209,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-21-The-Airport-with-Graves-and-Farah-1080p.mp4",
-      "name": "21 — The Airport with Graves and Farah · Cutscene",
+      "name": "21 — The Airport with Graves and Farah",
       "scene": "21",
       "run": "1:44",
       "size": "247.0 MB",
@@ -2221,7 +2221,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-22-Price-and-Farah-After-the-Crash-1080p.mp4",
-      "name": "22 — Price and Farah After the Crash · Cutscene",
+      "name": "22 — Price and Farah After the Crash",
       "scene": "22",
       "run": "1:34",
       "size": "254.0 MB",
@@ -2233,7 +2233,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-23-Shepherd-at-the-Senate-the-London-Briefing-1080p.mp4",
-      "name": "23 — Shepherd at the Senate, the London Briefing · Cutscene",
+      "name": "23 — Shepherd at the Senate, the London Briefing",
       "scene": "23",
       "run": "3:28",
       "size": "414.6 MB",
@@ -2245,7 +2245,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-24-Subway-Briefing-1080p.mp4",
-      "name": "24 — Subway Briefing · Cutscene",
+      "name": "24 — Subway Briefing",
       "scene": "24",
       "run": "0:47",
       "size": "89.7 MB",
@@ -2257,7 +2257,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-25-Laswells-Report-Soaps-Ashes-1080p.mp4",
-      "name": "25 — Laswell's Report, Soap's Ashes · Cutscene",
+      "name": "25 — Laswell's Report, Soap's Ashes",
       "scene": "25",
       "run": "2:15",
       "size": "299.2 MB",
@@ -2269,7 +2269,7 @@ const MW_CAMPAIGN_PACKS = [
      },
      {
       "url": "https://github.com/Qstrx/noctis/releases/download/mw-campaign-scenes/MW3-Campaign-26-Price-at-Shepherds-After-the-Credits-1080p.mp4",
-      "name": "26 — Price at Shepherd's: After the Credits · Cutscene",
+      "name": "26 — Price at Shepherd's: After the Credits",
       "scene": "26",
       "run": "1:44",
       "size": "189.5 MB",
