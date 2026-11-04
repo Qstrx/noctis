@@ -17,10 +17,6 @@
   }
 
   const root = document.documentElement;
-  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Footage further down waits for motion.js to reveal it as it scrolls in.
-  if (!still) root.classList.add('reveal-ready');
 
   // A photo carried over by a View Transition lands without a second entrance.
   addEventListener('pagereveal', event => {

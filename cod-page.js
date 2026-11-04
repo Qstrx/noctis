@@ -10,21 +10,21 @@
   if (!cast || !window.Shelf || typeof COD_PACKS === 'undefined') return;
 
   const VIEWS = [
-    { id: 'price', cover: 'img/cover/price.jpg', name: 'Price', still: 'img/stage/price.jpg', focus: '36% 30%' },
-    { id: 'gaz', cover: 'img/cover/gaz.jpg', coverFocus: '50% 16%', name: 'Gaz', still: 'img/stage/gaz.jpg', focus: '44% 30%' },
-    { id: 'ghost', cover: 'img/cover/ghost.jpg', name: 'Ghost', still: 'img/stage/ghost.jpg', focus: '56% 30%' },
-    { id: 'soap', cover: 'img/cover/soap.jpg', coverFocus: '50% 42%', name: 'Soap', still: 'img/stage/soap.jpg', focus: '46% 34%' },
-    { id: 'laswell', name: 'Laswell', cover: 'img/cover/laswell.jpg', coverFocus: '40% 40%' },
-    { id: 'farah', cover: 'img/cover/farah.jpg', name: 'Farah', still: 'img/stage/farah.jpg', focus: '68% 30%' },
-    { id: 'alex', name: 'Alex', teaser: 'img/cod/cuts-mw1.jpg' },
-    { id: 'valeria', cover: 'img/cover/valeria.jpg', coverFocus: '50% 20%', name: 'Valeria', still: 'img/stage/valeria.jpg', focus: '52% 40%' },
-    { id: 'graves', name: 'Graves', cover: 'img/cover/graves.jpg', coverFocus: '50% 25%' },
-    { id: 'makarov', name: 'Makarov', teaser: 'img/cod/gameplay-makarov.jpg' },
-    { id: 'dunn', name: 'Dunn', teaser: 'img/cod/mw4/scenes/05.jpg' },
-    { id: 'archer', name: 'The Archer', still: 'img/stage/archer.jpg', focus: '58% 30%' },
-    { id: 'ko', name: 'Ko Jin Hyuk', teaser: 'img/cod/mw4/scenes/12.jpg' },
-    { id: 'cutscenes', name: 'Full cutscenes', still: 'img/stage/cutscenes.jpg', focus: '59% 40%' },
-    { id: 'trailers', name: 'Trailers', still: 'img/stage/trailers.jpg', focus: '62% 50%' }
+    { id: 'price', cover: 'img/cover/price.webp', name: 'Price' },
+    { id: 'gaz', cover: 'img/cover/gaz.webp', coverFocus: '50% 16%', name: 'Gaz' },
+    { id: 'ghost', cover: 'img/cover/ghost.webp', name: 'Ghost' },
+    { id: 'soap', cover: 'img/cover/soap.webp', coverFocus: '50% 42%', name: 'Soap' },
+    { id: 'laswell', cover: 'img/cover/laswell.webp', coverFocus: '40% 40%', name: 'Laswell' },
+    { id: 'farah', cover: 'img/cover/farah.webp', name: 'Farah' },
+    { id: 'alex', name: 'Alex' },
+    { id: 'valeria', cover: 'img/cover/valeria.webp', coverFocus: '50% 20%', name: 'Valeria' },
+    { id: 'graves', cover: 'img/cover/graves.webp', coverFocus: '50% 25%', name: 'Graves' },
+    { id: 'makarov', name: 'Makarov' },
+    { id: 'dunn', name: 'Dunn' },
+    { id: 'archer', name: 'The Archer', still: 'img/stage/archer.webp', focus: '58% 30%' },
+    { id: 'ko', name: 'Ko Jin Hyuk' },
+    { id: 'cutscenes', name: 'Full cutscenes', still: 'img/stage/cutscenes.webp', focus: '59% 40%' },
+    { id: 'trailers', name: 'Trailers', still: 'img/stage/trailers.webp', focus: '62% 50%' }
   ];
   const SPECIAL = ['cutscenes', 'trailers'];
   // Sections that are complete; everything else shows blurred and locked.
@@ -213,26 +213,15 @@
   // The characters are all the same size; the full cutscenes (two parts)
   // and the trailers (one part) share a larger row at the bottom.
   const SIZE = { trailers: 'is-trailers', cutscenes: 'is-full' };
-  // Sections still to come show a blurred still of their game, a teaser.
-  cast.innerHTML = VIEWS.map((view, i) => `${view.id === 'cutscenes' ? '<li class="tiles-break" aria-hidden="true"></li>' : ''}<li class="${SIZE[view.id] || ''}" style="--n:${i}">${isOpen(view.id) ? `<a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light>` : `<a class="tile is-locked" data-view="${view.id}" aria-disabled="true" aria-label="${esc(view.name)}, locked">`}<span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${isOpen(view.id) ? esc(view.count) : 'Locked'}</span></span>${isOpen(view.id) ? '' : LOCK}</a></li>`).join('');
+  // Sections still to come show a small picture blurred ahead of time, so the
+  // browser has no live blur to draw.
+  cast.innerHTML = VIEWS.map((view, i) => {
+    const open = isOpen(view.id);
+    const picture = open ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}">` : `<img src="img/locked/${view.id}.webp" alt="">`;
+    const link = open ? `<a class="tile" href="#${view.id}" data-view="${view.id}">` : `<a class="tile is-locked" data-view="${view.id}" aria-disabled="true" aria-label="${esc(view.name)}, locked">`;
+    return `${view.id === 'cutscenes' ? '<li class="tiles-break" aria-hidden="true"></li>' : ''}<li class="${SIZE[view.id] || ''}" style="--n:${i}">${link}<span class="tile-pic">${picture}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${open ? esc(view.count) : 'Locked'}</span></span>${open ? '' : LOCK}</a></li>`;
+  }).join('');
   VIEWS.filter(view => isOpen(view.id)).forEach(view => Shelf.add(view.id, view));
-  // The room takes the colours of the tile under the pointer.
-  const glow = document.getElementById('glow');
-  let lit = null;
-  cast.addEventListener('pointerover', event => {
-    const tile = event.target.closest('.tile');
-    if (!tile || tile === lit || !glow) return;
-    lit = tile;
-    const view = VIEWS.find(item => item.id === tile.dataset.view);
-    const src = view.cover || view.still || view.teaser;
-    glow.querySelectorAll('img').forEach(img => { img.classList.remove('is-on'); setTimeout(() => img.remove(), 1100); });
-    if (!src) return;
-    const img = new Image();
-    img.alt = '';
-    img.src = src;
-    glow.append(img);
-    requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add('is-on')));
-  });
   // The sheet's picture grows out of the tile.
   const sourceFor = id => document.querySelector(`.tile[data-view="${CSS.escape(id)}"] .tile-pic`);
   // A link to an MW4 scene opens the cutscenes with that scene.

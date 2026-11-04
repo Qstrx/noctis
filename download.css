@@ -1,6 +1,6 @@
 /* A focused transfer panel, colored by the collection that opened it. */
 .transfer-dialog{width:min(480px,calc(100% - 32px));padding:28px;background:var(--panel-strong);border:0;box-shadow:0 24px 80px rgba(0,0,0,.48);border-radius:16px;overflow:auto}
-.transfer-close{position:absolute;z-index:2;right:14px;top:14px;display:grid;place-items:center;width:40px;height:40px;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.45);color:var(--ink);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.transfer-close{position:absolute;z-index:2;right:14px;top:14px;display:grid;place-items:center;width:40px;height:40px;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.45);color:var(--ink);}
 .transfer-close:hover{background:rgba(0,0,0,.7)}
 
 /* The download panel: the pack's picture, its name, a few tags, one button. */

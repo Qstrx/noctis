@@ -1,15 +1,12 @@
 (() => {
   'use strict';
 
-  // Motion for the archive: title cards rise, footage reveals as it scrolls in
-  // and every touch answers.
+  // Motion for the archive: dialogs rise in, the navigation underline travels
+  // and every press answers.
   const ease = 'cubic-bezier(.2,.8,.2,1)';
   const easeOut = 'cubic-bezier(.16,1,.3,1)';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   const enabled = () => document.body.dataset.motion !== 'off' && !reduced.matches;
-  const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
-  const root = document.documentElement;
   const animations = new Map();
   const closing = new Set();
   const scenes = new WeakMap();
@@ -62,49 +59,17 @@
   }
 
   /* ---------- Dialogs ----------
-     A preview grows out of the card that opened it; other dialogs rise in. */
-  let pressedCard = null;
-  let pressedAt = 0;
-  document.addEventListener('click', event => {
-    const card = event.target.closest?.('.pack-card');
-    if (card) { pressedCard = card; pressedAt = performance.now(); }
-  }, true);
+     Dialogs rise in. */
   function resetDialog(dialog) {
     cancel(dialog);
     dialog.querySelectorAll('.preview-heading, .preview-screen').forEach(cancel);
-    dialog.querySelectorAll('.preview-flight').forEach(flight => flight.remove());
     closing.delete(dialog);
     scenes.delete(dialog);
     dialog.classList.remove('is-closing');
   }
-  function growFromCard(dialog) {
-    const screen = dialog.querySelector('.preview-screen');
-    const source = performance.now() - pressedAt < 1200 && pressedCard?.querySelector('.cover-frame img');
-    if (!screen || !source || !source.complete || !source.getClientRects().length) return false;
-    const from = source.getBoundingClientRect();
-    const to = screen.getBoundingClientRect();
-    if (!from.width || !to.width || to.bottom < 0 || to.top > innerHeight) return false;
-    const flight = new Image();
-    flight.src = source.currentSrc || source.src;
-    flight.alt = '';
-    flight.className = 'preview-flight';
-    flight.setAttribute('aria-hidden', 'true');
-    flight.style.objectPosition = getComputedStyle(source).objectPosition;
-    dialog.append(flight);
-    animate(dialog, [{ opacity: 0 }, { opacity: 1 }], 320);
-    animate(screen, [{ opacity: 0 }, { opacity: 0, offset: .72 }, { opacity: 1 }], 680);
-    const box = (rect, radius) => ({ left: `${rect.left}px`, top: `${rect.top}px`, width: `${rect.width}px`, height: `${rect.height}px`, borderRadius: radius });
-    const travel = flight.animate([box(from, '12px'), box(to, '8px')], { duration: 680, easing: easeOut, fill: 'forwards' });
-    travel.finished
-      .then(() => flight.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: 'forwards' }).finished)
-      .catch(() => {})
-      .finally(() => flight.remove());
-    return true;
-  }
   function enterDialog(dialog) {
     if (!dialog.open || closing.has(dialog)) return;
     cancel(dialog);
-    if (enabled() && growFromCard(dialog)) return;
     animate(dialog, [
       { opacity: 0, transform: 'translateY(14px) scale(.98)' },
       { opacity: 1, transform: 'translateY(0) scale(1)' }
@@ -180,58 +145,6 @@
   }
   window.archiveMotion = { sceneChange };
 
-  /* ---------- Revealed while scrolling ---------- */
-  const reveals = [...document.querySelectorAll('.reveal')];
-  let revealObserver = null;
-  function revealAll() {
-    revealObserver?.disconnect();
-    reveals.forEach(element => element.classList.add('is-in'));
-  }
-  if (root.classList.contains('reveal-ready')) {
-    root.classList.add('reveal-live');
-    if (!('IntersectionObserver' in window) || !enabled()) revealAll();
-    else {
-      revealObserver = new IntersectionObserver(entries => {
-        const entering = entries.filter(entry => entry.isIntersecting).map(entry => entry.target);
-        entering.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
-        entering.forEach((element, index) => {
-          element.style.setProperty('--rd', `${Math.min(index, 6) * 90}ms`);
-          element.classList.add('is-in');
-          revealObserver.unobserve(element);
-        });
-      }, { rootMargin: '0px 0px -6% 0px', threshold: .08 });
-      reveals.forEach(element => revealObserver.observe(element));
-    }
-  }
-
-  /* ---------- Cards lean toward the pointer ---------- */
-  if (finePointer.matches) {
-    document.querySelectorAll('.pack-card .pack-cover').forEach(cover => {
-      let frame = 0, last = null;
-      cover.addEventListener('pointermove', event => {
-        if (!enabled()) return;
-        last = event;
-        if (frame) return;
-        frame = requestAnimationFrame(() => {
-          frame = 0;
-          const rect = cover.getBoundingClientRect();
-          const x = clamp((last.clientX - rect.left) / rect.width, 0, 1);
-          const y = clamp((last.clientY - rect.top) / rect.height, 0, 1);
-          cover.classList.add('is-tilting');
-          cover.style.setProperty('--rx', `${((.5 - y) * 8).toFixed(2)}deg`);
-          cover.style.setProperty('--ry', `${((x - .5) * 10).toFixed(2)}deg`);
-          cover.style.setProperty('--gx', x.toFixed(3));
-        });
-      });
-      cover.addEventListener('pointerleave', () => {
-        cancelAnimationFrame(frame);
-        frame = 0;
-        cover.classList.remove('is-tilting');
-        ['--rx', '--ry', '--gx'].forEach(name => cover.style.removeProperty(name));
-      });
-    });
-  }
-
   /* ---------- Buttons answer the press ---------- */
   document.addEventListener('click', event => {
     const button = event.target.closest?.('.action');
@@ -254,7 +167,6 @@
   addEventListener('pagehide', () => { [...animations.keys()].forEach(cancel); });
   function syncMotion() {
     if (enabled()) return;
-    revealAll();
     [...animations.keys()].forEach(cancel); [...closing].forEach(dialog => { if (dialog.open) dialog.close(); });
     updateMarkers();
   }

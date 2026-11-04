@@ -72,7 +72,6 @@ button svg, a svg, summary svg { width: 20px; height: 20px; flex: 0 0 20px; }
 .site-header { display: flex; align-items: center; justify-content: space-between; gap: 28px; width: min(1240px, calc(100% - 80px)); margin: 0 auto; min-height: 84px; border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 24px; letter-spacing: -.035em; line-height: 1; }
 .brand .brand-mark { width: 31px; height: 31px; color: var(--mint); flex: 0 0 31px; }
-.brand-caption { display: block; margin-top: 7px; font-size: 12px; font-weight: 400; letter-spacing: .16em; color: var(--muted); }
 .site-nav { display: flex; align-self: stretch; gap: 36px; align-items: center; }
 .site-nav a { display: flex; align-items: center; height: 100%; position: relative; font-size: 14px; color: var(--muted); transition: color .15s; }
 .site-nav a::after { content: ""; position: absolute; height: 2px; background: var(--mint); bottom: 24px; left: 0; right: 0; transform: scaleX(0); transition: transform .35s var(--ease); }
@@ -82,7 +81,7 @@ button svg, a svg, summary svg { width: 20px; height: 20px; flex: 0 0 20px; }
 h1, h2, h3, p { margin: 0; }
 h1, h2 { font-family: var(--display); }
 dialog { color: var(--ink); background: var(--panel-strong); border: 1px solid var(--line-strong); border-radius: 16px; padding: 0; max-height: calc(100svh - 40px); box-shadow: 0 30px 100px #0009; }
-dialog::backdrop { background: rgba(1,4,9,.72); backdrop-filter: blur(10px); }
+dialog::backdrop { background: rgba(1,4,9,.82); }
 body:has(dialog[open]) { overflow: hidden; }
 .preview-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px 24px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
 .preview-close { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: transparent; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); }
@@ -140,7 +139,6 @@ body:has(dialog[open]) { overflow: hidden; }
   .site-header, .catalog-main { width: calc(100% - 40px); }
   .site-header { min-height: 110px; flex-wrap: wrap; gap: 0; padding-top: 20px; }
   .brand { font-size: 22px; }
-  .brand-caption { font-size: 11px; }
   .site-nav { order: 3; width: 100%; height: 56px; gap: 28px; }
   .site-nav a { font-size: 13px; }
   .site-nav a::after { bottom: 8px; }

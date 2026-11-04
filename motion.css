@@ -22,21 +22,6 @@
 }
 @keyframes mark-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 
-/* ---------- Revealed while scrolling ------------------------------------------
-   arrival.js marks the document before its first paint; motion.js reveals
-   each element as it enters. If motion.js never runs, everything appears. */
-html.reveal-ready .reveal { transition: opacity .9s var(--ease-out) var(--rd, 0ms), transform 1s var(--ease-out) var(--rd, 0ms); }
-html.reveal-ready .reveal:not(.is-in) { opacity: 0; transform: translateY(36px); }
-html.reveal-ready:not(.reveal-live) .reveal:not(.is-in) { animation: reveal-fallback 1ms 2.5s forwards; }
-@keyframes reveal-fallback { to { opacity: 1; transform: none; } }
-
-/* ---------- Cards ----------------------------------------------------------- */
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  body:not([data-motion=off]) .pack-card:hover .pack-cover::before,
-  body:not([data-motion=off]) .pack-card:focus-within .pack-cover::before { opacity: .95; }
-  body:not([data-motion=off]) .pack-card:hover .cover-frame img { transform: scale(1.07); }
-  body:not([data-motion=off]) .pack-card:hover .cover-frame::after { transform: translateX(120%); transition: transform 1.1s var(--ease-out); }
-}
 @media (prefers-reduced-motion: no-preference) {
   .action.is-pressed svg { animation: press-drop .5s var(--ease-out); }
   .action[data-preview].is-pressed svg, .action[data-cod-preview].is-pressed svg { animation: press-pop .45s var(--ease-out); }
@@ -54,7 +39,6 @@ html.reveal-ready:not(.reveal-live) .reveal:not(.is-in) { animation: reveal-fall
 
 /* ---------- Dialogs ------------------------------------------------------------ */
 dialog.is-closing { pointer-events: none; }
-.preview-flight { position: fixed; z-index: 10; margin: 0; object-fit: cover; pointer-events: none; box-shadow: 0 30px 80px rgba(0, 0, 0, .5); }
 @keyframes archive-veil-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes archive-veil-out { from { opacity: 1; } to { opacity: 0; } }
 @media (prefers-reduced-motion: no-preference) {
@@ -65,10 +49,10 @@ dialog.is-closing { pointer-events: none; }
 
 /* ---------- Reduced motion ------------------------------------------------------
    Quick color and fade confirmations stay; travel, tilt and scale do not. */
-body[data-motion=off] :is(.pack-cover, .cover-frame img, .action svg) { transform: none !important; }
+body[data-motion=off] :is(.cover-frame img, .action svg) { transform: none !important; }
 body[data-motion=off] .nav-marker { transition: none; }
 html:has(body[data-motion=off]) { scroll-behavior: auto; }
 @media (prefers-reduced-motion: reduce) {
-  :is(.pack-cover, .cover-frame img, .action svg) { transform: none !important; }
+  :is(.cover-frame img, .action svg) { transform: none !important; }
   .nav-marker { transition: none; }
 }

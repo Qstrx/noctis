@@ -30,8 +30,8 @@
 .mw4-missions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 18px;margin:0;padding:0;list-style:none}
 .mw4-mission{min-width:0}
 .mw4-mission-cover{position:relative;display:block;width:100%;padding:0;border:0;border-radius:12px;overflow:hidden;background:var(--panel-strong);box-shadow:0 0 0 1px var(--line)}
-.mw4-mission-cover img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;filter:saturate(.85);transition:transform 1s var(--ease-out),filter .4s ease}
-.mw4-mission-cover:hover img{transform:scale(1.04);filter:none}
+.mw4-mission-cover img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;transition:transform .6s var(--ease-out) ease}
+.mw4-mission-cover:hover img{transform:scale(1.03)}
 .mw4-mission-cover:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .mw4-mission-no{position:absolute;top:10px;left:10px;padding:4px 8px;border-radius:6px;background:rgba(2,6,3,.78);color:#e7eeee;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
 .mw4-mission.is-open .mw4-mission-cover{box-shadow:0 0 0 2px var(--accent)}
@@ -50,7 +50,7 @@
 .mw4-media{position:relative;align-self:start;aspect-ratio:2.35/1;overflow:hidden;border-radius:12px;background:#000}
 .mw4-poster,.mw4-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .mw4-video{z-index:2;object-fit:contain;background:#000}
-.mw4-play{position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:10px;padding:6px 16px 6px 6px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(6,10,6,.6);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--ink);font-size:13px;font-weight:600;text-align:left}
+.mw4-play{position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:10px;padding:6px 16px 6px 6px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(6,10,6,.6);color:var(--ink);font-size:13px;font-weight:600;text-align:left}
 .mw4-play small{display:block;color:var(--muted);font-size:11px;font-weight:400}
 .mw4-play:hover{border-color:var(--accent)}
 .mw4-play-icon{display:grid;place-items:center;flex:none;width:38px;height:38px;border-radius:50%;background:var(--accent);color:var(--accent-ink)}

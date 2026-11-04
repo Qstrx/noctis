@@ -27,18 +27,24 @@
   const tileOf = id => sourceOf(id);
   const visible = rect => rect.bottom > 0 && rect.top < innerHeight && rect.width > 0;
 
-  function fly(src, focus, from, to, radius) {
+  // The picture is laid out once at its size in the sheet and moved with
+  // transform and clip-path alone, so no frame of the move needs a new layout.
+  function fly(src, focus, tile, sheetBox, radius, closing) {
     active?.remove();
     const flight = active = new Image();
+    flight.decoding = 'sync';
     flight.src = src;
     flight.alt = '';
     flight.className = 'flight';
-    flight.style.objectPosition = focus;
+    flight.style.cssText = `object-position:${focus};width:${sheetBox.width}px;height:${sheetBox.height}px`;
     document.body.append(flight);
-    const frame = (r, rad) => ({ left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px`, borderRadius: rad });
-    const run = flight.animate([frame(from, radius[0]), frame(to, radius[1])], { duration: 950, easing: EASE, fill: 'forwards' });
+    const scale = Math.max(tile.width / sheetBox.width, tile.height / sheetBox.height);
+    const insetX = (sheetBox.width - tile.width / scale) / 2, insetY = (sheetBox.height - tile.height / scale) / 2;
+    const small = { transform: `translate(${tile.left - insetX * scale}px, ${tile.top - insetY * scale}px) scale(${scale})`, clipPath: `inset(${insetY}px ${insetX}px round ${8 / scale}px)` };
+    const large = { transform: `translate(${sheetBox.left}px, ${sheetBox.top}px) scale(1)`, clipPath: `inset(0px 0px round ${radius}px)` };
+    const run = flight.animate(closing ? [large, small] : [small, large], { duration: 800, easing: EASE, fill: 'forwards' });
     // A tab in the background may never finish the animation; the page must not wait for it.
-    return Promise.race([run.finished.catch(() => {}), new Promise(resolve => setTimeout(resolve, 1100))]).then(() => flight);
+    return Promise.race([run.finished.catch(() => {}), new Promise(resolve => setTimeout(resolve, 950))]).then(() => flight);
   }
 
   function fill(id) {
@@ -72,7 +78,7 @@
     const from = tileOf(id)?.getBoundingClientRect();
     const flies = animate && !UI.still() && !switching && from && visible(from) && pictureOf(views.get(id));
     // The title rises as the picture lands.
-    UI.letters(title, views.get(id).name, flies ? 880 : 0);
+    UI.letters(title, views.get(id).name, flies ? 740 : 0);
     if (!flies) solid(true);
     title.focus({ preventScroll: true });
     if (UI.still() || switching) return;
@@ -91,10 +97,10 @@
     sheet.classList.add('is-clear', 'is-veiled', 'no-move');
     void sheet.offsetWidth;
     sheet.classList.remove('is-veiled', 'no-move');
-    document.getElementById('sheetParts')?.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: 600, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'backwards' });
-    sheet.querySelector('.sheet-close').animate(fade, { duration: 400, delay: 500, fill: 'backwards' });
+    document.getElementById('sheetParts')?.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 500, delay: 450, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'backwards' });
+    sheet.querySelector('.sheet-close').animate(fade, { duration: 300, delay: 450, fill: 'backwards' });
     const view = views.get(id);
-    fly(pictureOf(view), focusOf(view), from, to, ['8px', getComputedStyle(box).borderRadius]).then(flight => {
+    fly(pictureOf(view), focusOf(view), from, to, parseFloat(getComputedStyle(box).borderRadius), false).then(flight => {
       if (flight !== active) return;
       active = null;
       flight.remove();
@@ -148,7 +154,7 @@
     }
     box.style.visibility = 'hidden';
     sheet.classList.add('is-clear', 'is-veiled', 'is-leaving');
-    fly(pictureOf(views.get(id)), focusOf(views.get(id)), from, to, [getComputedStyle(box).borderRadius, '8px']).then(flight => {
+    fly(pictureOf(views.get(id)), focusOf(views.get(id)), to, from, parseFloat(getComputedStyle(box).borderRadius), true).then(flight => {
       if (flight === active) active = null;
       flight.remove();
       done();
