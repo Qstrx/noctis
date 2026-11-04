@@ -23,7 +23,7 @@
     { id: 'dunn', name: 'Dunn', teaser: 'img/cod/mw4/scenes/05.jpg' },
     { id: 'archer', name: 'The Archer', still: 'img/stage/archer.jpg', focus: '58% 30%' },
     { id: 'ko', name: 'Ko Jin Hyuk', teaser: 'img/cod/mw4/scenes/12.jpg' },
-    { id: 'cutscenes', name: 'Full cutscenes', still: 'img/stage/cutscenes.jpg', focus: '50% 40%' },
+    { id: 'cutscenes', name: 'Full cutscenes', still: 'img/stage/cutscenes.jpg', focus: '59% 40%' },
     { id: 'trailers', name: 'Trailers', still: 'img/stage/trailers.jpg', focus: '62% 50%' }
   ];
   const SPECIAL = ['cutscenes', 'trailers'];
