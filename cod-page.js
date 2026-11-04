@@ -10,7 +10,7 @@
   if (!cast || !window.Shelf || typeof COD_PACKS === 'undefined') return;
 
   const VIEWS = [
-    { id: 'price', cover: 'img/cover/price.jpg', name: 'John Price', still: 'img/stage/price.jpg', focus: '36% 30%' },
+    { id: 'price', cover: 'img/cover/price.jpg', name: 'Price', still: 'img/stage/price.jpg', focus: '36% 30%' },
     { id: 'gaz', cover: 'img/cover/gaz.jpg', name: 'Gaz', still: 'img/stage/gaz.jpg', focus: '44% 30%' },
     { id: 'ghost', cover: 'img/cover/ghost.jpg', name: 'Ghost', still: 'img/stage/ghost.jpg', focus: '56% 30%' },
     { id: 'soap', cover: 'img/cover/soap.jpg', coverFocus: '50% 25%', name: 'Soap', still: 'img/stage/soap.jpg', focus: '46% 34%' },
@@ -156,7 +156,7 @@
   // and the trailers (one part) share a larger row at the bottom.
   const SIZE = { trailers: 'is-trailers', cutscenes: 'is-full' };
   // Sections still to come show a blurred still of their game, a teaser.
-  cast.innerHTML = VIEWS.map((view, i) => `${view.id === 'cutscenes' ? '<li class="tiles-break" aria-hidden="true"></li>' : ''}<li class="${SIZE[view.id] || ''}" style="--n:${i}"><a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light><span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-no">${pad(i + 1)}</span><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${esc(view.count)}</span></span></a></li>`).join('');
+  cast.innerHTML = VIEWS.map((view, i) => `${view.id === 'cutscenes' ? '<li class="tiles-break" aria-hidden="true"></li>' : ''}<li class="${SIZE[view.id] || ''}" style="--n:${i}"><a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light><span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${esc(view.count)}</span></span></a></li>`).join('');
   VIEWS.forEach(view => Shelf.add(view.id, view));
   // The room takes the colours of the tile under the pointer.
   const glow = document.getElementById('glow');
