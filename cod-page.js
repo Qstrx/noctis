@@ -14,13 +14,15 @@
     { id: 'gaz', cover: 'img/cover/gaz.jpg', name: 'Gaz', still: 'img/stage/gaz.jpg', focus: '44% 30%' },
     { id: 'ghost', cover: 'img/cover/ghost.jpg', name: 'Ghost', still: 'img/stage/ghost.jpg', focus: '56% 30%' },
     { id: 'soap', cover: 'img/cover/soap.jpg', coverFocus: '50% 25%', name: 'Soap', still: 'img/stage/soap.jpg', focus: '46% 34%' },
+    { id: 'laswell', name: 'Laswell', cover: 'img/cover/laswell.jpg', coverFocus: '40% 40%' },
     { id: 'farah', cover: 'img/cover/farah.jpg', name: 'Farah', still: 'img/stage/farah.jpg', focus: '68% 30%' },
     { id: 'alex', name: 'Alex', teaser: 'img/cod/cuts-mw1.jpg' },
-    { id: 'graves', name: 'Graves', cover: 'img/cover/graves.jpg', coverFocus: '50% 25%' },
     { id: 'valeria', cover: 'img/cover/valeria.jpg', coverFocus: '50% 20%', name: 'Valeria', still: 'img/stage/valeria.jpg', focus: '52% 40%' },
-    { id: 'laswell', name: 'Laswell', cover: 'img/cover/laswell.jpg', coverFocus: '40% 40%' },
+    { id: 'graves', name: 'Graves', cover: 'img/cover/graves.jpg', coverFocus: '50% 25%' },
+    { id: 'makarov', name: 'Makarov', teaser: 'img/cod/gameplay-makarov.jpg' },
     { id: 'dunn', name: 'Dunn', teaser: 'img/cod/mw4/scenes/05.jpg' },
     { id: 'archer', name: 'The Archer', still: 'img/stage/archer.jpg', focus: '58% 30%' },
+    { id: 'ko', name: 'Ko Jin Hyuk', teaser: 'img/cod/mw4/scenes/12.jpg' },
     { id: 'cutscenes', name: 'Full cutscenes', still: 'img/stage/cutscenes.jpg', focus: '50% 40%' },
     { id: 'trailers', name: 'Trailers', still: 'img/stage/trailers.jpg', focus: '62% 50%' }
   ];
@@ -150,10 +152,9 @@
 
   // ---------- The slices ----------
   // ---------- The tiles: square pictures edge to edge, a name on each ----------
-  // Price and the full cutscenes are wide, so every row is full.
-  const WIDE = ['price', 'cutscenes'];
+  // Every picture the same size: five to a row, three rows.
   // Sections still to come show a blurred still of their game, a teaser.
-  cast.innerHTML = VIEWS.map((view, i) => `<li class="${WIDE.includes(view.id) ? 'is-wide' : ''}" style="--n:${i}"><a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light><span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${esc(view.count)}</span></span></a></li>`).join('');
+  cast.innerHTML = VIEWS.map((view, i) => `<li style="--n:${i}"><a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light><span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-no">${pad(i + 1)}</span><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${esc(view.count)}</span></span></a></li>`).join('');
   VIEWS.forEach(view => Shelf.add(view.id, view));
   // The room takes the colours of the tile under the pointer.
   const glow = document.getElementById('glow');
