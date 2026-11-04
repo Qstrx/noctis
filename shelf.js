@@ -35,8 +35,10 @@
   function fill(id) {
     const view = views.get(id);
     document.title = `${view.name} — ${baseTitle}`;
-    pic.src = view.still;
-    pic.style.objectPosition = view.focus;
+    // A view without a picture yet gets a quiet, empty frame.
+    box.classList.toggle('is-blank', !view.still);
+    if (view.still) { pic.src = view.still; pic.style.objectPosition = view.focus; }
+    else pic.removeAttribute('src');
     meta.textContent = view.meta;
     sheet.querySelectorAll('.sheet-part').forEach(part => { part.hidden = part.dataset.part !== id; });
     const part = sheet.querySelector(`.sheet-part[data-part="${CSS.escape(id)}"]`);
@@ -62,7 +64,7 @@
     const slice = sliceOf(id);
     const from = slice?.getBoundingClientRect();
     const fade = [{ opacity: 0 }, { opacity: 1 }];
-    if (!animate || !from || !visible(from)) {
+    if (!animate || !from || !visible(from) || !views.get(id).still) {
       sheet.animate(fade, { duration: 400, easing: 'ease-out' });
       return;
     }
@@ -95,7 +97,7 @@
     };
     const from = box.getBoundingClientRect();
     const to = slice?.getBoundingClientRect();
-    if (UI.still() || !to || !visible(from)) {
+    if (UI.still() || !to || !visible(from) || !views.get(id).still) {
       if (UI.still()) done();
       else sheet.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, easing: 'ease-in' }).finished.then(done, done);
       return;

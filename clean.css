@@ -110,6 +110,17 @@ body[data-world] .action svg path { fill: none; stroke: currentColor; stroke-wid
 .slice:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .slices:hover .slice:not(:hover) .slice-name { opacity: .6; }
 .slice-name { transition: opacity .5s ease; }
+/* Many slices: names run up the slice, like titles on spines */
+.slices.is-many .slice-name { left: 50%; right: auto; bottom: clamp(56px, 9vh, 96px); writing-mode: vertical-rl; transform: translateX(-50%) rotate(180deg); font-size: clamp(30px, 5.4vh, 60px); line-height: 1; white-space: nowrap; transition: opacity .5s ease, left .9s var(--ease-out), transform .9s var(--ease-out); }
+.slices.is-many .slice:hover .slice-name, .slices.is-many .slice:focus-visible .slice-name { left: clamp(20px, 8cqi, 40px); transform: translateX(0) rotate(180deg); }
+.slices.is-many .slice-count { left: 50%; transform: translate(-50%, 6px); white-space: nowrap; transition: opacity .5s ease, left .9s var(--ease-out), transform .6s var(--ease-out); }
+.slices.is-many .slice:hover .slice-count, .slices.is-many .slice:focus-visible .slice-count { left: clamp(20px, 8cqi, 40px); transform: none; }
+.slice.is-blank { background: radial-gradient(120% 70% at 50% 100%, #19191c, #0e0e10); }
+.slice.is-blank .slice-name { color: #5d5d63; }
+.slice.is-blank:hover .slice-name { color: var(--ink); }
+.sheet-pic.is-blank { background: radial-gradient(120% 120% at 20% 100%, #1b1b1f, #0e0e10); }
+.sheet-pic.is-blank img { display: none; }
+.empty { margin: 8px 0 0; padding: 28px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
 
 /* =====================================================================
    The sheet: a slice grown into its page
@@ -211,6 +222,10 @@ body[data-world] .quality-tip { border-radius: 12px; }
   .slice::after { background: linear-gradient(90deg, rgba(9, 9, 10, .75), rgba(9, 9, 10, 0) 70%); }
   .slice-name { top: 50%; bottom: auto; left: 20px; transform: translateY(-50%); font-size: clamp(26px, 8.5cqi, 44px); }
   .slice-count { display: none; }
+  .slices.is-many { height: auto; }
+  .slices.is-many .slice { flex: none; height: 96px; }
+  .slices.is-many .slice-name { left: 20px; right: 12px; bottom: auto; top: 50%; writing-mode: horizontal-tb; transform: translateY(-50%); font-size: clamp(26px, 8.5cqi, 40px); }
+  .slices.is-many .slice:hover .slice-name { left: 20px; transform: translateY(-50%); }
   .slice:hover, .slice:focus-visible { flex-grow: 1; }
   .sheet-pic { aspect-ratio: 4 / 3; border-radius: 14px; }
   .sheet-head { flex-direction: column; align-items: flex-start; gap: 10px; }

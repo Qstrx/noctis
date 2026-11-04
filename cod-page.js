@@ -1,6 +1,7 @@
 (() => {
   'use strict';
-  // Call of Duty: one slice per character and one for the cutscenes. A slice
+  // Call of Duty: one slice per character, then the full cutscenes and the
+  // trailers. A slice
   // opens its sheet (shelf.js): the packs from Modern Warfare to MW4, each in
   // 4K, 2K and 1080p, and for Price, Ghost and Gaz their gameplay. Everything
   // is built from COD_PACKS here, before site.js and motion.js run, so
@@ -13,10 +14,17 @@
     { id: 'gaz', name: 'Gaz', still: 'img/stage/gaz.jpg', focus: '44% 30%' },
     { id: 'ghost', name: 'Ghost', still: 'img/stage/ghost.jpg', focus: '56% 30%' },
     { id: 'soap', name: 'Soap', still: 'img/stage/soap.jpg', focus: '46% 34%' },
+    { id: 'farah', name: 'Farah', still: 'img/stage/farah.jpg', focus: '68% 30%' },
+    { id: 'alex', name: 'Alex' },
+    { id: 'graves', name: 'Graves' },
     { id: 'valeria', name: 'Valeria', still: 'img/stage/valeria.jpg', focus: '52% 40%' },
+    { id: 'laswell', name: 'Laswell' },
+    { id: 'dunn', name: 'Dunn' },
     { id: 'archer', name: 'The Archer', still: 'img/stage/archer.jpg', focus: '58% 30%' },
-    { id: 'cutscenes', name: 'Cutscenes', still: 'img/stage/cutscenes.jpg', focus: '50% 40%' }
+    { id: 'cutscenes', name: 'Full cutscenes', still: 'img/stage/cutscenes.jpg', focus: '50% 40%' },
+    { id: 'trailers', name: 'Trailers', still: 'img/stage/trailers.jpg', focus: '62% 50%' }
   ];
+  const SPECIAL = ['cutscenes', 'trailers'];
   // Which MW4 gameplay shows under which character. For now Price, Ghost and
   // Gaz each show all six.
   const MW4_GAMEPLAY = COD_PACKS.filter(pack => pack.group === 'gameplay').map(pack => pack.id);
@@ -100,27 +108,38 @@
   // ---------- The sheets ----------
   const parts = document.getElementById('sheetParts');
   VIEWS.forEach(view => {
-    if (view.id === 'cutscenes') return;
+    if (SPECIAL.includes(view.id)) return;
     // From Modern Warfare to MW4; more clips last.
     const packs = COD_PACKS.filter(pack => pack.group === view.id)
       .sort((a, b) => (YEARS[a.chapter] || 9999) - (YEARS[b.chapter] || 9999));
     const clips = (GAMEPLAY[view.id] || []).map(byId).filter(Boolean);
-    view.meta = `${plural(packs.length, 'pack')} · ${clock(packs.reduce((sum, pack) => sum + seconds(runOf(pack)), 0))}`;
-    view.count = plural(packs.length, 'pack') + (clips.length ? ` · ${clips.length} gameplay` : '');
+    view.meta = packs.length ? `${plural(packs.length, 'pack')} · ${clock(packs.reduce((sum, pack) => sum + seconds(runOf(pack)), 0))}` : 'Coming soon';
+    view.count = packs.length ? plural(packs.length, 'pack') + (clips.length ? ` · ${clips.length} gameplay` : '') : 'Coming soon';
     const part = document.createElement('div');
     part.className = 'sheet-part';
     part.dataset.part = view.id;
     part.hidden = true;
-    part.innerHTML = label('Scene packs') + rows(packs.map(pack => row(pack, {
+    part.innerHTML = label('Scene packs') + (packs.length ? rows(packs.map(pack => row(pack, {
       title: pack.chapter, sub: `${YEARS[pack.chapter] || 'Extra'} · ${runOf(pack)}`, all: true
-    }))) + (view.id in GAMEPLAY ? label('Gameplay') + rows(clips.map(pack => row(pack, { title: pack.chapter, sub: `MW4 · ${runOf(pack)}` }))) : '');
+    }))) : `<p class="empty">${esc(view.name)}’s scene packs are on the way.</p>`) + (view.id in GAMEPLAY ? label('Gameplay') + rows(clips.map(pack => row(pack, { title: pack.chapter, sub: `MW4 · ${runOf(pack)}` }))) : '');
     parts.append(part);
   });
-  // Cutscenes: Modern Warfare to MW III, then the MW4 campaign, then the trailers.
+  // Full cutscenes: Modern Warfare to MW III, then the MW4 campaign.
   const campaign = byId('mw4-campaign-individual');
-  const cuts = VIEWS[6];
+  const cuts = VIEWS.find(view => view.id === 'cutscenes');
   cuts.meta = 'MW · MW II · MW III · MW4';
-  cuts.count = 'MW to MW4 · trailers';
+  cuts.count = 'MW to MW4';
+  // Trailers: their own sheet.
+  const trailers = VIEWS.find(view => view.id === 'trailers');
+  const trailerPacks = COD_PACKS.filter(pack => pack.group === 'trailers');
+  trailers.meta = `${plural(trailerPacks.length, 'trailer')} · 4K`;
+  trailers.count = plural(trailerPacks.length, 'trailer');
+  const trailerPart = document.createElement('div');
+  trailerPart.className = 'sheet-part';
+  trailerPart.dataset.part = 'trailers';
+  trailerPart.hidden = true;
+  trailerPart.innerHTML = label('Modern Warfare 4') + '<ul class="rows" id="trailerRows"></ul>';
+  parts.append(trailerPart);
   document.getElementById('cutsRows').innerHTML = ['cuts1', 'cuts2', 'cuts3'].map(byId).map(pack => row(pack, { title: pack.chapter, sub: `${YEARS[pack.chapter]} · ${runOf(pack)}` })).join('');
   document.getElementById('trailerRows').innerHTML = COD_PACKS.filter(pack => pack.group === 'trailers').map(pack => row(pack, {
     title: pack.chapter.split(' — ')[1] || pack.chapter, sub: `${pack.releaseDate?.slice(0, 4) || ''} · ${runOf(pack)}`
@@ -129,7 +148,8 @@
   document.querySelectorAll('.row[data-versions]').forEach(rowEl => setVersion(rowEl, QUALITIES.find(q => JSON.parse(rowEl.dataset.versions)[q])));
 
   // ---------- The slices ----------
-  slices.innerHTML = VIEWS.map((view, i) => `<a class="slice" href="#${view.id}" data-view="${view.id}" style="--n:${i}"><img class="slice-pic" src="${view.still}" alt="" style="object-position:${view.focus}" decoding="async"><span class="slice-name">${esc(view.name)}</span><span class="slice-count">${esc(view.count)}</span></a>`).join('');
+  slices.classList.add('is-many');
+  slices.innerHTML = VIEWS.map((view, i) => `<a class="slice${view.still ? '' : ' is-blank'}" href="#${view.id}" data-view="${view.id}" style="--n:${i}">${view.still ? `<img class="slice-pic" src="${view.still}" alt="" style="object-position:${view.focus}" decoding="async">` : ''}<span class="slice-name">${esc(view.name)}</span><span class="slice-count">${esc(view.count)}</span></a>`).join('');
   VIEWS.forEach(view => Shelf.add(view.id, view));
   // A link to an MW4 scene opens the cutscenes with that scene.
   if (!location.hash && new URLSearchParams(location.search).has('scene')) {
@@ -137,5 +157,5 @@
     addEventListener('load', () => document.getElementById('mw4Detail')?.scrollIntoView({ block: 'center' }));
   }
   // Old addresses still land in the right sheet.
-  Shelf.start({ aliases: { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'cutscenes', gameplay: 'price', 'pack-gameplay': 'price', 'pack-price': 'price', 'pack-gaz': 'gaz', 'pack-ghost': 'ghost', 'pack-soap': 'soap', 'pack-valeria': 'valeria', 'pack-archer': 'archer' } });
+  Shelf.start({ aliases: { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'trailers', gameplay: 'price', 'pack-gameplay': 'price', 'pack-price': 'price', 'pack-gaz': 'gaz', 'pack-ghost': 'ghost', 'pack-soap': 'soap', 'pack-valeria': 'valeria', 'pack-archer': 'archer' } });
 })();
