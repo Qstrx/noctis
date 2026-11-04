@@ -85,8 +85,10 @@
     const ids = esc(JSON.stringify(Object.fromEntries(Object.entries(found).map(([q, p]) => [q, p.id]))));
     const canPreview = found[lightest].files.every(file => file.direct !== false);
     return `<li class="row pack-card is-game" style="--r:${rowNo % 12}" data-versions="${ids}" aria-labelledby="${key}">
-      <div class="game-id">${logo ? `<img src="${logo}" alt="" loading="lazy" decoding="async">` : `<span class="game-word">${esc(pack.chapter)}</span>`}<h3 class="sr-only" id="${key}">${esc(pack.chapter)}</h3></div>
-      <div class="pack-cover"><span class="cover-frame"><img src="${pack.poster}" alt="" loading="lazy" decoding="async"></span>${canPreview ? `<button class="row-play" type="button" data-cod-preview="${found[lightest].id}" aria-label="Preview ${esc(label)}"><i>${PLAY}</i></button>` : ''}<span class="game-time">${runOf(pack)}</span></div>
+      <div class="pack-cover"><span class="cover-frame"><img src="${pack.poster}" alt="" loading="lazy" decoding="async"></span><span class="game-shade"></span>
+        <div class="game-id">${logo ? `<img src="${logo}" alt="" loading="lazy" decoding="async">` : `<span class="game-word">${esc(pack.chapter)}</span>`}<h3 class="sr-only" id="${key}">${esc(pack.chapter)}</h3></div>
+        <span class="game-time">${runOf(pack)}</span>
+        ${canPreview ? `<button class="row-play" type="button" data-cod-preview="${found[lightest].id}" aria-label="Preview ${esc(label)}"><i>${PLAY}</i></button>` : ''}</div>
       <div class="game-side">
         <dl class="game-specs"><div><dt>Size</dt><dd data-spec="size">${sizeOf(found[first])}</dd></div><div><dt>Files</dt><dd data-spec="files">${filesOf(found[first])}</dd></div></dl>
         <div class="seg" role="radiogroup" aria-label="Quality" data-pill><span class="pill"></span>${QUALITIES.map(q => found[q]
