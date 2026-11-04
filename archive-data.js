@@ -47,16 +47,16 @@ var COD_PACKS = [
     "title": "Campaign cutscenes",
     "chapter": "Modern Warfare",
     "poster": "img/cod/cuts-mw1.jpg",
-    "meta": "59:15 · 4.51 GB · on Google Drive",
+    "meta": "29:56 · 4.14 GB · on Google Drive",
     "files": [
       {
-        "url": "https://drive.google.com/file/d/1lP5NG8kCMl4PpKJKyOi3KVMiDZNnuBlP/view",
+        "url": "https://drive.google.com/file/d/1KIoVIZACKLsK_r3O-n5mFVwWyYAZ82R8/view",
         "name": "MW1 cutscenes",
         "direct": false
       }
     ],
-    "fps": "60 FPS",
-    "resolution": "2560 × 1440",
+    "fps": "30 FPS",
+    "resolution": "3840 × 1634",
     "count": "01 file"
   },
   {
@@ -66,16 +66,16 @@ var COD_PACKS = [
     "title": "Campaign cutscenes",
     "chapter": "Modern Warfare II",
     "poster": "img/cod/cuts-mw2.jpg",
-    "meta": "38:36 · 3.67 GB · on Google Drive",
+    "meta": "41:26 · 5.74 GB · on Google Drive",
     "files": [
       {
-        "url": "https://drive.google.com/file/d/1oxg2-HFapdZli2YJaZ5iuyn9fHFd7gJu/view",
+        "url": "https://drive.google.com/file/d/1Af3usYrD51ijCPFDmdiSHi7KLD3TVHdq/view",
         "name": "MW2 cutscenes",
         "direct": false
       }
     ],
-    "fps": "60 FPS",
-    "resolution": "2560 × 1440",
+    "fps": "30 FPS",
+    "resolution": "3840 × 1634",
     "count": "01 file"
   },
   {
