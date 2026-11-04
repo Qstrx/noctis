@@ -19,13 +19,11 @@
     { id: 'archer', name: 'The Archer', still: 'img/cod/archer-mw4.jpg', focus: '30% 36%' },
     { id: 'cutscenes', name: 'Cutscenes', still: 'img/cod/mw4/mw4-recap.jpg', focus: '62% 45%' }
   ];
-  // Which MW4 gameplay belongs to which character. A gameplay pack listed
-  // under nobody stays with the cutscenes.
-  const GAMEPLAY = {
-    price: ['gameplay-price-ghost', 'gameplay-price-jail', 'gameplay-makarov', 'gameplay-graves-death'],
-    ghost: ['gameplay-price-ghost', 'gameplay-price-jail'],
-    gaz: []
-  };
+  // Which MW4 gameplay shows under which character, in story order. For now
+  // Price, Ghost and Gaz each show all six; a pack listed under nobody stays
+  // with the cutscenes.
+  const MW4_GAMEPLAY = COD_PACKS.filter(pack => pack.group === 'gameplay').map(pack => pack.id);
+  const GAMEPLAY = { price: MW4_GAMEPLAY, ghost: MW4_GAMEPLAY, gaz: MW4_GAMEPLAY };
   const GAMES = [
     { chapter: 'Modern Warfare', year: 2019, logo: 'img/cod/logos/mw1.svg' },
     { chapter: 'Modern Warfare II', year: 2022, logo: 'img/cod/logos/mw2.png' },
@@ -86,7 +84,7 @@
       ? `<div class="seg" role="radiogroup" aria-label="Quality for ${esc(label)}" data-pill><span class="pill"></span>${offered.map(q => found[q]
           ? `<button type="button" role="radio" aria-checked="${q === first}" data-q="${q}">${q}</button>`
           : `<button type="button" role="radio" aria-checked="false" disabled title="Coming soon">${q} <small>Soon</small></button>`).join('')}</div>`
-      : `<span class="card-tag">${first} · ${fps(found[first])}</span>`;
+      : `<span class="card-tag">${first}</span>`;
     const versionsJson = esc(JSON.stringify(Object.fromEntries(Object.entries(found).map(([q, p]) => [q, p.id]))));
     return `<article class="pack-card card" data-reveal data-versions="${versionsJson}" aria-labelledby="${key}">
       <div class="pack-cover"><span class="cover-frame"><img src="${pack.poster}" alt="" loading="lazy" decoding="async"></span><span class="card-shade"></span>
@@ -122,7 +120,7 @@
     if (button) setVersion(button.closest('.card'), button.dataset.q);
   });
 
-  const block = (title, note, body) => `<section class="block"><header class="block-head" data-reveal><h2>${esc(title)}</h2><p>${esc(note)}</p></header>${body}</section>`;
+  const block = (title, note, body, id = '') => `<section class="block"${id ? ` id="${id}"` : ''}><header class="block-head" data-reveal><h2>${esc(title)}</h2><p>${esc(note)}</p></header>${body}</section>`;
   const cards = (list, three) => `<div class="cards${three ? ' is-three' : ''}">${list.join('')}</div>`;
 
   // ---------- Each character's view ----------
@@ -142,7 +140,7 @@
       const clips = GAMEPLAY[view.id].map(byId).filter(Boolean);
       html += block('Gameplay', clips.length ? `${clips.length} from Modern Warfare 4` : 'Modern Warfare 4', clips.length
         ? cards(clips.map(pack => card(pack, { title: pack.chapter, sub: 'MW4', logo: false })), true)
-        : `<div class="empty" data-reveal><strong>Coming soon</strong><span>${esc(view.name)}’s gameplay is on the way.</span></div>`);
+        : `<div class="empty" data-reveal><strong>Coming soon</strong><span>${esc(view.name)}’s gameplay is on the way.</span></div>`, `gameplay-${view.id}`);
       view.stats.splice(2, 0, ['Gameplay', clips.length ? String(clips.length) : 'Soon']);
     }
     const section = document.createElement('div');
@@ -175,7 +173,9 @@
   const noEl = document.getElementById('heroNo');
   const statsEl = document.getElementById('heroStats');
   const frame = document.getElementById('frame');
-  const INSIDE = { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'cutscenes', 'mw4-gameplay': 'cutscenes', gameplay: 'price' };
+  // #gameplay and #pack-gameplay were the old Gameplay section: Price's now.
+  const INSIDE = { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'cutscenes', 'mw4-gameplay': 'cutscenes', gameplay: 'price', 'pack-gameplay': 'price' };
+  const TARGETS = { gameplay: 'gameplay-price', 'pack-gameplay': 'gameplay-price' };
   CHARACTERS.forEach(view => { INSIDE[`pack-${view.id}`] = view.id; });
   const baseTitle = document.title;
   let current = null;
@@ -184,7 +184,7 @@
     const id = decodeURIComponent(location.hash.slice(1));
     const view = CHARACTERS.find(item => item.id === id);
     if (view) return { view };
-    if (INSIDE[id]) return { view: CHARACTERS.find(item => item.id === INSIDE[id]), target: document.getElementById(id) };
+    if (INSIDE[id]) return { view: CHARACTERS.find(item => item.id === INSIDE[id]), target: document.getElementById(TARGETS[id] || id) };
     if (new URLSearchParams(location.search).has('scene')) return { view: CHARACTERS[6], target: document.getElementById('mw4-campaign') };
     return { view: CHARACTERS[0] };
   }
