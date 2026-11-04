@@ -327,9 +327,9 @@ body[data-world] .quality-tip { border-radius: 12px; }
    Sections still to come: blurred, locked, not clickable
    ===================================================================== */
 .tile.is-locked { cursor: not-allowed; }
-.tile.is-locked .tile-pic::before, .tile.is-locked .tile-pic::after { display: none; }
-.tile.is-locked .tile-name { color: transparent; text-shadow: 0 0 7px rgba(255, 255, 255, .55); }
-.tile.is-locked .tile-meta { color: transparent; text-shadow: 0 0 4px rgba(255, 255, 255, .4); }
+.tile.is-locked .tile-pic::before { display: none; }
+.tile.is-locked .tile-name { color: rgba(255, 255, 255, .28); text-shadow: 0 0 3px rgba(255, 255, 255, .7); }
+.tile.is-locked .tile-meta { color: rgba(255, 255, 255, .55); }
 .tile.is-locked::before, .tile.is-locked::after { display: none; }
 .tile-lock { position: absolute; z-index: 2; left: 50%; top: 50%; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: rgba(9, 9, 10, .55); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); color: rgba(255, 255, 255, .8); transform: translate(-50%, -50%); }
 .tile-lock svg { width: 18px; height: 18px; }
