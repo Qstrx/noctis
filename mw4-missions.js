@@ -1,15 +1,13 @@
 (() => {
   'use strict';
-  // MW4 campaign: one card per mission, its scenes as chips. Choosing a scene
+  // A campaign: one card per mission, its scenes as chips. Choosing a scene
   // opens it right under its mission's row, with a 1080p preview on request,
-  // the three resolutions and the existing download flow.
-  const grid = document.getElementById('mw4Missions');
-  const campaign = typeof COD_PACKS !== 'undefined' && COD_PACKS.find(pack => pack.id === 'mw4-campaign-individual');
-  const recap = typeof COD_PACKS !== 'undefined' && COD_PACKS.find(pack => pack.id === 'mw4-recap');
-  if (!grid || !campaign?.editions || !recap?.editions) return;
+  // the three resolutions and the existing download flow. MW4 and each of
+  // Modern Warfare I–III get one such grid.
+  const packById = id => typeof COD_PACKS !== 'undefined' && COD_PACKS.find(pack => pack.id === id);
   const QUALITIES = ['4K', '2K', '1080p'];
   const NOTES = {
-    '4K': 'Maximum detail. Video kept from the existing 4K pack without another encode.',
+    '4K': 'Maximum detail. Video kept without another encode.',
     '2K': 'A smaller download with more detail than 1080p. Original framing and frame rate.',
     '1080p': 'The smallest download. Original framing and frame rate. Device support varies.'
   };
@@ -21,9 +19,10 @@
   const icon = (d, filled) => `<svg viewBox="0 0 20 20" ${filled ? 'fill="currentColor"' : 'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"'} aria-hidden="true"><path d="${d}"/></svg>`;
   const esc = text => String(text).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
-  // Every scene with its three editions; the recap closes the list.
+  function campaignGrid({ grid, packs, prefix, param }) {
+  // Every scene with its three editions; a recap closes the list.
   const scenes = [];
-  [[campaign, false], [recap, true]].forEach(([pack, isRecap]) => pack.editions['4K'].files.forEach((file, i) => {
+  packs.forEach(([pack, isRecap]) => pack.editions['4K'].files.forEach((file, i) => {
     const [title, kind] = file.name.replace(/^\d+\s*[—–-]\s*/, '').split(' · ');
     scenes.push({
       index: scenes.length, no: isRecap ? 'recap' : file.scene, title, kind: isRecap ? 'Recap' : kind, recap: isRecap,
@@ -52,8 +51,8 @@
 
   const detail = document.createElement('li');
   detail.className = 'mw4-detail';
-  detail.id = 'mw4Detail';
-  detail.setAttribute('aria-labelledby', 'mw4SceneTitle');
+  detail.id = `${prefix}Detail`;
+  detail.setAttribute('aria-labelledby', `${prefix}SceneTitle`);
   detail.innerHTML = `
     <div class="mw4-media">
       <img class="mw4-poster" alt="" width="1200" height="510" decoding="async">
@@ -63,7 +62,7 @@
     </div>
     <div class="mw4-body">
       <div class="mw4-detail-head">
-        <div><p class="mw4-kicker"></p><h3 class="mw4-detail-title" id="mw4SceneTitle" tabindex="-1"></h3></div>
+        <div><p class="mw4-kicker"></p><h3 class="mw4-detail-title" id="${prefix}SceneTitle" tabindex="-1"></h3></div>
         <div class="mw4-detail-nav">
           <button type="button" class="mw4-step" data-step="-1" aria-label="Previous scene">${icon('m12 4-6 6 6 6')}</button>
           <button type="button" class="mw4-step" data-step="1" aria-label="Next scene">${icon('m8 4 6 6-6 6')}</button>
@@ -71,7 +70,7 @@
         </div>
       </div>
       <dl class="mw4-facts"><div><dt>Duration</dt><dd data-fact="run"></dd></div></dl>
-      <fieldset class="mw4-res"><legend>Resolution</legend>${QUALITIES.map(q => `<label><input type="radio" name="mw4-quality" value="${q}"><span class="mw4-res-face"><b>${q}</b><em data-size></em></span></label>`).join('')}</fieldset>
+      <fieldset class="mw4-res"><legend>Resolution</legend>${QUALITIES.map(q => `<label><input type="radio" name="${prefix}-quality" value="${q}"><span class="mw4-res-face"><b>${q}</b><em data-size></em></span></label>`).join('')}</fieldset>
       <p class="mw4-res-note" role="status"></p>
       <div class="mw4-phone-tip" hidden><span class="mw4-tip-icon">${PHONE_ICON}</span><p><strong>On a phone?</strong> <span class="mw4-tip-text"></span></p><div class="mw4-tip-picks"><button type="button" data-quality="2K"></button><button type="button" data-quality="1080p"></button></div></div>
       <button type="button" class="mw4-download">${icon('M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3')}<span class="mw4-download-label"></span><span class="mw4-download-size"></span></button>
@@ -82,13 +81,13 @@
   const params = new URLSearchParams(location.search);
   let quality = QUALITIES.includes(params.get('quality')) ? params.get('quality') : '4K';
   // The download dialog finds a file's pack by URL, so each pack carries the chosen edition.
-  const useEdition = () => [campaign, recap].forEach(pack => Object.assign(pack, pack.editions[quality]));
-  const linked = scenes.find(scene => scene.no === params.get('scene'));
+  const useEdition = () => packs.forEach(([pack]) => Object.assign(pack, pack.editions[quality]));
+  const linked = scenes.find(scene => scene.no === params.get(param));
   let current = linked ? linked.index : 0, open = !!linked, opener = null;
 
   function saveUrl() {
     const url = new URL(location.href);
-    if (open) url.searchParams.set('scene', scenes[current].no); else url.searchParams.delete('scene');
+    if (open) url.searchParams.set(param, scenes[current].no); else url.searchParams.delete(param);
     url.searchParams.set('quality', quality);
     try { history.replaceState(history.state, '', url); } catch { /* Embedded browsers can restrict history. */ }
   }
@@ -124,7 +123,7 @@
   function render() {
     const scene = scenes[current], file = scene.by[quality];
     poster.src = scene.poster;
-    $('.mw4-kicker').textContent = scene.recap ? 'Campaign recap · separate from the 22 scenes' : `Scene ${scene.no} of 22 · ${scene.kind}`;
+    $('.mw4-kicker').textContent = scene.recap ? 'Campaign recap · separate from the 22 scenes' : `Scene ${scene.no} of ${scenes.filter(item => !item.recap).length} · ${scene.kind}`;
     $('.mw4-detail-title').textContent = scene.recap ? 'Campaign Recap' : `${scene.title} · ${scene.kind}`;
     $('[data-fact=run]').textContent = scene.run;
     detail.querySelectorAll('.mw4-res input').forEach(input => {
@@ -216,12 +215,24 @@
   document.addEventListener('visibilitychange', () => { if (document.hidden) video?.pause(); });
   document.addEventListener('play', event => { if (video && event.target !== video) video.pause(); }, true);
 
-  // On a phone, the phone advice comes first in the guide.
-  const guide = document.getElementById('mw4Guide');
-  if (guide) guide.dataset.yours = phone ? 'phone' : 'computer';
   grid.hidden = false;
-  document.getElementById('mw4Fallback').hidden = true;
   useEdition();
   render();
   if (open) place();
+  }
+
+  // On a phone, the phone advice comes first in the guide.
+  const guide = document.getElementById('mw4Guide');
+  if (guide) guide.dataset.yours = phone ? 'phone' : 'computer';
+  const mw4 = packById('mw4-campaign-individual'), recap = packById('mw4-recap');
+  const mw4Grid = document.getElementById('mw4Missions');
+  if (mw4Grid && mw4?.editions && recap?.editions) {
+    campaignGrid({ grid: mw4Grid, packs: [[mw4, false], [recap, true]], prefix: 'mw4', param: 'scene' });
+    document.getElementById('mw4Fallback').hidden = true;
+  }
+  ['mw1', 'mw2', 'mw3'].forEach(prefix => {
+    const pack = packById(`${prefix}-campaign-individual`);
+    const grid = document.getElementById(`${prefix}Missions`);
+    if (grid && pack?.files?.length) campaignGrid({ grid, packs: [[pack, false]], prefix, param: prefix });
+  });
 })();

@@ -26,11 +26,12 @@
 <script src="arrival.js?v=14"></script>
 <script src="count.js?v=2" defer></script>
 <script src="ui.js?v=1" defer></script>
-<script src="archive-data.js?v=12" defer></script>
+<script src="archive-data.js?v=13" defer></script>
 <script src="mw4-data.js?v=13" defer></script>
-<script src="mw4-missions.js?v=16" defer></script>
+<script src="cuts-data.js?v=2" defer></script>
+<script src="mw4-missions.js?v=18" defer></script>
 <script src="shelf.js?v=5" defer></script>
-<script src="cod-page.js?v=24" defer></script>
+<script src="cod-page.js?v=25" defer></script>
 <script src="credit.js?v=11" defer></script>
 <script src="site.js?v=22" defer></script>
 <script src="motion.js?v=11" defer></script>
@@ -54,8 +55,12 @@
     <div class="sheet-pic"><img alt="" decoding="async"><div class="sheet-head"><h2 class="sheet-title" id="sheetTitle" tabindex="-1"></h2><p class="sheet-meta"></p></div></div>
     <div id="sheetParts">
       <div class="sheet-part" data-part="cutscenes" hidden>
-        <p class="label">Modern Warfare I–III</p>
-        <ul class="rows" id="cutsRows"></ul>
+        <p class="label" id="mw1Label">Modern Warfare</p>
+        <div class="sheet-mw4"><ol class="mw4-missions" id="mw1Missions" aria-label="Modern Warfare campaign cutscenes" hidden></ol></div>
+        <p class="label" id="mw2Label">Modern Warfare II</p>
+        <div class="sheet-mw4"><ol class="mw4-missions" id="mw2Missions" aria-label="Modern Warfare II campaign cutscenes" hidden></ol></div>
+        <p class="label" id="mw3Label">Modern Warfare III</p>
+        <div class="sheet-mw4"><ol class="mw4-missions" id="mw3Missions" aria-label="Modern Warfare III campaign cutscenes" hidden></ol></div>
         <p class="label" id="mw4Label">Modern Warfare 4</p>
         <div class="sheet-mw4">
 <section class="mw4-collection" id="mw4-campaign" aria-label="Modern Warfare 4 campaign cutscenes">
@@ -87,6 +92,8 @@
         </div>
         <p class="label" id="looseLabel">Gameplay</p>
         <ul class="rows" id="looseRows"></ul>
+        <p class="label">Whole campaigns in one file</p>
+        <ul class="rows" id="cutsRows"></ul>
       </div>
     </div>
   </div>

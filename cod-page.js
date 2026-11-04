@@ -189,6 +189,10 @@
   document.getElementById('looseLabel').hidden = !loose.length;
   document.getElementById('looseRows').innerHTML = loose.map(pack => row(pack, { title: pack.chapter, sub: `MW4 · ${runOf(pack)}` })).join('');
   if (campaign) document.getElementById('mw4Label').textContent = `Modern Warfare 4 · 22 scenes · ${runOf(campaign)}`;
+  ['mw1', 'mw2', 'mw3'].forEach(id => {
+    const pack = byId(`${id}-campaign-individual`);
+    if (pack) document.getElementById(`${id}Label`).textContent = `${pack.title} · ${pack.files.length} scenes · ${runOf(pack)}`;
+  });
   document.querySelectorAll('.row[data-versions]').forEach(rowEl => setVersion(rowEl, QUALITIES.find(q => JSON.parse(rowEl.dataset.versions)[q])));
 
   // ---------- The slices ----------
@@ -220,9 +224,9 @@
   // The sheet's picture grows out of the tile.
   const sourceFor = id => document.querySelector(`.tile[data-view="${CSS.escape(id)}"] .tile-pic`);
   // A link to an MW4 scene opens the cutscenes with that scene.
-  if (!location.hash && new URLSearchParams(location.search).has('scene')) {
+  if (!location.hash && ['scene', 'mw1', 'mw2', 'mw3'].some(name => new URLSearchParams(location.search).has(name))) {
     history.replaceState(history.state, '', '#cutscenes');
-    addEventListener('load', () => document.getElementById('mw4Detail')?.scrollIntoView({ block: 'center' }));
+    addEventListener('load', () => document.querySelector('.mw4-detail')?.scrollIntoView({ block: 'center' }));
   }
   // Old addresses still land in the right sheet.
   // During early access the page opens straight on the one open section.
