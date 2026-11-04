@@ -137,8 +137,12 @@ body[data-world] .action svg path { fill: none; stroke: currentColor; stroke-wid
    ===================================================================== */
 .sheet { position: fixed; inset: 0; z-index: 60; overflow-y: auto; overscroll-behavior: contain; background: var(--page); }
 .sheet[hidden] { display: none; }
-.sheet { transition: background-color .7s ease, opacity .26s ease; }
-.sheet.is-clear { background-color: transparent; }
+.sheet { transition: opacity .26s ease; }
+.sheet::before { content: ""; position: fixed; inset: 0; z-index: -1; background: var(--page); transition: opacity .7s ease; pointer-events: none; }
+.sheet.is-clear { background: none; }
+.sheet.is-veiled::before { opacity: 0; }
+.sheet.no-move::before { transition: none; }
+html.sheet-solid #main, html.sheet-solid .site-header { visibility: hidden; }
 .sheet.is-gone { opacity: 0; }
 .sheet.is-leaving .sheet-head, .sheet.is-leaving .sheet-close, .sheet.is-leaving #sheetParts { opacity: 0; transition: opacity .25s ease; }
 .sheet-close { position: fixed; z-index: 3; top: max(12px, env(safe-area-inset-top)); left: max(var(--gut), env(safe-area-inset-left)); display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px 0 14px; border: 0; border-radius: 999px; background: rgba(38, 38, 42, .82); color: var(--ink); font: 600 14px/1 var(--font); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); transition: background-color .2s ease, color .2s ease; }

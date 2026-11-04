@@ -73,6 +73,7 @@
     const flies = animate && !UI.still() && !switching && from && visible(from) && pictureOf(views.get(id));
     // The title rises as the picture lands.
     UI.letters(title, views.get(id).name, flies ? 880 : 0);
+    if (!flies) solid(true);
     title.focus({ preventScroll: true });
     if (UI.still() || switching) return;
     const fade = [{ opacity: 0 }, { opacity: 1 }];
@@ -81,16 +82,15 @@
       if (animate) sheet.animate(fade, { duration: 400, easing: 'ease-out' });
       return;
     }
-    // The picture travels; everything else waits for it. The page behind
-    // shows through only while the sheet's own colour comes up: a class and a
-    // CSS transition, so no state can outlive the move.
+    // The picture travels; everything else waits for it. The sheet's own
+    // background is off for the move while a veil of the same colour fades in.
+    // The background colour itself is never animated: browsers can leave it
+    // unpainted afterwards, and the page shows through.
     const to = box.getBoundingClientRect();
     box.style.visibility = 'hidden';
-    sheet.style.transition = 'none';
-    sheet.classList.add('is-clear');
+    sheet.classList.add('is-clear', 'is-veiled', 'no-move');
     void sheet.offsetWidth;
-    sheet.style.transition = '';
-    sheet.classList.remove('is-clear');
+    sheet.classList.remove('is-veiled', 'no-move');
     document.getElementById('sheetParts')?.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: 600, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'backwards' });
     sheet.querySelector('.sheet-close').animate(fade, { duration: 400, delay: 500, fill: 'backwards' });
     const view = views.get(id);
@@ -99,14 +99,19 @@
       active = null;
       flight.remove();
       box.style.visibility = '';
-      // However the page was running, once the picture has landed the sheet is solid.
-      sheet.getAnimations().forEach(animation => animation.finish());
+      solid(true);
       head.animate(fade, { duration: 350, easing: 'ease-out' });
     });
   }
 
+  // Once a sheet has settled it is the whole page: its background is plain and
+  // the page behind it is not drawn at all, so nothing can show through.
+  function solid(on) {
+    sheet.classList.remove('is-clear');
+    document.documentElement.classList.toggle('sheet-solid', on);
+  }
   function reset() {
-    sheet.classList.remove('is-clear', 'is-leaving', 'is-gone');
+    sheet.classList.remove('is-clear', 'is-veiled', 'is-leaving', 'is-gone');
     box.style.visibility = '';
   }
   function close() {
@@ -116,6 +121,7 @@
     current = null;
     document.title = baseTitle;
     behind.forEach(el => { el.inert = false; });
+    solid(false);
     const done = () => {
       if (ticket !== closeTicket) return;
       undoClose = null;
@@ -141,7 +147,7 @@
       return;
     }
     box.style.visibility = 'hidden';
-    sheet.classList.add('is-clear', 'is-leaving');
+    sheet.classList.add('is-clear', 'is-veiled', 'is-leaving');
     fly(pictureOf(views.get(id)), focusOf(views.get(id)), from, to, [getComputedStyle(box).borderRadius, '8px']).then(flight => {
       if (flight === active) active = null;
       flight.remove();
