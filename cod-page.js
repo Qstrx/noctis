@@ -77,50 +77,34 @@
   let rowNo = 0;
   const LOGOS = { 'Modern Warfare': 'img/cod/logos/mw1.svg', 'Modern Warfare II': 'img/cod/logos/mw2.png', 'Modern Warfare III': 'img/cod/logos/mw3.png', 'Modern Warfare 4': 'img/cod/logos/mw4.webp' };
   const filesOf = pack => pack.files.length === 1 ? (pack.files[0].direct === false ? 'Drive' : '1') : String(pack.files.length);
-  // A scene pack as a block of its own: the game's logo and year, a wide
-  // picture, then its numbers, quality and download.
-  function gameRow(pack) {
+  // Every pack is a block of its own: a wide picture with the game's logo or
+  // the pack's name, then its numbers, quality and download. Scene packs show
+  // all three qualities, the ones still to come greyed out.
+  function block(pack, { name, all = false } = {}) {
     const found = versions(pack);
     const first = QUALITIES.find(q => found[q]);
     const lightest = [...QUALITIES].reverse().find(q => found[q]);
     const label = `${pack.title}, ${pack.chapter}`;
     const key = `r${++rowNo}`;
-    const logo = LOGOS[pack.chapter];
+    const logo = !name && LOGOS[pack.chapter];
     const ids = esc(JSON.stringify(Object.fromEntries(Object.entries(found).map(([q, p]) => [q, p.id]))));
     const canPreview = found[lightest].files.every(file => file.direct !== false);
-    return `<li class="row pack-card is-game" style="--r:${rowNo % 12}" data-versions="${ids}" aria-labelledby="${key}">
-      <div class="pack-cover"><span class="cover-frame"><img src="${pack.poster}" alt="" loading="lazy" decoding="async"></span><span class="game-shade"></span>
-        <div class="game-id">${logo ? `<img src="${logo}" alt="" loading="lazy" decoding="async">` : `<span class="game-word">${esc(pack.chapter)}</span>`}<h3 class="sr-only" id="${key}">${esc(pack.chapter)}</h3></div>
-        <span class="game-time">${runOf(pack)}</span>
-        ${canPreview ? `<button class="row-play" type="button" data-cod-preview="${found[lightest].id}" aria-label="Preview ${esc(label)}"><i>${PLAY}</i></button>` : ''}</div>
-      <div class="game-side">
-        <dl class="game-specs"><div><dt>Size</dt><dd data-spec="size">${sizeOf(found[first])}</dd></div><div><dt>Files</dt><dd data-spec="files">${filesOf(found[first])}</dd></div></dl>
-        <div class="seg" role="radiogroup" aria-label="Quality" data-pill><span class="pill"></span>${QUALITIES.map(q => found[q]
-          ? `<button type="button" role="radio" aria-checked="${q === first}" data-q="${q}">${q}</button>`
-          : `<button type="button" role="radio" aria-checked="false" disabled title="Coming soon">${q}</button>`).join('')}</div>
-        <button class="action primary" type="button" data-download-pack="${found[first].id}">${SAVE}<span class="action-label">Download</span> <span class="action-size">${sizeOf(found[first])}</span></button>
-      </div>
-    </li>`;
-  }
-  function row(pack, { title, sub, all = false }) {
-    const found = versions(pack);
-    const first = QUALITIES.find(q => found[q]);
-    const lightest = [...QUALITIES].reverse().find(q => found[q]);
-    const label = `${pack.title}, ${pack.chapter}`;
-    const key = `r${++rowNo}`;
     const offered = all ? QUALITIES : QUALITIES.filter(q => found[q]);
     const choice = offered.length > 1
       ? `<div class="seg" role="radiogroup" aria-label="Quality" data-pill><span class="pill"></span>${offered.map(q => found[q]
           ? `<button type="button" role="radio" aria-checked="${q === first}" data-q="${q}">${q}</button>`
           : `<button type="button" role="radio" aria-checked="false" disabled title="Coming soon">${q}</button>`).join('')}</div>`
       : `<span class="row-tag">${first}</span>`;
-    const canPreview = found[lightest].files.every(file => file.direct !== false);
-    const ids = esc(JSON.stringify(Object.fromEntries(Object.entries(found).map(([q, p]) => [q, p.id]))));
-    return `<li class="row pack-card" style="--r:${rowNo % 12}" data-versions="${ids}" aria-labelledby="${key}">
-      <div class="pack-cover"><span class="cover-frame"><img src="${pack.poster}" alt="" loading="lazy" decoding="async"></span>${canPreview ? `<button class="row-play" type="button" data-cod-preview="${found[lightest].id}" aria-label="Preview ${esc(label)}"><i>${PLAY}</i></button>` : ''}</div>
-      <div class="row-text"><h3 id="${key}">${esc(title)}</h3><p>${esc(sub)}</p></div>
-      ${choice}
-      <button class="action primary" type="button" data-download-pack="${found[first].id}">${SAVE}<span class="action-label">Download</span> <span class="action-size">${sizeOf(found[first])}</span></button>
+    return `<li class="row pack-card is-game" style="--r:${rowNo % 12}" data-versions="${ids}" aria-labelledby="${key}">
+      <div class="pack-cover"><span class="cover-frame"><img src="${pack.poster}" alt="" loading="lazy"></span><span class="game-shade"></span>
+        <div class="game-id">${logo ? `<img src="${logo}" alt="" loading="lazy">` : `<span class="game-word">${esc(name || pack.chapter)}</span>`}<h3 class="sr-only" id="${key}">${esc(name || pack.chapter)}</h3></div>
+        <span class="game-time">${runOf(pack)}</span>
+        ${canPreview ? `<button class="row-play" type="button" data-cod-preview="${found[lightest].id}" aria-label="Preview ${esc(label)}"><i>${PLAY}</i></button>` : ''}</div>
+      <div class="game-side">
+        <dl class="game-specs"><div><dt>Size</dt><dd data-spec="size">${sizeOf(found[first])}</dd></div><div><dt>Files</dt><dd data-spec="files">${filesOf(found[first])}</dd></div></dl>
+        ${choice}
+        <button class="action primary" type="button" data-download-pack="${found[first].id}">${SAVE}<span class="action-label">Download</span> <span class="action-size">${sizeOf(found[first])}</span></button>
+      </div>
     </li>`;
   }
   function setVersion(rowEl, q) {
@@ -158,8 +142,8 @@
     part.className = 'sheet-part';
     part.dataset.part = view.id;
     part.hidden = true;
-    part.innerHTML = label('Scene packs', packs.length ? plural(packs.length, 'pack') : '') + (packs.length ? rows(packs.map(gameRow), 'is-games') : `<p class="empty">${esc(view.name)}’s scene packs are on the way.</p>`)
-      + (view.id in GAMEPLAY && clips.length ? label('Gameplay', `Modern Warfare 4 · ${plural(clips.length, 'scene')}`) + rows(clips.map(pack => row(pack, { title: pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}` })), 'is-clips') : '');
+    part.innerHTML = label('Scene packs', packs.length ? plural(packs.length, 'pack') : '') + (packs.length ? rows(packs.map(pack => block(pack, { all: true })), 'is-games') : `<p class="empty">${esc(view.name)}’s scene packs are on the way.</p>`)
+      + (view.id in GAMEPLAY && clips.length ? label('Gameplay', `Modern Warfare 4 · ${plural(clips.length, 'scene')}`) + rows(clips.map(pack => block(pack, { name: pack.chapter })), 'is-games') : '');
     parts.append(part);
   });
   // Full cutscenes: Modern Warfare to MW III, then the MW4 campaign.
@@ -176,16 +160,14 @@
   trailerPart.className = 'sheet-part';
   trailerPart.dataset.part = 'trailers';
   trailerPart.hidden = true;
-  trailerPart.innerHTML = label('Modern Warfare 4') + '<ul class="rows" id="trailerRows"></ul>';
+  trailerPart.innerHTML = label('Modern Warfare 4') + '<ul class="rows is-games" id="trailerRows"></ul>';
   parts.append(trailerPart);
-  document.getElementById('cutsRows').innerHTML = ['cuts1', 'cuts2', 'cuts3'].map(byId).map(pack => row(pack, { title: pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}` })).join('');
-  document.getElementById('trailerRows').innerHTML = COD_PACKS.filter(pack => pack.group === 'trailers').map(pack => row(pack, {
-    title: pack.chapter.split(' — ')[1] || pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}`
-  })).join('');
+  document.getElementById('cutsRows').innerHTML = ['cuts1', 'cuts2', 'cuts3'].map(byId).map(pack => block(pack, { name: pack.chapter })).join('');
+  document.getElementById('trailerRows').innerHTML = COD_PACKS.filter(pack => pack.group === 'trailers').map(pack => block(pack, { name: pack.chapter.split(' — ')[1] || pack.chapter })).join('');
   const assigned = new Set(Object.values(GAMEPLAY).flat());
   const loose = COD_PACKS.filter(pack => pack.group === 'gameplay' && !assigned.has(pack.id));
   document.getElementById('looseLabel').hidden = !loose.length;
-  document.getElementById('looseRows').innerHTML = loose.map(pack => row(pack, { title: pack.chapter, sub: `MW4 · ${runOf(pack)}` })).join('');
+  document.getElementById('looseRows').innerHTML = loose.map(pack => block(pack, { name: pack.chapter })).join('');
   if (campaign) document.getElementById('mw4Label').textContent = `Modern Warfare 4 · 22 scenes · ${runOf(campaign)}`;
   ['mw1', 'mw2', 'mw3'].forEach(id => {
     const pack = byId(`${id}-campaign-individual`);

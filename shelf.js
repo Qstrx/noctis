@@ -37,7 +37,8 @@
     document.body.append(flight);
     const frame = (r, rad) => ({ left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px`, borderRadius: rad });
     const run = flight.animate([frame(from, radius[0]), frame(to, radius[1])], { duration: 950, easing: EASE, fill: 'forwards' });
-    return run.finished.catch(() => {}).then(() => flight);
+    // A tab in the background may never finish the animation; the page must not wait for it.
+    return Promise.race([run.finished.catch(() => {}), new Promise(resolve => setTimeout(resolve, 1100))]).then(() => flight);
   }
 
   function fill(id) {
@@ -61,6 +62,7 @@
     if (!views.has(id)) return;
     const switching = current && current !== id;
     undoClose?.();
+    sheet.getAnimations({ subtree: true }).forEach(animation => { if (!(animation instanceof CSSTransition)) animation.cancel(); });
     current = id;
     sheet.hidden = false;
     document.documentElement.classList.add('sheet-open');
@@ -75,13 +77,20 @@
     if (UI.still() || switching) return;
     const fade = [{ opacity: 0 }, { opacity: 1 }];
     if (!flies) {
-      sheet.animate(fade, { duration: 400, easing: 'ease-out' });
+      // Arriving on a sheet's own address, it is simply there.
+      if (animate) sheet.animate(fade, { duration: 400, easing: 'ease-out' });
       return;
     }
-    // The picture travels; everything else waits for it.
+    // The picture travels; everything else waits for it. The page behind
+    // shows through only while the sheet's own colour comes up: a class and a
+    // CSS transition, so no state can outlive the move.
     const to = box.getBoundingClientRect();
     box.style.visibility = 'hidden';
-    sheet.animate([{ backgroundColor: 'rgba(9, 9, 10, 0)' }, { backgroundColor: 'rgba(9, 9, 10, 1)' }], { duration: 700, easing: 'ease-out' });
+    sheet.style.transition = 'none';
+    sheet.classList.add('is-clear');
+    void sheet.offsetWidth;
+    sheet.style.transition = '';
+    sheet.classList.remove('is-clear');
     document.getElementById('sheetParts')?.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: 600, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'backwards' });
     sheet.querySelector('.sheet-close').animate(fade, { duration: 400, delay: 500, fill: 'backwards' });
     const view = views.get(id);
@@ -90,11 +99,16 @@
       active = null;
       flight.remove();
       box.style.visibility = '';
-      box.animate(fade, { duration: 350, easing: 'ease-out', pseudoElement: '::after' });
+      // However the page was running, once the picture has landed the sheet is solid.
+      sheet.getAnimations().forEach(animation => animation.finish());
       head.animate(fade, { duration: 350, easing: 'ease-out' });
     });
   }
 
+  function reset() {
+    sheet.classList.remove('is-clear', 'is-leaving', 'is-gone');
+    box.style.visibility = '';
+  }
   function close() {
     if (!current) return;
     const id = current;
@@ -102,45 +116,37 @@
     current = null;
     document.title = baseTitle;
     behind.forEach(el => { el.inert = false; });
-    const tile = tileOf(id);
     const done = () => {
       if (ticket !== closeTicket) return;
       undoClose = null;
       sheet.hidden = true;
       document.documentElement.classList.remove('sheet-open');
-      box.style.visibility = '';
+      reset();
       linkOf(id)?.focus({ preventScroll: true });
     };
     const from = box.getBoundingClientRect();
-    const to = tile?.getBoundingClientRect();
+    const to = tileOf(id)?.getBoundingClientRect();
     // Reopening while this one is on its way out takes all of it back.
-    const running = [];
     undoClose = () => {
       closeTicket++;
       undoClose = null;
-      running.forEach(animation => animation.cancel());
       active?.remove();
       active = null;
-      box.style.visibility = '';
+      reset();
     };
-    if (UI.still() || !to || !visible(from) || !visible(to) || !pictureOf(views.get(id))) {
-      if (UI.still()) done();
-      else {
-        const out = sheet.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, easing: 'ease-in', fill: 'forwards' });
-        running.push(out);
-        out.finished.then(() => { done(); out.cancel(); }, () => {});
-      }
+    if (UI.still()) { done(); return; }
+    if (!to || !visible(from) || !visible(to) || !pictureOf(views.get(id))) {
+      sheet.classList.add('is-gone');
+      setTimeout(done, 280);
       return;
     }
     box.style.visibility = 'hidden';
+    sheet.classList.add('is-clear', 'is-leaving');
     fly(pictureOf(views.get(id)), focusOf(views.get(id)), from, to, [getComputedStyle(box).borderRadius, '8px']).then(flight => {
       if (flight === active) active = null;
       flight.remove();
-      running.forEach(animation => animation.cancel());
       done();
     });
-    running.push(sheet.animate([{ backgroundColor: 'rgba(9, 9, 10, 1)' }, { backgroundColor: 'rgba(9, 9, 10, 0)' }], { duration: 700, easing: 'ease-in-out', fill: 'forwards' }));
-    sheet.querySelectorAll('.sheet-inner > :not(.sheet-pic), .sheet-close').forEach(el => running.push(el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' })));
   }
 
   // Closing goes back in history when this page opened the sheet, so Back
