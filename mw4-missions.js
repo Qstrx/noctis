@@ -43,7 +43,7 @@
     const first = mission.scenes[0], last = mission.scenes[mission.scenes.length - 1];
     const label = mission.recap ? 'Recap' : first === last ? 'Scene ' + first.no : `Scenes ${first.no}–${last.no}`;
     return `<li class="mw4-mission${mission.recap ? ' is-recap' : ''}" data-mission="${m}">
-      <button type="button" class="mw4-mission-cover" data-scene="${first.index}" aria-controls="mw4Detail" aria-label="${esc(`Open ${mission.title}, ${first.kind}, ${first.run}`)}"><img src="${first.poster}" alt="" width="1200" height="510" loading="lazy" decoding="async"><span class="mw4-mission-no">${esc(label)}</span></button>
+      <button type="button" class="mw4-mission-cover" data-scene="${first.index}" aria-controls="mw4Detail" aria-label="${esc(`Open ${mission.title}, ${first.kind}, ${first.run}`)}"><img src="${first.poster}" alt="" width="1200" height="510" loading="lazy"><span class="mw4-mission-no">${esc(label)}</span></button>
       <h3 class="mw4-mission-title">${esc(mission.title)}</h3>
       <div class="mw4-clips">${mission.scenes.map(scene => `<button type="button" class="mw4-clip" data-scene="${scene.index}" aria-controls="mw4Detail" aria-expanded="false" aria-label="${esc(`${mission.title}, ${scene.kind}, ${scene.run}`)}"><b>${esc(scene.kind)}</b>${scene.run}</button>`).join('')}</div>
     </li>`;
