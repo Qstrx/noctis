@@ -6,8 +6,8 @@
   // 4K, 2K and 1080p, and for Price, Ghost and Gaz their gameplay. Everything
   // is built from COD_PACKS here, before site.js and motion.js run, so
   // Preview and Download work on these rows as on any other card.
-  const track = document.getElementById('track');
-  if (!track || !window.Shelf || typeof COD_PACKS === 'undefined') return;
+  const cast = document.getElementById('cast');
+  if (!cast || !window.Shelf || typeof COD_PACKS === 'undefined') return;
 
   const VIEWS = [
     { id: 'price', name: 'John Price', still: 'img/stage/price.jpg', focus: '36% 30%' },
@@ -148,129 +148,13 @@
   document.querySelectorAll('.row[data-versions]').forEach(rowEl => setVersion(rowEl, QUALITIES.find(q => JSON.parse(rowEl.dataset.versions)[q])));
 
   // ---------- The slices ----------
-  // ---------- The carousel: portraits in a row, the centred one leads ----------
-  track.innerHTML = VIEWS.map((view, i) => `<a class="card${view.still ? '' : ' is-soon'}" href="#${view.id}" data-view="${view.id}" data-i="${i}" style="--n:${i}" aria-label="${esc(view.name)}, ${esc(view.count)}"><span class="card-pic">${view.still ? `<img src="${view.still}" alt="" style="object-position:${view.focus}" decoding="async"${i > 4 ? ' loading="lazy"' : ''}>` : '<span class="card-soon">Coming soon</span>'}</span></a>`).join('');
+  // ---------- The cast: a quiet grid of portraits ----------
+  const card = (view, i) => `<li style="--n:${i}"><a class="who${view.still ? '' : ' is-soon'}" href="#${view.id}" data-view="${view.id}"><span class="who-pic">${view.still ? `<img src="${view.still}" alt="" style="object-position:${view.focus}" loading="lazy" decoding="async">` : '<span>Soon</span>'}</span><span class="who-name">${esc(view.name)}</span><span class="who-meta">${esc(view.count)}</span></a></li>`;
+  cast.innerHTML = VIEWS.filter(view => !SPECIAL.includes(view.id)).map(card).join('');
+  document.getElementById('footage').innerHTML = VIEWS.filter(view => SPECIAL.includes(view.id)).map((view, i) => card(view, i + 11)).join('');
   VIEWS.forEach(view => Shelf.add(view.id, view));
-  const cards = [...track.querySelectorAll('.card')];
-  const glow = document.getElementById('glow');
-  const capNo = document.getElementById('capNo');
-  const capName = document.getElementById('capName');
-  const capMeta = document.getElementById('capMeta');
-  const progress = document.getElementById('progress');
-  document.getElementById('capOf').textContent = pad(VIEWS.length);
-  let active = -1, frame = 0, target = null;
-
-  const centre = card => card.offsetLeft + card.offsetWidth / 2 - track.clientWidth / 2;
-  // Steps count from where the carousel is heading, so quick presses add up.
-  const here = () => (target ?? active);
-  function go(i, smooth = true) {
-    const index = Math.max(0, Math.min(cards.length - 1, i));
-    target = index;
-    track.scrollTo({ left: centre(cards[index]), behavior: smooth && !UI.still() ? 'smooth' : 'auto' });
-  }
-  // Every card is placed by its distance from the centre: smaller, dimmer
-  // and greyer the further it is, its picture drifting the other way.
-  function layout() {
-    frame = 0;
-    const mid = track.scrollLeft + track.clientWidth / 2;
-    let nearest = 0, best = Infinity;
-    cards.forEach((card, i) => {
-      const step = card.offsetWidth + parseFloat(getComputedStyle(track).columnGap || 0);
-      const d = (card.offsetLeft + card.offsetWidth / 2 - mid) / step;
-      const a = Math.min(Math.abs(d), 3);
-      card.style.setProperty('--s', (1 - Math.min(a, 1.6) * .14).toFixed(4));
-      card.style.setProperty('--o', (1 - a * .26).toFixed(4));
-      card.style.setProperty('--g', Math.min(a, 1).toFixed(4));
-      card.style.setProperty('--px', `${(Math.max(-1, Math.min(1, d)) * -9).toFixed(3)}%`);
-      if (Math.abs(d) < best) { best = Math.abs(d); nearest = i; }
-    });
-    if (nearest !== active) select(nearest);
-    if (target !== null && Math.abs(track.scrollLeft - centre(cards[target])) < 2) target = null;
-  }
-  const queue = () => { if (!frame) frame = requestAnimationFrame(layout); };
-  function select(i) {
-    const first = active < 0;
-    active = i;
-    const view = VIEWS[i];
-    cards.forEach((card, n) => { card.classList.toggle('is-on', n === i); card.tabIndex = n === i ? 0 : -1; });
-    capNo.textContent = pad(i + 1);
-    UI.letters(capName, view.name, first ? 250 : 0);
-    capMeta.textContent = view.count;
-    progress.style.transform = `scaleX(${(i + 1) / VIEWS.length})`;
-    // The room takes the colour of the one in front.
-    const old = [...glow.querySelectorAll('img')];
-    old.forEach(img => { img.classList.remove('is-on'); setTimeout(() => img.remove(), 1200); });
-    if (view.still) {
-      const img = new Image();
-      img.alt = '';
-      img.src = view.still;
-      img.style.objectPosition = view.focus;
-      glow.append(img);
-      requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add('is-on')));
-    }
-  }
-  track.addEventListener('scroll', queue, { passive: true });
-  track.addEventListener('touchstart', () => { target = null; }, { passive: true });
-  addEventListener('resize', () => { go(active, false); queue(); }, { passive: true });
-
-  // A side card comes to the centre; the centre one opens.
-  let dragged = false;
-  track.addEventListener('click', event => {
-    const card = event.target.closest('.card');
-    if (!card) return;
-    if (dragged) { event.preventDefault(); return; }
-    if (Number(card.dataset.i) !== active) { event.preventDefault(); go(Number(card.dataset.i)); }
-  });
-  // Drag with the mouse, as with a finger.
-  let drag = null;
-  track.addEventListener('pointerdown', event => {
-    if (event.pointerType !== 'mouse' || event.button) return;
-    drag = { x: event.clientX, left: track.scrollLeft, moved: false };
-    target = null;
-    dragged = false;
-  });
-  addEventListener('pointermove', event => {
-    if (!drag) return;
-    const dx = event.clientX - drag.x;
-    if (!drag.moved && Math.abs(dx) > 6) { drag.moved = true; track.classList.add('is-dragging'); }
-    if (drag.moved) track.scrollLeft = drag.left - dx;
-  });
-  addEventListener('pointerup', () => {
-    if (!drag) return;
-    dragged = drag.moved;
-    drag = null;
-    if (dragged) { track.classList.remove('is-dragging'); go(active); setTimeout(() => { dragged = false; }, 0); }
-  });
-  // The wheel and the arrow keys move one card at a time.
-  let wheelLock = 0, wheelSum = 0;
-  track.addEventListener('wheel', event => {
-    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-    event.preventDefault();
-    if (performance.now() < wheelLock) return;
-    wheelSum += delta;
-    if (Math.abs(wheelSum) < 30) return;
-    go(here() + Math.sign(wheelSum));
-    wheelSum = 0;
-    wheelLock = performance.now() + 420;
-  }, { passive: false });
-  document.querySelectorAll('.step').forEach(button => button.addEventListener('click', () => go(here() + Number(button.dataset.step))));
-  addEventListener('keydown', event => {
-    if (document.documentElement.classList.contains('sheet-open') || document.querySelector('dialog[open]')) return;
-    if (event.altKey || event.ctrlKey || event.metaKey) return;
-    if (event.key === 'ArrowRight') { event.preventDefault(); go(here() + 1); }
-    else if (event.key === 'ArrowLeft') { event.preventDefault(); go(here() - 1); }
-  });
-
-  // Start on the one in the address, or on Price.
-  const startAt = Math.max(0, VIEWS.findIndex(view => view.id === decodeURIComponent(location.hash.slice(1))));
-  requestAnimationFrame(() => { go(startAt, false); layout(); });
-  // The sheet's picture grows out of the card, brought to the centre first.
-  const sourceFor = id => {
-    const i = VIEWS.findIndex(view => view.id === id);
-    if (i < 0) return null;
-    if (i !== active) { go(i, false); layout(); }
-    return cards[i].querySelector('.card-pic');
-  };
+  // The sheet's picture grows out of the portrait.
+  const sourceFor = id => document.querySelector(`.who[data-view="${CSS.escape(id)}"] .who-pic`);
   // A link to an MW4 scene opens the cutscenes with that scene.
   if (!location.hash && new URLSearchParams(location.search).has('scene')) {
     history.replaceState(history.state, '', '#cutscenes');
