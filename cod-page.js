@@ -155,13 +155,13 @@
     const clips = (GAMEPLAY[view.id] || []).map(byId).filter(Boolean);
     view.meta = packs.length ? `${plural(packs.length, 'pack')} · ${clock(packs.reduce((sum, pack) => sum + seconds(runOf(pack)), 0))}` : 'Coming soon';
     view.soon = !packs.length;
-    view.count = packs.length ? plural(packs.length, 'pack') + (clips.length && !earlyAccess ? ` · ${clips.length} gameplay` : '') : 'Coming soon';
+    view.count = packs.length ? plural(packs.length, 'pack') + (clips.length ? ` · ${clips.length} gameplay` : '') : 'Coming soon';
     const part = document.createElement('div');
     part.className = 'sheet-part';
     part.dataset.part = view.id;
     part.hidden = true;
     part.innerHTML = label('Scene packs', packs.length ? `${plural(packs.length, 'game')}` : '') + (packs.length ? rows(packs.map(gameRow), 'is-games') : `<p class="empty">${esc(view.name)}’s scene packs are on the way.</p>`)
-      + (view.id in GAMEPLAY && clips.length ? label('Gameplay', earlyAccess ? 'Coming soon' : `Modern Warfare 4 · ${plural(clips.length, 'scene')}`) + (earlyAccess ? `<div class="locked-block" aria-hidden="true" inert>${rows(clips.map(pack => row(pack, { title: pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}` })), 'is-clips')}</div>` : rows(clips.map(pack => row(pack, { title: pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}` })), 'is-clips')) : '');
+      + (view.id in GAMEPLAY && clips.length ? label('Gameplay', `Modern Warfare 4 · ${plural(clips.length, 'scene')}`) + rows(clips.map(pack => row(pack, { title: pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}` })), 'is-clips') : '');
     parts.append(part);
   });
   // Full cutscenes: Modern Warfare to MW III, then the MW4 campaign.
@@ -224,5 +224,6 @@
     addEventListener('load', () => document.getElementById('mw4Detail')?.scrollIntoView({ block: 'center' }));
   }
   // Old addresses still land in the right sheet.
-  Shelf.start({ sourceFor, aliases: { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'trailers', gameplay: 'price', 'pack-gameplay': 'price', 'pack-price': 'price', 'pack-gaz': 'gaz', 'pack-ghost': 'ghost', 'pack-soap': 'soap', 'pack-valeria': 'valeria', 'pack-archer': 'archer' } });
+  // During early access the page opens straight on the one open section.
+  Shelf.start({ sourceFor, initial: earlyAccess && OPEN.length === 1 ? OPEN[0] : null, aliases: { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'trailers', gameplay: 'price', 'pack-gameplay': 'price', 'pack-price': 'price', 'pack-gaz': 'gaz', 'pack-ghost': 'ghost', 'pack-soap': 'soap', 'pack-valeria': 'valeria', 'pack-archer': 'archer' } });
 })();

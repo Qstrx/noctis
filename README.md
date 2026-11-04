@@ -13,7 +13,7 @@ Mobile in-app browsers receive instructions for opening the site in Safari or Ch
 
 ## Early access
 
-The site is open with only Call of Duty, and in it only Ghost's scene packs: every other section is blurred and cannot be opened, SIX and Quality send visitors to the home. `OPEN` in `cod-page.js` lists the sections that open; set `earlyAccess` to `false` in both `cod-page.js` and `arrival.js` to open everything.
+The site is open with only Call of Duty, and in it only Ghost's scene packs: Ghost's gameplay is open too, and Call of Duty opens straight on Ghost's page; every other section is blurred and cannot be opened, SIX and Quality send visitors to the home. With more than one section in `OPEN` the page opens on the grid; the home's Call of Duty door points at `cod.html#ghost`. `OPEN` in `cod-page.js` lists the sections that open; set `earlyAccess` to `false` in both `cod-page.js` and `arrival.js` to open everything.
 
 ## Run locally
 
