@@ -85,7 +85,7 @@
     const ids = esc(JSON.stringify(Object.fromEntries(Object.entries(found).map(([q, p]) => [q, p.id]))));
     const canPreview = found[lightest].files.every(file => file.direct !== false);
     return `<li class="row pack-card is-game" style="--r:${rowNo % 12}" data-versions="${ids}" aria-labelledby="${key}">
-      <div class="game-id">${logo ? `<img src="${logo}" alt="" loading="lazy" decoding="async">` : `<span class="game-word">${esc(pack.chapter)}</span>`}<h3 class="sr-only" id="${key}">${esc(pack.chapter)}</h3><span class="game-year">${YEARS[pack.chapter] || 'Extra footage'}</span></div>
+      <div class="game-id">${logo ? `<img src="${logo}" alt="" loading="lazy" decoding="async">` : `<span class="game-word">${esc(pack.chapter)}</span>`}<h3 class="sr-only" id="${key}">${esc(pack.chapter)}</h3></div>
       <div class="pack-cover"><span class="cover-frame"><img src="${pack.poster}" alt="" loading="lazy" decoding="async"></span>${canPreview ? `<button class="row-play" type="button" data-cod-preview="${found[lightest].id}" aria-label="Preview ${esc(label)}"><i>${PLAY}</i></button>` : ''}<span class="game-time">${runOf(pack)}</span></div>
       <div class="game-side">
         <dl class="game-specs"><div><dt>Size</dt><dd data-spec="size">${sizeOf(found[first])}</dd></div><div><dt>Files</dt><dd data-spec="files">${filesOf(found[first])}</dd></div></dl>
@@ -172,9 +172,9 @@
   trailerPart.hidden = true;
   trailerPart.innerHTML = label('Modern Warfare 4') + '<ul class="rows" id="trailerRows"></ul>';
   parts.append(trailerPart);
-  document.getElementById('cutsRows').innerHTML = ['cuts1', 'cuts2', 'cuts3'].map(byId).map(pack => row(pack, { title: pack.chapter, sub: `${YEARS[pack.chapter]} · ${runOf(pack)}` })).join('');
+  document.getElementById('cutsRows').innerHTML = ['cuts1', 'cuts2', 'cuts3'].map(byId).map(pack => row(pack, { title: pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}` })).join('');
   document.getElementById('trailerRows').innerHTML = COD_PACKS.filter(pack => pack.group === 'trailers').map(pack => row(pack, {
-    title: pack.chapter.split(' — ')[1] || pack.chapter, sub: `${pack.releaseDate?.slice(0, 4) || ''} · ${runOf(pack)}`
+    title: pack.chapter.split(' — ')[1] || pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}`
   })).join('');
   const assigned = new Set(Object.values(GAMEPLAY).flat());
   const loose = COD_PACKS.filter(pack => pack.group === 'gameplay' && !assigned.has(pack.id));
