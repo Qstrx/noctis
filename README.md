@@ -26,10 +26,9 @@ Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of
 | File | What it does |
 | --- | --- |
 | `index.html` | Home: two full-height doors, Call of Duty and SIX |
-| `noir.css`, `noir.js` | The cinema look shared by every page: grain, header with a recording timecode, letterbox opening, buttons, the stage, the reel and the doors |
-| `stage.js` | The WebGL stage: a full-screen still with a slow push-in, pointer parallax, grain and a smoke dissolve between pictures; two cross-fading images without WebGL |
-| `cod-stage.js` | Call of Duty: the roster (characters, gameplay, cutscenes), one address per choice (`cod.html#ghost`) and the packs as shots, built from `archive-data.js` |
-| `six-stage.js` | The SIX stage: Joe Graves and the two seasons |
+| `clean.css`, `ui.js` | The look shared by every page (header, buttons, the sliding switch, cards, the doors) and its motion: rising letters, numbers that count up, sections that arrive, the sliding pill |
+| `cod-page.js` | Call of Duty: the switch of characters and cutscenes, one address per choice (`cod.html#ghost`), the hero picture that wipes to the next, and the cards with their 4K, 2K and 1080p versions; `GAMEPLAY` at the top says which MW4 gameplay belongs to Price, Ghost and Gaz |
+| `six-page.js` | SIX: Joe Graves, then one season at a time |
 | `cod.html`, `six.html` | The two collections |
 | `site.css` | Fonts, colours, header, dialogs, shared base |
 | `select.css`, `select.js` | The select screens on the home and on Call of Duty |
@@ -41,7 +40,7 @@ Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of
 | `player.js` | The SIX preview player |
 | `motion.css`, `motion.js`, `arrival.js` | Page fades, scroll reveals, card tilt and the navigation underline |
 | `quality.html`, `quality.css` | One page with the resolution, frame rate and format of every pack |
-| `archive-data.js` | Files, sizes and links of every pack |
+| `archive-data.js` | Files, sizes and links of every pack. A pack's other versions go in `"editions": { "2K": { "files": […], "meta": "…", "resolution": "…" }, "1080p": {…} }`; until then the card shows them as Soon |
 
 Every page is dark and flat, with one colour per collection: sand for Call of Duty, blue for SIX. The home and Call of Duty open on the same select screen: a numbered list beside a picture of the row you are on. Pointing, focus, the arrow keys or the number keys move through it; a click, a tap or Enter opens it. Phones show the list alone, each row with its picture; on the home the list sits in the middle of the screen, each row a large name with what it holds and a portrait beside it. On larger screens the home's two names lead, large, with a smaller picture of the one you are on beside them; the page takes that collection's colour.
 
