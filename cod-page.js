@@ -225,5 +225,5 @@
   }
   // Old addresses still land in the right sheet.
   // During early access the page opens straight on the one open section.
-  Shelf.start({ sourceFor, initial: earlyAccess && OPEN.length === 1 ? OPEN[0] : null, aliases: { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'trailers', gameplay: 'price', 'pack-gameplay': 'price', 'pack-price': 'price', 'pack-gaz': 'gaz', 'pack-ghost': 'ghost', 'pack-soap': 'soap', 'pack-valeria': 'valeria', 'pack-archer': 'archer' } });
+  Shelf.start({ sourceFor, pinned: earlyAccess && OPEN.length === 1 ? OPEN[0] : null, aliases: { 'mw4-campaign': 'cutscenes', 'campaign-cutscenes': 'cutscenes', 'mw4-trailers': 'trailers', gameplay: 'price', 'pack-gameplay': 'price', 'pack-price': 'price', 'pack-gaz': 'gaz', 'pack-ghost': 'ghost', 'pack-soap': 'soap', 'pack-valeria': 'valeria', 'pack-archer': 'archer' } });
 })();

@@ -126,7 +126,10 @@
 
   // Closing goes back in history when this page opened the sheet, so Back
   // and the close button agree.
+  // A pinned sheet is the whole page: it cannot be closed or left.
+  let pinned = null;
   function requestClose() {
+    if (pinned) return;
     if (openedHere) history.back();
     else { history.replaceState(history.state, '', location.pathname + location.search); close(); }
   }
@@ -154,6 +157,13 @@
     start(options = {}) {
       aliases = options.aliases || {};
       if (options.sourceFor) sourceOf = options.sourceFor;
+      pinned = options.pinned && views.has(options.pinned) ? options.pinned : null;
+      if (pinned) {
+        if (location.hash !== `#${pinned}`) history.replaceState(history.state, '', `#${pinned}`);
+        addEventListener('hashchange', () => { if (location.hash !== `#${pinned}`) history.replaceState(history.state, '', `#${pinned}`); open(pinned, { animate: false }); });
+        open(pinned, { animate: false });
+        return;
+      }
       addEventListener('hashchange', () => route());
       if (options.initial && !location.hash) history.replaceState(history.state, '', `#${options.initial}`);
       route({ initial: true });

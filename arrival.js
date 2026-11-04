@@ -16,12 +16,12 @@
     if (!owner) { location.replace('maintenance.html'); return; }
   }
 
-  // Early access: only Call of Duty is open, and in it only Ghost's scene
-  // packs (OPEN in cod-page.js). SIX and Quality send visitors home.
-  // To open everything, set earlyAccess to false here and in cod-page.js.
+  // Early access: the whole site is Ghost's page (OPEN in cod-page.js).
+  // Every other page sends visitors there. To open everything, set
+  // earlyAccess to false here and in cod-page.js.
   const earlyAccess = true;
-  if (earlyAccess && /\/(six|quality)\.html$/.test(location.pathname)) { location.replace('index.html'); return; }
-  if (earlyAccess) document.documentElement.classList.add('early-access');
+  if (earlyAccess && !/\/(cod|maintenance)\.html$/.test(location.pathname)) { location.replace('cod.html'); return; }
+  if (earlyAccess) document.documentElement.classList.add('early-access', 'solo');
 
   const root = document.documentElement;
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;

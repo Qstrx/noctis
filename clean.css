@@ -377,3 +377,11 @@ body[data-world] .quality-tip { border-radius: 12px; }
 .door.is-locked:hover .door-enter { background: transparent; color: inherit; }
 .locked-block { position: relative; }
 .locked-block > .rows { filter: blur(6px); opacity: .45; pointer-events: none; user-select: none; }
+
+/* Solo: during early access the site is a single page, Ghost's */
+.solo-note { display: none; }
+.solo .solo-note { display: block; margin: clamp(56px, 10vh, 96px) 0 0; padding-top: 28px; border-top: 1px solid var(--line); font: 400 clamp(26px, 3vw, 40px)/1 var(--title); letter-spacing: .02em; text-transform: uppercase; text-align: center; color: var(--muted); }
+.solo .sheet-close, .solo .site-nav { display: none; }
+.solo body[data-world] .site-header { z-index: 70; background: linear-gradient(180deg, rgba(9, 9, 10, .9), rgba(9, 9, 10, 0)); }
+.solo .sheet-inner { padding-top: calc(var(--head) + 4px); }
+.solo #main { visibility: hidden; }
