@@ -14,7 +14,7 @@
   const behind = [document.getElementById('main'), document.querySelector('.site-header')].filter(Boolean);
   const views = new Map();
   const baseTitle = document.title;
-  let current = null, openedHere = false, active = null, leaving = false, closeTicket = 0, undoClose = null;
+  let current = null, openedHere = false, active = null, closeTicket = 0, undoClose = null;
   const EASE = 'cubic-bezier(.77, 0, .18, 1)';
 
   // Where a sheet's picture flies from and back to, and what takes focus
@@ -157,10 +157,14 @@
 
   // Closing goes back in history when this page opened the sheet, so Back
   // and the close button agree.
+  // The sheet closes at once, whatever the history does afterwards.
   function requestClose() {
-    if (leaving) return;
-    if (openedHere) { leaving = true; history.back(); }
-    else { history.replaceState(history.state, '', location.pathname + location.search); close(); }
+    if (!current) return;
+    const back = openedHere;
+    openedHere = false;
+    close();
+    if (back) history.back();
+    else history.replaceState(history.state, '', location.pathname);
   }
   sheet.querySelector('.sheet-close').addEventListener('click', requestClose);
   addEventListener('keydown', event => {
@@ -170,8 +174,8 @@
   });
 
   function route({ initial = false } = {}) {
-    leaving = false;
-    const id = decodeURIComponent(location.hash.slice(1));
+    let id = location.hash.slice(1);
+    try { id = decodeURIComponent(id); } catch { /* A malformed address opens nothing. */ }
     const target = views.has(id) ? id : resolve(id);
     if (target) {
       if (target !== current) open(target, { animate: !initial });
@@ -188,6 +192,9 @@
       aliases = options.aliases || {};
       if (options.sourceFor) sourceOf = options.sourceFor;
       addEventListener('hashchange', () => route());
+      // A step back that also changes the query fires no hashchange in Chrome,
+      // and a chosen scene or quality is in the query.
+      addEventListener('popstate', () => route());
       route({ initial: true });
     }
   };

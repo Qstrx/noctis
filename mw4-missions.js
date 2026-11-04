@@ -88,7 +88,7 @@
   function saveUrl() {
     const url = new URL(location.href);
     if (open) url.searchParams.set(param, scenes[current].no); else url.searchParams.delete(param);
-    url.searchParams.set('quality', quality);
+    if (quality === '4K') url.searchParams.delete('quality'); else url.searchParams.set('quality', quality);
     try { history.replaceState(history.state, '', url); } catch { /* Embedded browsers can restrict history. */ }
   }
 

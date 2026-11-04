@@ -29,7 +29,7 @@ Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of
 
 | File | What it does |
 | --- | --- |
-| `index.html` | Home: two full-height doors, Call of Duty and SIX |
+| `index.html` | Home: two pictures, Call of Duty and SIX |
 | `clean.css`, `ui.js` | The look shared by every page (header, buttons, the quality switch, the doors, the slices, the sheet and its rows) and small pieces of motion |
 | `shelf.js` | Slices and their sheet: a slice opens its own address (`cod.html#ghost`) and its picture grows into the top of the sheet; Back, Escape and the close button send it back |
 | `cod-page.js` | Call of Duty: square tiles edge to edge, a name on each (Price and the full cutscenes wide), lit under the pointer; each sheet lists the packs from Modern Warfare to MW4 with their 4K, 2K and 1080p versions, and the gameplay under Price, Ghost and Gaz (`GAMEPLAY` at the top) |
@@ -37,10 +37,8 @@ Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of
 | `img/stage/` | Full-HD stills taken from the packs themselves, for the slices and the sheets |
 | `cod.html`, `six.html` | The two collections |
 | `site.css` | Fonts, colours, header, dialogs, shared base |
-| `select.css`, `select.js` | The select screens on the home and on Call of Duty |
-| `cards.css` | Pack cards (cover, details, Preview and Download) and the SIX seasons |
-| `cod.css`, `cod-views.js` | Call of Duty sections, one view at a time |
-| `mw4.css`, `mw4-data.js`, `mw4-missions.js` | The Modern Warfare 4 campaign cutscenes |
+| `clean.css`, `cod-page.js`, `shelf.js`, `six-page.js` | The look of every page, the Call of Duty tiles and sheets, and the SIX episodes |
+| `mw4.css`, `mw4-data.js`, `cuts-data.js`, `mw4-missions.js` | The cutscenes of every campaign, a card per scene |
 | `download.css`, `site.js` | The download dialog, in-app browser notice and Call of Duty previews |
 | `credit.css`, `credit.js` | The credit reminder after a download |
 | `player.js` | The SIX preview player |
@@ -63,7 +61,7 @@ node scripts/test-in-app-download.cjs
 node scripts/test-navigation.cjs
 ```
 
-Set `PLAYWRIGHT_MODULE` to the module's path if it is installed elsewhere, and `PLAYWRIGHT_CHANNEL=chrome` to use an installed Chrome instead of Playwright's Chromium. The download checks use a local server, disposable browser contexts and small intercepted attachments; they cover embedded-browser detection, multipart and provider files, clipboard fallback, focus return, credit reminders and narrow-screen fit, and save captures to the ignored `.review/in-app-download/` directory. The navigation checks walk the select screens and the Call of Duty views by pointer, keyboard, Back and touch. Browser emulation does not replace testing on physical devices.
+Set `PLAYWRIGHT_MODULE` to the module's path if it is installed elsewhere, and `PLAYWRIGHT_CHANNEL=chrome` to use an installed Chrome instead of Playwright's Chromium. The download checks use a local server, disposable browser contexts and small intercepted attachments; they cover embedded-browser detection, multipart and provider files, clipboard fallback, focus return, credit reminders and narrow-screen fit, and save captures to the ignored `.review/in-app-download/` directory. The navigation checks walk the home, the tiles and their sheets by pointer, keyboard, Back and touch. Browser emulation does not replace testing on physical devices.
 
 ## Modern Warfare 4
 
