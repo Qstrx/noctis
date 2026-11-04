@@ -74,17 +74,25 @@ body[data-world] .action svg path { fill: none; stroke: currentColor; stroke-wid
 .seg > button:disabled { color: #4a4a50; cursor: default; opacity: 1; }
 
 /* =====================================================================
-   The home: two pictures, a name on each
+   The home: two cards in the middle of a quiet page
    ===================================================================== */
-.doors { display: flex; height: 100svh; min-height: 420px; gap: clamp(8px, 1vw, 14px); padding: var(--head) var(--gut) var(--gut); }
-.door { position: relative; flex: 1 1 0; display: flex; align-items: flex-end; min-width: 0; overflow: hidden; border-radius: 8px; color: var(--ink); isolation: isolate; }
-.door-pic { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; filter: brightness(.62) saturate(.8); transition: transform 1.4s var(--ease-out), filter .7s ease; }
-.door::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(5, 5, 6, .7), rgba(5, 5, 6, 0) 40%); }
-.door-copy { padding: clamp(16px, 2.4vw, 32px); }
-.door-title { margin: 0; font: 400 clamp(30px, 3.4vw, 52px)/1 var(--title); letter-spacing: .02em; text-transform: uppercase; }
+.home { display: grid; place-items: center; min-height: 100svh; padding: calc(var(--head) + 16px) var(--gut) 40px; }
+.doors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 2.4vw, 32px); width: min(680px, 100%); }
+.door { display: grid; gap: 16px; min-width: 0; color: var(--ink); outline: none; animation: door-in .8s var(--ease-out) both; }
+.door + .door { animation-delay: .08s; }
+@keyframes door-in { from { opacity: 0; transform: translateY(14px); } }
+.door-frame { display: block; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 14px; background: var(--surface); box-shadow: 0 0 0 1px var(--line); transition: box-shadow .3s ease, transform .5s var(--ease-out); }
+.door-pic { display: block; width: 100%; height: 100%; object-fit: cover; filter: brightness(.82) saturate(.9); transition: transform 1.2s var(--ease-out), filter .4s ease; }
+.door-copy { display: grid; gap: 4px; padding: 0 2px; }
+.door-title { font: 400 clamp(24px, 3vw, 34px)/1 var(--title); letter-spacing: .02em; text-transform: uppercase; }
+.door-note { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.door:hover .door-frame, .door:focus-visible .door-frame { transform: translateY(-4px); box-shadow: 0 0 0 1px var(--line-strong), 0 24px 60px -24px rgba(0, 0, 0, .9); }
 .door:hover .door-pic, .door:focus-visible .door-pic { filter: none; transform: scale(1.03); }
-.door:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-@media (hover: none) { .door-pic { filter: brightness(.85) saturate(.95); } }
+.door[data-palette=cod] { --accent: #ecc786; }
+.door[data-palette=six] { --accent: #8ec9ff; }
+.door:hover .door-title, .door:focus-visible .door-title { color: var(--accent); }
+.door:focus-visible .door-frame { box-shadow: 0 0 0 2px var(--accent); }
+@media (hover: none) { .door-pic { filter: none; } }
 
 .sheet-pic.is-blank { background: radial-gradient(120% 120% at 20% 100%, #1b1b1f, #0e0e10); }
 .sheet-pic.is-blank img { display: none; }
@@ -282,7 +290,7 @@ body[data-world] .quality-tip { border-radius: 12px; }
   body[data-world] .site-nav a { font-size: 13px; }
   body[data-world] .site-nav a[href="index.html"] { display: none; }
   body[data-world] .site-nav a::after, body[data-world] .nav-marker { bottom: 12px; }
-  .doors { flex-direction: column; }
+  .door-note { font-size: 12px; }
   .sheet-inner { padding-top: 68px; }
   .game-switch { gap: 5px; }
   .game-switch [role=tab] { min-height: 70px; padding: 10px 4px; gap: 7px; border-radius: 10px; }
@@ -319,7 +327,7 @@ body[data-world] .quality-tip { border-radius: 12px; }
   .row .seg > button { padding: 0 9px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .tiles > li, .tile-text, .tiles-title, .is-rising .ch, .rows.is-entering .row, .label.is-entering, .sheet-mw4.is-entering { animation: none !important; }
+  .door, .tiles > li, .tile-text, .tiles-title, .is-rising .ch, .rows.is-entering .row, .label.is-entering, .sheet-mw4.is-entering { animation: none !important; }
 }
 
 /* =====================================================================
