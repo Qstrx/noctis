@@ -27,10 +27,13 @@
     { id: 'trailers', name: 'Trailers', still: 'img/stage/trailers.jpg', focus: '62% 50%' }
   ];
   const SPECIAL = ['cutscenes', 'trailers'];
-  // Which MW4 gameplay shows under which character. For now Price, Ghost and
-  // Gaz each show all six.
-  const MW4_GAMEPLAY = COD_PACKS.filter(pack => pack.group === 'gameplay').map(pack => pack.id);
-  const GAMEPLAY = { price: MW4_GAMEPLAY, ghost: MW4_GAMEPLAY, gaz: MW4_GAMEPLAY };
+  // Which MW4 gameplay shows under which character. Gameplay listed under
+  // nobody goes at the end of the full cutscenes.
+  const GAMEPLAY = {
+    price: ['gameplay-makarov', 'gameplay-graves-death', 'gameplay-price-ghost', 'gameplay-price-jail'],
+    gaz: ['gameplay-price-ghost'],
+    ghost: ['gameplay-price-ghost', 'gameplay-price-jail']
+  };
   const YEARS = { 'Modern Warfare': 2019, 'Modern Warfare II': 2022, 'Modern Warfare III': 2023, 'Modern Warfare 4': 2026 };
   const QUALITIES = ['4K', '2K', '1080p'];
   const PLAY = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3.5 11 6.5-11 6.5z"/></svg>';
@@ -147,6 +150,10 @@
   document.getElementById('trailerRows').innerHTML = COD_PACKS.filter(pack => pack.group === 'trailers').map(pack => row(pack, {
     title: pack.chapter.split(' — ')[1] || pack.chapter, sub: `${pack.releaseDate?.slice(0, 4) || ''} · ${runOf(pack)}`
   })).join('');
+  const assigned = new Set(Object.values(GAMEPLAY).flat());
+  const loose = COD_PACKS.filter(pack => pack.group === 'gameplay' && !assigned.has(pack.id));
+  document.getElementById('looseLabel').hidden = !loose.length;
+  document.getElementById('looseRows').innerHTML = loose.map(pack => row(pack, { title: pack.chapter, sub: `MW4 · ${runOf(pack)}` })).join('');
   if (campaign) document.getElementById('mw4Label').textContent = `Modern Warfare 4 · 22 scenes · ${runOf(campaign)}`;
   document.querySelectorAll('.row[data-versions]').forEach(rowEl => setVersion(rowEl, QUALITIES.find(q => JSON.parse(rowEl.dataset.versions)[q])));
 
