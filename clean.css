@@ -135,7 +135,7 @@ body[data-world] .action svg path { fill: none; stroke: currentColor; stroke-wid
 .tiles-glow img.is-on { opacity: .2; }
 .tiles-glow::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 70% at 50% 50%, transparent, var(--page) 90%); }
 .tiles { display: grid; grid-auto-flow: row dense; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(8px, 1vw, 14px); margin: 0; padding: 0; list-style: none; }
-.tiles > li { position: relative; aspect-ratio: 4 / 5; animation: tile-in 1.1s calc(var(--n) * 50ms + 120ms) var(--ease-io) both; }
+.tiles > li { position: relative; aspect-ratio: 1; animation: tile-in 1.1s calc(var(--n) * 50ms + 120ms) var(--ease-io) both; }
 @keyframes tile-in { from { clip-path: inset(100% 0 0 0 round 8px); } to { clip-path: inset(0 0 0 0 round 8px); } }
 /* The trailers close the last row of characters; the full cutscenes span the page */
 .tiles > li.is-trailers { grid-column: span 2; aspect-ratio: auto; }
