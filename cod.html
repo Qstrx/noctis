@@ -17,43 +17,45 @@
 <link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="img/icon-180.png">
 <link rel="preload" href="img/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="img/cod/price-mw2.jpg" as="image">
 <link rel="stylesheet" href="site.css?v=17">
 <link rel="stylesheet" href="motion.css?v=11">
 <link rel="stylesheet" href="mw4.css?v=16">
 <link rel="stylesheet" href="download.css?v=15">
 <link rel="stylesheet" href="credit.css?v=17">
-<link rel="stylesheet" href="clean.css?v=1">
+<link rel="stylesheet" href="clean.css?v=2">
 <script src="arrival.js?v=12"></script>
 <script src="count.js?v=2" defer></script>
 <script src="ui.js?v=1" defer></script>
 <script src="archive-data.js?v=11" defer></script>
 <script src="mw4-data.js?v=13" defer></script>
 <script src="mw4-missions.js?v=16" defer></script>
-<script src="cod-page.js?v=1" defer></script>
+<script src="shelf.js?v=1" defer></script>
+<script src="cod-page.js?v=2" defer></script>
 <script src="credit.js?v=11" defer></script>
 <script src="site.js?v=22" defer></script>
 <script src="motion.js?v=11" defer></script>
 </head>
 <body data-world="cod" data-theme="night" data-motion="on">
-<a class="skip-link" href="#views">Skip to the packs</a>
+<a class="skip-link" href="#slices">Skip to the characters</a>
 <header class="site-header">
   <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s<span class="brand-caption">scenepacks</span></span></a>
   <nav class="site-nav" aria-label="Main navigation"><a href="index.html">Collections</a><a href="cod.html" aria-current="page">Call of Duty</a><a href="six.html">SIX</a><a href="quality.html">Quality</a></nav>
 </header>
-<main class="page" id="main">
-  <div class="page-top"><p class="eyebrow">Call of Duty</p></div>
-  <div class="switch-wrap"><nav class="seg switch" id="switch" aria-label="Characters and cutscenes"><span class="pill"></span></nav></div>
-  <section class="hero" aria-labelledby="heroName">
-    <div class="hero-row">
-      <div><p class="hero-no"><b id="heroNo">01</b> / 07</p><h1 class="hero-name" id="heroName" tabindex="-1">John Price</h1></div>
-      <dl class="stats" id="heroStats"></dl>
-    </div>
-    <div class="frame" id="frame"><img src="img/cod/price-mw2.jpg" alt="" style="object-position:62% 34%"><div class="frame-hint"><button type="button" data-step="-1" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button><button type="button" data-step="1" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div></div>
-  </section>
-  <div id="views">
-  <div class="view" id="view-cutscenes" data-view="cutscenes" hidden>
-  <section class="block">
+<main id="main">
+  <h1 class="sr-only">Call of Duty scene packs</h1>
+  <nav class="slices" id="slices" aria-label="Characters and cutscenes"></nav>
+  <noscript><p class="no-script">This page needs JavaScript to show the packs. <a href="https://github.com/Qstrx/noctis/releases">Browse all downloads on GitHub</a>.</p></noscript>
+</main>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+  <button class="sheet-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  <div class="sheet-inner">
+    <div class="sheet-pic"><img alt="" decoding="async"><div class="sheet-head"><h2 class="sheet-title" id="sheetTitle" tabindex="-1"></h2><p class="sheet-meta"></p></div></div>
+    <div id="sheetParts">
+      <div class="sheet-part" data-part="cutscenes" hidden>
+        <p class="label">Modern Warfare I–III</p>
+        <ul class="rows" id="cutsRows"></ul>
+        <p class="label" id="mw4Label">Modern Warfare 4</p>
+        <div class="sheet-mw4">
 <section class="mw4-collection" id="mw4-campaign" aria-label="Modern Warfare 4 campaign cutscenes">
   <header class="mw4-heading">
     <div><h2 id="mw4-collection-title" tabindex="-1"><img src="img/cod/logos/mw4.webp" alt="Modern Warfare 4" width="1179" height="404"></h2><p>22 campaign cutscenes from 17 missions, plus the recap. Every scene in three resolutions.</p></div>
@@ -80,12 +82,13 @@
   <p id="mw4Fallback" class="mw4-fallback">Loading the campaign scenes. <a href="https://github.com/Qstrx/noctis/releases/tag/mw4-scenepack-versions">Browse all downloads on GitHub</a>.</p>
   <ol class="mw4-missions" id="mw4Missions" aria-label="Modern Warfare 4 campaign missions" hidden></ol>
 </section>
-  </section>
-  <div id="cutsMore"></div>
+        </div>
+        <p class="label">Trailers</p>
+        <ul class="rows" id="trailerRows"></ul>
+      </div>
+    </div>
   </div>
-  </div>
-  <noscript><p class="no-script">This page needs JavaScript to show the packs. <a href="https://github.com/Qstrx/noctis/releases">Browse all downloads on GitHub</a>.</p></noscript>
-</main>
+</div>
 <dialog class="download-dialog transfer-dialog" id="hit" aria-labelledby="hitT" aria-describedby="hitS hitNote">
   <div class="transfer-poster"><img class="transfer-cover" id="hitCover" src="img/icon.svg" alt="" width="960" height="408" hidden></div>
   <button class="transfer-close" type="button" id="hitNo" aria-label="Cancel download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>

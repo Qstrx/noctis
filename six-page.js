@@ -1,42 +1,42 @@
 (() => {
   'use strict';
-  // SIX: Joe Graves large, then one season at a time. The switch slides
-  // between Season 1 and Season 2; each has its own address (#season-2).
-  const switchEl = document.getElementById('switch');
-  if (!switchEl || !window.UI) return;
-  const seasons = [...document.querySelectorAll('.season')];
-  const title = document.getElementById('seasonTitle');
-  const note = document.getElementById('seasonNote');
-  const frame = document.getElementById('frame');
+  // SIX: a slice per season. Each opens its sheet (shelf.js) with Joe
+  // Graves' scene packs, one row per episode, built from EPISODES before
+  // site.js and player.js run, so Preview and Download work on them.
+  const slices = document.getElementById('slices');
+  if (!slices || !window.Shelf || typeof EPISODES === 'undefined') return;
+  const SEASONS = [
+    { id: 'season-1', n: 1, name: 'Season 1', still: 'img/stage/six-1.jpg', focus: '72% 30%' },
+    { id: 'season-2', n: 2, name: 'Season 2', still: 'img/stage/six-2.jpg', focus: '58% 30%' }
+  ];
+  const PLAY = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3.5 11 6.5-11 6.5z"/></svg>';
+  const SAVE = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 16h12" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const esc = text => String(text).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const pad = n => String(n).padStart(2, '0');
+  const seconds = run => run.split(':').reduce((total, part) => total * 60 + Number(part), 0);
+  const clock = total => `${Math.floor(total / 3600)}:${pad(Math.floor(total / 60) % 60)}:${pad(total % 60)}`;
+  const parts = document.getElementById('sheetParts');
 
-  UI.letters(document.getElementById('heroName'), 'Joe Graves', 120);
-  const stats = [['Scene packs', '18'], ['Footage', '3:01:33'], ['Seasons', '2'], ['Quality', '1080p']];
-  const statsEl = document.getElementById('heroStats');
-  statsEl.innerHTML = stats.map(([k]) => `<div><dt>${k}</dt><dd></dd></div>`).join('');
-  statsEl.querySelectorAll('dd').forEach((dd, i) => UI.count(dd, stats[i][1], 1100));
-  const img = frame.querySelector('img');
-  if (!UI.still()) img.animate([{ clipPath: 'inset(50% 0 50% 0)', transform: 'scale(1.15)' }, { clipPath: 'inset(0 0 0 0)', transform: 'scale(1)' }], { duration: 1400, delay: 100, easing: 'cubic-bezier(.77, 0, .18, 1)', fill: 'backwards' });
-
-  let current = null;
-  function show(n, initial) {
-    if (n === current) return;
-    current = n;
-    seasons.forEach(season => { season.hidden = season.dataset.group !== n; });
-    switchEl.querySelectorAll('[data-season-link]').forEach(link => {
-      if (link.dataset.seasonLink === n) link.setAttribute('aria-current', 'page');
-      else link.removeAttribute('aria-current');
-    });
-    UI.pill(switchEl);
-    const season = seasons.find(item => item.dataset.group === n);
-    title.textContent = `Season ${n}`;
-    note.textContent = season?.querySelector('.season-head p')?.textContent || '';
-    if (!initial) UI.arrive(season.querySelectorAll('.pack-card'), 45);
-  }
-  const route = () => (/^#season-([12])$/.exec(location.hash) || [])[1] || '1';
-  addEventListener('hashchange', () => {
-    if (!/^#season-/.test(location.hash)) return;
-    show(route());
-    document.getElementById('seasons').scrollIntoView({ block: 'start', behavior: UI.still() ? 'auto' : 'smooth' });
+  SEASONS.forEach((season, i) => {
+    const episodes = EPISODES[season.n];
+    season.meta = `${episodes.length} packs · ${clock(episodes.reduce((sum, ep) => sum + seconds(ep.run), 0))}`;
+    season.count = `${episodes.length} packs`;
+    const part = document.createElement('div');
+    part.className = 'sheet-part';
+    part.dataset.part = season.id;
+    part.hidden = true;
+    part.innerHTML = `<p class="label">Joe Graves</p><ul class="rows">${episodes.map((ep, r) => {
+      const label = `Joe Graves scenes from season ${season.n}, episode ${pad(ep.ep)}, ${ep.title}`;
+      return `<li class="row pack-card" style="--r:${r}" aria-labelledby="s${season.n}e${ep.ep}">
+        <div class="pack-cover"><span class="cover-frame"><img src="${SHOTS[season.n]}${pad(ep.ep)}.jpg" alt="" loading="lazy" decoding="async"></span><button class="row-play" type="button" data-preview data-season="${season.n}" data-episode="${ep.ep}" aria-label="Preview ${esc(label)}"><i>${PLAY}</i></button></div>
+        <div class="row-text"><h3 id="s${season.n}e${ep.ep}">${esc(ep.title)}</h3><p>E${pad(ep.ep)} · ${ep.run}${ep.parts ? ' · 2 parts' : ''}</p></div>
+        <span class="row-tag">1080p</span>
+        <button class="action primary" type="button" data-download-episode="${ep.ep}" data-season="${season.n}" aria-label="Download ${esc(label)}">${SAVE}<span class="action-label">Download</span> <span class="action-size">${ep.size}</span></button>
+      </li>`;
+    }).join('')}</ul>`;
+    parts.append(part);
+    Shelf.add(season.id, season);
   });
-  show(route(), true);
+  slices.innerHTML = SEASONS.map((season, i) => `<a class="slice" href="#${season.id}" data-view="${season.id}" style="--n:${i}"><img class="slice-pic" src="${season.still}" alt="" style="object-position:${season.focus}" decoding="async"><span class="slice-name">${season.name}</span><span class="slice-count">${season.count}</span></a>`).join('');
+  Shelf.start();
 })();
