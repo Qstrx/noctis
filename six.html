@@ -21,35 +21,28 @@
 <link rel="stylesheet" href="motion.css?v=11">
 <link rel="stylesheet" href="download.css?v=15">
 <link rel="stylesheet" href="credit.css?v=17">
-<link rel="stylesheet" href="clean.css?v=23">
+<link rel="stylesheet" href="clean.css?v=25">
 <script src="arrival.js?v=15"></script>
 <script src="count.js?v=2" defer></script>
-<script src="ui.js?v=1" defer></script>
+<script src="ui.js?v=2" defer></script>
 <script src="archive-data.js?v=13" defer></script>
-<script src="shelf.js?v=5" defer></script>
-<script src="six-page.js?v=2" defer></script>
+<script src="six-page.js?v=3" defer></script>
 <script src="credit.js?v=11" defer></script>
 <script src="site.js?v=22" defer></script>
 <script src="motion.js?v=11" defer></script>
 <script src="player.js?v=19" defer></script>
 </head>
 <body data-world="six" data-theme="night" data-motion="on">
-<a class="skip-link" href="#slices">Skip to the seasons</a>
+<a class="skip-link" href="#main">Skip to the episodes</a>
 <header class="site-header">
   <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s<span class="brand-caption">scenepacks</span></span></a>
   <nav class="site-nav" aria-label="Main navigation"><a href="index.html">Collections</a><a href="cod.html">Call of Duty</a><a href="six.html" aria-current="page">SIX</a><a href="quality.html">Quality</a></nav>
 </header>
-<main id="main">
-  <h1 class="sr-only">Joe Graves scene packs from SIX</h1>
-  <nav class="slices" id="slices" aria-label="Seasons"></nav>
+<main id="main" class="episodes-page">
+  <h1 class="tiles-title">SIX</h1>
+  <div id="seasons"></div>
+  <noscript><p class="no-script">This page needs JavaScript to show the episodes. <a href="https://github.com/Qstrx/noctis/releases">Browse all downloads on GitHub</a>.</p></noscript>
 </main>
-<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
-  <button class="sheet-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-  <div class="sheet-inner">
-    <div class="sheet-pic"><img alt="" decoding="async"><div class="sheet-head"><h2 class="sheet-title" id="sheetTitle" tabindex="-1"></h2><p class="sheet-meta"></p></div></div>
-    <div id="sheetParts"></div>
-  </div>
-</div>
 <dialog class="download-dialog transfer-dialog" id="hit" aria-labelledby="hitT" aria-describedby="hitS hitNote">
   <div class="transfer-poster"><img class="transfer-cover" id="hitCover" src="img/icon.svg" alt="" width="960" height="408" hidden></div>
   <button class="transfer-close" type="button" id="hitNo" aria-label="Cancel download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>

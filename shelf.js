@@ -1,9 +1,9 @@
 (() => {
   'use strict';
-  // Slices and their sheet. Each slice links to its own address
-  // (cod.html#ghost). Opening one, its picture flies out of the slice and
-  // grows into the top of the sheet while the page settles in around it;
-  // closing sends it back. Back, Escape and the close button all close.
+  // Tiles and their sheet. Each tile links to its own address
+  // (cod.html#ghost). Opening one, its picture resizes from the tile into the
+  // top of the sheet while the page settles in around it; closing sends it
+  // back. Back, Escape and the close button all close.
   const sheet = document.getElementById('sheet');
   if (!sheet || !window.UI) return;
   const box = sheet.querySelector('.sheet-pic');
@@ -14,23 +14,22 @@
   const behind = [document.getElementById('main'), document.querySelector('.site-header')].filter(Boolean);
   const views = new Map();
   const baseTitle = document.title;
-  let current = null, openedHere = false, busy = null;
+  let current = null, openedHere = false, active = null, leaving = false, closeTicket = 0, undoClose = null;
   const EASE = 'cubic-bezier(.77, 0, .18, 1)';
 
   // Where a sheet's picture flies from and back to, and what takes focus
-  // after closing. A page can set both; by default it is the slice.
-  // A view's wide picture heads its sheet; its cover (the tile's picture)
-  // is what flies. Either stands in for the other.
-  const heroOf = view => view.still || view.cover;
-  const coverOf = view => view.cover || view.still;
-  const focusOf = view => view.still ? view.focus : (view.coverFocus || '50% 30%');
+  // after closing. A page can set both; by default it is the tile.
+  // The sheet shows the tile's own picture, so it only changes size.
+  const pictureOf = view => view.cover || view.still;
+  const focusOf = view => view.cover ? (view.coverFocus || '50% 30%') : view.focus;
   const linkOf = id => document.querySelector(`[data-view="${CSS.escape(id)}"]`);
   let sourceOf = id => linkOf(id);
-  const sliceOf = id => sourceOf(id);
+  const tileOf = id => sourceOf(id);
   const visible = rect => rect.bottom > 0 && rect.top < innerHeight && rect.width > 0;
 
   function fly(src, focus, from, to, radius) {
-    const flight = new Image();
+    active?.remove();
+    const flight = active = new Image();
     flight.src = src;
     flight.alt = '';
     flight.className = 'flight';
@@ -45,8 +44,8 @@
     const view = views.get(id);
     document.title = `${view.name} — ${baseTitle}`;
     // A view without a picture yet gets a quiet, empty frame.
-    box.classList.toggle('is-blank', !heroOf(view));
-    if (heroOf(view)) { pic.src = heroOf(view); pic.style.objectPosition = focusOf(view); }
+    box.classList.toggle('is-blank', !pictureOf(view));
+    if (pictureOf(view)) { pic.src = pictureOf(view); pic.style.objectPosition = focusOf(view); }
     else pic.removeAttribute('src');
     meta.textContent = view.meta;
     sheet.querySelectorAll('.sheet-part').forEach(part => { part.hidden = part.dataset.part !== id; });
@@ -61,19 +60,21 @@
   function open(id, { animate = true } = {}) {
     if (!views.has(id)) return;
     const switching = current && current !== id;
+    undoClose?.();
     current = id;
     sheet.hidden = false;
     document.documentElement.classList.add('sheet-open');
     behind.forEach(el => { el.inert = true; });
     sheet.scrollTop = 0;
     fill(id);
-    UI.letters(title, views.get(id).name, animate ? 420 : 0);
+    const from = tileOf(id)?.getBoundingClientRect();
+    const flies = animate && !UI.still() && !switching && from && visible(from) && pictureOf(views.get(id));
+    // The title rises as the picture lands.
+    UI.letters(title, views.get(id).name, flies ? 880 : 0);
     title.focus({ preventScroll: true });
     if (UI.still() || switching) return;
-    const slice = sliceOf(id);
-    const from = slice?.getBoundingClientRect();
     const fade = [{ opacity: 0 }, { opacity: 1 }];
-    if (!animate || !from || !visible(from) || !coverOf(views.get(id))) {
+    if (!flies) {
       sheet.animate(fade, { duration: 400, easing: 'ease-out' });
       return;
     }
@@ -81,56 +82,72 @@
     const to = box.getBoundingClientRect();
     box.style.visibility = 'hidden';
     sheet.animate([{ backgroundColor: 'rgba(9, 9, 10, 0)' }, { backgroundColor: 'rgba(9, 9, 10, 1)' }], { duration: 700, easing: 'ease-out' });
-    head.animate(fade, { duration: 500, delay: 650, fill: 'backwards' });
     document.getElementById('sheetParts')?.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: 600, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'backwards' });
     sheet.querySelector('.sheet-close').animate(fade, { duration: 400, delay: 500, fill: 'backwards' });
     const view = views.get(id);
-    const mine = busy = fly(coverOf(view), view.cover ? (view.coverFocus || '50% 30%') : view.focus, from, to, ['0px', getComputedStyle(box).borderRadius]).then(flight => {
+    fly(pictureOf(view), focusOf(view), from, to, ['8px', getComputedStyle(box).borderRadius]).then(flight => {
+      if (flight !== active) return;
+      active = null;
+      flight.remove();
       box.style.visibility = '';
-      // The cover lands and the wide picture comes up through it.
-      if (view.cover && heroOf(view) !== view.cover) pic.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 450, easing: 'ease-out' });
-      flight.animate(fade.slice().reverse(), { duration: 200 }).finished.then(() => flight.remove(), () => flight.remove());
-      if (busy === mine) busy = null;
+      box.animate(fade, { duration: 350, easing: 'ease-out', pseudoElement: '::after' });
+      head.animate(fade, { duration: 350, easing: 'ease-out' });
     });
   }
 
   function close() {
     if (!current) return;
     const id = current;
+    const ticket = ++closeTicket;
     current = null;
     document.title = baseTitle;
     behind.forEach(el => { el.inert = false; });
-    const slice = sliceOf(id);
+    const tile = tileOf(id);
     const done = () => {
+      if (ticket !== closeTicket) return;
+      undoClose = null;
       sheet.hidden = true;
       document.documentElement.classList.remove('sheet-open');
       box.style.visibility = '';
       linkOf(id)?.focus({ preventScroll: true });
     };
     const from = box.getBoundingClientRect();
-    const to = slice?.getBoundingClientRect();
-    if (UI.still() || !to || !visible(from) || !coverOf(views.get(id))) {
+    const to = tile?.getBoundingClientRect();
+    // Reopening while this one is on its way out takes all of it back.
+    const running = [];
+    undoClose = () => {
+      closeTicket++;
+      undoClose = null;
+      running.forEach(animation => animation.cancel());
+      active?.remove();
+      active = null;
+      box.style.visibility = '';
+    };
+    if (UI.still() || !to || !visible(from) || !visible(to) || !pictureOf(views.get(id))) {
       if (UI.still()) done();
-      else sheet.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, easing: 'ease-in' }).finished.then(done, done);
+      else {
+        const out = sheet.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, easing: 'ease-in', fill: 'forwards' });
+        running.push(out);
+        out.finished.then(() => { done(); out.cancel(); }, () => {});
+      }
       return;
     }
     box.style.visibility = 'hidden';
-    fly(heroOf(views.get(id)), focusOf(views.get(id)), from, to, [getComputedStyle(box).borderRadius, '0px']).then(flight => {
+    fly(pictureOf(views.get(id)), focusOf(views.get(id)), from, to, [getComputedStyle(box).borderRadius, '8px']).then(flight => {
+      if (flight === active) active = null;
       flight.remove();
+      running.forEach(animation => animation.cancel());
+      done();
     });
-    sheet.animate([{ backgroundColor: 'rgba(9, 9, 10, 1)', opacity: 1 }, { backgroundColor: 'rgba(9, 9, 10, 0)', opacity: 1 }], { duration: 700, easing: 'ease-in-out' });
-    const parts = [...sheet.querySelectorAll('.sheet-inner > :not(.sheet-pic), .sheet-head, .sheet-close')];
-    parts.forEach(el => el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' }));
-    setTimeout(() => { parts.forEach(el => el.getAnimations().forEach(a => a.cancel())); done(); }, 950);
+    running.push(sheet.animate([{ backgroundColor: 'rgba(9, 9, 10, 1)' }, { backgroundColor: 'rgba(9, 9, 10, 0)' }], { duration: 700, easing: 'ease-in-out', fill: 'forwards' }));
+    sheet.querySelectorAll('.sheet-inner > :not(.sheet-pic), .sheet-close').forEach(el => running.push(el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' })));
   }
 
   // Closing goes back in history when this page opened the sheet, so Back
   // and the close button agree.
-  // A pinned sheet is the whole page: it cannot be closed or left.
-  let pinned = null;
   function requestClose() {
-    if (pinned) return;
-    if (openedHere) history.back();
+    if (leaving) return;
+    if (openedHere) { leaving = true; history.back(); }
     else { history.replaceState(history.state, '', location.pathname + location.search); close(); }
   }
   sheet.querySelector('.sheet-close').addEventListener('click', requestClose);
@@ -141,6 +158,7 @@
   });
 
   function route({ initial = false } = {}) {
+    leaving = false;
     const id = decodeURIComponent(location.hash.slice(1));
     const target = views.has(id) ? id : resolve(id);
     if (target) {
@@ -157,15 +175,7 @@
     start(options = {}) {
       aliases = options.aliases || {};
       if (options.sourceFor) sourceOf = options.sourceFor;
-      pinned = options.pinned && views.has(options.pinned) ? options.pinned : null;
-      if (pinned) {
-        if (location.hash !== `#${pinned}`) history.replaceState(history.state, '', `#${pinned}`);
-        addEventListener('hashchange', () => { if (location.hash !== `#${pinned}`) history.replaceState(history.state, '', `#${pinned}`); open(pinned, { animate: false }); });
-        open(pinned, { animate: false });
-        return;
-      }
       addEventListener('hashchange', () => route());
-      if (options.initial && !location.hash) history.replaceState(history.state, '', `#${options.initial}`);
       route({ initial: true });
     }
   };

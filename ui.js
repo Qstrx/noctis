@@ -89,6 +89,8 @@
     if (!marker) return;
     const on = group.querySelector('[aria-current=page], [aria-checked=true], [aria-pressed=true]');
     if (!on) { marker.style.opacity = 0; return; }
+    // Inside a closed sheet nothing has a size yet; the sheet calls again when it opens.
+    if (!on.offsetWidth) return;
     const first = !group.classList.contains('has-pill');
     if (first) marker.style.transition = 'none';
     marker.style.opacity = 1;

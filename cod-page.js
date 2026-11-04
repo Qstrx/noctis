@@ -1,7 +1,7 @@
 (() => {
   'use strict';
-  // Call of Duty: one slice per character, then the full cutscenes and the
-  // trailers. A slice
+  // Call of Duty: one tile per character, then the full cutscenes and the
+  // trailers. A tile
   // opens its sheet (shelf.js): the packs from Modern Warfare to MW4, each in
   // 4K, 2K and 1080p, and for Price, Ghost and Gaz their gameplay. Everything
   // is built from COD_PACKS here, before site.js and motion.js run, so
@@ -11,9 +11,9 @@
 
   const VIEWS = [
     { id: 'price', cover: 'img/cover/price.jpg', name: 'Price', still: 'img/stage/price.jpg', focus: '36% 30%' },
-    { id: 'gaz', cover: 'img/cover/gaz.jpg', name: 'Gaz', still: 'img/stage/gaz.jpg', focus: '44% 30%' },
+    { id: 'gaz', cover: 'img/cover/gaz.jpg', coverFocus: '50% 16%', name: 'Gaz', still: 'img/stage/gaz.jpg', focus: '44% 30%' },
     { id: 'ghost', cover: 'img/cover/ghost.jpg', name: 'Ghost', still: 'img/stage/ghost.jpg', focus: '56% 30%' },
-    { id: 'soap', cover: 'img/cover/soap.jpg', coverFocus: '50% 25%', name: 'Soap', still: 'img/stage/soap.jpg', focus: '46% 34%' },
+    { id: 'soap', cover: 'img/cover/soap.jpg', coverFocus: '50% 42%', name: 'Soap', still: 'img/stage/soap.jpg', focus: '46% 34%' },
     { id: 'laswell', name: 'Laswell', cover: 'img/cover/laswell.jpg', coverFocus: '40% 40%' },
     { id: 'farah', cover: 'img/cover/farah.jpg', name: 'Farah', still: 'img/stage/farah.jpg', focus: '68% 30%' },
     { id: 'alex', name: 'Alex', teaser: 'img/cod/cuts-mw1.jpg' },
@@ -158,7 +158,7 @@
     part.className = 'sheet-part';
     part.dataset.part = view.id;
     part.hidden = true;
-    part.innerHTML = label('Scene packs', packs.length ? `${plural(packs.length, 'game')}` : '') + (packs.length ? rows(packs.map(gameRow), 'is-games') : `<p class="empty">${esc(view.name)}’s scene packs are on the way.</p>`)
+    part.innerHTML = label('Scene packs', packs.length ? plural(packs.length, 'pack') : '') + (packs.length ? rows(packs.map(gameRow), 'is-games') : `<p class="empty">${esc(view.name)}’s scene packs are on the way.</p>`)
       + (view.id in GAMEPLAY && clips.length ? label('Gameplay', `Modern Warfare 4 · ${plural(clips.length, 'scene')}`) + rows(clips.map(pack => row(pack, { title: pack.chapter, sub: `${runOf(pack)} · ${sizeOf(pack)}` })), 'is-clips') : '');
     parts.append(part);
   });
@@ -193,13 +193,12 @@
   });
   document.querySelectorAll('.row[data-versions]').forEach(rowEl => setVersion(rowEl, QUALITIES.find(q => JSON.parse(rowEl.dataset.versions)[q])));
 
-  // ---------- The slices ----------
   // ---------- The tiles: square pictures edge to edge, a name on each ----------
   // The characters are all the same size; the full cutscenes (two parts)
   // and the trailers (one part) share a larger row at the bottom.
   const SIZE = { trailers: 'is-trailers', cutscenes: 'is-full' };
   // Sections still to come show a blurred still of their game, a teaser.
-  cast.innerHTML = VIEWS.map((view, i) => `${view.id === 'cutscenes' ? '<li class="tiles-break" aria-hidden="true"></li>' : ''}<li class="${SIZE[view.id] || ''}" style="--n:${i}">${isOpen(view.id) ? `<a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light>` : `<a class="tile is-locked" data-view="${view.id}" aria-disabled="true" aria-label="${esc(view.name)}, locked">`}<span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${isOpen(view.id) ? esc(view.count) : 'Locked'}</span></span>${isOpen(view.id) ? '' : LOCK}</a></li>`).join('');
+  cast.innerHTML = VIEWS.map((view, i) => `${view.id === 'cutscenes' ? '<li class="tiles-break" aria-hidden="true"></li>' : ''}<li class="${SIZE[view.id] || ''}" style="--n:${i}">${isOpen(view.id) ? `<a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light>` : `<a class="tile is-locked" data-view="${view.id}" aria-disabled="true" aria-label="${esc(view.name)}, locked">`}<span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${isOpen(view.id) ? esc(view.count) : 'Locked'}</span></span>${isOpen(view.id) ? '' : LOCK}</a></li>`).join('');
   VIEWS.filter(view => isOpen(view.id)).forEach(view => Shelf.add(view.id, view));
   // The room takes the colours of the tile under the pointer.
   const glow = document.getElementById('glow');
