@@ -10,15 +10,15 @@
   if (!cast || !window.Shelf || typeof COD_PACKS === 'undefined') return;
 
   const VIEWS = [
-    { id: 'price', name: 'John Price', still: 'img/stage/price.jpg', focus: '36% 30%' },
-    { id: 'gaz', name: 'Gaz', still: 'img/stage/gaz.jpg', focus: '44% 30%' },
-    { id: 'ghost', name: 'Ghost', still: 'img/stage/ghost.jpg', focus: '56% 30%' },
-    { id: 'soap', name: 'Soap', still: 'img/stage/soap.jpg', focus: '46% 34%' },
-    { id: 'farah', name: 'Farah', still: 'img/stage/farah.jpg', focus: '68% 30%' },
+    { id: 'price', cover: 'img/cover/price.jpg', name: 'John Price', still: 'img/stage/price.jpg', focus: '36% 30%' },
+    { id: 'gaz', cover: 'img/cover/gaz.jpg', name: 'Gaz', still: 'img/stage/gaz.jpg', focus: '44% 30%' },
+    { id: 'ghost', cover: 'img/cover/ghost.jpg', name: 'Ghost', still: 'img/stage/ghost.jpg', focus: '56% 30%' },
+    { id: 'soap', cover: 'img/cover/soap.jpg', coverFocus: '50% 25%', name: 'Soap', still: 'img/stage/soap.jpg', focus: '46% 34%' },
+    { id: 'farah', cover: 'img/cover/farah.jpg', name: 'Farah', still: 'img/stage/farah.jpg', focus: '68% 30%' },
     { id: 'alex', name: 'Alex', teaser: 'img/cod/cuts-mw1.jpg' },
-    { id: 'graves', name: 'Graves', teaser: 'img/cod/cuts-mw2.jpg' },
-    { id: 'valeria', name: 'Valeria', still: 'img/stage/valeria.jpg', focus: '52% 40%' },
-    { id: 'laswell', name: 'Laswell', teaser: 'img/cod/cuts-mw3.jpg' },
+    { id: 'graves', name: 'Graves', cover: 'img/cover/graves.jpg', coverFocus: '50% 25%' },
+    { id: 'valeria', cover: 'img/cover/valeria.jpg', coverFocus: '50% 20%', name: 'Valeria', still: 'img/stage/valeria.jpg', focus: '52% 40%' },
+    { id: 'laswell', name: 'Laswell', cover: 'img/cover/laswell.jpg', coverFocus: '40% 40%' },
     { id: 'dunn', name: 'Dunn', teaser: 'img/cod/mw4/scenes/05.jpg' },
     { id: 'archer', name: 'The Archer', still: 'img/stage/archer.jpg', focus: '58% 30%' },
     { id: 'cutscenes', name: 'Full cutscenes', still: 'img/stage/cutscenes.jpg', focus: '50% 40%' },
@@ -114,6 +114,7 @@
       .sort((a, b) => (YEARS[a.chapter] || 9999) - (YEARS[b.chapter] || 9999));
     const clips = (GAMEPLAY[view.id] || []).map(byId).filter(Boolean);
     view.meta = packs.length ? `${plural(packs.length, 'pack')} · ${clock(packs.reduce((sum, pack) => sum + seconds(runOf(pack)), 0))}` : 'Coming soon';
+    view.soon = !packs.length;
     view.count = packs.length ? plural(packs.length, 'pack') + (clips.length ? ` · ${clips.length} gameplay` : '') : 'Coming soon';
     const part = document.createElement('div');
     part.className = 'sheet-part';
@@ -152,7 +153,7 @@
   // Price and the full cutscenes are wide, so every row is full.
   const WIDE = ['price', 'cutscenes'];
   // Sections still to come show a blurred still of their game, a teaser.
-  cast.innerHTML = VIEWS.map((view, i) => `<li class="${WIDE.includes(view.id) ? 'is-wide' : ''}" style="--n:${i}"><a class="tile${view.still ? '' : ' is-soon'}" href="#${view.id}" data-view="${view.id}" data-light><span class="tile-pic">${view.still ? `<img src="${view.still}" alt="" style="object-position:${view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${esc(view.count)}</span></span></a></li>`).join('');
+  cast.innerHTML = VIEWS.map((view, i) => `<li class="${WIDE.includes(view.id) ? 'is-wide' : ''}" style="--n:${i}"><a class="tile${view.soon ? ' is-soon' : ''}" href="#${view.id}" data-view="${view.id}" data-light><span class="tile-pic">${view.cover || view.still ? `<img src="${view.cover || view.still}" alt="" style="object-position:${view.cover ? (view.coverFocus || '50% 30%') : view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${esc(view.count)}</span></span></a></li>`).join('');
   VIEWS.forEach(view => Shelf.add(view.id, view));
   // The room takes the colours of the tile under the pointer.
   const glow = document.getElementById('glow');
@@ -162,7 +163,7 @@
     if (!tile || tile === lit || !glow) return;
     lit = tile;
     const view = VIEWS.find(item => item.id === tile.dataset.view);
-    const src = view.still || view.teaser;
+    const src = view.cover || view.still || view.teaser;
     glow.querySelectorAll('img').forEach(img => { img.classList.remove('is-on'); setTimeout(() => img.remove(), 1100); });
     if (!src) return;
     const img = new Image();

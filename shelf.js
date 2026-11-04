@@ -19,6 +19,11 @@
 
   // Where a sheet's picture flies from and back to, and what takes focus
   // after closing. A page can set both; by default it is the slice.
+  // A view's wide picture heads its sheet; its cover (the tile's picture)
+  // is what flies. Either stands in for the other.
+  const heroOf = view => view.still || view.cover;
+  const coverOf = view => view.cover || view.still;
+  const focusOf = view => view.still ? view.focus : (view.coverFocus || '50% 30%');
   const linkOf = id => document.querySelector(`[data-view="${CSS.escape(id)}"]`);
   let sourceOf = id => linkOf(id);
   const sliceOf = id => sourceOf(id);
@@ -40,8 +45,8 @@
     const view = views.get(id);
     document.title = `${view.name} — ${baseTitle}`;
     // A view without a picture yet gets a quiet, empty frame.
-    box.classList.toggle('is-blank', !view.still);
-    if (view.still) { pic.src = view.still; pic.style.objectPosition = view.focus; }
+    box.classList.toggle('is-blank', !heroOf(view));
+    if (heroOf(view)) { pic.src = heroOf(view); pic.style.objectPosition = focusOf(view); }
     else pic.removeAttribute('src');
     meta.textContent = view.meta;
     sheet.querySelectorAll('.sheet-part').forEach(part => { part.hidden = part.dataset.part !== id; });
@@ -68,7 +73,7 @@
     const slice = sliceOf(id);
     const from = slice?.getBoundingClientRect();
     const fade = [{ opacity: 0 }, { opacity: 1 }];
-    if (!animate || !from || !visible(from) || !views.get(id).still) {
+    if (!animate || !from || !visible(from) || !coverOf(views.get(id))) {
       sheet.animate(fade, { duration: 400, easing: 'ease-out' });
       return;
     }
@@ -79,8 +84,11 @@
     head.animate(fade, { duration: 500, delay: 650, fill: 'backwards' });
     document.getElementById('sheetParts')?.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 700, delay: 600, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'backwards' });
     sheet.querySelector('.sheet-close').animate(fade, { duration: 400, delay: 500, fill: 'backwards' });
-    const mine = busy = fly(views.get(id).still, views.get(id).focus, from, to, ['0px', getComputedStyle(box).borderRadius]).then(flight => {
+    const view = views.get(id);
+    const mine = busy = fly(coverOf(view), view.cover ? (view.coverFocus || '50% 30%') : view.focus, from, to, ['0px', getComputedStyle(box).borderRadius]).then(flight => {
       box.style.visibility = '';
+      // The cover lands and the wide picture comes up through it.
+      if (view.cover && heroOf(view) !== view.cover) pic.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 450, easing: 'ease-out' });
       flight.animate(fade.slice().reverse(), { duration: 200 }).finished.then(() => flight.remove(), () => flight.remove());
       if (busy === mine) busy = null;
     });
@@ -101,13 +109,13 @@
     };
     const from = box.getBoundingClientRect();
     const to = slice?.getBoundingClientRect();
-    if (UI.still() || !to || !visible(from) || !views.get(id).still) {
+    if (UI.still() || !to || !visible(from) || !coverOf(views.get(id))) {
       if (UI.still()) done();
       else sheet.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, easing: 'ease-in' }).finished.then(done, done);
       return;
     }
     box.style.visibility = 'hidden';
-    fly(views.get(id).still, views.get(id).focus, from, to, [getComputedStyle(box).borderRadius, '0px']).then(flight => {
+    fly(heroOf(views.get(id)), focusOf(views.get(id)), from, to, [getComputedStyle(box).borderRadius, '0px']).then(flight => {
       flight.remove();
     });
     sheet.animate([{ backgroundColor: 'rgba(9, 9, 10, 1)', opacity: 1 }, { backgroundColor: 'rgba(9, 9, 10, 0)', opacity: 1 }], { duration: 700, easing: 'ease-in-out' });
