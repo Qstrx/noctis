@@ -388,5 +388,5 @@ body[data-world] .quality-tip { border-radius: 12px; }
 .solo .tiles > li { width: min(440px, 100%); }
 .solo .tile-name { font-size: clamp(32px, 3.6vw, 48px); }
 .solo .tile-meta { font-size: 13px; }
-.solo .solo-note { display: block; margin: clamp(28px, 5vh, 48px) 0 0; font: 400 clamp(22px, 2.4vw, 30px)/1 var(--title); letter-spacing: .03em; text-transform: uppercase; text-align: center; color: var(--muted); animation: tile-text-in 1s .7s var(--ease-out) both; }
+.solo .solo-note { display: block; margin: clamp(28px, 5vh, 48px) 0 0; font: 400 clamp(15px, 1.4vw, 18px)/1.5 var(--font); letter-spacing: .01em; text-align: center; color: var(--muted); animation: tile-text-in 1s .7s var(--ease-out) both; }
 @media (max-width: 760px) { .solo .tile-meta { display: block; } .solo .tile-text { padding: 16px; } }

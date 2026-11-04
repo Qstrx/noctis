@@ -13,7 +13,7 @@ Mobile in-app browsers receive instructions for opening the site in Safari or Ch
 
 ## Early access
 
-For now every address (the home, SIX, Quality) lands on `cod.html`, which shows only the open sections, Ghost, as one large tile with "The others will be back soon." under it. The tile opens Ghost's page (scene packs and gameplay), which closes back to it; addresses of other sections open nothing. `OPEN` in `cod-page.js` lists the sections that show; set `earlyAccess` to `false` in both `cod-page.js` and `arrival.js` to bring back the full site.
+For now every address (the home, SIX, Quality) lands on `cod.html`, which shows only the open sections, Ghost, as one large tile with "Other scenepacks will be back soon.." under it. The tile opens Ghost's page (scene packs and gameplay), which closes back to it; addresses of other sections open nothing. `OPEN` in `cod-page.js` lists the sections that show; set `earlyAccess` to `false` in both `cod-page.js` and `arrival.js` to bring back the full site.
 
 ## Run locally
 
