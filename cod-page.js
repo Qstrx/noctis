@@ -15,11 +15,11 @@
     { id: 'ghost', name: 'Ghost', still: 'img/stage/ghost.jpg', focus: '56% 30%' },
     { id: 'soap', name: 'Soap', still: 'img/stage/soap.jpg', focus: '46% 34%' },
     { id: 'farah', name: 'Farah', still: 'img/stage/farah.jpg', focus: '68% 30%' },
-    { id: 'alex', name: 'Alex' },
-    { id: 'graves', name: 'Graves' },
+    { id: 'alex', name: 'Alex', teaser: 'img/cod/cuts-mw1.jpg' },
+    { id: 'graves', name: 'Graves', teaser: 'img/cod/cuts-mw2.jpg' },
     { id: 'valeria', name: 'Valeria', still: 'img/stage/valeria.jpg', focus: '52% 40%' },
-    { id: 'laswell', name: 'Laswell' },
-    { id: 'dunn', name: 'Dunn' },
+    { id: 'laswell', name: 'Laswell', teaser: 'img/cod/cuts-mw3.jpg' },
+    { id: 'dunn', name: 'Dunn', teaser: 'img/cod/mw4/scenes/05.jpg' },
     { id: 'archer', name: 'The Archer', still: 'img/stage/archer.jpg', focus: '58% 30%' },
     { id: 'cutscenes', name: 'Full cutscenes', still: 'img/stage/cutscenes.jpg', focus: '50% 40%' },
     { id: 'trailers', name: 'Trailers', still: 'img/stage/trailers.jpg', focus: '62% 50%' }
@@ -151,8 +151,26 @@
   // ---------- The tiles: square pictures edge to edge, a name on each ----------
   // Price and the full cutscenes are wide, so every row is full.
   const WIDE = ['price', 'cutscenes'];
-  cast.innerHTML = VIEWS.map((view, i) => `<li class="${WIDE.includes(view.id) ? 'is-wide' : ''}" style="--n:${i}"><a class="tile${view.still ? '' : ' is-soon'}" href="#${view.id}" data-view="${view.id}"><span class="tile-pic">${view.still ? `<img src="${view.still}" alt="" style="object-position:${view.focus}" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${esc(view.count)}</span></span></a></li>`).join('');
+  // Sections still to come show a blurred still of their game, a teaser.
+  cast.innerHTML = VIEWS.map((view, i) => `<li class="${WIDE.includes(view.id) ? 'is-wide' : ''}" style="--n:${i}"><a class="tile${view.still ? '' : ' is-soon'}" href="#${view.id}" data-view="${view.id}" data-light><span class="tile-pic">${view.still ? `<img src="${view.still}" alt="" style="object-position:${view.focus}" decoding="async">` : view.teaser ? `<img class="tile-teaser" src="${view.teaser}" alt="" decoding="async">` : ''}</span><span class="tile-text"><span class="tile-name">${esc(view.name)}</span><span class="tile-meta">${esc(view.count)}</span></span></a></li>`).join('');
   VIEWS.forEach(view => Shelf.add(view.id, view));
+  // The room takes the colours of the tile under the pointer.
+  const glow = document.getElementById('glow');
+  let lit = null;
+  cast.addEventListener('pointerover', event => {
+    const tile = event.target.closest('.tile');
+    if (!tile || tile === lit || !glow) return;
+    lit = tile;
+    const view = VIEWS.find(item => item.id === tile.dataset.view);
+    const src = view.still || view.teaser;
+    glow.querySelectorAll('img').forEach(img => { img.classList.remove('is-on'); setTimeout(() => img.remove(), 1100); });
+    if (!src) return;
+    const img = new Image();
+    img.alt = '';
+    img.src = src;
+    glow.append(img);
+    requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add('is-on')));
+  });
   // The sheet's picture grows out of the tile.
   const sourceFor = id => document.querySelector(`.tile[data-view="${CSS.escape(id)}"] .tile-pic`);
   // A link to an MW4 scene opens the cutscenes with that scene.
