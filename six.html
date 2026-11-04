@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="cards.css?v=11">
 <link rel="stylesheet" href="download.css?v=15">
 <link rel="stylesheet" href="credit.css?v=17">
+<link rel="stylesheet" href="noir.css?v=1">
 <script src="arrival.js?v=12"></script>
 <script src="count.js?v=2" defer></script>
 <script src="archive-data.js?v=11" defer></script>
@@ -29,15 +30,31 @@
 <script src="site.js?v=22" defer></script>
 <script src="motion.js?v=11" defer></script>
 <script src="player.js?v=19" defer></script>
+<script src="stage.js?v=1" defer></script>
+<script src="six-stage.js?v=1" defer></script>
 </head>
-<body data-world="six" data-theme="night" data-motion="on">
+<body data-world="six" data-theme="night" data-motion="on" data-intro="on">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg><span>ocean’s<span class="brand-caption">scenepacks</span></span></a>
   <nav class="site-nav" aria-label="Main navigation"><a href="index.html">Collections</a><a href="cod.html">Call of Duty</a><a href="six.html" aria-current="page">SIX</a><a href="quality.html">Quality</a></nav>
 </header>
+<section class="stage" id="stage" aria-labelledby="stageName">
+  <div class="stage-pic"></div>
+  <div class="stage-shade"></div>
+  <div class="stage-marks" aria-hidden="true"><span>SIX</span><span>Joe Graves</span></div>
+  <div class="stage-copy">
+    <p class="stage-kicker"><b>SIX</b> &nbsp;·&nbsp; Seasons 1–2</p>
+    <div class="stage-title"><h1 class="stage-name" id="stageName" tabindex="-1">Joe Graves</h1><p class="stage-echo" aria-hidden="true">Joe Graves</p></div>
+    <p class="stage-facts" id="stageFacts"></p>
+    <a class="stage-go" href="#main"><i></i><span>See the scene packs</span></a>
+  </div>
+  <ol class="roster" style="--n:4" aria-label="Seasons">
+    <li><a href="#season-1"><span class="roster-pic"><img src="img/six/s1-e05.jpg" alt="" decoding="async"></span><span class="roster-label"><b>S1</b><span>Season 1</span></span></a></li>
+    <li><a href="#season-2"><span class="roster-pic"><img src="img/six/s2-e10.jpg" alt="" decoding="async"></span><span class="roster-label"><b>S2</b><span>Season 2</span></span></a></li>
+  </ol>
+</section>
 <main class="catalog-main" id="main">
-<h1 class="sr-only">Joe Graves scene packs from SIX</h1>
 <div class="season-collections">
 <section class="season" id="season-1" data-group="1" aria-labelledby="group-1">
   <header class="season-head reveal"><span class="chapter-no" aria-hidden="true">S1</span><div><h2 id="group-1">Season 1</h2><p>8 scene packs · 1:34:13 · 15.5 GB</p></div></header>
@@ -210,5 +227,6 @@
     </aside>
   </div>
 </dialog><noscript><p class="no-script">Enable JavaScript to preview and download the scene packs.</p></noscript>
+<script src="noir.js?v=1"></script>
 </body>
 </html>

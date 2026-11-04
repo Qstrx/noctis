@@ -25,7 +25,11 @@ Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of
 
 | File | What it does |
 | --- | --- |
-| `index.html` | Home: choose Call of Duty or SIX |
+| `index.html` | Home: two full-height doors, Call of Duty and SIX |
+| `noir.css`, `noir.js` | The cinema look shared by every page: grain, header with a recording timecode, letterbox opening, buttons, the stage, the reel and the doors |
+| `stage.js` | The WebGL stage: a full-screen still with a slow push-in, pointer parallax, grain and a smoke dissolve between pictures; two cross-fading images without WebGL |
+| `cod-stage.js` | Call of Duty: the roster (characters, gameplay, cutscenes), one address per choice (`cod.html#ghost`) and the packs as shots, built from `archive-data.js` |
+| `six-stage.js` | The SIX stage: Joe Graves and the two seasons |
 | `cod.html`, `six.html` | The two collections |
 | `site.css` | Fonts, colours, header, dialogs, shared base |
 | `select.css`, `select.js` | The select screens on the home and on Call of Duty |
