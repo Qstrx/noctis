@@ -4,3 +4,7 @@ downloads.cmd
 .download-report.html
 .review/
 
+node_modules/
+test-results/
+playwright-report/
+coverage/

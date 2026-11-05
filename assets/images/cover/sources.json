@@ -1,0 +1,30 @@
+[
+  {
+    "character": "Joseph Dunn",
+    "game": "Call of Duty: Modern Warfare 4 (2026)",
+    "source_page": "https://www.dexerto.com/wikis/modern-warfare-4/characters/",
+    "source_image": "https://media.dexerto.com/media/dunn-modern-warfare-4.jpg",
+    "retrieved": "2026-11-05",
+    "source_sha256": "1c3a3bf09be2c553a1874fb5dce0d94c25f86f3f10a93539804a43a8bebd883a",
+    "cover": "assets/images/cover/dunn.webp",
+    "cover_sha256": "0eac96744107d5f234d773929133195a26b2308d00f770ba2b09aed5e39e29be",
+    "locked_thumbnail": "assets/images/locked/dunn.webp",
+    "locked_sha256": "b369836ac585e9b74e36550e61ba6020a757b941efdaf0dec062857ab9674868",
+    "processing": "Original square game portrait converted to WebP. Locked thumbnail resized to 560 × 560 with a 6 px Gaussian blur. No generated or face-altered imagery.",
+    "credit": "Game imagery © Activision; character identification and image reference via Dexerto."
+  },
+  {
+    "character": "Ko Jin Hyuk",
+    "game": "Call of Duty: Modern Warfare 4 (2026)",
+    "source_page": "https://www.dexerto.com/wikis/modern-warfare-4/characters/",
+    "source_image": "https://media.dexerto.com/media/ko-jin-hyuk-modern-warfare-4.jpg",
+    "retrieved": "2026-11-05",
+    "source_sha256": "3a8c1bf3e4fda312a9f62d34002544baa2e4c91978cc6cd85f605db9ced74f82",
+    "cover": "assets/images/cover/ko.webp",
+    "cover_sha256": "a2e09cec3d33a5cbd9728693731d2323d3a691a8328e4e90a71850bc98365574",
+    "locked_thumbnail": "assets/images/locked/ko.webp",
+    "locked_sha256": "9671c0244bc0b0afedf6e38d0d2f8439a32eb46632a7c8f30f90d52b209ee000",
+    "processing": "Original square game portrait converted to WebP. Locked thumbnail resized to 560 × 560 with a 6 px Gaussian blur. No generated or face-altered imagery.",
+    "credit": "Game imagery © Activision; character identification and image reference via Dexerto."
+  }
+]

@@ -1,0 +1,33 @@
+name: Bug report
+description: Report a broken page, download or interaction.
+title: "Bug: "
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Affected URL
+      placeholder: https://qstrx.github.io/noctis/cod.html#ghost
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include the pack, scene, quality and part when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and actual behavior
+      description: Screenshots or the exact error message can help.
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Device and browser
+      description: Include the app name if the page is open inside TikTok or another app.
+      placeholder: iPhone, iOS 18, Safari
+    validations:
+      required: true

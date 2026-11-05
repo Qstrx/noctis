@@ -1,68 +1,54 @@
 # Ocean’s Scenepacks
 
-Scene packs for video editors, available at [qstrx.github.io/noctis](https://qstrx.github.io/noctis/).
+[![Checks](https://github.com/Qstrx/noctis/actions/workflows/ci.yml/badge.svg)](https://github.com/Qstrx/noctis/actions/workflows/ci.yml)
 
-## Collections
+Scene packs for video editors, published at **[qstrx.github.io/noctis](https://qstrx.github.io/noctis/)**.
 
-- **Call of Duty:** scene packs of John Price, Gaz, Ghost and Soap from Modern Warfare I–III and Modern Warfare 4 (plus more clips of Gaz and Soap), Valeria and The Archer from Modern Warfare 4, the campaign cutscenes of Modern Warfare I–III, and 22 Modern Warfare 4 campaign cutscenes, a separate campaign recap and three trailers.
-- **SIX:** selected Joe Graves scenes from eight Season 1 and ten Season 2 source episodes. These files are character scene packs, not full episodes.
+- **Call of Duty:** character packs, gameplay, campaign cutscenes and trailers from Modern Warfare through Modern Warfare 4. Available editions include 4K, 2K and 1080p.
+- **SIX:** Joe Graves scene packs from eight Season 1 and ten Season 2 episodes. These are selected character scenes, not full episodes.
 
-File entries show their duration and preview. Available previews play in the browser. Downloads retain the original GitHub and Google Drive destinations, with part selection for split files. After Start download, a reminder links to [@oceanxaep on TikTok](https://www.tiktok.com/@oceanxaep).
-
-Mobile in-app browsers receive instructions for opening the site in Safari or Chrome before downloading. Detection uses device and browser signals; a TikTok referrer alone does not block downloads in an external browser.
-
-## Early access
-
-For now every address (the home, SIX, Quality) lands on `cod.html`, which shows only the open sections, Ghost, as one large tile with "Other scenepacks will be back soon.." under it. The tile opens Ghost's page (scene packs and gameplay), which closes back to it; addresses of other sections open nothing. `OPEN` in `cod-page.js` lists the sections that show; set `earlyAccess` to `false` in both `cod-page.js` and `arrival.js` to bring back the full site.
+Previews play on request. Downloads use GitHub Releases or Google Drive; split packs let visitors select a part. Mobile in-app browsers receive instructions to open Safari or Chrome. Individual GitHub files stay below 2 GB; complete campaigns on Drive are larger.
 
 ## Run locally
 
-This is a static HTML, CSS and JavaScript site. No build step or backend is required.
+The site is plain HTML, CSS and JavaScript. There is no build step or backend.
 
 ```sh
-python -m http.server 8765 --bind 127.0.0.1
+npm run dev
 ```
 
-Open [localhost:8765](http://127.0.0.1:8765). GitHub Pages publishes the root of the main branch.
+Open [localhost:8765/noctis/](http://127.0.0.1:8765/noctis/). Node.js 22.12 or newer runs the local server; no dependencies are needed to serve the site. GitHub Pages serves the root of `main`; the HTML page addresses remain stable.
 
-## How it is built
+## Check changes
 
-| File | What it does |
-| --- | --- |
-| `index.html` | Home: two pictures, Call of Duty and SIX |
-| `clean.css`, `ui.js` | The look shared by every page (header, buttons, the quality switch, the doors, the slices, the sheet and its rows) and small pieces of motion |
-| `shelf.js` | Slices and their sheet: a slice opens its own address (`cod.html#ghost`) and its picture grows into the top of the sheet; Back, Escape and the close button send it back |
-| `cod-page.js` | Call of Duty: square tiles edge to edge, a name on each (Price and the full cutscenes wide), lit under the pointer; each sheet lists the packs from Modern Warfare to MW4 with their 4K, 2K and 1080p versions, and the gameplay under Price, Ghost and Gaz (`GAMEPLAY` at the top) |
-| `six-page.js` | SIX: a slice per season, each sheet a row per episode |
-| `img/stage/` | Full-HD stills taken from the packs themselves, for the slices and the sheets |
-| `cod.html`, `six.html` | The two collections |
-| `site.css` | Fonts, colours, header, dialogs, shared base |
-| `clean.css`, `cod-page.js`, `shelf.js`, `six-page.js` | The look of every page, the Call of Duty tiles and sheets, and the SIX episodes |
-| `mw4.css`, `mw4-data.js`, `cuts-data.js`, `mw4-missions.js` | The cutscenes of every campaign, a card per scene |
-| `download.css`, `site.js` | The download dialog, in-app browser notice and Call of Duty previews |
-| `credit.css`, `credit.js` | The credit reminder after a download |
-| `player.js` | The SIX preview player |
-| `motion.css`, `motion.js`, `arrival.js` | Page fades, scroll reveals, card tilt and the navigation underline |
-| `quality.html`, `quality.css` | One page with the resolution, frame rate and format of every pack |
-| `archive-data.js` | Files, sizes and links of every pack. A pack's other versions go in `"editions": { "2K": { "files": […], "meta": "…", "resolution": "…" }, "1080p": {…} }`; until then the card shows them as Soon |
-
-Every page is dark and flat. The home is two pictures with a name each. Call of Duty is a page of square tiles, one per character, then the full cutscenes and the trailers; a tile opens a sheet, and its picture resizes from the tile into the top of the sheet. `OPEN` in `cod-page.js` lists the complete sections; the rest show blurred with a lock. SIX is the episodes themselves, listed by season.
-
-Each Call of Duty sheet is its own address (`cod.html#price`, `#ghost`, `#cutscenes`), so links, Back and Forward work. A pack lists its 4K, 2K and 1080p files in `editions`. The full cutscenes show every campaign as cards, one per scene, from the same grid code (`mw4-missions.js`, with `mw4-data.js` and `cuts-data.js`).
-
-Reduced motion turns movement into plain fades. Fonts are Latin subsets of Anton, Archivo Black and Barlow Condensed, licensed under the SIL Open Font License in [img/fonts/OFL.txt](img/fonts/OFL.txt). The travelling navigation underline follows AuroraGrab’s, under the [MIT license](LICENSE-AuroraGrab). Official game logo sources are listed in [img/cod/logos/README.md](img/cod/logos/README.md). SIX previews support links to timestamps.
-
-## Checks
-
-With Playwright installed (`playwright` or `playwright-core`):
+Use Node.js 22.12+ and npm to install the development tools:
 
 ```sh
-node scripts/test-in-app-download.cjs
-node scripts/test-navigation.cjs
+npm ci
+npm test
+npx playwright install chromium
+npm run test:e2e
 ```
 
-Set `PLAYWRIGHT_MODULE` to the module's path if it is installed elsewhere, and `PLAYWRIGHT_CHANNEL=chrome` to use an installed Chrome instead of Playwright's Chromium. The download checks use a local server, disposable browser contexts and small intercepted attachments; they cover embedded-browser detection, multipart and provider files, clipboard fallback, focus return, credit reminders and narrow-screen fit, and save captures to the ignored `.review/in-app-download/` directory. The navigation checks walk the home, the tiles and their sheets by pointer, keyboard, Back and touch. Browser emulation does not replace testing on physical devices.
+Browser tests use local pages, disposable contexts and intercepted test attachments. They do not download the original multi-gigabyte videos. GitHub Actions runs the checks on pushes and pull requests.
 
-## Modern Warfare 4
+## Repository layout
 
-The Cutscenes view offers the same 22 individual campaign cutscenes and a separate campaign recap in three editions: 4K, 2K (2560 pixels wide), and 1080p (1920 pixels wide), under the `mw4-scenepack-versions` release. The campaign is laid out as 17 mission cards in campaign order (`mw4-missions.js`), each with its scenes as Intro / Interlude / Outro chips; the recap closes the list. Choosing a scene opens it right under its mission’s row: a large poster, its duration, the three resolutions with their file sizes, and a download action that opens the existing download flow for the selected file only. Previous and next step through the scenes; Escape or the close button folds the scene away and returns to its chip. Previews stream the 1080p edition on explicit play; choosing 4K or 2K changes the download and does not silently request a heavier preview. Phones show two mission cards per row, tablets three, desktops four, and the open scene always spans the full width. Above the missions, a short guide explains the three resolutions: on a computer any of them works, while on a phone that cannot play or import 4K at 60 fps a lower one is the answer; on a phone the phone advice comes first. On phones, choosing 4K also shows a tip beside the resolutions with one-tap switches to 2K and 1080p. Scene and quality are retained in the URL. Artwork provenance is recorded in `img/cod/mw4/scenes/sources.json`. Every video is below 2 GB; original 30/60 fps and cinematic framing are retained. One English AAC-LC stereo track is included where recovered; Meltdown Outro remains silent. The 4K video bitstreams match the previous size-capped release; smaller editions are high-quality conversions. The earlier release and older operator, trailer and SIX behavior are preserved.
+```text
+*.html                 Public pages at their existing addresses
+assets/css/            Shared and page-specific styles
+assets/js/             Navigation, players, downloads and motion
+assets/data/           Pack metadata, editions and media URLs
+assets/images/         Images, icons, local fonts and provenance
+tests/                 Static checks and browser regression tests
+tools/                 Maintenance utilities
+docs/                  Architecture and maintenance notes
+```
+
+See [Architecture](docs/ARCHITECTURE.md), [Maintenance](docs/MAINTENANCE.md), [Media and captions](docs/MEDIA.md) and [Contributing](CONTRIBUTING.md) for the implementation and update workflow.
+
+The latest audit corrections and validation are recorded in [Audit fixes](docs/AUDIT_FIXES.md).
+
+## Credits
+
+The navigation underline incorporates work from AuroraGrab under the [MIT license](LICENSE-AuroraGrab). Bundled fonts retain their [SIL Open Font License](assets/images/fonts/OFL.txt). [Character sources](docs/IMAGE_SOURCES.md), [logo sources](assets/images/cod/logos/README.md) and [MW4 poster provenance](assets/images/cod/mw4/scenes/sources.json) are recorded alongside the assets. Game and television content belongs to its respective rights holders; these notices do not grant a license to that content.
