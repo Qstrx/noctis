@@ -85,16 +85,16 @@ var COD_PACKS = [
     "title": "Campaign cutscenes",
     "chapter": "Modern Warfare III",
     "poster": "img/cod/cuts-mw3.jpg",
-    "meta": "1:14:44 · 5.73 GB · on Google Drive",
+    "meta": "54:00 · 5.67 GB · on Google Drive",
     "files": [
       {
-        "url": "https://drive.google.com/file/d/1ALgxOjOu_UF4f5RGsHnBsxDVpRm510zu/view",
+        "url": "https://drive.google.com/file/d/1iTuCPOnDDlZ5LggPpO0OS-k0KJ45W1Jx/view",
         "name": "MW3 cutscenes",
         "direct": false
       }
     ],
-    "fps": "60 FPS",
-    "resolution": "2560 × 1440",
+    "fps": "30 FPS",
+    "resolution": "3840 × 1634",
     "count": "01 file"
   },
   {
