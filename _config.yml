@@ -1,0 +1,10 @@
+# Keep development material out of the existing branch-based Pages publication.
+exclude:
+  - tests
+  - tools
+  - node_modules
+  - package.json
+  - package-lock.json
+  - README.md
+  - test-results
+  - playwright-report

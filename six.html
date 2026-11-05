@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src https://oceans-scenepacks.goatcounter.com; media-src https://github.com https://release-assets.githubusercontent.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src https://oceans-scenepacks.goatcounter.com; media-src 'self' https://github.com https://release-assets.githubusercontent.com; base-uri 'none'; form-action 'none'">
+<link rel="canonical" href="https://qstrx.github.io/noctis/six.html">
+<meta property="og:url" content="https://qstrx.github.io/noctis/six.html">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#090b0f">
@@ -11,26 +13,26 @@
 <meta name="description" content="Joe Graves scene packs. Original quality, no watermark, no sign-in.">
 <meta property="og:title" content="Joe Graves — SIX — Ocean’s Scenepacks">
 <meta property="og:description" content="Joe Graves scene packs. Original quality, no watermark, no sign-in.">
-<meta property="og:image" content="https://qstrx.github.io/noctis/img/joe.jpg">
+<meta property="og:image" content="https://qstrx.github.io/noctis/assets/images/joe.jpg">
 <meta property="og:type" content="website">
-<link rel="icon" href="img/icon.svg" type="image/svg+xml">
-<link rel="alternate icon" href="img/icon-32.png" sizes="32x32">
-<link rel="apple-touch-icon" href="img/icon-180.png">
-<link rel="preload" href="img/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="site.css?v=40">
-<link rel="stylesheet" href="motion.css?v=40">
-<link rel="stylesheet" href="download.css?v=40">
-<link rel="stylesheet" href="credit.css?v=40">
-<link rel="stylesheet" href="clean.css?v=41">
-<script src="arrival.js?v=16"></script>
-<script src="count.js?v=2" defer></script>
-<script src="ui.js?v=3" defer></script>
-<script src="archive-data.js?v=16" defer></script>
-<script src="six-page.js?v=3" defer></script>
-<script src="credit.js?v=11" defer></script>
-<script src="site.js?v=22" defer></script>
-<script src="motion.js?v=12" defer></script>
-<script src="player.js?v=19" defer></script>
+<link rel="icon" href="assets/images/icon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="assets/images/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/images/icon-180.png">
+<link rel="preload" href="assets/images/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css?v=20261105.2">
+<link rel="stylesheet" href="assets/css/motion.css?v=20261105.2">
+<link rel="stylesheet" href="assets/css/download.css?v=20261105.2">
+<link rel="stylesheet" href="assets/css/credit.css?v=20261105.2">
+<link rel="stylesheet" href="assets/css/clean.css?v=20261105.2">
+<script src="assets/js/arrival.js?v=20261105.2"></script>
+<script src="assets/js/count.js?v=20261105.2" defer></script>
+<script src="assets/js/ui.js?v=20261105.2" defer></script>
+<script src="assets/data/archive-data.js?v=20261105.2" defer></script>
+<script src="assets/js/six-page.js?v=20261105.2" defer></script>
+<script src="assets/js/credit.js?v=20261105.2" defer></script>
+<script src="assets/js/site.js?v=20261105.2" defer></script>
+<script src="assets/js/motion.js?v=20261105.2" defer></script>
+<script src="assets/js/player.js?v=20261105.2" defer></script>
 </head>
 <body data-world="six" data-theme="night" data-motion="on">
 <a class="skip-link" href="#main">Skip to the episodes</a>
@@ -40,11 +42,12 @@
 </header>
 <main id="main" class="episodes-page">
   <h1 class="tiles-title">SIX</h1>
+  <p class="collection-description">Joe Graves scene packs: selected scenes from seasons 1 and 2, not full episodes.</p>
   <div id="seasons"></div>
   <noscript><p class="no-script">This page needs JavaScript to show the episodes. <a href="https://github.com/Qstrx/noctis/releases">Browse all downloads on GitHub</a>.</p></noscript>
 </main>
 <dialog class="download-dialog transfer-dialog" id="hit" aria-labelledby="hitT" aria-describedby="hitS hitNote">
-  <div class="transfer-poster"><img class="transfer-cover" id="hitCover" src="img/icon.svg" alt="" width="960" height="408" hidden></div>
+  <div class="transfer-poster"><img class="transfer-cover" id="hitCover" src="assets/images/icon.svg" alt="" width="960" height="408" hidden></div>
   <button class="transfer-close" type="button" id="hitNo" aria-label="Cancel download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
   <div class="transfer-body">
   <div class="transfer-heading"><p class="transfer-kicker" id="hitS"></p><h2 id="hitT">Scene pack</h2></div>
@@ -68,8 +71,9 @@
         <p class="preview-meta" id="previewMeta"></p>
         <div class="preview-parts" id="previewParts" role="group" aria-label="Scene pack parts" hidden></div>
       </div>
+      <p class="preview-data-note" id="previewDataNote"></p>
       <div class="preview-screen">
-        <video id="previewVideo" controls playsinline preload="none" aria-label="Joe Graves scene pack preview"></video>
+        <video id="previewVideo" controls playsinline preload="none" aria-describedby="previewDataNote" aria-label="Joe Graves scene pack preview"></video>
         <span class="preview-state" id="previewState" role="status">Loading preview…</span>
         <div class="preview-error" id="previewError" role="alert" hidden>
           <strong>Preview unavailable</strong>
@@ -78,8 +82,8 @@
         </div>
       </div>
       <div class="preview-tools">
-        <button type="button" id="previewBack" aria-label="Back 10 seconds" disabled>−10s</button>
-        <button type="button" id="previewForward" aria-label="Forward 10 seconds" disabled>+10s</button>
+        <button type="button" id="previewBack" aria-label="−10s: back 10 seconds" disabled>−10s</button>
+        <button type="button" id="previewForward" aria-label="+10s: forward 10 seconds" disabled>+10s</button>
         <label><span class="preview-speed-label">Speed</span> <select id="previewSpeed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
         <div class="preview-jump">
           <label for="previewTime">Jump to</label>

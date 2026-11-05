@@ -1,0 +1,10 @@
+name: An idea for the collection
+description: We’d love to hear it.
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you love to see?
+      description: A new scene, a small improvement, or something else — tell us.
+    validations:
+      required: true
