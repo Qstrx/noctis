@@ -28,7 +28,7 @@
   ];
   const SPECIAL = ['cutscenes', 'trailers'];
   // Sections that are complete; everything else shows blurred and locked.
-  const OPEN = ['price', 'gaz', 'ghost', 'soap', 'cutscenes', 'trailers'];
+  const OPEN = ['price', 'gaz', 'ghost', 'soap', 'graves', 'cutscenes', 'trailers'];
   const isOpen = id => OPEN.includes(id);
   // Which MW4 gameplay shows under which character. Gameplay listed under
   // nobody goes at the end of the full cutscenes.
