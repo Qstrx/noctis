@@ -99,7 +99,7 @@
       <div class="pack-cover"><span class="cover-frame"><img src="${pack.poster}" alt="" loading="lazy"></span><span class="game-shade"></span>
         <div class="game-id">${logo ? `<img src="${logo}" alt="" loading="lazy">` : `<span class="game-word">${esc(name || pack.chapter)}</span>`}<h3 class="sr-only" id="${key}">${esc(name || pack.chapter)}</h3></div>
         <span class="game-time">${runOf(pack)}</span>
-        ${canPreview ? `<button class="row-play" type="button" data-cod-preview="${found[lightest].id}" aria-label="Preview ${esc(label)}"><i>${PLAY}</i></button>` : ''}</div>
+        ${canPreview ? `<button class="row-play" type="button" data-cod-preview="${found[first].id}" aria-label="Preview ${esc(label)}, ${first}"><i>${PLAY}</i></button>` : ''}</div>
       <div class="game-side">
         <dl class="game-specs"><div><dt>Size</dt><dd data-spec="size">${sizeOf(found[first])}</dd></div><div><dt>Files</dt><dd data-spec="files">${filesOf(found[first])}</dd></div></dl>
         ${choice}
@@ -121,6 +121,12 @@
     const spec = name => rowEl.querySelector(`[data-spec="${name}"]`);
     if (spec('size')) { spec('size').textContent = sizeOf(pack); spec('files').textContent = filesOf(pack); }
     download.setAttribute('aria-label', `Download ${sizeOf(pack)}: ${pack.title}, ${pack.chapter}, ${q}`);
+    // The preview plays the quality picked here.
+    const play = rowEl.querySelector('[data-cod-preview]');
+    if (play && pack.files.every(file => file.direct !== false)) {
+      play.dataset.codPreview = pack.id;
+      play.setAttribute('aria-label', `Preview ${pack.title}, ${pack.chapter}, ${q}`);
+    }
     const seg = rowEl.querySelector('.seg');
     if (seg) UI.pill(seg);
   }
