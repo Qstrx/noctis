@@ -448,10 +448,18 @@
       : [pack.chapter, pack.title];
     // The name, with its game beside it: "Gaz  Modern Warfare".
     // Gameplay packs show only the video's own name.
-    if (pack.group === 'gameplay') $('codPreviewTitle').replaceChildren(pack.chapter);
-    else $('codPreviewTitle').replaceChildren(heading[1], ' ', create('span', heading[0], 'preview-game'));
-    $('codPreviewLabel').textContent = pack.group === 'trailers' ? 'Call of Duty / Trailer preview' : 'Call of Duty / Scene preview';
-    $('codPreviewMeta').textContent = (selectedFile.run || pack.meta.split(' · ')[0]) + (pack.files.length > 1 && !pack.namedFiles ? ` · Part ${part + 1}` : '');
+    // Side panel: the name large, its game under it, then length, size and quality.
+    $('codPreviewTitle').textContent = pack.group === 'gameplay' ? pack.chapter : heading[1];
+    $('codPreviewGame').textContent = 'Call of Duty' + (pack.group === 'gameplay' ? ' · ' + pack.title : ' · ' + heading[0]);
+    $('codPreviewLabel').textContent = pack.group === 'trailers' ? 'Trailer preview' : 'Scene preview';
+    const run = selectedFile.run || pack.meta.split(' · ')[0];
+    const size = selectedFile.size || pack.meta.split(' · ')[1] || '';
+    const width = parseInt(selectedFile.resolution || pack.resolution, 10) || 0;
+    $('codSpecRun').textContent = run;
+    $('codSpecSize').textContent = size;
+    $('codSpecQuality').textContent = width >= 3800 ? '4K' : width >= 2500 ? '2K' : width ? '1080p' : '—';
+    $('codPreviewMeta').textContent = (pack.files.length > 1 && !pack.namedFiles ? `Part ${part + 1} · ` : '') + run;
+    $('codPreviewDownloadLabel').textContent = pack.files.length > 1 ? (pack.namedFiles ? 'Download this scene' : `Download part ${part + 1}`) : 'Download this file';
     video.poster = pack.poster;
     video.setAttribute('aria-label', `${pack.title}, ${pack.chapter}${pack.files.length > 1 ? ', part ' + (part + 1) : ''}${pack.group === 'trailers' ? '' : ' scene pack'}`);
     $('codPreviewParts').hidden = pack.files.length === 1;
@@ -469,9 +477,16 @@
       label.append(select);
       $('codPreviewParts').append(label);
     } else pack.files.forEach((file, fileIndex) => {
-      const button = create('button', 'Part ' + (fileIndex + 1));
+      // One card per part: a still, its name, length and size; the open one says Playing.
+      const button = create('button', '', 'cp-part');
       button.type = 'button';
       button.setAttribute('aria-pressed', String(fileIndex === part));
+      const still = create('img');
+      still.src = pack.poster; still.alt = ''; still.loading = 'lazy';
+      const text = create('span');
+      text.append(create('strong', 'Part ' + (fileIndex + 1)), create('small', [file.run, file.size].filter(Boolean).join(' · ')));
+      button.append(still, text);
+      if (fileIndex === part) button.append(create('span', 'Playing', 'cp-now'));
       button.addEventListener('click', () => loadPart(fileIndex));
       $('codPreviewParts').append(button);
     });
