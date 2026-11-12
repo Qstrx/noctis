@@ -6,13 +6,6 @@ var previewState = document.getElementById("previewState");
 var previewError = document.getElementById("previewError");
 var previewList = document.getElementById("previewList");
 var previewParts = document.getElementById("previewParts");
-var previewFeedback = document.getElementById("previewFeedback");
-var previewLink = document.getElementById("previewLink");
-var previewSpeed = document.getElementById("previewSpeed");
-var previewTime = document.getElementById("previewTime");
-var previewPrevious = document.getElementById("previewPrevious");
-var previewNext = document.getElementById("previewNext");
-var previewReadyControls = ["previewBack", "previewForward", "previewTime", "previewJump", "previewShare"];
 var previewFiles = [], previewIndex = -1, previewOpener = null, previewLoad = 0;
 var previewTarget = 0, previewTimer = null, previewPendingLink = null;
 function padEpisode(n){ return String(n).padStart(2, "0"); }
@@ -26,9 +19,7 @@ Object.keys(EPISODES).forEach(function(s){
     });
   });
 });
-function previewControls(ready){
-  previewReadyControls.forEach(function(id){ document.getElementById(id).disabled = !ready; });
-}
+function previewControls(){}
 function previewStatus(message){
   if (!preview.open) return;
   previewState.textContent = message;
@@ -84,16 +75,15 @@ function loadPreview(index, time){
   previewVideo.replaceChildren();
   previewControls(false);
   previewTarget = Math.max(0, Number(time) || 0);
-  previewTime.value = "";
-  previewTime.removeAttribute("aria-invalid");
-  previewFeedback.textContent = "";
-  previewLink.hidden = true;
   previewError.hidden = true;
   document.getElementById("previewKicker").textContent = "Joe Graves · S" + padEpisode(current.season) + " E" + padEpisode(current.ep);
   document.getElementById("previewTitle").textContent = current.entry.title;
   document.getElementById("previewMeta").textContent = current.file.run +
     (current.entry.parts ? " · Part " + current.part + " of " + current.entry.parts.length : "");
-  document.getElementById("previewDownload").textContent = "Download";
+  document.getElementById("previewSpecRun").textContent = current.file.run;
+  document.getElementById("previewSpecSize").textContent = current.file.size || "";
+  document.getElementById("previewSpecEp").textContent = "S" + current.season + " · E" + padEpisode(current.ep);
+  document.getElementById("previewDownloadLabel").textContent = current.entry.parts ? "Download part " + current.part : "Download";
   document.getElementById("previewDownload").setAttribute("aria-label", "Download Joe Graves scenes from season " + current.season + ", episode " + current.ep + ", " + current.entry.title +
     (current.entry.parts ? ", part " + current.part : ""));
   previewVideo.poster = SHOTS[current.season] + padEpisode(current.ep) + ".jpg";
@@ -102,10 +92,8 @@ function loadPreview(index, time){
   previewParts.hidden = !current.entry.parts;
   previewParts.innerHTML = (current.entry.parts || []).map(function(part){
     return '<button type="button" data-preview-part="' + part.part + '" aria-pressed="' +
-      (part.part === current.part) + '">Part ' + part.part + ' · ' + part.run + '</button>';
+      (part.part === current.part) + '" class="cp-part"><img src="' + SHOTS[current.season] + padEpisode(current.ep) + '.jpg" alt="" loading="lazy"><span><strong>Part ' + part.part + '</strong><small>' + part.run + (part.size ? ' · ' + part.size : '') + '</small></span>' + (part.part === current.part ? '<span class="cp-now">Playing</span>' : '') + '</button>';
   }).join("");
-  previewPrevious.disabled = index === 0;
-  previewNext.disabled = index === previewFiles.length - 1;
   drawPreviewList(current.season);
   if (focusWasInsideList) previewList.querySelector('[aria-current="true"]').focus({preventScroll:true});
   if (focusWasInsideParts){
@@ -123,7 +111,6 @@ function loadPreview(index, time){
   window.archive.attachPreviewTracks(previewVideo, current.file);
   document.getElementById("previewDataNote").textContent = window.archive.previewDataNotice(current.file);
   previewVideo.load();
-  previewVideo.playbackRate = Number(previewSpeed.value);
   previewTimer = setTimeout(function(){
     if (id === previewLoad && previewVideo.readyState < 3 && previewError.hidden)
       previewStatus("Still loading. Large preview files may take longer.");
@@ -195,13 +182,10 @@ previewParts.addEventListener("click", function(event){
   var button = event.target.closest("[data-preview-part]"), current = previewFiles[previewIndex];
   if (button && current) openPreview(current.season, current.ep, button.dataset.previewPart);
 });
-previewPrevious.addEventListener("click", function(event){ loadPreview(previewIndex - 1); revealPreviewForTouch(event); });
-previewNext.addEventListener("click", function(event){ loadPreview(previewIndex + 1); revealPreviewForTouch(event); });
 document.getElementById("previewRetry").addEventListener("click", function(){ loadPreview(previewIndex, previewTarget || previewVideo.currentTime); });
 previewVideo.addEventListener("loadedmetadata", function(){
   if (!preview.open || previewIndex < 0 || !Number.isFinite(previewVideo.duration)) return;
   previewControls(true);
-  previewVideo.playbackRate = Number(previewSpeed.value);
   if (previewTarget){
     previewVideo.currentTime = Math.min(previewTarget, Math.max(0, previewVideo.duration - 0.1));
     previewTarget = 0;
@@ -214,47 +198,6 @@ previewVideo.addEventListener("seeking", function(){ if (previewError.hidden) pr
 previewVideo.addEventListener("seeked", function(){ previewStatus(""); });
 previewVideo.addEventListener("canplay", function(){ clearTimeout(previewTimer); previewStatus(""); });
 previewVideo.addEventListener("error", previewFailed);
-previewSpeed.addEventListener("change", function(){ previewVideo.playbackRate = Number(previewSpeed.value); });
-function seekPreview(time){
-  if (!Number.isFinite(previewVideo.duration)) return;
-  previewVideo.currentTime = Math.max(0, Math.min(time, Math.max(0, previewVideo.duration - 0.1)));
-}
-document.getElementById("previewBack").addEventListener("click", function(){ seekPreview(previewVideo.currentTime - 10); });
-document.getElementById("previewForward").addEventListener("click", function(){ seekPreview(previewVideo.currentTime + 10); });
-function jumpPreview(){
-  var value = previewTime.value.trim(), match = /^(\d{1,4}):([0-5]\d)$/.exec(value);
-  var seconds = match ? Number(match[1]) * 60 + Number(match[2]) : /^\d{1,6}$/.test(value) ? Number(value) : NaN;
-  if (!Number.isFinite(seconds) || !Number.isFinite(previewVideo.duration) || seconds >= previewVideo.duration){
-    previewTime.setAttribute("aria-invalid", "true");
-    previewFeedback.textContent = "Enter a time within this part, such as 02:30, or a number of seconds.";
-    return;
-  }
-  previewTime.removeAttribute("aria-invalid");
-  previewFeedback.textContent = "";
-  seekPreview(seconds);
-  if (matchMedia("(pointer:coarse)").matches) previewTime.blur();
-}
-document.getElementById("previewJump").addEventListener("click", jumpPreview);
-previewTime.addEventListener("keydown", function(event){ if (event.key === "Enter"){ event.preventDefault(); jumpPreview(); } });
-document.getElementById("previewShare").addEventListener("click", function(){
-  var current = previewFiles[previewIndex];
-  if (!current) return;
-  var url = new URL(location.href), id = previewLoad;
-  url.hash = "preview=s" + current.season + "-e" + padEpisode(current.ep) + "-p" + current.part + "&t=" + Math.floor(previewVideo.currentTime || 0);
-  function reveal(){
-    if (!preview.open || id !== previewLoad) return;
-    previewLink.value = url.href;
-    previewLink.hidden = false;
-    previewLink.focus();
-    previewLink.select();
-    previewFeedback.textContent = "Copy this link to share the scene at this time.";
-  }
-  if (navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(url.href).then(function(){
-      if (preview.open && id === previewLoad) previewFeedback.textContent = "Scene link copied, including this timestamp.";
-    }, reveal);
-  } else reveal();
-});
 document.getElementById("previewDownload").addEventListener("click", function(){
   var current = previewFiles[previewIndex];
   if (!current) return;

@@ -19,20 +19,20 @@
 <link rel="alternate icon" href="assets/images/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/images/icon-180.png">
 <link rel="preload" href="assets/images/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css?v=20261105.2">
-<link rel="stylesheet" href="assets/css/motion.css?v=20261105.2">
-<link rel="stylesheet" href="assets/css/download.css?v=20261105.2">
-<link rel="stylesheet" href="assets/css/credit.css?v=20261105.2">
-<link rel="stylesheet" href="assets/css/clean.css?v=20261105.2">
-<script src="assets/js/arrival.js?v=20261105.2"></script>
-<script src="assets/js/count.js?v=20261105.2" defer></script>
-<script src="assets/js/ui.js?v=20261105.2" defer></script>
-<script src="assets/data/archive-data.js?v=20261105.2" defer></script>
-<script src="assets/js/six-page.js?v=20261105.2" defer></script>
-<script src="assets/js/credit.js?v=20261105.2" defer></script>
-<script src="assets/js/site.js?v=20261105.2" defer></script>
-<script src="assets/js/motion.js?v=20261105.2" defer></script>
-<script src="assets/js/player.js?v=20261105.2" defer></script>
+<link rel="stylesheet" href="assets/css/site.css?v=20261112.5">
+<link rel="stylesheet" href="assets/css/motion.css?v=20261112.5">
+<link rel="stylesheet" href="assets/css/download.css?v=20261112.5">
+<link rel="stylesheet" href="assets/css/credit.css?v=20261112.5">
+<link rel="stylesheet" href="assets/css/clean.css?v=20261112.5">
+<script src="assets/js/arrival.js?v=20261112.5"></script>
+<script src="assets/js/count.js?v=20261112.5" defer></script>
+<script src="assets/js/ui.js?v=20261112.5" defer></script>
+<script src="assets/data/archive-data.js?v=20261112.5" defer></script>
+<script src="assets/js/six-page.js?v=20261112.5" defer></script>
+<script src="assets/js/credit.js?v=20261112.5" defer></script>
+<script src="assets/js/site.js?v=20261112.5" defer></script>
+<script src="assets/js/motion.js?v=20261112.5" defer></script>
+<script src="assets/js/player.js?v=20261112.5" defer></script>
 </head>
 <body data-world="six" data-theme="night" data-motion="on">
 <a class="skip-link" href="#main">Skip to the episodes</a>
@@ -58,61 +58,33 @@
   <p class="transfer-credit">Please credit <a href="https://www.tiktok.com/@oceanxaep" target="_blank" rel="noopener noreferrer">@oceanxaep</a> on TikTok</p>
   </div>
 </dialog>
-<dialog class="preview-dialog" id="preview" aria-labelledby="previewTitle previewKicker" aria-describedby="previewDescription">
-  <div class="preview-top">
-    <span class="preview-label">Joe Graves / Scene pack preview</span>
-    <button type="button" class="preview-close" id="previewClose" aria-label="Close preview" autofocus><svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
-  </div>
-  <div class="preview-layout">
-    <div class="preview-main">
-      <div class="preview-heading">
-        <p class="preview-kicker" id="previewKicker">Joe Graves · S01 E01</p>
-        <h2 id="previewTitle">Pilot</h2>
-        <p class="preview-meta" id="previewMeta"></p>
-        <div class="preview-parts" id="previewParts" role="group" aria-label="Scene pack parts" hidden></div>
-      </div>
-      <p class="preview-data-note" id="previewDataNote"></p>
+<dialog class="preview-dialog six-preview" id="preview" aria-labelledby="previewTitle previewKicker">
+  <div class="cp-grid">
+    <div class="cp-stage">
       <div class="preview-screen">
         <video id="previewVideo" controls playsinline preload="none" aria-describedby="previewDataNote" aria-label="Joe Graves scene pack preview"></video>
         <span class="preview-state" id="previewState" role="status">Loading preview…</span>
         <div class="preview-error" id="previewError" role="alert" hidden>
           <strong>Preview unavailable</strong>
-          <p>The video could not load. Check your connection and try again, or use the download below.</p>
+          <p>The video could not load. Check your connection and try again, or download it.</p>
           <button type="button" id="previewRetry">Try again</button>
         </div>
       </div>
-      <div class="preview-tools">
-        <button type="button" id="previewBack" aria-label="−10s: back 10 seconds" disabled>−10s</button>
-        <button type="button" id="previewForward" aria-label="+10s: forward 10 seconds" disabled>+10s</button>
-        <label><span class="preview-speed-label">Speed</span> <select id="previewSpeed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
-        <div class="preview-jump">
-          <label for="previewTime">Jump to</label>
-          <input id="previewTime" type="text" inputmode="numeric" placeholder="150 sec" aria-label="Jump to time in seconds, or minutes and seconds" aria-describedby="previewTimeHint previewFeedback" maxlength="8" disabled>
-          <button type="button" id="previewJump" disabled>Go →</button>
-          <span class="sr" id="previewTimeHint">Enter seconds, such as 150, or minutes and seconds, such as 02:30.</span>
-        </div>
-        <p class="preview-feedback" id="previewFeedback" role="status"></p>
-      </div>
-      <div class="preview-bottom">
-        <p id="previewDescription">Preview Joe Graves’ scenes, then save the pack you need.</p>
-        <button type="button" id="previewShare" disabled>Copy scene link</button>
-        <button type="button" class="preview-download" id="previewDownload">Download</button>
-        <input class="preview-link" id="previewLink" type="text" readonly aria-label="Scene link — copy this URL" hidden>
-      </div>
+      <div class="cp-under"><p class="preview-data-note" id="previewDataNote"></p><p class="preview-meta" id="previewMeta"></p></div>
     </div>
-    <aside class="preview-sidebar" aria-label="Browse Joe Graves scene packs">
-      <div class="preview-sidebar-head">
-        <h3>Scene packs</h3>
+    <aside class="cp-side">
+      <div class="cp-head"><span class="preview-label">Scene preview</span><button type="button" class="preview-close" id="previewClose" aria-label="Close preview" autofocus><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <div class="preview-heading"><h2 id="previewTitle">Pilot</h2><p class="cp-game" id="previewKicker">Joe Graves · S01 E01</p></div>
+      <dl class="cp-specs"><div><dt>Length</dt><dd id="previewSpecRun"></dd></div><div><dt>Size</dt><dd id="previewSpecSize"></dd></div><div><dt>Episode</dt><dd id="previewSpecEp"></dd></div></dl>
+      <div class="preview-parts cp-parts" id="previewParts" role="group" aria-label="Scene pack parts" hidden></div>
+      <div class="cp-browse">
         <div class="preview-seasons" role="group" aria-label="Choose a season">
-          <button type="button" data-preview-season="1" aria-pressed="true">Season 01</button>
-          <button type="button" data-preview-season="2" aria-pressed="false">Season 02</button>
+          <button type="button" data-preview-season="1" aria-pressed="true">Season 1</button>
+          <button type="button" data-preview-season="2" aria-pressed="false">Season 2</button>
         </div>
+        <ol class="preview-list" id="previewList" aria-label="Joe Graves scene packs from season 1"></ol>
       </div>
-      <ol class="preview-list" id="previewList" aria-label="Joe Graves scene packs from season 1"></ol>
-      <nav class="preview-nav" aria-label="Preview navigation">
-        <button type="button" id="previewPrevious">← Previous</button>
-        <button type="button" id="previewNext">Next →</button>
-      </nav>
+      <div class="cp-foot"><button type="button" class="preview-download" id="previewDownload"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="previewDownloadLabel">Download</span></button></div>
     </aside>
   </div>
 </dialog><noscript><p class="no-script">Enable JavaScript to preview and download the scene packs.</p></noscript>

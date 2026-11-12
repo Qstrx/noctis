@@ -19,30 +19,42 @@
 <link rel="alternate icon" href="assets/images/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/images/icon-180.png">
 <link rel="preload" href="assets/images/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/site.css?v=20261105.2">
-<link rel="stylesheet" href="assets/css/motion.css?v=20261105.2">
-<link rel="stylesheet" href="assets/css/clean.css?v=20261105.2">
-<script src="assets/js/arrival.js?v=20261105.2"></script>
-<script src="assets/js/count.js?v=20261105.2" defer></script>
-<script src="assets/js/ui.js?v=20261105.2" defer></script>
-<script src="assets/js/motion.js?v=20261105.2" defer></script>
+<link rel="stylesheet" href="assets/css/site.css?v=20261112.5">
+<link rel="stylesheet" href="assets/css/motion.css?v=20261112.5">
+<link rel="stylesheet" href="assets/css/clean.css?v=20261112.5">
+<script src="assets/js/arrival.js?v=20261112.5"></script>
+<script src="assets/js/count.js?v=20261112.5" defer></script>
+<script src="assets/js/ui.js?v=20261112.5" defer></script>
+<script src="assets/js/motion.js?v=20261112.5" defer></script>
 </head>
 <body data-world="home" data-palette="cod" data-theme="night" data-motion="on">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="index.html" aria-label="Ocean’s Scenepacks home"><svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path pathLength="1" d="M3 19c4-9 7 4 11-5s6 2 8-1"/></svg></a>
 </header>
-<main id="main" class="home">
+<main id="main" class="home home-b">
 <h1 class="sr-only">Ocean’s Scenepacks: choose a collection</h1>
-<div class="doors">
-  <a class="door" href="cod.html" data-palette="cod">
-    <span class="door-frame"><img class="door-pic" src="assets/images/home/cod-ghost.webp" alt="" style="object-position:44% 30%" fetchpriority="high"></span>
-    <span class="door-copy"><strong class="door-title">Call of Duty</strong><span class="door-note">Scene packs, cutscenes, trailers</span></span>
-  </a>
-  <a class="door" href="six.html" data-palette="six">
-    <span class="door-frame"><img class="door-pic" src="assets/images/joe.webp" alt="" style="object-position:50% 34%"></span>
-    <span class="door-copy"><strong class="door-title">SIX</strong><span class="door-note">Joe Graves, seasons 1 and 2</span></span>
-  </a>
+<div class="hb">
+  <div class="hb-grid">
+    <a class="hb-card hb-cod" href="cod.html" data-palette="cod">
+      <img src="assets/images/home/cod-ghost-hd.webp" alt="" style="object-position:50% 30%" fetchpriority="high">
+      <span class="hb-badge"><b>4K</b>Scene packs · 2K · 1080p</span>
+      <span class="hb-copy"><span><strong class="hb-title">Call of Duty</strong><span class="hb-tags"><span>Scene packs</span><span>Cutscenes</span><span>Trailers</span></span></span><span class="hb-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></span>
+    </a>
+    <div class="hb-side">
+      <a class="hb-card hb-six" href="six.html" data-palette="six">
+        <img src="assets/images/joe.webp" alt="" style="object-position:50% 38%">
+        <span class="hb-copy"><span><strong class="hb-title">SIX</strong><span class="hb-tags"><span>Joe Graves</span><span>Seasons 1–2</span></span></span><span class="hb-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></span>
+      </a>
+      <section class="hb-new" aria-labelledby="hbNewTitle">
+        <div class="hb-new-head"><h2 class="hb-new-title" id="hbNewTitle">Just added</h2><span>2 characters</span></div>
+        <div class="hb-tiles">
+          <a class="hb-tile" href="cod.html#farah"><img src="assets/images/cover/farah.webp" alt="" loading="lazy"><em>New</em><span><strong>Farah</strong><small>MW · MW II · MW III</small></span></a>
+          <a class="hb-tile" href="cod.html#graves"><img src="assets/images/cover/graves.webp" alt="" loading="lazy"><em>New</em><span><strong>Graves</strong><small>MW II · MW III</small></span></a>
+        </div>
+      </section>
+    </div>
+  </div>
 </div>
 </main>
 </body>
