@@ -21,7 +21,7 @@
 <link rel="preload" href="assets/images/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css?v=20261112.5">
 <link rel="stylesheet" href="assets/css/motion.css?v=20261112.5">
-<link rel="stylesheet" href="assets/css/quality.css?v=20261112.5">
+<link rel="stylesheet" href="assets/css/quality.css?v=20261112.6">
 <link rel="stylesheet" href="assets/css/clean.css?v=20261112.5">
 <script src="assets/js/arrival.js?v=20261112.5"></script>
 <script src="assets/js/count.js?v=20261112.5" defer></script>
@@ -36,90 +36,40 @@
   <nav class="site-nav" aria-label="Main navigation"><a href="index.html">Collections</a><a href="cod.html">Call of Duty</a><a href="six.html">SIX</a><a href="quality.html" aria-current="page">Quality</a></nav>
 </header>
 <main class="catalog-main quality plain-main" id="main">
-<header class="q-head">
-  <p class="q-kicker">Ocean’s Scenepacks</p>
-  <h1>Quality</h1>
-  <p class="q-lead">Every pack comes as a plain MP4 you can drop straight into your editor. No watermark, no sign-in.</p>
-  <ul class="q-facts" aria-label="File format">
-    <li><b>MP4</b><span>H.264 video</span></li>
-    <li><b>No watermark</b><span>Clean footage</span></li>
-    <li><b>Under 2 GB</b><span>Per file on GitHub</span></li>
-    <li><b>Original fps</b><span>30 or 60, as in the game</span></li>
-  </ul>
-</header>
-
-<section class="q-section" aria-labelledby="q-pick">
-  <h2 id="q-pick">Which one should I pick?</h2>
-  <p class="q-sub">Scene packs and cutscenes come in three versions. The preview plays the one you pick.</p>
-  <ol class="q-tiers">
-    <li class="q-tier is-top">
-      <span class="q-badge">4K</span>
-      <strong>3840 × 1634</strong>
-      <span class="q-bar" style="--w:100%" aria-hidden="true"></span>
-      <p>Sharpest. For editing on a computer and exporting in 4K.</p>
-    </li>
-    <li class="q-tier">
-      <span class="q-badge">2K</span>
-      <strong>2560 × 1088</strong>
-      <span class="q-bar" style="--w:66%" aria-hidden="true"></span>
-      <p>Lighter, still very sharp. A good middle ground for most edits.</p>
-    </li>
-    <li class="q-tier">
-      <span class="q-badge">1080p</span>
-      <strong>1920 × 816</strong>
-      <span class="q-bar" style="--w:42%" aria-hidden="true"></span>
-      <p>Smallest. For phones and apps that can’t handle 4K.</p>
-    </li>
-  </ol>
-  <p class="q-note">The picture is in the wide 2.39 : 1 cinema frame, so the height is lower than a full 16 : 9 video.</p>
+<section class="q-top" aria-labelledby="qTitle">
+  <div class="q-intro">
+    <p class="q-kicker">Ocean’s Scenepacks</p>
+    <h1 id="qTitle">Quality</h1>
+    <p class="q-lead">Plain MP4 files, no watermark. Scene packs and cutscenes come in three sizes: pick the one your editor and device can handle.</p>
+  </div>
+  <div class="q-visual">
+    <div class="q-frames" role="img" aria-label="The 4K picture, with the smaller 2K and 1080p sizes drawn inside it">
+      <span class="q-fr q-f4"><img src="assets/images/home/cod-ghost-hd.webp" alt=""><b>4K</b></span>
+      <span class="q-fr q-f2"><b>2K</b></span>
+      <span class="q-fr q-f1"><b>1080p</b></span>
+    </div>
+    <ul class="q-legend">
+      <li><b class="is-gold">4K</b><span>3840 × 1634 · for editing in 4K</span></li>
+      <li><b>2K</b><span>2560 × 1088 · the middle ground</span></li>
+      <li><b>1080p</b><span>1920 × 816 · lightest, for phones</span></li>
+    </ul>
+  </div>
 </section>
 
-<section class="q-section" aria-labelledby="q-cod">
-  <h2 id="q-cod">Call of Duty</h2>
-  <ul class="q-list">
-    <li class="q-row">
-      <div class="q-name"><strong>Scene packs, Modern Warfare to MW III</strong><small>Price, Gaz, Ghost, Soap, Farah, Graves · Raid Atomgrad · Shadow Siege</small></div>
-      <div class="q-chips"><span class="is-gold">4K</span><span>2K</span><span>1080p</span><span class="is-fps">30 fps</span></div>
-    </li>
-    <li class="q-row">
-      <div class="q-name"><strong>Scene packs, Modern Warfare 4</strong><small>Price, Gaz, Ghost · Price is split into two files</small></div>
-      <div class="q-chips"><span class="is-gold">4K</span><span>2K</span><span>1080p</span><span class="is-fps">60 fps</span></div>
-    </li>
-    <li class="q-row">
-      <div class="q-name"><strong>Cutscenes, Modern Warfare to MW III</strong><small>One file per scene · 4K is the game’s own video, not re-encoded</small></div>
-      <div class="q-chips"><span class="is-gold">4K</span><span>2K</span><span>1080p</span><span class="is-fps">30 fps</span></div>
-    </li>
-    <li class="q-row">
-      <div class="q-name"><strong>Cutscenes, Modern Warfare 4</strong><small>22 campaign scenes and the recap · 4K not re-encoded</small></div>
-      <div class="q-chips"><span class="is-gold">4K</span><span>2K</span><span>1080p</span><span class="is-fps">30–60 fps</span></div>
-    </li>
-    <li class="q-row">
-      <div class="q-name"><strong>Whole campaigns</strong><small>Modern Warfare to MW III in one file each · 4–6 GB · on Google Drive</small></div>
-      <div class="q-chips"><span class="is-gold">4K</span><span class="is-fps">30 fps</span></div>
-    </li>
-    <li class="q-row">
-      <div class="q-name"><strong>More clips</strong><small>Gaz and Soap · full 16 : 9 frame</small></div>
-      <div class="q-chips"><span class="is-gold">3840 × 2160</span><span class="is-fps">60 fps</span></div>
-    </li>
-    <li class="q-row">
-      <div class="q-name"><strong>MW4 gameplay</strong><small>Character scenes and other gameplay · Makarov Chase is in two files</small></div>
-      <div class="q-chips"><span>2560 × 1440</span><span class="is-fps">60 fps</span></div>
-    </li>
-    <li class="q-row">
-      <div class="q-name"><strong>Trailers</strong><small>10 official trailers, Modern Warfare to MW4</small></div>
-      <div class="q-chips"><span class="is-gold">4K</span><span class="is-fps">24–60 fps</span></div>
-    </li>
+<section class="q-section" aria-labelledby="qPacks">
+  <h2 id="qPacks">What each pack comes in</h2>
+  <ul class="q-grid">
+    <li class="q-it"><strong>Scene packs, MW to MW III</strong><small>Price, Gaz, Ghost, Soap, Farah, Graves · Raid Atomgrad · Shadow Siege</small><p>4K · 2K · 1080p <i>· 30 fps</i></p></li>
+    <li class="q-it"><strong>Scene packs, MW4</strong><small>Price, Gaz, Ghost · Price is in two files</small><p>4K · 2K · 1080p <i>· 60 fps</i></p></li>
+    <li class="q-it"><strong>Cutscenes, MW to MW III</strong><small>One file per scene · 4K not re-encoded</small><p>4K · 2K · 1080p <i>· 30 fps</i></p></li>
+    <li class="q-it"><strong>Cutscenes, MW4</strong><small>22 scenes and the recap · 4K not re-encoded</small><p>4K · 2K · 1080p <i>· 30–60 fps</i></p></li>
+    <li class="q-it"><strong>Whole campaigns</strong><small>One file per game · 4–6 GB · on Google Drive</small><p>4K <i>· 30 fps</i></p></li>
+    <li class="q-it"><strong>Trailers</strong><small>10 official trailers, MW to MW4</small><p>4K <i>· 24–60 fps</i></p></li>
+    <li class="q-it"><strong>More clips</strong><small>Gaz and Soap · full 16:9 frame</small><p>3840 × 2160 <i>· 60 fps</i></p></li>
+    <li class="q-it"><strong>MW4 gameplay</strong><small>Character scenes and more · Makarov Chase is in two files</small><p>2560 × 1440 <i>· 60 fps</i></p></li>
+    <li class="q-it is-six"><strong>SIX, Joe Graves</strong><small>Seasons 1 and 2 · cut from the Blu-ray</small><p>1920 × 1080 <i>· 24 fps</i></p></li>
   </ul>
-</section>
-
-<section class="q-section" aria-labelledby="q-six">
-  <h2 id="q-six" class="is-six">SIX</h2>
-  <ul class="q-list">
-    <li class="q-row">
-      <div class="q-name"><strong>Joe Graves, seasons 1 and 2</strong><small>Cut from the Blu-ray · the first or last frame may belong to the next scene</small></div>
-      <div class="q-chips"><span>1920 × 1080</span><span class="is-fps">24 fps</span></div>
-    </li>
-  </ul>
+  <p class="q-foot">Every file is an MP4 with H.264 video and no watermark. Files on GitHub are under 2 GB; the preview plays the size you pick.</p>
 </section>
 </main>
 </body>
