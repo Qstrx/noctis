@@ -1,32 +1,57 @@
-/* Quality: one page with the resolution, frame rate and format of every pack. */
-.quality { max-width: 1040px; padding-top: 56px; }
-.quality-head { max-width: 640px; }
-.quality-kicker { color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
-.quality-head h1 { margin: 8px 0 16px; font: 400 clamp(56px, 8vw, 104px)/.88 var(--title); letter-spacing: .01em; text-transform: uppercase; }
-.quality-head p:last-child { color: var(--muted); font-size: 15px; line-height: 1.6; }
-.quality-group { margin-top: 64px; }
-.quality-group h2 { margin-bottom: 18px; font: 700 clamp(30px, 3vw, 40px)/1 "Barlow Condensed", "Arial Narrow", sans-serif; text-transform: uppercase; }
-.quality-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14px; }
-.quality-table thead th:nth-child(1) { width: 34%; }
-.quality-table thead th:nth-child(2) { width: 19%; }
-.quality-table thead th:nth-child(3) { width: 17%; }
-.quality-table thead th { padding: 0 16px 12px 0; color: var(--faint); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-align: left; text-transform: uppercase; border-bottom: 1px solid var(--line-strong); }
-.quality-table tbody th, .quality-table td { padding: 18px 16px 18px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-.quality-table tbody th { font-weight: 600; }
-.quality-table tbody th small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 400; }
-.quality-table td { font-variant-numeric: tabular-nums; }
-.quality-table td:last-child { color: var(--muted); font-size: 13px; line-height: 1.55; white-space: normal; }
-.quality-tip { max-width: 70ch; margin-top: 18px; padding: 14px 16px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 8%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent); color: var(--ink); font-size: 13px; line-height: 1.6; }
+/* Quality: what every pack comes in, at a glance. */
+.quality { max-width: 1080px; padding-top: 56px; padding-bottom: 72px; }
+.q-head { display: grid; gap: 14px; }
+.q-kicker { margin: 0; color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.q-head h1 { margin: 0; font: 400 clamp(56px, 8vw, 100px)/.88 var(--title); letter-spacing: .01em; text-transform: uppercase; }
+.q-lead { max-width: 52ch; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.q-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; padding: 0; list-style: none; }
+.q-facts li { display: grid; gap: 4px; padding: 14px 16px; border-radius: 16px; background: #111113; box-shadow: 0 0 0 1px var(--line); }
+.q-facts b { font: 400 20px/1 var(--title); letter-spacing: .02em; text-transform: uppercase; }
+.q-facts span { color: var(--muted); font-size: 12px; }
 
-/* Phone: each pack becomes a small card of its own */
+.q-section { margin-top: 64px; }
+.q-section h2 { margin: 0 0 6px; font: 400 clamp(30px, 3.4vw, 42px)/1 var(--title); letter-spacing: .01em; text-transform: uppercase; }
+.q-sub { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+.q-section > h2 + .q-list { margin-top: 18px; }
+
+/* The three versions, side by side */
+.q-tiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.q-tier { position: relative; display: grid; align-content: start; gap: 12px; padding: 22px; border-radius: 22px; background: linear-gradient(180deg, #141416, #0f0f11); box-shadow: 0 0 0 1px var(--line); }
+.q-tier.is-top { box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent), 0 30px 70px -40px color-mix(in srgb, var(--accent) 60%, transparent); }
+.q-badge { justify-self: start; padding: 6px 12px 5px; border-radius: 999px; background: rgba(255,255,255,.08); font: 400 22px/1 var(--title); letter-spacing: .04em; }
+.q-tier.is-top .q-badge { background: var(--accent); color: var(--accent-ink); }
+.q-tier strong { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.q-bar { display: block; height: 6px; border-radius: 6px; background: rgba(255,255,255,.07); position: relative; overflow: hidden; }
+.q-bar::after { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--w); border-radius: 6px; background: rgba(255,255,255,.35); }
+.q-tier.is-top .q-bar::after { background: var(--accent); }
+.q-tier p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.q-note { margin: 14px 0 0; color: var(--muted); font-size: 12px; }
+
+/* One row per kind of pack */
+.q-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.q-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 18px; border-radius: 16px; background: #111113; box-shadow: 0 0 0 1px var(--line); transition: background .2s ease; }
+.q-row:hover { background: #151517; }
+.q-name { display: grid; gap: 4px; min-width: 0; }
+.q-name strong { font-size: 15px; font-weight: 600; }
+.q-name small { color: var(--muted); font-size: 13px; line-height: 1.45; }
+.q-chips { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; flex: none; max-width: 48%; }
+.q-chips span { padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); font-size: 12px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.q-chips .is-gold { background: color-mix(in srgb, var(--accent) 14%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); color: var(--accent); }
+.q-chips .is-fps { background: none; color: var(--muted); }
+.q-section h2.is-six { color: #8ec9ff; }
+
 @media (max-width: 760px) {
-  .quality { padding-top: 32px; }
-  .quality-group { margin-top: 48px; }
-  .quality-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-  .quality-table, .quality-table tbody, .quality-table tr { display: block; }
-  .quality-table tr { padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .quality-table tbody th, .quality-table td { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; width: auto; padding: 4px 0; border: 0; white-space: normal; }
-  .quality-table tbody th { display: block; padding-bottom: 10px; }
-  .quality-table td::before { content: attr(data-label); color: var(--faint); font-size: 12px; }
-  .quality-table td:empty { display: none; }
+  .quality { padding-top: 28px; padding-bottom: 48px; }
+  .q-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .q-facts li { padding: 12px 14px; border-radius: 14px; }
+  .q-facts b { font-size: 18px; }
+  .q-section { margin-top: 44px; }
+  .q-tiers { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .q-tier { grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 14px; row-gap: 8px; padding: 16px; border-radius: 18px; }
+  .q-badge { grid-row: 1 / 3; align-self: center; min-width: 64px; text-align: center; }
+  .q-tier strong { align-self: end; }
+  .q-tier .q-bar { align-self: start; }
+  .q-tier p { grid-column: 1 / -1; }
+  .q-row { flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px 16px; }
+  .q-chips { justify-content: flex-start; max-width: none; }
 }
