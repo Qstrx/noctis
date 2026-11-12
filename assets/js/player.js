@@ -86,13 +86,13 @@ function loadPreview(index, time){
   document.getElementById("previewDownloadLabel").textContent = current.entry.parts ? "Download part " + current.part : "Download";
   document.getElementById("previewDownload").setAttribute("aria-label", "Download Joe Graves scenes from season " + current.season + ", episode " + current.ep + ", " + current.entry.title +
     (current.entry.parts ? ", part " + current.part : ""));
-  previewVideo.poster = SHOTS[current.season] + padEpisode(current.ep) + ".jpg";
+  previewVideo.poster = current.file.thumb || SHOTS[current.season] + padEpisode(current.ep) + ".jpg";
   previewVideo.setAttribute("aria-label", "Joe Graves scenes from season " + current.season + ", episode " + current.ep + ", " + current.entry.title +
     (current.entry.parts ? ", part " + current.part : ""));
   previewParts.hidden = !current.entry.parts;
   previewParts.innerHTML = (current.entry.parts || []).map(function(part){
     return '<button type="button" data-preview-part="' + part.part + '" aria-pressed="' +
-      (part.part === current.part) + '" class="cp-part"><img src="' + SHOTS[current.season] + padEpisode(current.ep) + '.jpg" alt="" loading="lazy"><span><strong>Part ' + part.part + '</strong><small>' + part.run + (part.size ? ' · ' + part.size : '') + '</small></span>' + (part.part === current.part ? '<span class="cp-now">Playing</span>' : '') + '</button>';
+      (part.part === current.part) + '" class="cp-part"><img src="' + (part.thumb || SHOTS[current.season] + padEpisode(current.ep) + '.jpg') + '" alt="" loading="lazy"><span><strong>Part ' + part.part + '</strong><small>' + part.run + (part.size ? ' · ' + part.size : '') + '</small></span>' + (part.part === current.part ? '<span class="cp-now">Playing</span>' : '') + '</button>';
   }).join("");
   drawPreviewList(current.season);
   if (focusWasInsideList) previewList.querySelector('[aria-current="true"]').focus({preventScroll:true});

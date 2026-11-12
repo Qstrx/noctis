@@ -460,7 +460,7 @@
     $('codSpecQuality').textContent = width >= 3800 ? '4K' : width >= 2500 ? '2K' : width ? '1080p' : '—';
     $('codPreviewMeta').textContent = (pack.files.length > 1 && !pack.namedFiles ? `Part ${part + 1} · ` : '') + run;
     $('codPreviewDownloadLabel').textContent = pack.files.length > 1 ? (pack.namedFiles ? 'Download this scene' : `Download part ${part + 1}`) : 'Download this file';
-    video.poster = pack.poster;
+    video.poster = selectedFile.thumb || pack.poster;
     video.setAttribute('aria-label', `${pack.title}, ${pack.chapter}${pack.files.length > 1 ? ', part ' + (part + 1) : ''}${pack.group === 'trailers' ? '' : ' scene pack'}`);
     $('codPreviewParts').hidden = pack.files.length === 1;
     $('codPreviewParts').replaceChildren();
@@ -482,7 +482,7 @@
       button.type = 'button';
       button.setAttribute('aria-pressed', String(fileIndex === part));
       const still = create('img');
-      still.src = pack.poster; still.alt = ''; still.loading = 'lazy';
+      still.src = file.thumb || pack.poster; still.alt = ''; still.loading = 'lazy';
       const text = create('span');
       text.append(create('strong', 'Part ' + (fileIndex + 1)), create('small', [file.run, file.size].filter(Boolean).join(' · ')));
       button.append(still, text);
