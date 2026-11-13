@@ -24,7 +24,7 @@
     { id: 'archer', name: 'The Archer', still: 'assets/images/stage/archer.webp', focus: '58% 30%' },
     { id: 'ko', cover: 'assets/images/cover/ko.webp', name: 'Ko Jin Hyuk' },
     { id: 'cutscenes', name: 'Full cutscenes', still: 'assets/images/stage/cutscenes.webp', focus: '59% 40%' },
-    { id: 'trailers', name: 'Trailers', still: 'assets/images/stage/trailers.webp', focus: '62% 50%' }
+    { id: 'trailers', name: 'Trailers', still: 'assets/images/stage/trailers-ka.webp', focus: '50% 50%' }
   ];
   const SPECIAL = ['cutscenes', 'trailers'];
   // Sections that are complete; everything else shows blurred and locked.
