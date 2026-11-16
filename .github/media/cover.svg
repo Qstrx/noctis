@@ -1,19 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="450" viewBox="0 0 1280 450" role="img" aria-labelledby="title description">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="392" viewBox="0 0 1280 392" role="img" aria-labelledby="title description">
   <title id="title">Ocean’s Scenepacks</title>
-  <desc id="description">A little archive for your next edit. Call of Duty and SIX. An original charcoal and warm gold cover with the archive’s wave mark.</desc>
+  <desc id="description">Ocean’s Scenepacks. Call of Duty and SIX. Charcoal and gold with the archive’s wave mark.</desc>
   <defs>
     <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ecc786"/><stop offset="1" stop-color="#9b7950"/></linearGradient>
     <linearGradient id="shade"><stop stop-color="#151310"/><stop offset="1" stop-color="#09090a"/></linearGradient>
-    <clipPath id="frame"><rect x=".5" y=".5" width="1279" height="449" rx="20"/></clipPath>
+    <clipPath id="frame"><rect x=".5" y=".5" width="1279" height="391" rx="20"/></clipPath>
   </defs>
   <g clip-path="url(#frame)">
-    <rect width="1280" height="450" fill="#09090a"/>
-    <path d="M758 0H1280V450H978Z" fill="url(#shade)"/>
+    <rect width="1280" height="392" fill="#09090a"/>
+    <path d="M758 0H1280V392H978Z" fill="url(#shade)"/>
     <g fill="none" stroke="#ecc786" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(56 42) scale(1.5)">
       <path d="M2 15c4-9 7 4 11-5s7 3 9-1"/><path d="M3 19c4-9 7 4 11-5s6 2 8-1"/>
     </g>
     <g font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="2" fill="#aaa69f">
-      <text x="109" y="66">A LITTLE ARCHIVE FOR YOUR NEXT EDIT.</text>
       <text x="1224" y="66" text-anchor="end" fill="#ecc786">CALL OF DUTY / SIX</text>
     </g>
     <path d="M56 98H1224" stroke="#2b2823"/>
@@ -23,13 +22,7 @@
       <path d="M0 108C52-15 90 169 142 48S232 87 285 31" opacity=".6"/>
       <path d="M0 133C52 10 90 194 142 73S232 112 285 56" opacity=".28"/>
     </g>
-    <text x="1008" y="326" text-anchor="middle" font-family="monospace" font-size="11" letter-spacing="3" fill="#aaa69f">FIND YOUR NEXT FRAME.</text>
-    <path d="M56 379H1224" stroke="#2b2823"/>
-    <g font-family="monospace" font-size="12" letter-spacing="1.2" fill="#aaa69f">
-      <text x="56" y="417">SCENE PACKS / CUTSCENES / TRAILERS</text>
-      <text x="1188" y="417" text-anchor="end" fill="#ecc786">CURATED BY @OCEANXAEP</text>
-    </g>
-    <path d="M1208 419l15-15m-15 0h15v15" fill="none" stroke="#ecc786" stroke-width="1.5"/>
+
   </g>
-  <rect x=".5" y=".5" width="1279" height="449" rx="20" fill="none" stroke="#2b2823"/>
+  <rect x=".5" y=".5" width="1279" height="391" rx="20" fill="none" stroke="#2b2823"/>
 </svg>
